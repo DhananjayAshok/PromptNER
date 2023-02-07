@@ -2,7 +2,7 @@ from algorithms import Algorithm, ConllConfig, GeniaConfig
 from models import *
 
 from data import *
-
+from eval import f1
 
 class Quick:
     @staticmethod
@@ -21,13 +21,15 @@ class Quick:
         q = conll_train.loc[i]
         para = q['text']
         entities = q['entities']
+        e.set_para(para)
+        e.set_model_fn(model)
         print(f"Paragraph: {para}\nEntities: {entities}")
-        e = Algorithm(para=para)
-        config = ConllConfig()
-        config.set_config(e, exemplar=True)
-        return e.perform(model, verbose=verbose)
+        return e.perform(verbose=verbose)
 
 
+e = Algorithm(split_phrases=True)
+config = ConllConfig()
+config.set_config(e, exemplar=True)
 genia_train = load_genia()
 conll_train = load_conll2003()
 gc = GeniaConfig()

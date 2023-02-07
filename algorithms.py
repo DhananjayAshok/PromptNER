@@ -23,41 +23,49 @@ class BaseAlgorithm:
     phrase_iter1 = "Go over this list and for each item "
     boolean_force = "Answer with 'True or 'False''"
 
-    def __init__(self, para, word_limit=4):
+    def __init__(self, model_fn=None, word_limit=4, split_phrases=False):
         self.defn = self.defn.replace("[WORDLIMIT]", f"{word_limit}")
+        self.para = None
+        self.model_fn = model_fn
+        self.split_phrases = split_phrases
+
+    def set_para(self, para):
         self.para = para
 
-    def initial_query(self, model, verbose=False, indent_level=0):
+    def set_model_fn(self, model_fn):
+        self.model_fn = model_fn
+
+    def initial_query(self, verbose=False, indent_level=0):
         q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + self.base_task
-        initial_list = AnswerMapping.get_numbered_list_items(model(q), verbose=verbose, indent_level=indent_level)
+        initial_list = AnswerMapping.get_numbered_list_items(self.model_fn(q), verbose=verbose, indent_level=indent_level)
         return initial_list
 
-    def removal_query(self, model, working_list, verbose=False, indent_level=0):
+    def removal_query(self, working_list, verbose=False, indent_level=0):
         list_str = ""
         for i, entity in enumerate(working_list):
             list_str = list_str + f"\n{i}. {entity}"
         task = f"You are given the following list: {list_str}. {self.removal_task}"
         q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + task
-        removal_answer = AnswerMapping.get_numbered_list_items(model(q), verbose=verbose, indent_level=indent_level)
+        removal_answer = AnswerMapping.get_numbered_list_items(self.model_fn(q), verbose=verbose, indent_level=indent_level)
         return removal_answer
 
-    def check_word(self, model, word, force=True, verbose=False, indent_level=0):
+    def check_word(self, word, force=True, verbose=False, indent_level=0):
         task = self.phrase_entity_task.replace("[WORD]", word)
         if force:
             task = task + " " + self.boolean_force
         q = f"{self.defn}\n{self.para_reference}'{self.para}'\n{task}"
-        return AnswerMapping.get_true_or_false(model(q), verbose=verbose, indent_level=indent_level)
+        return AnswerMapping.get_true_or_false(self.model_fn(q), verbose=verbose, indent_level=indent_level)
 
-    def check_composition_speciality(self, model, entity_list, phrase, force=True, verbose=False, indent_level=0):
+    def check_composition_speciality(self, entity_list, phrase, force=True, verbose=False, indent_level=0):
         task = self.speciality_task.replace("[WORDLIST]", f"{entity_list}").replace("[PHRASE]", phrase)
         if force:
             task = task + " " + self.boolean_force
         q = f"{self.defn}\n{self.para_reference}'{self.para}'\n{task}"
-        return AnswerMapping.get_true_or_false(model(q), verbose=verbose, indent_level=indent_level)
+        return AnswerMapping.get_true_or_false(self.model_fn(q), verbose=verbose, indent_level=indent_level)
 
 
 class Algorithm(BaseAlgorithm):
-    def perform(self, model, mode=1, verbose=True):
+    def perform(self, mode=1, verbose=True):
         """
 
         :param model:
@@ -66,21 +74,33 @@ class Algorithm(BaseAlgorithm):
         :return:
         """
         if mode == 0:
-            return self.perform_exhaustive(model, verbose=verbose)
+            answers = self.perform_exhaustive(verbose=verbose)
         elif mode == 1:
-            return self.perform_single_query(model, verbose=verbose)
+            answers = self.perform_single_query(verbose=verbose)
         else:
-            pass
+            answers = None
+        if self.split_phrases:
+            new_answers = []
+            for answer in answers:
+                if " " not in answer:
+                    new_answers.append(answer)
+                else:
+                    minis = answer.split(" ")
+                    for mini in minis:
+                        new_answers.append(mini)
+            return new_answers
+        else:
+            return answers
 
-    def perform_exhaustive(self, model, verbose=True):
-        initial_list = self.initial_query(model, verbose=verbose)
+    def perform_exhaustive(self, verbose=True):
+        initial_list = self.initial_query(verbose=verbose)
         if verbose:
             print(f"Processed initial list is: {initial_list}")
         working_list = []
         for item in initial_list:
             if verbose:
                 print(f"Checking Validity of {item}")
-            is_entity = self.check_word(model, item, verbose=verbose, indent_level=1)
+            is_entity = self.check_word(item, verbose=verbose, indent_level=1)
             if is_entity:
                 working_list.append(item)
             else:
@@ -89,7 +109,7 @@ class Algorithm(BaseAlgorithm):
                     if verbose:
                         print(f"{item} was not an entity, going into words of the phrase")
                     for word in words:
-                        is_entity = self.check_word(model, word, verbose=verbose, indent_level=2)
+                        is_entity = self.check_word(word, verbose=verbose, indent_level=2)
                         if is_entity:
                             working_list.append(item)
         if verbose:
@@ -105,7 +125,7 @@ class Algorithm(BaseAlgorithm):
             for i, word in enumerate(words):
                 if verbose:
                     print(f"\t\tChecking {word}")
-                is_entity = self.check_word(model, word, verbose=verbose, indent_level=2)
+                is_entity = self.check_word(word, verbose=verbose, indent_level=2)
                 if not is_entity:
                     flag = False
                     break
@@ -117,14 +137,14 @@ class Algorithm(BaseAlgorithm):
         final_list = working_list
         return final_list
 
-    def perform_single_query(self, model, verbose=True):
+    def perform_single_query(self, verbose=True):
         exemplar_construction = ""
         exemplar_construction += self.defn + "\n"
         for exemplar in self.exemplars:
             exemplar_construction += self.whole_task + "\n"
             exemplar_construction += exemplar + "\n"
         exemplar_construction += self.whole_task + "\n"
-        output = model(exemplar_construction + self.para)
+        output = self.model_fn(exemplar_construction + self.para)
         final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
         return final
 

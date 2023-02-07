@@ -25,7 +25,9 @@ class T5:
         self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}")
 
     def query(self, prompt):
-        inputs = self.tokenizer("A step by step recipe to make bolognese pasta:", return_tensors="pt")
-        outputs = self.model.generate(**inputs)
+        inputs = self.tokenizer(prompt, return_tensors="pt")
+        outputs = self.model.generate(**inputs, max_new_tokens=50)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
+    def __call__(self, prompt):
+        return self.query(prompt)

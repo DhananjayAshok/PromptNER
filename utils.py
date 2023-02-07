@@ -62,10 +62,29 @@ class AnswerMapping:
 
     @staticmethod
     def exemplar_format_list(output, verbose=False, indent_level=0, separator='|'):
-        listed = AnswerMapping.get_numbered_list_items(output, verbose=verbose, indent_level=indent_level+1)
+        if "\n" in output:
+            listed = AnswerMapping.get_numbered_list_items(output, verbose=verbose, indent_level=indent_level+1)
+        else:
+            listed = []
+            split = re.split(r"\d+[.)]", output)
+            for item in split:
+                if item.strip().lower() == "" or "answer" in item.strip().lower():
+                    pass
+                else:
+                    listed.append(item.strip())
         final = []
         for option in listed:
-            entity, status, explanation = option.split(separator)
+            split = option.split(separator)
+            if len(split) == 1:
+                print(f"Got only one value for {option} with separator '{separator}'")
+                continue
+            elif len(split) == 2:
+                entity, status = split
+            elif len(split) == 3:
+                entity, status, explanation = split
+            else:
+                entity, status = split[0], split[1]
+                print(f"Got more than 3 values for {option} with separator '{separator}'")
             if status.strip().lower() == "true":
                 final.append(entity.strip().lower())
             else:
