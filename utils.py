@@ -61,6 +61,7 @@ class AnswerMapping:
             return default
 
     @staticmethod
+    @verbose
     def exemplar_format_list(output, verbose=False, indent_level=0, separator='|'):
         if "\n" in output:
             listed = AnswerMapping.get_numbered_list_items(output, verbose=verbose, indent_level=indent_level+1)

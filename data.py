@@ -115,3 +115,17 @@ def load_conll2003(split="validation"):
 
 def load_genia(genia_path="data/Genia/Genia4ERtask1.iob2"):
     return read_ob2(genia_path)
+
+
+def scroll(dataset, start=0):
+    cols = dataset.columns
+    for i in range(start, len(dataset)):
+        s = dataset.loc[i]
+        print(f"Item: {i}")
+        for col in cols:
+            print(f"{col}")
+            print(s[col])
+            print(f"XXXXXXXXXXXXXXX")
+        inp = input("Continue?")
+        if inp != "":
+            return

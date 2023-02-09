@@ -79,6 +79,9 @@ class Algorithm(BaseAlgorithm):
             answers = self.perform_single_query(verbose=verbose)
         else:
             answers = None
+        for trivial in ["", " ", "."]:
+            while trivial in answers:
+                answers.remove(trivial)
         if self.split_phrases:
             new_answers = []
             for answer in answers:
@@ -144,7 +147,7 @@ class Algorithm(BaseAlgorithm):
             exemplar_construction += self.whole_task + "\n"
             exemplar_construction += exemplar + "\n"
         exemplar_construction += self.whole_task + "\n"
-        output = self.model_fn(exemplar_construction + self.para)
+        output = self.model_fn(exemplar_construction + f"'{self.para}'" + "\nAnswer:")
         final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
         return final
 
@@ -152,9 +155,10 @@ class Algorithm(BaseAlgorithm):
 class ConllConfig:
     defn = "An entity is an object, place, individual, being, title or process that has a distinct and " \
                 "independent existence. The name of a collection of entities is also an entity. " \
+           "Names, first names, last names, countries and nationalitites are entities " \
                 "Sports, adjectives, verbs, numbers, " \
-                "adverbs, abstract concepts are not entities. Dates, years and times are not entities. " \
-           "Possessive words like I, you, him and me are not entities. "
+                "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
+           "Possessive words like I, you, him and me are not entities."
 
     phrase_entity_task = "Does the phrase or word '[WORD]' represent an object, place, individual or title that has " \
                          "a distinct and independant existence. " \

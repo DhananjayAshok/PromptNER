@@ -4,6 +4,7 @@ from models import *
 from data import *
 from eval import f1
 
+
 class Quick:
     @staticmethod
     def genia(i, model=GPT3.query, verbose=False):
@@ -14,7 +15,7 @@ class Quick:
         e = Algorithm(para=para)
         config = GeniaConfig()
         config.set_config(e)
-        return e.perform(model, verbose=verbose)
+        return entities, e.perform(model, verbose=verbose)
 
     @staticmethod
     def conll(i, model=GPT3.query, verbose=False):
@@ -24,7 +25,7 @@ class Quick:
         e.set_para(para)
         e.set_model_fn(model)
         print(f"Paragraph: {para}\nEntities: {entities}")
-        return e.perform(verbose=verbose)
+        return entities, e.perform(verbose=verbose)
 
 
 e = Algorithm(split_phrases=True)

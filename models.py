@@ -6,6 +6,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class GPT3:
     model = "text-davinci-003"
+    seconds_per_query = (60 / 20) + 0.01
     @staticmethod
     def request_model(prompt):
         return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=200)
@@ -22,7 +23,7 @@ class GPT3:
 class T5:
     def __init__(self, size="large"):
         self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}")
-        self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}")
+        self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
 
     def query(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt")
