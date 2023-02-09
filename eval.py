@@ -4,6 +4,7 @@ from data import *
 from tqdm import tqdm
 import time
 import pandas as pd
+import openai
 
 def is_eq(e1, e2):
     return e1.lower() == e2.lower()
@@ -57,8 +58,13 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None):
         algorithm.set_para(para)
         if sleep_between_queries is not None:
             time.sleep(sleep_between_queries)
-        print(entities)
-        preds = algorithm.perform(verbose=True)
+        flag = False
+        while not flag:
+            try:
+                preds = algorithm.perform(verbose=True)
+                flag = True
+            except openai.error.RateLimitError:
+                time.sleep(0.5)
         f1_score = f1(entities, preds)
         if f1_score != 1:
             mistake_data.append([i, para, entities, preds, f1_score])
@@ -87,6 +93,6 @@ if __name__ == "__main__":
     from models import T5, GPT3
     model = GPT3
     x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, sleep_between_queries=model.seconds_per_query,
-                                limit=20)
+                                limit=200)
     print(x)
     print(y)

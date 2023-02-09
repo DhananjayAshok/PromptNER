@@ -5,8 +5,6 @@ import re
 import string
 
 data_root = "data"
-re_root = os.path.join(data_root, "RelationExtraction")
-re_options = os.listdir(re_root)
 
 
 def get_row(func):
@@ -15,22 +13,6 @@ def get_row(func):
             frame = frame.loc[i, :]
         return func(frame, i=None)
     return infunc
-
-
-def get_re_dset(name=None, i=None):
-    if (name is None and i is None) or (name is not None and name not in re_options) or \
-            (i is not None and i > len(re_options)):
-        name = re_options[0]
-    elif i is not None:
-        name = re_options[i]
-    train = pd.read_json(os.path.join(re_root, name, "train.json"), lines=True)
-    def smap(x):
-        s = ""
-        for iii in x:
-            s = s + iii + " "
-        return s
-    train['token'] = train['token'].map(smap)
-    return train
 
 
 def read_ob2(file_path):
