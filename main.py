@@ -15,7 +15,7 @@ class Quick:
         e = Algorithm(para=para)
         config = GeniaConfig()
         config.set_config(e)
-        return entities, e.perform(model, verbose=verbose)
+        return entities, e.perform(model, verbose=verbose)[0]
 
     @staticmethod
     def conll(i, model=GPT3.query, verbose=False):
@@ -25,7 +25,7 @@ class Quick:
         e.set_para(para)
         e.set_model_fn(model)
         print(f"Paragraph: {para}\nEntities: {entities}")
-        return entities, e.perform(verbose=verbose)
+        return entities, e.perform(verbose=verbose)[0]
 
 
 e = Algorithm(split_phrases=True)

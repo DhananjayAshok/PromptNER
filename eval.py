@@ -61,13 +61,13 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None):
         flag = False
         while not flag:
             try:
-                preds = algorithm.perform(verbose=True)
+                preds, metadata = algorithm.perform(verbose=True)
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
         f1_score = f1(entities, preds)
         if f1_score != 1:
-            mistake_data.append([i, para, entities, preds, f1_score])
+            mistake_data.append([i, para, entities, preds, metadata, f1_score])
         f1s.append(f1_score)
     f1s = np.array(f1s)
     return f1s.mean(), f1s.std(), mistake_data
@@ -78,7 +78,7 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
     config.set_config(algorithm)
     conll = load_conll2003("validation").loc[:limit]
     f1_means, f1_stds = [], []
-    mistake_columns = ["idx", "para", "entities", "preds", "f1"]
+    mistake_columns = ["idx", "para", "entities", "preds", "meta", "f1"]
     for i in range(n_runs):
         f1_mean, f1_std, mistake_data = eval_dataset(conll, model, algorithm, sleep_between_queries=sleep_between_queries)
         f1_means.append(f1_mean)
@@ -91,8 +91,13 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 
 if __name__ == "__main__":
     from models import T5, GPT3
-    model = GPT3
-    x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, sleep_between_queries=model.seconds_per_query,
-                                limit=200)
-    print(x)
-    print(y)
+    model = GPT3()
+    x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, sleep_between_queries=model.seconds_per_query, limit=200)
+
+    #model = T5(size='xxl')
+    #x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, limit=200)
+
+    print(f"f1_means: {x}")
+    print(f"f1_stds: {y}")
+    print(f"Saving file to {model.__class__.__name__}_conll.csv")
+    mistakes.to_csv(f"{model.__class__.__name__}_conll.csv")

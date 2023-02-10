@@ -76,9 +76,9 @@ class Algorithm(BaseAlgorithm):
         :return:
         """
         if mode == 0:
-            answers = self.perform_exhaustive(verbose=verbose)
+            answers, metadata = self.perform_exhaustive(verbose=verbose)
         elif mode == 1:
-            answers = self.perform_single_query(verbose=verbose)
+            answers, metadata = self.perform_single_query(verbose=verbose)
         else:
             answers = None
         for trivial in ["", " ", "."] + stopwords.words('english'):
@@ -93,9 +93,9 @@ class Algorithm(BaseAlgorithm):
                     minis = answer.split(" ")
                     for mini in minis:
                         new_answers.append(mini)
-            return new_answers
+            return new_answers, metadata
         else:
-            return answers
+            return answers, metadata
 
     def perform_exhaustive(self, verbose=True):
         initial_list = self.initial_query(verbose=verbose)
@@ -140,7 +140,7 @@ class Algorithm(BaseAlgorithm):
                 mixed_entity_multiples.append(multi)
         working_list = pure_entity_multiples + singles + mixed_entity_multiples
         final_list = working_list
-        return final_list
+        return final_list, None
 
     def perform_single_query(self, verbose=True):
         exemplar_construction = ""
@@ -151,7 +151,7 @@ class Algorithm(BaseAlgorithm):
         exemplar_construction += self.whole_task + "\n"
         output = self.model_fn(exemplar_construction + f"'{self.para}'" + "\nAnswer:")
         final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
-        return final
+        return final, output
 
 
 class ConllConfig:
