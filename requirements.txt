@@ -4,3 +4,4 @@ tqdm
 openai
 transformers
 datasets
+nltk

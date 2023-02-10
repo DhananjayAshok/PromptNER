@@ -1,5 +1,7 @@
 import utils
 from utils import AnswerMapping
+from nltk.corpus import stopwords
+
 
 
 class BaseAlgorithm:
@@ -79,7 +81,7 @@ class Algorithm(BaseAlgorithm):
             answers = self.perform_single_query(verbose=verbose)
         else:
             answers = None
-        for trivial in ["", " ", "."]:
+        for trivial in ["", " ", "."] + stopwords.words('english'):
             while trivial in answers:
                 answers.remove(trivial)
         if self.split_phrases:
