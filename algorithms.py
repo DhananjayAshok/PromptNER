@@ -25,7 +25,7 @@ class BaseAlgorithm:
     phrase_iter1 = "Go over this list and for each item "
     boolean_force = "Answer with 'True or 'False''"
 
-    def __init__(self, model_fn=None, word_limit=4, split_phrases=False):
+    def __init__(self, model_fn=None, word_limit=4, split_phrases=True):
         self.defn = self.defn.replace("[WORDLIMIT]", f"{word_limit}")
         self.para = None
         self.model_fn = model_fn
