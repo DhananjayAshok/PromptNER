@@ -30,16 +30,25 @@ class AnswerMapping:
     @verbose
     def get_numbered_list_items(output, verbose=False, indent_level=0):
         final = []
-        candidates = output.split("\n")
-        for cand in candidates:
-            c = cand.strip()
-            if c.lower().strip() in ["", "answer:"]:
-                pass
-            elif re.match(r"\d+[.)]+ *", cand):
-                final.append(cand[2:].strip())
-            else:
-                print(f"Unable to match nonempty {c}")
-                pass
+        if "\n" in output:
+            candidates = output.split("\n")
+            for cand in candidates:
+                c = cand.strip()
+                if c.lower().strip() in ["", "answer:"]:
+                    pass
+                elif re.match(r"\d+[.)]+ *", cand):
+                    final.append(cand[2:].strip())
+                else:
+                    print(f"Unable to match nonempty {c}")
+                    pass
+        else:
+            candidates = re.split(r"\d+[.)]", output)
+            for cand in candidates:
+                c = cand.strip()
+                if c.lower().strip() in ["", "answer:"]:
+                    pass
+                else:
+                    final.append(cand)
         return final
 
     @staticmethod
