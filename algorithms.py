@@ -30,6 +30,7 @@ class BaseAlgorithm:
         self.model_fn = model_fn
         self.mode = mode
         self.split_phrases = split_phrases
+        self.exemplars = None
 
     def set_para(self, para):
         self.para = para
@@ -38,7 +39,13 @@ class BaseAlgorithm:
         self.model_fn = model_fn
 
     def initial_query(self, verbose=False, indent_level=0):
-        q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + self.base_task
+        if self.exemplars is not None:
+            q = self.defn + "\n"
+            for exemplar in self.exemplars:
+                q += self.base_task + "\nParagraph: " + exemplar + "\n"
+            q += "\n" + self.defn + "\n" + self.base_task + "\nParagraph: " + self.para + "\nAnswer:"
+        else:
+            q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + self.base_task
         initial_list = AnswerMapping.get_numbered_list_items(self.model_fn(q), verbose=verbose, indent_level=indent_level)
         return initial_list
 
