@@ -48,7 +48,7 @@ class AnswerMapping:
                 if c.lower().strip() in ["", "answer:"]:
                     pass
                 else:
-                    final.append(cand)
+                    final.append(c)
         return final
 
     @staticmethod

@@ -91,6 +91,7 @@ class Algorithm(BaseAlgorithm):
         for trivial in ["", " ", "."] + stopwords.words('english'):
             while trivial in answers:
                 answers.remove(trivial)
+        answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
             for answer in answers:
