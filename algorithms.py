@@ -3,7 +3,6 @@ from utils import AnswerMapping
 from nltk.corpus import stopwords
 
 
-
 class BaseAlgorithm:
     defn = "An entity is an object, place, individual, being, title, proper noun or process that has a distinct and " \
            "independent existence. The name of a collection of entities is also an entity. Adjectives, verbs, numbers, " \
@@ -25,10 +24,11 @@ class BaseAlgorithm:
     phrase_iter1 = "Go over this list and for each item "
     boolean_force = "Answer with 'True or 'False''"
 
-    def __init__(self, model_fn=None, word_limit=4, split_phrases=True):
+    def __init__(self, model_fn=None, word_limit=4, split_phrases=True, mode=1):
         self.defn = self.defn.replace("[WORDLIMIT]", f"{word_limit}")
         self.para = None
         self.model_fn = model_fn
+        self.mode = mode
         self.split_phrases = split_phrases
 
     def set_para(self, para):
@@ -67,7 +67,7 @@ class BaseAlgorithm:
 
 
 class Algorithm(BaseAlgorithm):
-    def perform(self, mode=1, verbose=True):
+    def perform(self, verbose=True):
         """
 
         :param model:
@@ -75,9 +75,9 @@ class Algorithm(BaseAlgorithm):
         :param mode: 0: most exhaustive, 2: least exhaustive
         :return:
         """
-        if mode == 0:
+        if self.mode == 0:
             answers, metadata = self.perform_exhaustive(verbose=verbose)
-        elif mode == 1:
+        elif self.mode == 1:
             answers, metadata = self.perform_single_query(verbose=verbose)
         else:
             answers = None
@@ -154,7 +154,20 @@ class Algorithm(BaseAlgorithm):
         return final, output
 
 
-class ConllConfig:
+class Config:
+    def set_config(self, alg, exemplar=False, coT=False):
+        alg.defn = self.defn
+        if not exemplar:
+            alg.phrase_entity_task = self.phrase_entity_task
+        else:
+            if coT:
+                alg.exemplars = self.cot_exemplars
+            else:
+                alg.exemplars = self.exemplars
+            alg.phrase_entity_task = self.phrase_entity_task_exemplar
+
+
+class ConllConfig(Config):
     defn = "An entity is an object, place, individual, being, title or process that has a distinct and " \
                 "independent existence. The name of a collection of entities is also an entity. " \
            "Names, first names, last names, countries and nationalitites are entities " \
@@ -182,7 +195,7 @@ class ConllConfig:
     Does the phrase or word '[WORD]' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept    
     """
 
-    exemplar_1 = """
+    cot_exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
     
     Answer:
@@ -196,7 +209,7 @@ class ConllConfig:
     8. England | True | as it is a place or location
     9. Andy Caddick | True | as it is the name of a person. 
     """
-    exemplar_2 = """
+    cot_exemplar_2 = """
     Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
     
     Answer:
@@ -208,17 +221,31 @@ class ConllConfig:
     6. 2-0 | False | as it is a score or set of numbers which is not an entity. 
     
     """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
-    def set_config(self, alg, exemplar=False):
-        alg.defn = self.defn
-        alg.exemplars = [self.exemplar_1, self.exemplar_2]
-        if not exemplar:
-            alg.phrase_entity_task = self.phrase_entity_task
-        else:
-            alg.phrase_entity_task = self.phrase_entity_task_exemplar
+    exemplar_1 = """
+    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+    Answer:
+    1. Somerset
+    2. Grace Road
+    3. Leicestershire
+    4. England
+    5. Andy Caddick
+    """
+    exemplar_2 = """
+    Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+
+    Answer:
+    1. Florian Rousseau
+    2. France
+    3. Ainar Kiksis
+    4. Latvia
+    """
+    exemplars = [exemplar_1, exemplar_2]
 
 
-class GeniaConfig:
+class GeniaConfig(Config):
     defn = "An entity is a protien, group of protiens, DNA, RNA, Cell Type or Cell Line. " \
            "Abstract concepts, processes and adjectives are not entities"
 
@@ -226,10 +253,5 @@ class GeniaConfig:
                          "a distinct and independant existence. " \
                          "Answer False if the word represents a process, adjective or abstract concept. Explain why"
 
-    def set_config(self, alg, exemplar=False):
-        alg.defn = self.defn
-        if not exemplar:
-            alg.phrase_entity_task = self.phrase_entity_task
-        else:
-            pass
-            #alg.phrase_entity_task = self.phrase_entity_task_exemplar
+    cot_exemplars = None
+    exemplars = None

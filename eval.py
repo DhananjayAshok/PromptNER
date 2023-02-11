@@ -61,7 +61,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None):
         flag = False
         while not flag:
             try:
-                preds, metadata = algorithm.perform(verbose=True)
+                preds, metadata = algorithm.perform(verbose=False)
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
@@ -91,13 +91,14 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 
 if __name__ == "__main__":
     from models import T5, GPT3
-    model = GPT3()
-    x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, sleep_between_queries=model.seconds_per_query, limit=200)
+    for mode in [1]:
+        model = GPT3()
+        x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=1, sleep_between_queries=model.seconds_per_query, limit=200)
 
-    #model = T5(size='xxl')
-    #x, y, mistakes = eval_conll(model.query, Algorithm(), n_runs=1, limit=200)
+        #model = T5(size='xxl')
+        #x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=5)
 
-    print(f"f1_means: {x}")
-    print(f"f1_stds: {y}")
-    print(f"Saving file to {model.__class__.__name__}_conll.csv")
-    mistakes.to_csv(f"{model.__class__.__name__}_conll.csv")
+        print(f"f1_means: {x}")
+        print(f"f1_stds: {y}")
+        print(f"Saving file to {model.__class__.__name__}_{mode}_conll.csv")
+        mistakes.to_csv(f"{model.__class__.__name__}_{mode}_conll.csv")

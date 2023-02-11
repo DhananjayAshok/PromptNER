@@ -27,7 +27,7 @@ class T5:
 
     def query(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt")
-        outputs = self.model.generate(**inputs, max_new_tokens=50)
+        outputs = self.model.generate(**inputs, max_new_tokens=500)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
     def __call__(self, prompt):
