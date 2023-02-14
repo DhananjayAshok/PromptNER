@@ -1,5 +1,5 @@
 import os
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXTokenizerFast
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -28,6 +28,20 @@ class T5:
     def query(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt")
         outputs = self.model.generate(**inputs, max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+
+    def __call__(self, prompt):
+        return self.query(prompt)
+
+
+class GPTNeoX:
+    def __init__(self):
+        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b")
+        self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
+
+    def query(self, prompt):
+        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+        outputs = self.model.generate(input_ids, max_new_tokens=500)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
     def __call__(self, prompt):
