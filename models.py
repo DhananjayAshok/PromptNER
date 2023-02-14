@@ -1,5 +1,6 @@
 import os
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXTokenizerFast
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXTokenizerFast, \
+    GPTNeoForCausalLM, GPT2Tokenizer, AutoModelForCausalLM
 import openai
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -38,6 +39,34 @@ class GPTNeoX:
     def __init__(self):
         self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b")
         self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
+
+    def query(self, prompt):
+        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+        outputs = self.model.generate(input_ids, max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+
+    def __call__(self, prompt):
+        return self.query(prompt)
+
+
+class GPTNeo:
+    def __init__(self):
+        self.model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B")
+        self.tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
+
+    def query(self, prompt):
+        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
+        outputs = self.model.generate(input_ids, max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+
+    def __call__(self, prompt):
+        return self.query(prompt)
+
+
+class GPTNeo:
+    def __init__(self):
+        self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6B")
+        self.tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
 
     def query(self, prompt):
         input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
