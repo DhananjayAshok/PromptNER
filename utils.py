@@ -103,3 +103,7 @@ class AnswerMapping:
             else:
                 final.append(option.strip().lower())
         return final
+
+
+class Parameters:
+    device = "cuda:0"
