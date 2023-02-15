@@ -178,8 +178,8 @@ class Config:
 class ConllConfig(Config):
     defn = "An entity is an object, place, individual, being, title or process that has a distinct and " \
                 "independent existence. The name of a collection of entities is also an entity. " \
-           "Names, first names, last names, countries and nationalitites are entities " \
-                "Sports, adjectives, verbs, numbers, " \
+           "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
+           "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
            "Possessive words like I, you, him and me are not entities."
 
