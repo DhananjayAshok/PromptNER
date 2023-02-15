@@ -10,7 +10,7 @@ class GPT3:
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
     def request_model(prompt):
-        return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=200)
+        return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=150)
 
     @staticmethod
     def decode_response(response):
@@ -44,8 +44,8 @@ class GPTNeoX:
         input_tokens = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input_tokens.input_ids
         attention_mask = input_tokens.attention_mask
-        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
-                                      max_new_tokens=500)
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.3,
+                                      max_new_tokens=150)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
@@ -61,8 +61,8 @@ class GPTNeo:
         input_tokens = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input_tokens.input_ids
         attention_mask = input_tokens.attention_mask
-        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
-                                      max_new_tokens=500)
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.3,
+                                      max_new_tokens=150)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
@@ -78,8 +78,8 @@ class GPTJ:
         input_tokens = self.tokenizer(prompt, return_tensors="pt")
         input_ids = input_tokens.input_ids
         attention_mask = input_tokens.attention_mask
-        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
-                                      max_new_tokens=500)
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.3,
+                                      max_new_tokens=150)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
