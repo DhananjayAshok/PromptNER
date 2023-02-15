@@ -47,7 +47,7 @@ def f1(true_list, pred_list):
     return f1_score
 
 
-def eval_dataset(val, model, algorithm, sleep_between_queries=None):
+def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
     algorithm.set_model_fn(model)
     f1s = []
     mistake_data = []
@@ -69,6 +69,9 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None):
         if f1_score != 1:
             mistake_data.append([i, para, entities, preds, metadata, f1_score])
         f1s.append(f1_score)
+        if print_every is not None:
+            if i % print_every == 0:
+                print(f"Iteration {i}: Avg f1: {np.array(f1s).mean()}, Std f1: {np.array(f1s).std()}")
     f1s = np.array(f1s)
     return f1s.mean(), f1s.std(), mistake_data
 
