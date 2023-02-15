@@ -14,7 +14,7 @@ class GPT3:
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
     def request_model(prompt):
-        return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=150)
+        return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=250)
 
     @staticmethod
     def decode_response(response):
