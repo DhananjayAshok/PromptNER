@@ -41,9 +41,12 @@ class GPTNeoX:
         self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
 
     def query(self, prompt):
-        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
-        outputs = self.model.generate(input_ids, max_new_tokens=500)
-        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+        input_tokens = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = input_tokens.input_ids
+        attention_mask = input_tokens.attention_mask
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
+                                      max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
         return self.query(prompt)
@@ -55,23 +58,29 @@ class GPTNeo:
         self.tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
 
     def query(self, prompt):
-        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
-        outputs = self.model.generate(input_ids, max_new_tokens=500)
-        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+        input_tokens = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = input_tokens.input_ids
+        attention_mask = input_tokens.attention_mask
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
+                                      max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
         return self.query(prompt)
 
 
-class GPTNeo:
+class GPTJ:
     def __init__(self):
         self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6B")
         self.tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
 
     def query(self, prompt):
-        input_ids = self.tokenizer(prompt, return_tensors="pt").input_ids
-        outputs = self.model.generate(input_ids, max_new_tokens=500)
-        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
+        input_tokens = self.tokenizer(prompt, return_tensors="pt")
+        input_ids = input_tokens.input_ids
+        attention_mask = input_tokens.attention_mask
+        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.9,
+                                      max_new_tokens=500)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
 
     def __call__(self, prompt):
         return self.query(prompt)
