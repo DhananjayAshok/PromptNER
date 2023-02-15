@@ -163,7 +163,7 @@ class Algorithm(BaseAlgorithm):
 
 
 class Config:
-    def set_config(self, alg, exemplar=False, coT=False):
+    def set_config(self, alg, exemplar=True, coT=True):
         alg.defn = self.defn
         if not exemplar:
             alg.phrase_entity_task = self.phrase_entity_task
