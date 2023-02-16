@@ -80,7 +80,7 @@ def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=Non
     f1_means, f1_stds = [], []
     mistake_columns = ["idx", "para", "entities", "preds", "meta", "f1"]
     for i in range(n_runs):
-        f1_mean, f1_std, mistake_data = eval_dataset(dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
+        f1_mean, f1_std, mistake_data = eval_dataset(dataset.loc[:limit], model, algorithm, sleep_between_queries=sleep_between_queries)
         f1_means.append(f1_mean)
         f1_stds.append(f1_std)
     df = pd.DataFrame(data=mistake_data, columns=mistake_columns)

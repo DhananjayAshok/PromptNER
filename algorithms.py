@@ -88,9 +88,6 @@ class Algorithm(BaseAlgorithm):
             answers, metadata = self.perform_single_query(verbose=verbose)
         else:
             answers = None
-        for trivial in ["", " ", "."] + stopwords.words('english'):
-            while trivial in answers:
-                answers.remove(trivial)
         answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
@@ -101,9 +98,12 @@ class Algorithm(BaseAlgorithm):
                     minis = answer.split(" ")
                     for mini in minis:
                         new_answers.append(mini)
-            return new_answers, metadata
-        else:
-            return answers, metadata
+            answers = new_answers
+        answers = list(set(answers))
+        for trivial in ["", " ", "."] + stopwords.words('english'):
+            while trivial in answers:
+                answers.remove(trivial)
+        return answers, metadata
 
     def perform_exhaustive(self, verbose=True):
         initial_list = self.initial_query(verbose=verbose)
