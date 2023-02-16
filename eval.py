@@ -76,14 +76,11 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
     return f1s.mean(), f1s.std(), mistake_data
 
 
-def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
-    config = ConllConfig()
-    config.set_config(algorithm)
-    conll = load_conll2003("validation").loc[:limit]
+def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
     f1_means, f1_stds = [], []
     mistake_columns = ["idx", "para", "entities", "preds", "meta", "f1"]
     for i in range(n_runs):
-        f1_mean, f1_std, mistake_data = eval_dataset(conll, model, algorithm, sleep_between_queries=sleep_between_queries)
+        f1_mean, f1_std, mistake_data = eval_dataset(dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
         f1_means.append(f1_mean)
         f1_stds.append(f1_std)
     df = pd.DataFrame(data=mistake_data, columns=mistake_columns)
@@ -92,16 +89,31 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
     return f1_means, f1_stds, df
 
 
+def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
+    config = ConllConfig()
+    config.set_config(algorithm)
+    conll = load_conll2003("validation").loc[:limit]
+    return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries, limit=limit)
+
+
+def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
+    config = GeniaConfig()
+    config.set_config(algorithm)
+    genia = load_genia()
+    return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries, limit=limit)
+
+
 if __name__ == "__main__":
     from models import T5, GPT3
     for mode in [1]:
         model = GPT3()
-        x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=1, sleep_between_queries=model.seconds_per_query, limit=200)
+        x, y, mistakes = eval_genia(model.query, Algorithm(mode=mode), n_runs=1,
+                                    sleep_between_queries=model.seconds_per_query, limit=200)
 
         #model = T5(size='xxl')
         #x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=5)
 
         print(f"f1_means: {x}")
         print(f"f1_stds: {y}")
-        print(f"Saving file to {model.__class__.__name__}_{mode}_conll.csv")
-        mistakes.to_csv(f"{model.__class__.__name__}_{mode}_conll.csv")
+        print(f"Saving file to {model.__class__.__name__}_{mode}_genia.csv")
+        mistakes.to_csv(f"{model.__class__.__name__}_{mode}_genia.csv")

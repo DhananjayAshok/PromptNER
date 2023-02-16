@@ -261,5 +261,66 @@ class GeniaConfig(Config):
                          "a distinct and independant existence. " \
                          "Answer False if the word represents a process, adjective or abstract concept. Explain why"
 
-    cot_exemplars = None
-    exemplars = None
+    "represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept.Explain why"
+
+    phrase_entity_task_exemplar = """
+        Does the phrase or word 'cytokines' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
+        Answer: Yes. Cytokines is a type of protein that is made by certain immune and non-immune cells and has an effect on the immune system. 
+
+        Does the phrase or word 'AP-1' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
+        Answer: Yes. Activator protein 1 (AP-1) is a transcription factor DNA that regulates gene expression in response to a variety of stimuli
+
+        Does the phrase or word 'anti-CD4 mAb' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
+        Answer: Yes. anti-CD4 mAb is a cell type
+
+        Does the phrase or word 'CD4+ T cells' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
+        Answer: Yes. This is because CD4+ T Cells is a Cell Type
+
+        Does the phrase or word 'interleukin-2' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
+        """
+
+    cot_exemplar_1 = """
+        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+
+        Answer:
+        1. Immunoprecipitation | False | as it is a process
+        2. gp 160  | True | as Glycoprotein Gp 160 it is a type of protein
+        3. polyclonal antibodies | True | as it is a type of cell
+        4. Fos | True | as Fructo-oligosaccharides are proteins
+        5. Jun | True | as it is a type of protein
+        6. AP-1 | True | as Activator protein 1 (AP-1) is a protein
+        """
+    cot_exemplar_2 = """
+        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+
+        Answer:
+        1. gp 160 | True | as Glycoprotein Gp 160 it is a type of protein
+        2. mediated | False | as it is a verb
+        3. CD4 molecule | True | as CD4 (cluster of differentiation 4) is a glycoprotein a type of protien
+        4. CD4-IgG | True | as CD4-igG is a homodimer of a hybrid polypeptide
+        5. abrogates | False | as it is a verb
+        6. CD4 negative T cell lines | True | as they are a type of Cell Line
+
+        """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    exemplar_1 = """
+        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+
+        Answer:
+        1. gp 160
+        2. polyclonal antibodies
+        3. Fos
+        4. Jun
+        5. AP-1
+        """
+    exemplar_2 = """
+        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+
+        Answer:
+        1. gp 160
+        2. CD4 molecule
+        3. CD4-IgG
+        4. CD4 negative T cell lines
+        """
+    exemplars = [exemplar_1, exemplar_2]
