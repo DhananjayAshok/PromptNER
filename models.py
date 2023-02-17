@@ -27,10 +27,8 @@ class GPT3:
 
 class HugginFaceModel:
     def query(self, prompt):
-        inputs = self.tokenizer(prompt, return_tensors="pt")
-        input_ids = inputs.input_ids.to(utils.Parameters.device)
-        attention_mask = inputs.attention_mask.to(utils.Parameters.device)
-        outputs = self.model.generate(**inputs, max_new_tokens=500)
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(utils.Parameters.devices[0])
+        outputs = self.model.generate(**inputs, max_new_tokens=200)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
     def __call__(self, prompt):
@@ -39,25 +37,46 @@ class HugginFaceModel:
 
 class T5(HugginFaceModel):
     def __init__(self, size="large"):
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}").to(utils.Parameters.device)
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}").to(utils.Parameters.devices[0])
         self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
+
+
+class T5XL(HugginFaceModel):
+    def __init__(self, size="xxl"):
+        assert size in ["xl", "xxl"]
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}")
+        self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
+        if len(utils.Parameters.devices) == 1:
+            pass
+        else:
+            device_map = {
+                5: [0, 1, 2, 3, 4, 5, 6],
+                6: [7, 8, 9, 10, 11, 12, 13, 14, 15],
+                7: [16, 17, 18, 19, 20, 21, 22, 23]
+            }
+            self.model.parallelize(device_map)
+
+    def query(self, prompt):
+        inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda:5")
+        outputs = self.model.generate(**inputs, max_new_tokens=200)
+        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
 
 class GPTNeoX(HugginFaceModel):
     def __init__(self):
-        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b").to(utils.Parameters.device)
+        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b").to(utils.Parameters.devices[0])
         self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
 
 
 class GPTNeo(HugginFaceModel):
     def __init__(self):
-        self.model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B").to(utils.Parameters.device)
+        self.model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B").to(utils.Parameters.devices[0])
         self.tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
 
 
 class GPTJ(HugginFaceModel):
     def __init__(self):
-        self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6B").to(utils.Parameters.device)
+        self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6B").to(utils.Parameters.devices[0])
         self.tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
 
     def query(self, prompt):

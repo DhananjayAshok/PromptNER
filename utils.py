@@ -106,4 +106,4 @@ class AnswerMapping:
 
 
 class Parameters:
-    device = "cuda:0"
+    devices = ["cuda:0"]

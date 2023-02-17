@@ -104,14 +104,14 @@ def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 
 
 if __name__ == "__main__":
-    from models import T5, GPT3
+    from models import T5, GPT3, T5XL
     for mode in [1]:
-        model = GPT3()
-        x, y, mistakes = eval_genia(model.query, Algorithm(mode=mode), n_runs=1,
-                                    sleep_between_queries=model.seconds_per_query, limit=200)
+        #model = GPT3()
+        #x, y, mistakes = eval_genia(model.query, Algorithm(mode=mode), n_runs=1,
+        #                            sleep_between_queries=model.seconds_per_query, limit=200)
 
-        #model = T5(size='xxl')
-        #x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=5)
+        model = T5XL(size='xxl')
+        x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=5)
 
         print(f"f1_means: {x}")
         print(f"f1_stds: {y}")
