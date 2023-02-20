@@ -6,6 +6,7 @@ import time
 import pandas as pd
 import openai
 
+
 def is_eq(e1, e2):
     return e1.lower() == e2.lower()
 
@@ -107,15 +108,33 @@ def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 
 if __name__ == "__main__":
     from models import T5, GPT3, T5XL
-    for mode in [1]:
-        #model = GPT3()
-        #x, y, mistakes = eval_genia(model.query, Algorithm(mode=mode), n_runs=1,
-        #                            sleep_between_queries=model.seconds_per_query, limit=200)
+    res_path = "results"
+    gpt_limit=200
 
-        model = T5XL(size='xxl')
-        x, y, mistakes = eval_conll(model.query, Algorithm(mode=mode), n_runs=5)
+    gpt = True
+    exemplar = True
+    coT = True
+    dataset = "conll"
+    name_meta = ""
+    modes = [1]
+
+    if dataset == "conll":
+        eval_fn = eval_conll
+    elif dataset == "genia":
+        eval_fn = eval_genia
+    for mode in modes:
+        if gpt:
+            model = GPT3()
+            sleep_between_queries = model.seconds_per_query
+            x, y, mistakes = eval_fn(model.query, Algorithm(mode=mode), n_runs=1,
+                                     sleep_between_queries=model.seconds_per_query,
+                                     limit=gpt_limit, exemplar=exemplar, coT=coT)
+        else:
+            model = T5XL(size='xxl')
+            x, y, mistakes = eval_fn(model.query, Algorithm(mode=mode), n_runs=1, sleep_between_queries=None,
+                                     exemplar=exemplar, coT=coT)
 
         print(f"f1_means: {x}")
         print(f"f1_stds: {y}")
-        print(f"Saving file to {model.__class__.__name__}_{mode}_genia.csv")
-        mistakes.to_csv(f"{model.__class__.__name__}_{mode}_genia.csv")
+        print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{mode}_{dataset}.csv")
+        mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{mode}_{dataset}.csv")
