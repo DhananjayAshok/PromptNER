@@ -89,16 +89,18 @@ def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=Non
     return f1_means, f1_stds, df
 
 
-def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
+def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True):
     config = ConllConfig()
-    config.set_config(algorithm)
+    algorithm.split_phrases = True
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     conll = load_conll2003("validation").loc[:limit]
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries, limit=limit)
 
 
-def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
+def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True):
     config = GeniaConfig()
-    config.set_config(algorithm)
+    algorithm.split_phrases = True
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries, limit=limit)
 

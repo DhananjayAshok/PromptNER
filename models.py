@@ -61,7 +61,7 @@ class T5XL(HugginFaceModel):
 
 class GPTNeoX(HugginFaceModel):
     def __init__(self):
-        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b").to(utils.Parameters.devices[0])
+        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b").half().to(utils.Parameters.devices[0])
         self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
 
 
