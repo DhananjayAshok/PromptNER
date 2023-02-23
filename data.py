@@ -27,7 +27,7 @@ def read_ob2(file_path):
     type_list = []
     working_sentence = ""
     working_entity = ""
-    for line in lines:
+    for i, line in enumerate(lines):
         if line == "\n":
             if working_sentence != "":
                 sentences.append(working_sentence)
@@ -40,7 +40,6 @@ def read_ob2(file_path):
             working_entity = ""
             type_list = []
         l = line.strip().split("\t")
-        print(l)
         if len(l) == 0 or l[0].strip() == "":
             continue
         if working_sentence == "":
@@ -132,4 +131,4 @@ def scroll(dataset, start=0, exclude=None):
         inp = input("Continue?")
         if inp != "":
             return
-
+        
