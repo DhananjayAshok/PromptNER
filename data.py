@@ -40,6 +40,7 @@ def read_ob2(file_path):
             working_entity = ""
             type_list = []
         l = line.strip().split("\t")
+        print(l)
         if len(l) == 0 or l[0].strip() == "":
             continue
         if working_sentence == "":
@@ -61,6 +62,11 @@ def read_ob2(file_path):
                 if working_entity == "":
                     print(f"Theres a problem here no working entity, new entity {l[1][0]}. Line {line}")
                 working_entity = working_entity + " " + l[0]
+            else:
+                if working_entity == "":
+                    working_entity = l[0]
+                else:
+                    working_entity = working_entity + " " + l[0]
     columns = ["text", "entities", "types"]
     data = []
     for i in range(len(sentences)):
@@ -99,15 +105,31 @@ def load_genia(genia_path="data/Genia/Genia4ERtask1.iob2"):
     return read_ob2(genia_path)
 
 
-def scroll(dataset, start=0):
+def load_few_nerd(few_nerd_path="data/FewNERD", category="intra"):
+    assert category in ["inter", "intra", "supervised"]
+    file_path = os.path.join(few_nerd_path, category, "dev.txt")
+    return read_ob2(file_path)
+
+
+def load_cross_ner(cross_ner_path='data/CrossNER', category="ai"):
+    assert category in ['politics', 'literature', 'ai', 'science', 'conll2003', 'music']
+    file_path = os.path.join(cross_ner_path, "ner_data", category, "dev.txt")
+    return read_ob2(file_path)
+
+
+def scroll(dataset, start=0, exclude=None):
     cols = dataset.columns
     for i in range(start, len(dataset)):
         s = dataset.loc[i]
         print(f"Item: {i}")
         for col in cols:
+            if exclude is not None:
+                if col in exclude:
+                    continue
             print(f"{col}")
             print(s[col])
             print(f"XXXXXXXXXXXXXXX")
         inp = input("Continue?")
         if inp != "":
             return
+
