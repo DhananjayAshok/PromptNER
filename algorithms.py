@@ -73,6 +73,29 @@ class BaseAlgorithm:
         return AnswerMapping.get_true_or_false(self.model_fn(q), verbose=verbose, indent_level=indent_level)
 
 
+class CapitalAlgorithm(BaseAlgorithm):
+    def is_date(self, word):
+        return word.lower() in ["january", "february", "march", "april", "may", "june", "july", "august", "september",
+                                "october", "november", "december"]
+
+    def perform(self, verbose=False):
+        words = self.para.split()
+        selected = []
+        for i, word in enumerate(words):
+            if i == 0:
+                is_entity = self.check_word(word, verbose=verbose, indent_level=1)
+                if is_entity:
+                    selected.append(word)
+            else:
+                if len(word) <= 1:
+                    pass
+                else:
+                    if word[0].isupper():
+                        if not self.is_date(word):
+                            selected.append(word)
+        return selected
+
+
 class Algorithm(BaseAlgorithm):
     def perform(self, verbose=True):
         """
@@ -163,15 +186,60 @@ class Algorithm(BaseAlgorithm):
 
 
 class Config:
-    def set_config(self, alg, exemplar=True, coT=True):
+    generic_cot_exemplar_1 = """
+    It's a skateboarding penguin with a sunhat!
+
+    Answer:
+    1. It's | False | as it is a pronoun
+    2. Skateboarding | False | as it is an action or adjective, with no distinct existence 
+    3. Penguin | True | as it is an animal with a distinct and independent existence. 
+    4. Sunhat | True | as it is an object with a distinct and independent existence. 
+    """
+    generic_cot_exemplar_2 = """
+    Smith saw boulders lined the side of the road, foretelling what could come next.
+
+    Answer:
+    1. Smith | True | as it is the name of a person
+    2. boulders | True | as they are objects with independent and distinct existence. 
+    3. side | False | as it is a position with no distinct existence
+    4. road | True | as it is an object with a distinct and independent existence. 
+    5. foretelling | False | as it is an action
+
+    """
+    generic_cot_exemplars = [generic_cot_exemplar_1, generic_cot_exemplar_2]
+
+    generic_exemplar_1 = """
+    It's a skateboarding penguin with a sunhat!
+
+    Answer:
+    1. Penguin
+    2. Sunhat
+    """
+    generic_exemplar_2 = """
+    Smith saw boulders lined the side of the road, foretelling what could come next.
+
+    Answer:
+    1. Smith
+    2. boulders
+    3. road
+    """
+    generic_exemplars = [generic_exemplar_1, generic_exemplar_2]
+
+    def set_config(self, alg, exemplar=True, coT=True, generic=False):
         alg.defn = self.defn
         if not exemplar:
             alg.phrase_entity_task = self.phrase_entity_task
         else:
-            if coT:
-                alg.exemplars = self.cot_exemplars
+            if not generic:
+                if coT:
+                    alg.exemplars = self.cot_exemplars
+                else:
+                    alg.exemplars = self.exemplars
             else:
-                alg.exemplars = self.exemplars
+                if coT:
+                    alg.exemplars = self.generic_cot_exemplars
+                else:
+                    alg.exemplars = self.generic_exemplars
             alg.phrase_entity_task = self.phrase_entity_task_exemplar
 
 
@@ -261,7 +329,7 @@ class GeniaConfig(Config):
                          "a distinct and independant existence. " \
                          "Answer False if the word represents a process, adjective or abstract concept. Explain why"
 
-    "represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept.Explain why"
+
 
     phrase_entity_task_exemplar = """
         Does the phrase or word 'cytokines' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
@@ -276,7 +344,6 @@ class GeniaConfig(Config):
         Does the phrase or word 'CD4+ T cells' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
         Answer: Yes. This is because CD4+ T Cells is a Cell Type
 
-        Does the phrase or word 'interleukin-2' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
         """
 
     cot_exemplar_1 = """
@@ -324,3 +391,109 @@ class GeniaConfig(Config):
         4. CD4 negative T cell lines
         """
     exemplars = [exemplar_1, exemplar_2]
+
+
+class CrossNERConfig(Config):
+    # No defn or phrase_entity_task
+    cot_exemplar_1 = ConllConfig.cot_exemplar_1
+    cot_exemplar_2 = """
+    India carried out a nuclear test in 1974 but says it has not built the bomb .
+    
+    Answer:
+    1. India | True | as it is a country
+    2. nuclear test | False | as it is a concept and not an entity with physical existence
+    3. 1974 | False | as it is a date or time
+    4. bomb | True | as it is an object with independent and distinct existence. 
+    
+    """
+    exemplar_1 = ConllConfig.exemplar_1
+    exemplar_2 = """
+    India carried out a nuclear test in 1974 but says it has not built the bomb .
+    
+    Answer:
+    1. India
+    2. bomb
+    """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    exemplars = [exemplar_1, exemplar_2]
+
+
+class CrossNERPoliticsConfig(CrossNERConfig):
+    defn = """
+    An entity is a person, organization, politician, political party, event, eleection, country, location or 
+    other object that has an independent and distinct existence. Dates, times, abstract concepts, 
+    adjectives and verbs are not entities
+    """
+
+    phrase_entity_task = """
+    Does the phrase or word '[WORD]' represent a person, organization, politician, political party, event, eleection, country, location or 
+    other object that has an independent and distinct existence? Answer False if the word represents 
+    dates, times, abstract concepts, adjectives and verbs as these are not entities. Explain why
+    """
+
+
+class CrossNERNaturalSciencesConfig(CrossNERConfig):
+    defn = """
+    An entity is a person, university, scientist, organization, country, location, scientific discipline, enzyme, 
+    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, theory or 
+    other object that has an independent and distinct existence. Abstract scientific concepts can be entities if they 
+    have a name associated with them. Dates, times, adjectives and verbs are not entities
+    """
+
+    phrase_entity_task = """
+    Does the phrase or word '[WORD]' represent a person, university, scientist, organization, country, location, 
+    scientific discipline, enzyme, 
+    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, theory or 
+    other object that has an independent and distinct existence? Answer False if the word represents 
+    dates, times, adjectives and verbs as these are not entities. Explain why
+    """
+
+
+class CrossNERMusicConfig(CrossNERConfig):
+    defn = """
+    An entity is a person, country, location, organization, music genre, song, band, album, artist, musical instrument, 
+    award, event or other object with an independent and distinct existence. 
+    Dates, times, adjectives and verbs are not entities. 
+    """
+
+    phrase_entity_task = """
+        Does the phrase or word '[WORD]' represent a person, country, location, organization, music genre, song, band, 
+        album, artist, musical instrument, 
+        award, event or other object with an independent and distinct existence? Answer False if the word represents 
+        dates, times, adjectives and verbs as these are not entities. Explain why
+    """
+
+
+class CrossNERLiteratureConfig(CrossNERConfig):
+    defn = """
+    An entity is a person, country, location, organization, book, writer, poem, magazine, 
+    award, event or other object with an independent and distinct existence. 
+    Dates, times, adjectives and verbs are not entities. 
+    """
+
+    phrase_entity_task = """
+        Does the phrase or word '[WORD]' represent a person, country, location, organization, book, writer, poem, 
+        magazine,
+        award, event or other object with an independent and distinct existence? Answer False if the word represents 
+        dates, times, adjectives and verbs as these are not entities. Explain why
+    """
+
+
+class CrossNERAIConfig(CrossNERConfig):
+    defn = """
+    An entity is a person, country, location, organization, field of Artificial Intelligence, 
+    task in artificial intelligence, product, algorithm, metric in artificial intelligence, university. 
+    Dates, times, adjectives and verbs are not entities. 
+    """
+
+    phrase_entity_task = """
+        Does the phrase or word '[WORD]' represent a person, country, location, organization, 
+        field of Artificial Intelligence, task in artificial intelligence, product, algorithm, 
+        metric in artificial intelligence, university
+        award, event or other object with an independent and distinct existence? Answer False if the word represents 
+        dates, times, adjectives and verbs as these are not entities. Explain why
+    """
+
+
+class FewNERDINTRAConfig(Config):
+    defn = ""
