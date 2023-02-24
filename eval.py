@@ -53,7 +53,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
     f1s = []
     tp, fp, fn = 0, 0, 0
     mistake_data = []
-    for i, info in tqdm(enumerate(val.iterrows())):
+    for i, info in tqdm(enumerate(val.iterrows()), total=len(val)):
         index, q = info
         para = q['text']
         entities = q['entities']
