@@ -495,5 +495,139 @@ class CrossNERAIConfig(CrossNERConfig):
     """
 
 
-class FewNERDINTRAConfig(Config):
-    defn = ""
+class FewNERDConfig(Config):
+    person = "person"
+    art = "piece of art"
+    miscellaneous = "product, language, living thing, currency, god or scientific concept in astronomy, biology etc. "
+    locations = "locations"
+    organizations = "organizations"
+    buildings = "the names of buildings"
+    events = "events"
+    clearly_not = "Dates, times, abstract concepts and adjectives"
+    train_group = f"{person}, {art}, {miscellaneous}."
+    dev_group = f"{buildings} and {events}"
+    test_group = f"{locations} and {organizations}"
+    q_1 = "Albert Einstein used 100 USD to purchase the Eiffel tower from the Association of Artificial Intelligence"
+    q_2 = "In England, there is a festival called the Grand Jubilee, founded in 1982 by Attila the Hun, " \
+          "it was the original birthplace of the painting 'The Starry Night'"
+
+
+class FewNERDINTRATrainConfig(FewNERDConfig):
+    defn = f"""
+    An entitiy is a {FewNERDConfig.train_group}. {FewNERDConfig.dev_group} are not entities, 
+    {FewNERDConfig.test_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
+    """
+    cot_exemplar_1 = FewNERDConfig.q_1 + \
+        """
+         Answer:
+         1. Albert Einstein | True | as this is the name of a person
+         2. USD | True | as this is the name of a currency
+         3. purchase | False | as this is an action or verb
+         4. Eiffel tower | False | as this is the name of a building
+         5. Association of Artificial Intelligence | False | as this is an organization
+        """
+
+    cot_exemplar_2 = FewNERDConfig.q_2 + \
+        """
+        Answer:
+        1. England | False | as it is a location
+        2. festival | False | as it is not a named entity
+        3. Grand Jubilee | False | as it is an event
+        4. 1982 | False | as it is a date
+        5. Attila the Hun | True | as it is a person
+        6. The Starry Night | True | as it is a piece of art
+        """
+
+    exemplar_1 = FewNERDConfig.q_1 + \
+        """
+        Answer:
+        1. Albert Einstein
+        2. USD
+        """
+
+    exemplar_2 = FewNERDConfig.q_2 + \
+        """
+        Answer: 
+        1. Attila the Hun
+        2. The Starry Night
+        """
+
+
+class FewNERDINTRADevConfig(FewNERDConfig):
+    defn = f"""
+        Entities are  {FewNERDConfig.dev_group}. Entities are not a {FewNERDConfig.train_group}, 
+        {FewNERDConfig.test_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
+        """
+
+    cot_exemplar_1 = FewNERDConfig.q_1 + \
+         """
+          Answer:
+          1. Albert Einstein | False | as this is the name of a person
+          2. USD | False | as this is the name of a currency
+          3. purchase | False | as this is an action or verb
+          4. Eiffel tower | True | as this is the name of a building
+          5. Association of Artificial Intelligence | False | as this is an organization
+         """
+
+    cot_exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer:
+         1. England | False | as it is a location
+         2. festival | False | as it is not a named entity
+         3. Grand Jubilee | True | as it is an event
+         4. 1982 | False | as it is a date
+         5. Attila the Hun | False | as it is a person
+         6. The Starry Night | False | as it is a piece of art
+         """
+
+    exemplar_1 = FewNERDConfig.q_1 + \
+         """
+         Answer:
+         1. Eiffel Tower
+         """
+
+    exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer: 
+         1. Grand Jubilee
+         """
+
+
+class FewNERDINTRATestConfig(FewNERDConfig):
+    defn = f"""
+        Entities are  {FewNERDConfig.test_group}. Entities are not a {FewNERDConfig.train_group}, 
+        {FewNERDConfig.dev_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
+        """
+
+    cot_exemplar_1 = FewNERDConfig.q_1 + \
+         """
+          Answer:
+          1. Albert Einstein | False | as this is the name of a person
+          2. USD | False | as this is the name of a currency
+          3. purchase | False | as this is an action or verb
+          4. Eiffel tower | False | as this is the name of a building
+          5. Association of Artificial Intelligence | True | as this is an organization
+         """
+
+    cot_exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer:
+         1. England | True | as it is a location
+         2. festival | False | as it is not a named entity
+         3. Grand Jubilee | False | as it is an event
+         4. 1982 | False | as it is a date
+         5. Attila the Hun | False | as it is a person
+         6. The Starry Night | False | as it is a piece of art
+         """
+
+    exemplar_1 = FewNERDConfig.q_1 + \
+         """
+         Answer:
+         1. Association of Artificial Intelligence
+         """
+
+    exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer: 
+         1. England
+         """

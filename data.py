@@ -63,9 +63,10 @@ def read_ob2(file_path):
                 working_entity = working_entity + " " + l[0]
             else:
                 if working_entity == "":
-                    working_entity = l[0]
+                    working_entity = l[0].translate(str.maketrans('', '', string.punctuation)).strip()
                 else:
-                    working_entity = working_entity + " " + l[0]
+                    working_entity = working_entity + " " + \
+                                     l[0].translate(str.maketrans('', '', string.punctuation)).strip()
     columns = ["text", "entities", "types"]
     data = []
     for i in range(len(sentences)):
@@ -104,9 +105,9 @@ def load_genia(genia_path="data/Genia/Genia4ERtask1.iob2"):
     return read_ob2(genia_path)
 
 
-def load_few_nerd(few_nerd_path="data/FewNERD", category="intra"):
+def load_few_nerd(few_nerd_path="data/FewNERD", category="intra", split="train"):
     assert category in ["inter", "intra", "supervised"]
-    file_path = os.path.join(few_nerd_path, category, "dev.txt")
+    file_path = os.path.join(few_nerd_path, category, f"{split}.txt")
     return read_ob2(file_path)
 
 
@@ -131,4 +132,3 @@ def scroll(dataset, start=0, exclude=None):
         inp = input("Continue?")
         if inp != "":
             return
-        

@@ -100,7 +100,7 @@ def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=Non
 
 
 def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False):
+               generic=False, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
     config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
@@ -110,7 +110,7 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 
 
 def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False):
+               generic=False, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = True
     config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
@@ -119,40 +119,71 @@ def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
                          limit=limit)
 
 
-if __name__ == "__main__":
-    from models import T5, GPT3, T5XL
+def eval_cross_ner(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+               generic=False, **kwargs):
+    cats = ['politics', 'literature', 'ai', 'science', 'music']
+    confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
+             CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
+    category = kwargs.get('add_info', None)
+    assert category in cats
+    i = cats.index(category)
+    config = confs[i]
+    algorithm.split_phrases = True
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    dataset = load_cross_ner(category=category)
+    return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
+                         limit=limit)
+
+
+def eval_few_nerd_intra(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+               generic=False, **kwargs):
+    splits = ["train", "dev", "test"]
+    confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
+    split = kwargs.get("add_info")
+    assert split in splits
+    i = splits.index(split)
+    config = confs[i]
+    algorithm.split_phrases = True
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    dataset = load_few_nerd(category="intra", split=split)
+    return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
+                         limit=limit)
+
+
+def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, generic=False, name_meta=""):
     res_path = "results"
     gpt_limit = 500
     other_limit = 500
     Algorithm_class = Algorithm
 
-    gpt = True
-    exemplar = True
-    coT = True
-    generic = False
-    dataset = "conll"
-    name_meta = ""
-    modes = [1]
 
     if dataset == "conll":
         eval_fn = eval_conll
     elif dataset == "genia":
         eval_fn = eval_genia
-    for mode in modes:
-        if gpt:
-            model = GPT3()
-            sleep_between_queries = model.seconds_per_query
-            f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=mode), n_runs=1,
-                                     sleep_between_queries=model.seconds_per_query, limit=gpt_limit,
-                                                          exemplar=exemplar, coT=coT, generic=generic)
-        else:
-            model = T5XL(size='xxl')
-            f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=mode), n_runs=1,
-                                                          sleep_between_queries=None, exemplar=exemplar,
-                                                          coT=coT, limit=other_limit, generic=generic)
+    elif dataset == "crossner":
+        eval_fn = eval_cross_ner
+    elif dataset == "fewnerd":
+        eval_fn = eval_few_nerd_intra
 
-        print(f"f1_means: {f1_mean}")
-        print(f"f1_stds: {f1_std}")
-        print(f"micro_f1s: {micro_f1}")
-        print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{mode}_{dataset}.csv")
-        mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{mode}_{dataset}.csv")
+    if gpt:
+        model = GPT3()
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=1,
+                                                      sleep_between_queries=model.seconds_per_query,
+                                                      limit=gpt_limit,
+                                                      exemplar=exemplar, coT=coT, generic=generic, add_info=subdataset)
+    else:
+        model = T5XL(size='xxl')
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=1,
+                                                      sleep_between_queries=None, exemplar=exemplar,
+                                                      coT=coT, limit=other_limit, generic=generic, add_info=subdataset)
+
+    print(f"f1_means: {f1_mean}")
+    print(f"f1_stds: {f1_std}")
+    print(f"micro_f1s: {micro_f1}")
+    print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{dataset}.csv")
+    mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{dataset}.csv")
+
+
+if __name__ == "__main__":
+    from models import T5, GPT3, T5XL
