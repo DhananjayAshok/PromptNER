@@ -12,7 +12,8 @@ class Quick:
         para = q['text']
         entities = q['entities']
         print(f"Paragraph: {para}\nEntities: {entities}")
-        e = Algorithm(para=para)
+        e = Algorithm()
+        e.set_para(para)
         config.set_config(e)
         return entities, e.perform(model, verbose=verbose)[0]
 
