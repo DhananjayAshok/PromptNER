@@ -14,19 +14,19 @@ def is_eq(e1, e2):
 def f1(true_list, pred_list):
     true_list = list(set(true_list))
     pred_list = list(set(pred_list))
-    if len(true_list) == 0:
-        if len(pred_list) != 0:
-            return 0
-        else:
-            return 1
-    if len(pred_list) == 0:
-        if len(true_list) != 0:
-            return 0
-        else:
-            return 1
     tp = 0
     fn = 0
     fp = 0
+    if len(true_list) == 0:
+        if len(pred_list) != 0:
+            return 0, tp, len(pred_list), fn
+        else:
+            return 1, tp, fp, fn
+    if len(pred_list) == 0:
+        if len(true_list) != 0:
+            return 0, tp, fp, len(true_list)
+        else:
+            return 1, tp, fp, fn
     for positive in true_list:
         flag = False
         for candidate in pred_list:
@@ -187,4 +187,4 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
 
 if __name__ == "__main__":
     from models import T5, GPT3, T5XL
-    run()
+    run(gpt=True, dataset="crossner", subdataset="politics")
