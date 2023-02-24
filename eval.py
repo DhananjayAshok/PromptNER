@@ -53,8 +53,8 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
     f1s = []
     tp, fp, fn = 0, 0, 0
     mistake_data = []
-    for i in tqdm(range(len(val))):
-        q = val.loc[i]
+    for i, info in tqdm(enumerate(val.iterrows())):
+        index, q = info
         para = q['text']
         entities = q['entities']
         algorithm.set_para(para)
@@ -69,7 +69,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
                 time.sleep(0.5)
         f1_score, tp, fp, fn = f1(entities, preds)
         if f1_score != 1:
-            mistake_data.append([i, para, entities, preds, metadata, f1_score])
+            mistake_data.append([index, para, entities, preds, metadata, f1_score])
         f1s.append(f1_score)
         if print_every is not None:
             if i % print_every == 0:
@@ -187,3 +187,4 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
 
 if __name__ == "__main__":
     from models import T5, GPT3, T5XL
+    run()
