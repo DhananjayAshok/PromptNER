@@ -225,6 +225,24 @@ class Config:
     """
     generic_exemplars = [generic_exemplar_1, generic_exemplar_2]
 
+    phrase_entity_task = "Does the phrase or word '[WORD]' represent an object, place, individual or title that has " \
+                         "a distinct and independant existence. " \
+                         "Answer no if the word represents a time, date, name of sport or abstract concept"
+
+    phrase_entity_task_exemplar = """
+        Does the phrase or word 'Innings Victory' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
+        Answer: No. Innings victory is an abstract concept of winning an innings which does not have a distinct and independant physical existence
+
+        Does the phrase or word 'Grace Road' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
+        Answer: Yes. Grace Road is the name of a place. 
+
+        Does the phrase or word 'England' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
+        Answer: Yes. England is the name of a place. 
+
+        Does the phrase or word 'county championship' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
+        Answer: No. This word refers to an event which does not have a physical existence. 
+        """
+
     def set_config(self, alg, exemplar=True, coT=True, generic=False):
         alg.defn = self.defn
         if not exemplar:
@@ -267,8 +285,6 @@ class ConllConfig(Config):
     
     Does the phrase or word 'county championship' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
     Answer: No. This word refers to an event which does not have a physical existence. 
-    
-    Does the phrase or word '[WORD]' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept    
     """
 
     cot_exemplar_1 = """
