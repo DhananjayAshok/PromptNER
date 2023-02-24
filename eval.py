@@ -82,13 +82,15 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
     return f1s.mean(), f1s.std(), micro_f1, mistake_data
 
 
-def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=None, limit=None):
+def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=None, limit=None):
     f1_means, f1_stds, micro_f1s = [], [], []
     mistake_columns = ["idx", "para", "entities", "preds", "meta", "f1"]
-    if limit is not None:
-        dataset = dataset.sample(limit)
     for i in range(n_runs):
-        f1_mean, f1_std, micro_f1, mistake_data = eval_dataset(dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
+        if limit is not None:
+            small_dataset = dataset.sample(limit)
+        else:
+            small_dataset = dataset
+        f1_mean, f1_std, micro_f1, mistake_data = eval_dataset(small_dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
         f1_means.append(f1_mean)
         f1_stds.append(f1_std)
         micro_f1s.append(micro_f1)
@@ -99,7 +101,7 @@ def complete_eval(dataset, model, algorithm, n_runs=3, sleep_between_queries=Non
     return f1_means, f1_stds, micro_f1s, df
 
 
-def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                generic=False, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
@@ -109,7 +111,7 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
                          limit=limit)
 
 
-def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                generic=False, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
@@ -119,7 +121,7 @@ def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
                          limit=limit)
 
 
-def eval_cross_ner(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                generic=False, **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']
     confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
@@ -135,7 +137,7 @@ def eval_cross_ner(model, algorithm, n_runs=3, sleep_between_queries=None, limit
                          limit=limit)
 
 
-def eval_few_nerd_intra(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                generic=False, **kwargs):
     splits = ["train", "dev", "test"]
     confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
@@ -152,8 +154,10 @@ def eval_few_nerd_intra(model, algorithm, n_runs=3, sleep_between_queries=None, 
 
 def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, generic=False, name_meta=""):
     res_path = "results"
-    gpt_limit = 500
-    other_limit = 500
+    gpt_limit = 100
+    gpt_nruns = 2
+    other_limit = 100
+    other_nruns = 2
     Algorithm_class = Algorithm
 
 
@@ -168,13 +172,13 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
 
     if gpt:
         model = GPT3()
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=1,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
                                                       exemplar=exemplar, coT=coT, generic=generic, add_info=subdataset)
     else:
         model = T5XL(size='xxl')
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=1,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, limit=other_limit, generic=generic, add_info=subdataset)
 
