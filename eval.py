@@ -112,7 +112,7 @@ def eval_conll(model, algorithm, n_runs=3, sleep_between_queries=None, limit=Non
 def eval_genia(model, algorithm, n_runs=3, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                generic=False, **kwargs):
     config = GeniaConfig()
-    algorithm.split_phrases = True
+    algorithm.split_phrases = False
     config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
@@ -128,7 +128,7 @@ def eval_cross_ner(model, algorithm, n_runs=3, sleep_between_queries=None, limit
     assert category in cats
     i = cats.index(category)
     config = confs[i]
-    algorithm.split_phrases = True
+    algorithm.split_phrases = False
     config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
     dataset = load_cross_ner(category=category)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
@@ -143,7 +143,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=3, sleep_between_queries=None, 
     assert split in splits
     i = splits.index(split)
     config = confs[i]
-    algorithm.split_phrases = True
+    algorithm.split_phrases = False
     config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
     dataset = load_few_nerd(category="intra", split=split)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
