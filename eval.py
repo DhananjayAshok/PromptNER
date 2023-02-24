@@ -51,7 +51,7 @@ def f1(true_list, pred_list):
 def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
     algorithm.set_model_fn(model)
     f1s = []
-    tp, fp, fn = 0
+    tp, fp, fn = 0, 0, 0
     mistake_data = []
     for i in tqdm(range(len(val))):
         q = val.loc[i]
