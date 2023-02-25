@@ -67,7 +67,10 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
-        f1_score, tp, fp, fn = f1(entities, preds)
+        f1_score, tp_a, fp_a, fn_a = f1(entities, preds)
+        tp += tp_a
+        fp += fp_a
+        fn += fn_a
         if f1_score != 1:
             mistake_data.append([index, para, entities, preds, metadata, f1_score])
         f1s.append(f1_score)
