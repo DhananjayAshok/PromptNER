@@ -567,7 +567,8 @@ class FewNERDINTRATrainConfig(FewNERDConfig):
         1. Attila the Hun
         2. The Starry Night
         """
-
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    exemplars = [exemplar_1, exemplar_2]
 
 class FewNERDINTRADevConfig(FewNERDConfig):
     defn = f"""
@@ -607,6 +608,8 @@ class FewNERDINTRADevConfig(FewNERDConfig):
          Answer: 
          1. Grand Jubilee
          """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    exemplars = [exemplar_1, exemplar_2]
 
 
 class FewNERDINTRATestConfig(FewNERDConfig):
@@ -647,3 +650,5 @@ class FewNERDINTRATestConfig(FewNERDConfig):
          Answer: 
          1. England
          """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    exemplars = [exemplar_1, exemplar_2]
