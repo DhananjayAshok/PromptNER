@@ -11,11 +11,23 @@ class Quick:
         q = train_dset.loc[i]
         para = q['text']
         entities = q['entities']
-        print(f"Paragraph: {para}\nEntities: {entities}")
+        print(f"Paragraph: {para}")
         e.set_para(para)
         e.set_model_fn(model)
         config.set_config(e)
-        return entities, e.perform(verbose=verbose)[0]
+        ans = e.perform(verbose=verbose)[0]
+        Quick.analyze(entities, ans)
+        return
+
+    @staticmethod
+    def analyze(entities, ans):
+        print(entities)
+        print(ans)
+        entities_small = [e.lower() for e in entities]
+        print(f"False positives: {set(entities_small).difference(set(ans))}")
+        print(f"False negatives: {set(ans).difference(set(entities_small))}")
+        print(f"F1: {f1(entities, ans)}")
+
 
     @staticmethod
     def genia(i, model=GPT3.query, verbose=False):
@@ -36,6 +48,7 @@ class Quick:
                  CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
         assert category in cats
         j = cats.index(category)
+        print(j)
         config = confs[j]
         config.set_config(e)
         return Quick.dataset(i, train_dset=cross_ner_train, config=config, model=model, verbose=verbose)
@@ -55,7 +68,7 @@ e = Algorithm(split_phrases=False)
 genia_train = load_genia()
 conll_train = load_conll2003()
 few_nerd_train = load_few_nerd(split="train")
-cross_ner_train = load_cross_ner(category="politics")
+cross_ner_train = load_cross_ner(category="ai")
 
 
 if __name__ == "__main__":
