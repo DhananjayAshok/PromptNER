@@ -188,10 +188,11 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
     print(f"micro_f1s: {micro_f1}")
-    print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{dataset}.csv")
-    mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{dataset}.csv")
+    print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
+    mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
 
 
 if __name__ == "__main__":
     from models import T5, GPT3, T5XL
-    run(gpt=True, dataset="crossner", subdataset="politics")
+    for category in ['politics', 'literature', 'ai', 'science', 'music']:
+        run(gpt=True, dataset="crossner", subdataset=category)

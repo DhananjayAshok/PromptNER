@@ -1,3 +1,5 @@
+import string
+
 import utils
 from utils import AnswerMapping
 from nltk.corpus import stopwords
@@ -122,11 +124,18 @@ class Algorithm(BaseAlgorithm):
                     for mini in minis:
                         new_answers.append(mini)
             answers = new_answers
+        answers = self.clean_output(answers)
+        return answers, metadata
+
+    def clean_output(self, answers):
         answers = list(set(answers))
-        for trivial in ["", " ", "."] + stopwords.words('english'):
+        for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
             while trivial in answers:
                 answers.remove(trivial)
-        return answers, metadata
+        for i in range(len(answers)):
+            ans = answers[i].strip().strip(''.join(string.punctuation)).strip()
+            answers[i] = ans
+        return answers
 
     def perform_exhaustive(self, verbose=True):
         initial_list = self.initial_query(verbose=verbose)
@@ -412,51 +421,60 @@ class GeniaConfig(Config):
     exemplars = [exemplar_1, exemplar_2]
 
 
-class CrossNERConfig(Config):
-    # No defn or phrase_entity_task
-    cot_exemplar_1 = ConllConfig.cot_exemplar_1
-    cot_exemplar_2 = """
-    India carried out a nuclear test in 1974 but says it has not built the bomb .
-    
-    Answer:
-    1. India | True | as it is a country
-    2. nuclear test | False | as it is a concept and not an entity with physical existence
-    3. 1974 | False | as it is a date or time
-    4. bomb | True | as it is an object with independent and distinct existence. 
-    
-    """
-    exemplar_1 = ConllConfig.exemplar_1
-    exemplar_2 = """
-    India carried out a nuclear test in 1974 but says it has not built the bomb .
-    
-    Answer:
-    1. India
-    2. bomb
-    """
-    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
-    exemplars = [exemplar_1, exemplar_2]
-
-
-class CrossNERPoliticsConfig(CrossNERConfig):
+class CrossNERPoliticsConfig(Config):
     defn = """
-    An entity is a person, organization, politician, political party, event, eleection, country, location or 
+    An entity is a person, organization, politician, political party, event, election, country, location or 
     other object that has an independent and distinct existence. Dates, times, abstract concepts, 
     adjectives and verbs are not entities
     """
 
     phrase_entity_task = """
-    Does the phrase or word '[WORD]' represent a person, organization, politician, political party, event, eleection, country, location or 
+    Does the phrase or word '[WORD]' represent a person, organization, politician, political party, event, election, country, location or 
     other object that has an independent and distinct existence? Answer False if the word represents 
     dates, times, abstract concepts, adjectives and verbs as these are not entities. Explain why
     """
 
+    cot_exemplar_1 = """
+    Assisted by his top aide Harry Hopkins and with very strong national support , 
+    he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
+    Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
+    
+    Answer:
+    1. Harry Hopkins | True | as it is a person
+    2. British | True | as it is a nationality
+    3. Prime Minister | False | as it is a title and not a person or politician
+    4. Winston Churchill | True | as it is a person
+    5. Soviet | True | as it is a nationality
+    6. Joseph Stalin | True | as it isa person
+    7. Chinese | True | as it is a nationality
+    8. Chiang Kai-shek | True | as it is a person
+    9. Allied Powers | True | as it is an organization
+    10. Axis Powers | True | as it is an organization
+    """
 
-class CrossNERNaturalSciencesConfig(CrossNERConfig):
+    cot_exemplar_2 = """
+    Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
+    but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
+    who went on to win the 1952 United States presidential election .
+
+    Answer:
+    1. Hoover | True | as it is a person
+    2. conservative | False | as it is an ideology and not a political party
+    3. Robert A. Taft | True | as it is a person
+    4. 1952 Republican National Convention | True | as it is a political event
+    5. Dwight D. Eisenhower | True | as it is a person
+    6. 1952 United States presidential election | True | as it is an election
+    """
+
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+
+class CrossNERNaturalSciencesConfig(Config):
     defn = """
     An entity is a person, university, scientist, organization, country, location, scientific discipline, enzyme, 
-    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, theory or 
-    other object that has an independent and distinct existence. Abstract scientific concepts can be entities if they 
-    have a name associated with them. Dates, times, adjectives and verbs are not entities
+    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, or theory. 
+    Abstract scientific concepts can be entities if they have a name associated with them. 
+    Dates, times, adjectives and verbs are not entities
     """
 
     phrase_entity_task = """
@@ -467,8 +485,37 @@ class CrossNERNaturalSciencesConfig(CrossNERConfig):
     dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
+    cot_exemplar_1 = """
+    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
+    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
+    
+    Answer:
+    1. August Kopff | True | person
+    2. Wolf | True | person
+    3. Heidelberg | True | as it is a university or location
+    4. 617 Patroclus | True | as it is the name of a scientific discovery
+    5. Achilles | True | as it is the name of an asteroid
+    6. 1907 | False | as it is a date
+    7. Jupiter trojans | True | as it is a group of astronomical objects 
+    8. 624 Hektor | True | as it is an astronomical object
+    """
 
-class CrossNERMusicConfig(CrossNERConfig):
+    cot_exemplar_2 = """
+    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
+    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
+    
+    Answer:
+    1. Nüsslein-Volhard | True | as it is a person
+    2. University of Tübingen | True | as it is a university
+    3. PhD | True | as it is an award
+    4. Protein-DNA interaction | True | as it is a scientific discipline
+    5. RNA polymerase | True | as it is a chemical compound
+    6. Escherichia coli | True | as it is a scientific specimen
+    """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+
+class CrossNERMusicConfig(Config):
     defn = """
     An entity is a person, country, location, organization, music genre, song, band, album, artist, musical instrument, 
     award, event or other object with an independent and distinct existence. 
@@ -482,8 +529,38 @@ class CrossNERMusicConfig(CrossNERConfig):
         dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
+    cot_exemplar_1 = """
+    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
+    in the US by the Recording Industry Association of America .. BBC News .
+    
+    Answer:
+    1. Stevens | True | as it is a name
+    2. Tea for Tillerman | True | as it is an album
+    3. Teaser and the Firecat | True | as it is an album
+    4. 1971 | False | as it is a date
+    5. triple platinum | False | as it is an album certification and not an award
+    6. US | True | as it is a country
+    7. Recording Industry Association of America | True | as it is an organization
+    8. BBC News | True | as it is an organization
+    """
 
-class CrossNERLiteratureConfig(CrossNERConfig):
+    cot_exemplar_2 = """
+    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
+    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
+    
+    Answer:
+    1. Spice Girls | True | as it is a band
+    2. Brit Awards | True | as it is an award
+    3. American Music Awards | True | as it is an award
+    4. MTV Europe Music Awards | True | as it is an award
+    5. MTV Video Music Award | True | as it is an award
+    6. World Music Awards | True | as it is an award
+    
+    """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+
+class CrossNERLiteratureConfig(Config):
     defn = """
     An entity is a person, country, location, organization, book, writer, poem, magazine, 
     award, event or other object with an independent and distinct existence. 
@@ -497,8 +574,44 @@ class CrossNERLiteratureConfig(CrossNERConfig):
         dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
+    cot_exemplar_1 = """
+    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
+    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
+    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
+    
+    Answer:
+    1. 1351 | False | as it is a date
+    2. Emperor Toghon Temür | True | as it is a person
+    3. Yuan dynasty | True | as it is the name of a dynasty or organization
+    4. Kong Huan | True | as it is the name of a person
+    5. 孔浣 | True | as it is a person
+    6. Kong Shao | True | as it a person 
+    7. 孔昭 | True | as it a person
+    8. China | True | as it is a country
+    9. Korea | True | as it is a country
+    10. Goryeo | True | as it is a event
+    11. Princess Noguk | True | as it a person
+    12. Mongolian-born | True | as it a nationality
+    13. Gongmin | True | as it is a person 
+    """
 
-class CrossNERAIConfig(CrossNERConfig):
+    cot_exemplar_2 = """
+    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
+    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
+    
+    Answer: 
+    1. anti-slavery writings | True | as it is the theme of writing of some works
+    2. poems | True | as it is the word poem
+    3. Barbara Frietchie | True | as it is a poem
+    4. The Barefoot Boy | True | as it is a poem
+    5. Maud Muller | True | as it is a poem
+    6. Snow-Bound | True | as it is a poem 
+    """
+
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+
+class CrossNERAIConfig(Config):
     defn = """
     An entity is a person, country, location, organization, field of Artificial Intelligence, 
     task in artificial intelligence, product, algorithm, metric in artificial intelligence, university. 
@@ -512,6 +625,33 @@ class CrossNERAIConfig(CrossNERConfig):
         award, event or other object with an independent and distinct existence? Answer False if the word represents 
         dates, times, adjectives and verbs as these are not entities. Explain why
     """
+
+    cot_exemplar_1 = """
+    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
+    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
+    H. Zhang , 21 ( 5 ) : e12957 .
+    
+    Answers:
+    1. opinion-based recommender system | True | as it is a type of system in AI
+    2. text mining | True | as it is a technique or method in AI
+    3. information retrieval | True | as it is a technique or method in AI
+    4. sentiment analysis | True | as it is a technique or method in AI
+    5. Multimodal sentiment analysis | True | as it is a technique or method in AI
+    6. deep learning | True | as it is a technique or method in AI
+    7. X.Y. Feng | True | as it is a person
+    8. H. Zhang | True | as it is a person
+    """
+
+    cot_exemplar_2 = """
+    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
+    using a that is mostly compatible with MATLAB.
+    
+    Answers:
+    1. Octave | True | as it is a product or tool
+    2. linear and nonlinear problems | False | as it is a type of problem
+    3. MATLAB | True | as it is a product or tool
+    """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
 
 class FewNERDConfig(Config):
