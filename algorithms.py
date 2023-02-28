@@ -570,6 +570,7 @@ class FewNERDINTRATrainConfig(FewNERDConfig):
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
     exemplars = [exemplar_1, exemplar_2]
 
+
 class FewNERDINTRADevConfig(FewNERDConfig):
     defn = f"""
         Entities are  {FewNERDConfig.dev_group}. Entities are not a {FewNERDConfig.train_group}, 
