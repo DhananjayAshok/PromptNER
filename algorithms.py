@@ -93,7 +93,7 @@ class CapitalAlgorithm(BaseAlgorithm):
                     if word[0].isupper():
                         if not self.is_date(word):
                             selected.append(word)
-        return selected
+        return selected, None
 
 
 class Algorithm(BaseAlgorithm):
@@ -285,6 +285,9 @@ class ConllConfig(Config):
     
     Does the phrase or word 'county championship' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
     Answer: No. This word refers to an event which does not have a physical existence. 
+    
+    Does the phrase or word '[WORD]' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
+    Answer: 
     """
 
     cot_exemplar_1 = """
