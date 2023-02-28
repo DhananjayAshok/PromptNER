@@ -12,7 +12,6 @@ class Quick:
         para = q['text']
         entities = q['entities']
         print(f"Paragraph: {para}\nEntities: {entities}")
-        e = Algorithm()
         e.set_para(para)
         e.set_model_fn(model)
         config.set_config(e)
@@ -52,7 +51,7 @@ class Quick:
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
-e = Algorithm(split_phrases=True)
+e = Algorithm(split_phrases=False)
 genia_train = load_genia()
 conll_train = load_conll2003()
 few_nerd_train = load_few_nerd(split="train")
