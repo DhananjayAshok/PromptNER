@@ -108,7 +108,7 @@ def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
                generic=False, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     conll = load_conll2003("validation")
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
@@ -118,7 +118,7 @@ def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
                generic=False, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
@@ -134,7 +134,7 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
     i = cats.index(category)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     dataset = load_cross_ner(category=category)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
@@ -149,13 +149,13 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
     i = splits.index(split)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, generic=generic)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT)
     dataset = load_few_nerd(category="intra", split=split)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, generic=False, name_meta=""):
+def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True,  name_meta=""):
     res_path = "results"
     gpt_limit = 100
     gpt_nruns = 2
@@ -175,15 +175,15 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
 
     if gpt:
         model = GPT3()
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=gpt_nruns,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
-                                                      exemplar=exemplar, coT=coT, generic=generic, add_info=subdataset)
+                                                      exemplar=exemplar, coT=coT, add_info=subdataset)
     else:
         model = T5XL(size='xxl')
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(mode=1), n_runs=other_nruns,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
-                                                      coT=coT, limit=other_limit, generic=generic, add_info=subdataset)
+                                                      coT=coT, limit=other_limit, add_info=subdataset)
 
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
@@ -194,5 +194,6 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, ge
 
 if __name__ == "__main__":
     from models import T5, GPT3, T5XL
-    for category in ['politics', 'literature', 'ai', 'science', 'music']:
-        run(gpt=True, dataset="crossner", subdataset=category)
+    for cot in [True, False]:
+        for exemplar in [True, False]:
+            run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar)

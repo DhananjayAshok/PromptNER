@@ -1,5 +1,4 @@
 import string
-
 import utils
 from utils import AnswerMapping
 from nltk.corpus import stopwords
@@ -8,94 +7,23 @@ from nltk.corpus import stopwords
 class BaseAlgorithm:
     defn = "An entity is an object, place, individual, being, title, proper noun or process that has a distinct and " \
            "independent existence. The name of a collection of entities is also an entity. Adjectives, verbs, numbers, " \
-           "adverbs, abstract concepts are not entities. No phrase that is longer than [WORDLIMIT] words is an entity." \
-           "Dates, years and times are not entities"
+           "adverbs, abstract concepts are not entities. Dates, years and times are not entities"
 
     # if [] = n then there are O(n^2) phrase groupings
 
-    base_task = "Make a numbered list of all the entities in the paragraph: "
-    phrase_entity_task = "Does the phrase or word '[WORD]' represent an entity? Explain Why"
-
-    removal_task = "Which items in this list are not actually entities. " \
-                   "Report a numbered list."
-    whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
-                 "and for each entry explain why it either is or is not an entity. \nParagraph:"
-
-    para_reference = "Given the following paragraph: "
-    phrase_iter = "For every phrase in this list "
-    phrase_iter1 = "Go over this list and for each item "
-    boolean_force = "Answer with 'True or 'False''"
-
-    def __init__(self, model_fn=None, word_limit=4, split_phrases=True, mode=1):
-        self.defn = self.defn.replace("[WORDLIMIT]", f"{word_limit}")
+    def __init__(self, model_fn=None, split_phrases=True):
+        self.defn = self.defn
         self.para = None
         self.model_fn = model_fn
-        self.mode = mode
         self.split_phrases = split_phrases
-        self.exemplars = None
+        self.exemplar_task = None
+        self.format_task = None
 
     def set_para(self, para):
         self.para = para
 
     def set_model_fn(self, model_fn):
         self.model_fn = model_fn
-
-    def initial_query(self, verbose=False, indent_level=0):
-        if self.exemplars is not None:
-            q = self.defn + "\n"
-            for exemplar in self.exemplars:
-                q += self.base_task + "\nParagraph: " + exemplar + "\n"
-            q += "\n" + self.defn + "\n" + self.base_task + "\nParagraph: " + self.para + "\nAnswer:"
-        else:
-            q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + self.base_task
-        initial_list = AnswerMapping.get_numbered_list_items(self.model_fn(q), verbose=verbose, indent_level=indent_level)
-        return initial_list
-
-    def removal_query(self, working_list, verbose=False, indent_level=0):
-        list_str = ""
-        for i, entity in enumerate(working_list):
-            list_str = list_str + f"\n{i}. {entity}"
-        task = f"You are given the following list: {list_str}. {self.removal_task}"
-        q = self.defn + "\n" + self.para_reference + "\n" + self.para + "\n" + task
-        removal_answer = AnswerMapping.get_numbered_list_items(self.model_fn(q), verbose=verbose, indent_level=indent_level)
-        return removal_answer
-
-    def check_word(self, word, force=True, verbose=False, indent_level=0):
-        task = self.phrase_entity_task.replace("[WORD]", word)
-        if force:
-            task = task + " " + self.boolean_force
-        q = f"{self.defn}\n{self.para_reference}'{self.para}'\n{task}"
-        return AnswerMapping.get_true_or_false(self.model_fn(q), verbose=verbose, indent_level=indent_level)
-
-    def check_composition_speciality(self, entity_list, phrase, force=True, verbose=False, indent_level=0):
-        task = self.speciality_task.replace("[WORDLIST]", f"{entity_list}").replace("[PHRASE]", phrase)
-        if force:
-            task = task + " " + self.boolean_force
-        q = f"{self.defn}\n{self.para_reference}'{self.para}'\n{task}"
-        return AnswerMapping.get_true_or_false(self.model_fn(q), verbose=verbose, indent_level=indent_level)
-
-
-class CapitalAlgorithm(BaseAlgorithm):
-    def is_date(self, word):
-        return word.lower() in ["january", "february", "march", "april", "may", "june", "july", "august", "september",
-                                "october", "november", "december"]
-
-    def perform(self, verbose=False):
-        words = self.para.split()
-        selected = []
-        for i, word in enumerate(words):
-            if i == 0:
-                is_entity = self.check_word(word, verbose=verbose, indent_level=1)
-                if is_entity:
-                    selected.append(word)
-            else:
-                if len(word) <= 1:
-                    pass
-                else:
-                    if word[0].isupper():
-                        if not self.is_date(word):
-                            selected.append(word)
-        return selected, None
 
 
 class Algorithm(BaseAlgorithm):
@@ -104,15 +32,9 @@ class Algorithm(BaseAlgorithm):
 
         :param model:
         :param paragraph:
-        :param mode: 0: most exhaustive, 2: least exhaustive
         :return:
         """
-        if self.mode == 0:
-            answers, metadata = self.perform_exhaustive(verbose=verbose)
-        elif self.mode == 1:
-            answers, metadata = self.perform_single_query(verbose=verbose)
-        else:
-            answers = None
+        answers, metadata = self.perform_single_query(verbose=verbose)
         answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
@@ -124,10 +46,11 @@ class Algorithm(BaseAlgorithm):
                     for mini in minis:
                         new_answers.append(mini)
             answers = new_answers
-        answers = self.clean_output(answers)
+        answers = Algorithm.clean_output(answers)
         return answers, metadata
 
-    def clean_output(self, answers):
+    @staticmethod
+    def clean_output(answers):
         answers = list(set(answers))
         for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
             while trivial in answers:
@@ -137,137 +60,66 @@ class Algorithm(BaseAlgorithm):
             answers[i] = ans
         return answers
 
-    def perform_exhaustive(self, verbose=True):
-        initial_list = self.initial_query(verbose=verbose)
-        if verbose:
-            print(f"Processed initial list is: {initial_list}")
-        working_list = []
-        for item in initial_list:
-            if verbose:
-                print(f"Checking Validity of {item}")
-            is_entity = self.check_word(item, verbose=verbose, indent_level=1)
-            if is_entity:
-                working_list.append(item)
-            else:
-                words = item.split(" ")
-                if len(words) > 1:
-                    if verbose:
-                        print(f"{item} was not an entity, going into words of the phrase")
-                    for word in words:
-                        is_entity = self.check_word(word, verbose=verbose, indent_level=2)
-                        if is_entity:
-                            working_list.append(item)
-        if verbose:
-            print(f"Working List now: {working_list}")
-        singles, multiples = utils.separate_single_multi(working_list)
-        pure_entity_multiples = []
-        mixed_entity_multiples = []
-        for multi in multiples:
-            flag = True
-            if verbose:
-                print(f"\tWorking on {multi}")
-            words = multi.split(" ")
-            for i, word in enumerate(words):
-                if verbose:
-                    print(f"\t\tChecking {word}")
-                is_entity = self.check_word(word, verbose=verbose, indent_level=2)
-                if not is_entity:
-                    flag = False
-                    break
-            if flag:
-                pure_entity_multiples.append(multi)
-            else:
-                mixed_entity_multiples.append(multi)
-        working_list = pure_entity_multiples + singles + mixed_entity_multiples
-        final_list = working_list
-        return final_list, None
-
     def perform_single_query(self, verbose=True):
-        exemplar_construction = ""
-        exemplar_construction += self.defn + "\n"
-        for exemplar in self.exemplars:
-            exemplar_construction += self.whole_task + "\n"
-            exemplar_construction += exemplar + "\n"
-        exemplar_construction += self.whole_task + "\n"
-        output = self.model_fn(exemplar_construction + f"'{self.para}'" + "\nAnswer:")
-        final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+        if self.exemplar_task is not None:
+            task = self.defn + "\n" + self.exemplar_task + f" '{self.para}' \nAnswer:"
+            output = self.model_fn(task)
+            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+        else:
+            task = self.defn + "\n" + self.format_task + f"\nParagraph: {self.para} \nAnswer:"
+            output = self.model_fn(task)
+            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
         return final, output
 
 
 class Config:
-    generic_cot_exemplar_1 = """
-    It's a skateboarding penguin with a sunhat!
-
-    Answer:
-    1. It's | False | as it is a pronoun
-    2. Skateboarding | False | as it is an action or adjective, with no distinct existence 
-    3. Penguin | True | as it is an animal with a distinct and independent existence. 
-    4. Sunhat | True | as it is an object with a distinct and independent existence. 
+    cot_format = """
+    Format: 
+    
+    1. First Candidate | True | Explanation why the word is an entity
+    2. Second Candidate | False | Explanation why the word is not an entity
     """
-    generic_cot_exemplar_2 = """
-    Smith saw boulders lined the side of the road, foretelling what could come next.
 
-    Answer:
-    1. Smith | True | as it is the name of a person
-    2. boulders | True | as they are objects with independent and distinct existence. 
-    3. side | False | as it is a position with no distinct existence
-    4. road | True | as it is an object with a distinct and independent existence. 
-    5. foretelling | False | as it is an action
-
+    exemplar_format = """
+    Format:    
+    
+    1. First Entity
+    2. Second Entity
     """
-    generic_cot_exemplars = [generic_cot_exemplar_1, generic_cot_exemplar_2]
 
-    generic_exemplar_1 = """
-    It's a skateboarding penguin with a sunhat!
-
-    Answer:
-    1. Penguin
-    2. Sunhat
-    """
-    generic_exemplar_2 = """
-    Smith saw boulders lined the side of the road, foretelling what could come next.
-
-    Answer:
-    1. Smith
-    2. boulders
-    3. road
-    """
-    generic_exemplars = [generic_exemplar_1, generic_exemplar_2]
-
-    phrase_entity_task = "Does the phrase or word '[WORD]' represent an object, place, individual or title that has " \
-                         "a distinct and independant existence. " \
-                         "Answer no if the word represents a time, date, name of sport or abstract concept"
-
-    phrase_entity_task_exemplar = """
-        Does the phrase or word 'Innings Victory' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-        Answer: No. Innings victory is an abstract concept of winning an innings which does not have a distinct and independant physical existence
-
-        Does the phrase or word 'Grace Road' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-        Answer: Yes. Grace Road is the name of a place. 
-
-        Does the phrase or word 'England' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-        Answer: Yes. England is the name of a place. 
-
-        Does the phrase or word 'county championship' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-        Answer: No. This word refers to an event which does not have a physical existence. 
-        """
-
-    def set_config(self, alg, exemplar=True, coT=True, generic=False):
+    def set_config(self, alg, exemplar=True, coT=True):
         alg.defn = self.defn
         if not exemplar:
-            alg.phrase_entity_task = self.phrase_entity_task
-        else:
-            if not generic:
-                if coT:
-                    alg.exemplars = self.cot_exemplars
-                else:
-                    alg.exemplars = self.exemplars
+            alg.exemplar_task = None
+            if coT:
+                whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
+                             "and for each entry explain why it either is or is not an entity. Answer in the format: \n"
+
+                alg.format_task = whole_task + self.cot_format
             else:
-                if coT:
-                    alg.exemplars = self.generic_cot_exemplars
-                else:
-                    alg.exemplars = self.generic_exemplars
-            alg.phrase_entity_task = self.phrase_entity_task_exemplar
+                whole_task = "Q: Given the paragraph below, identify the list of entities " \
+                             "Answer in the format: \n"
+
+                alg.format_task = whole_task + self.exemplar_format
+        else:
+            alg.format_task = None
+            if coT:
+                whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
+                             "and for each entry explain why it either is or is not an entity. \nParagraph:"
+                exemplar_construction = ""
+                for exemplar in self.cot_exemplars:
+                    exemplar_construction = exemplar_construction + whole_task + "\n"
+                    exemplar_construction = exemplar_construction + exemplar + "\n"
+                exemplar_construction = exemplar_construction + whole_task + "\n"
+                alg.exemplar_task = exemplar_construction
+            else:
+                whole_task = "Q: Given the paragraph below, identify the list of entities \nParagraph:"
+                exemplar_construction = ""
+                for exemplar in self.exemplars:
+                    exemplar_construction = exemplar_construction + whole_task + "\n"
+                    exemplar_construction = exemplar_construction + exemplar + "\n"
+                exemplar_construction = exemplar_construction + whole_task + "\n"
+                alg.exemplar_task = exemplar_construction
 
 
 class ConllConfig(Config):
@@ -277,27 +129,6 @@ class ConllConfig(Config):
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
            "Possessive words like I, you, him and me are not entities."
-
-    phrase_entity_task = "Does the phrase or word '[WORD]' represent an object, place, individual or title that has " \
-                         "a distinct and independant existence. " \
-                         "Answer no if the word represents a time, date, name of sport or abstract concept"
-
-    phrase_entity_task_exemplar = """
-    Does the phrase or word 'Innings Victory' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-    Answer: No. Innings victory is an abstract concept of winning an innings which does not have a distinct and independant physical existence
-    
-    Does the phrase or word 'Grace Road' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-    Answer: Yes. Grace Road is the name of a place. 
-    
-    Does the phrase or word 'England' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-    Answer: Yes. England is the name of a place. 
-    
-    Does the phrase or word 'county championship' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-    Answer: No. This word refers to an event which does not have a physical existence. 
-    
-    Does the phrase or word '[WORD]' represent an object, place, individual or title that has a distinct and independant physical existence. Answer no if the word represents a time, date, name of sport or abstract concept
-    Answer: 
-    """
 
     cot_exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
@@ -353,27 +184,6 @@ class GeniaConfig(Config):
     defn = "An entity is a protien, group of protiens, DNA, RNA, Cell Type or Cell Line. " \
            "Abstract concepts, processes and adjectives are not entities"
 
-    phrase_entity_task = "Does the phrase or word '[WORD]' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has " \
-                         "a distinct and independant existence. " \
-                         "Answer False if the word represents a process, adjective or abstract concept. Explain why"
-
-
-
-    phrase_entity_task_exemplar = """
-        Does the phrase or word 'cytokines' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
-        Answer: Yes. Cytokines is a type of protein that is made by certain immune and non-immune cells and has an effect on the immune system. 
-
-        Does the phrase or word 'AP-1' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
-        Answer: Yes. Activator protein 1 (AP-1) is a transcription factor DNA that regulates gene expression in response to a variety of stimuli
-
-        Does the phrase or word 'anti-CD4 mAb' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
-        Answer: Yes. anti-CD4 mAb is a cell type
-
-        Does the phrase or word 'CD4+ T cells' represent a protien, group of protiens, DNA, RNA, Cell Type or Cell Line that has a distinct and independant existence. Answer False if the word represents a process, adjective or abstract concept. Explain why
-        Answer: Yes. This is because CD4+ T Cells is a Cell Type
-
-        """
-
     cot_exemplar_1 = """
         Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
 
@@ -428,12 +238,6 @@ class CrossNERPoliticsConfig(Config):
     adjectives and verbs are not entities
     """
 
-    phrase_entity_task = """
-    Does the phrase or word '[WORD]' represent a person, organization, politician, political party, event, election, country, location or 
-    other object that has an independent and distinct existence? Answer False if the word represents 
-    dates, times, abstract concepts, adjectives and verbs as these are not entities. Explain why
-    """
-
     cot_exemplar_1 = """
     Assisted by his top aide Harry Hopkins and with very strong national support , 
     he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
@@ -477,14 +281,6 @@ class CrossNERNaturalSciencesConfig(Config):
     Dates, times, adjectives and verbs are not entities
     """
 
-    phrase_entity_task = """
-    Does the phrase or word '[WORD]' represent a person, university, scientist, organization, country, location, 
-    scientific discipline, enzyme, 
-    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, theory or 
-    other object that has an independent and distinct existence? Answer False if the word represents 
-    dates, times, adjectives and verbs as these are not entities. Explain why
-    """
-
     cot_exemplar_1 = """
     August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
     and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
@@ -520,13 +316,6 @@ class CrossNERMusicConfig(Config):
     An entity is a person, country, location, organization, music genre, song, band, album, artist, musical instrument, 
     award, event or other object with an independent and distinct existence. 
     Dates, times, adjectives and verbs are not entities. 
-    """
-
-    phrase_entity_task = """
-        Does the phrase or word '[WORD]' represent a person, country, location, organization, music genre, song, band, 
-        album, artist, musical instrument, 
-        award, event or other object with an independent and distinct existence? Answer False if the word represents 
-        dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
     cot_exemplar_1 = """
@@ -565,13 +354,6 @@ class CrossNERLiteratureConfig(Config):
     An entity is a person, country, location, organization, book, writer, poem, magazine, 
     award, event or other object with an independent and distinct existence. 
     Dates, times, adjectives and verbs are not entities. 
-    """
-
-    phrase_entity_task = """
-        Does the phrase or word '[WORD]' represent a person, country, location, organization, book, writer, poem, 
-        magazine,
-        award, event or other object with an independent and distinct existence? Answer False if the word represents 
-        dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
     cot_exemplar_1 = """
@@ -616,14 +398,6 @@ class CrossNERAIConfig(Config):
     An entity is a person, country, location, organization, field of Artificial Intelligence, 
     task in artificial intelligence, product, algorithm, metric in artificial intelligence, university. 
     Dates, times, adjectives and verbs are not entities. 
-    """
-
-    phrase_entity_task = """
-        Does the phrase or word '[WORD]' represent a person, country, location, organization, 
-        field of Artificial Intelligence, task in artificial intelligence, product, algorithm, 
-        metric in artificial intelligence, university
-        award, event or other object with an independent and distinct existence? Answer False if the word represents 
-        dates, times, adjectives and verbs as these are not entities. Explain why
     """
 
     cot_exemplar_1 = """
