@@ -123,8 +123,8 @@ class Config:
 
 
 class ConllConfig(Config):
-    defn = "An entity is an object, place, individual, being, title or process that has a distinct and " \
-                "independent existence. The name of a collection of entities is also an entity. " \
+    defn = "An entity is a person, title, named organization, location, country or nationality." \
+                "The name of a collection of entities is also an entity. " \
            "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
@@ -156,7 +156,19 @@ class ConllConfig(Config):
     6. 2-0 | False | as it is a score or set of numbers which is not an entity. 
     
     """
-    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    cot_exemplar_3 = """
+    But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
+    
+    Answer:
+    1. money | False | as it is not a named person, organization or location
+    2. savings account | False | as it is not a person, organization or location
+    3. 5.3 | False | as it is a number
+    4. June | False | as it is a date
+    5. July | False | as it is a date
+    
+    """
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
 
     exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
@@ -177,7 +189,14 @@ class ConllConfig(Config):
     3. Ainar Kiksis
     4. Latvia
     """
-    exemplars = [exemplar_1, exemplar_2]
+
+    exemplar_3 = """
+    But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
+
+    Answer:
+    1. 
+    """
+    exemplars = [exemplar_1, exemplar_2, exemplar_3]
 
 
 class GeniaConfig(Config):

@@ -78,10 +78,16 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
             if i % print_every == 0:
                 avg_f1 = np.array(f1s).mean()
                 std_f1 = np.array(f1s).std()
-                micro_f1 = tp/(tp + 0.5*(fp+fn))
+                if (tp + 0.5 * (fp + fn)) == 0:
+                    micro_f1 = 0
+                else:
+                    micro_f1 = tp / (tp + 0.5 * (fp + fn))
                 print(f"Iteration {i}: Avg f1: {avg_f1}, Std f1: {std_f1}, micro f1: {micro_f1}")
     f1s = np.array(f1s)
-    micro_f1 = tp / (tp + 0.5 * (fp + fn))
+    if (tp + 0.5 * (fp + fn)) == 0:
+        micro_f1 = 0
+    else:
+        micro_f1 = tp / (tp + 0.5 * (fp + fn))
     return f1s.mean(), f1s.std(), micro_f1, mistake_data
 
 
@@ -104,8 +110,7 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
     return f1_means, f1_stds, micro_f1s, df
 
 
-def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False, **kwargs):
+def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
     config.set_config(algorithm, exemplar=exemplar, coT=coT)
@@ -114,8 +119,7 @@ def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
                          limit=limit)
 
 
-def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False, **kwargs):
+def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
     config.set_config(algorithm, exemplar=exemplar, coT=coT)
@@ -125,7 +129,7 @@ def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
 
 
 def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False, **kwargs):
+                   **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']
     confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
              CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -141,7 +145,7 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
 
 
 def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-               generic=False, **kwargs):
+                        **kwargs):
     splits = ["train", "dev", "test"]
     confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
     split = kwargs.get("add_info")
@@ -157,10 +161,10 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
 
 def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True,  name_meta=""):
     res_path = "results"
-    gpt_limit = 100
+    gpt_limit = 300
     gpt_nruns = 2
     other_limit = 100
-    other_nruns = 2
+    other_nruns = 3
     Algorithm_class = Algorithm
 
 
@@ -196,4 +200,8 @@ if __name__ == "__main__":
     from models import T5, GPT3, T5XL
     for cot in [True, False]:
         for exemplar in [True, False]:
-            run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar)
+            run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar, subdataset=f"cot_{cot}_exemplar_{exemplar}")
+    for category in ['politics', 'literature', 'ai', 'science', 'music']:
+        run(gpt=True, dataset="crossner", coT=True, exemplar=True, subdataset=category)
+    for split in ["train", "dev", "test"]:
+        run(gpt=True, dataset="fewnerd", coT=True, exemplar=True, subdataset=category)
