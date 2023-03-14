@@ -188,7 +188,7 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True,  n
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, limit=other_limit, add_info=subdataset)
-
+    print(f"Final Results For {dataset} | {subdataset} | {cot} | {exemplar}")
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
     print(f"micro_f1s: {micro_f1}")
