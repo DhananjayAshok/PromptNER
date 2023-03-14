@@ -46,15 +46,16 @@ class T5XL(HugginFaceModel):
         assert size in ["xl", "xxl"]
         self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}")
         self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
+        self.devices = utils.Parameters.get_device_ints(3)
         device_map = {
-            5: [0, 1, 2, 3, 4, 5, 6],
-            6: [7, 8, 9, 10, 11, 12, 13, 14, 15],
-            7: [16, 17, 18, 19, 20, 21, 22, 23]
+            self.devices[0]: [0,  1,  2,  3,  4,  5,  6],
+            self.devices[1]: [7,  8,  9,  10, 11, 12, 13, 14, 15],
+            self.devices[2]: [16, 17, 18, 19, 20, 21, 22, 23]
         }
         self.model.parallelize(device_map)
 
     def query(self, prompt):
-        inputs = self.tokenizer(prompt, return_tensors="pt").to("cuda:5")
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.devices[0])
         outputs = self.model.generate(**inputs, max_new_tokens=200)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
