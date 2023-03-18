@@ -1,0 +1,166 @@
+(kg) dhananjay@dhananjay-G7-7700:~/Desktop/playground$ python eval.py
+Found cached dataset conll2003 (/home/dhananjay/.cache/huggingface/datasets/conll2003/conll2003/1.0.0/9a4d16a94f8674ba3466315300359b0acd891b68b6c8743ddf60b9c702adce98)
+100%|████████████████████████████████████████████| 3/3 [00:00<00:00, 849.62it/s]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.2222222222222222, Std f1: 0.0, micro f1: 0.2222222222222222
+ 10%|████▏                                     | 10/100 [01:04<10:01,  6.69s/it]Iteration 10: Avg f1: 0.8165390165390165, Std f1: 0.22775302372707976, micro f1: 0.7887323943661971
+ 20%|████████▍                                 | 20/100 [02:07<07:52,  5.91s/it]Iteration 20: Avg f1: 0.6774463631606489, Std f1: 0.37521162921861595, micro f1: 0.7218045112781954
+ 30%|████████████▌                             | 30/100 [03:16<07:19,  6.28s/it]Iteration 30: Avg f1: 0.7504667375635117, Std f1: 0.3382034690925611, micro f1: 0.7731958762886598
+ 40%|████████████████▊                         | 40/100 [04:23<06:09,  6.16s/it]Iteration 40: Avg f1: 0.7622770183745793, Std f1: 0.3267148501602983, micro f1: 0.7833333333333333
+ 50%|█████████████████████                     | 50/100 [05:25<05:34,  6.70s/it]Iteration 50: Avg f1: 0.76363288127994, Std f1: 0.3238795231498039, micro f1: 0.7828947368421053
+ 60%|█████████████████████████▏                | 60/100 [06:38<04:56,  7.40s/it]Iteration 60: Avg f1: 0.7927461644993606, Std f1: 0.30564601086108917, micro f1: 0.8041237113402062
+ 70%|█████████████████████████████▍            | 70/100 [07:46<03:27,  6.92s/it]Iteration 70: Avg f1: 0.803157502832784, Std f1: 0.291157673450211, micro f1: 0.8114035087719298
+ 80%|█████████████████████████████████▌        | 80/100 [08:45<02:01,  6.08s/it]Iteration 80: Avg f1: 0.7723444072449624, Std f1: 0.32668583511798815, micro f1: 0.7903225806451613
+ 90%|█████████████████████████████████████▊    | 90/100 [09:53<01:11,  7.12s/it]Iteration 90: Avg f1: 0.7735519815403878, Std f1: 0.3348613395674416, micro f1: 0.8069565217391305
+100%|█████████████████████████████████████████| 100/100 [10:53<00:00,  6.54s/it]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.6666666666666666, Std f1: 0.0, micro f1: 0.6666666666666666
+ 10%|████▏                                     | 10/100 [00:57<07:39,  5.10s/it]Iteration 10: Avg f1: 0.8195133149678604, Std f1: 0.2821816588847713, micro f1: 0.8421052631578947
+ 20%|████████▍                                 | 20/100 [02:08<09:21,  7.02s/it]Iteration 20: Avg f1: 0.7689514189514189, Std f1: 0.33632404245932224, micro f1: 0.7964601769911505
+ 30%|████████████▌                             | 30/100 [03:11<06:57,  5.97s/it]Iteration 30: Avg f1: 0.8398989898989899, Std f1: 0.29589595041716865, micro f1: 0.8536585365853658
+ 34%|██████████████▎                           | 34/100 [03:36<06:42,  6.10s/it]Unable to match nonempty 1. Gillian Russell | True | as it is the name of a person
+Unable to match nonempty 2. Jamaica | True | as it is the name of a place or location
+Unable to match nonempty 3. 13.17 | False | as it is a number, which is not an entity.
+ 40%|████████████████▊                         | 40/100 [04:12<06:20,  6.34s/it]Iteration 40: Avg f1: 0.775570906058711, Std f1: 0.3500391907002903, micro f1: 0.7924528301886793
+ 47%|███████████████████▋                      | 47/100 [05:00<06:16,  7.10s/it]Unable to match nonempty 1. Hong Kong | True | as it is the name of a place or location
+Unable to match nonempty 2. taxes | False | as it is an abstract concept
+Unable to match nonempty 3. currency | False | as it is an abstract concept
+Unable to match nonempty 4. expenditure priorities | False | as it is an abstract concept
+Unable to match nonempty 5. financial reserves | False |as it is an abstract concept
+Unable to match nonempty 6. Tsang | True | as it is the name of a person
+ 50%|█████████████████████                     | 50/100 [05:17<05:07,  6.16s/it]Iteration 50: Avg f1: 0.7450668068315127, Std f1: 0.3750605807442041, micro f1: 0.7795275590551181
+ 60%|█████████████████████████▏                | 60/100 [06:18<03:55,  5.88s/it]Iteration 60: Avg f1: 0.7589615206957744, Std f1: 0.36645181077597994, micro f1: 0.7898089171974523
+ 70%|█████████████████████████████▍            | 70/100 [07:14<02:37,  5.25s/it]Iteration 70: Avg f1: 0.78620369417256, Std f1: 0.3484728322652055, micro f1: 0.8022922636103151
+ 80%|█████████████████████████████████▌        | 80/100 [08:22<02:17,  6.87s/it]Iteration 80: Avg f1: 0.7800145255798276, Std f1: 0.34338629097930995, micro f1: 0.7980997624703088
+ 90%|█████████████████████████████████████▊    | 90/100 [09:28<01:01,  6.13s/it]Iteration 90: Avg f1: 0.7814781308274656, Std f1: 0.34338262444918627, micro f1: 0.7905982905982906
+100%|█████████████████████████████████████████| 100/100 [10:29<00:00,  6.30s/it]
+f1_means: [0.78816307 0.78063228]
+f1_stds: 0.34107629638780146
+micro_f1s: [0.81493506 0.79069767]
+Saving file to results/GPT3_conllNone.csv
+Found cached dataset conll2003 (/home/dhananjay/.cache/huggingface/datasets/conll2003/conll2003/1.0.0/9a4d16a94f8674ba3466315300359b0acd891b68b6c8743ddf60b9c702adce98)
+100%|████████████████████████████████████████████| 3/3 [00:00<00:00, 776.53it/s]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.8888888888888888, Std f1: 0.0, micro f1: 0.8888888888888888
+ 10%|████▏                                     | 10/100 [01:11<10:57,  7.30s/it]Iteration 10: Avg f1: 0.7682539682539683, Std f1: 0.31128554758739985, micro f1: 0.8125
+ 20%|████████▍                                 | 20/100 [02:15<09:16,  6.95s/it]Iteration 20: Avg f1: 0.7629032899709591, Std f1: 0.3157132572096628, micro f1: 0.8
+ 30%|████████████▌                             | 30/100 [03:21<07:29,  6.42s/it]Iteration 30: Avg f1: 0.7549135829271654, Std f1: 0.3183917822311621, micro f1: 0.7800829875518672
+ 40%|████████████████▊                         | 40/100 [04:28<06:19,  6.33s/it]Iteration 40: Avg f1: 0.7553808978070852, Std f1: 0.3199505717442279, micro f1: 0.7766990291262136
+ 50%|█████████████████████                     | 50/100 [05:31<05:18,  6.37s/it]Iteration 50: Avg f1: 0.7508711045862748, Std f1: 0.33303934748236297, micro f1: 0.7771428571428571
+ 54%|██████████████████████▋                   | 54/100 [06:04<05:42,  7.44s/it]Unable to match nonempty 1. Antonella Bellutti | True | An individual's name is an entity.
+ 60%|█████████████████████████▏                | 60/100 [06:43<04:16,  6.42s/it]Iteration 60: Avg f1: 0.7337693032688718, Std f1: 0.33935326910954816, micro f1: 0.7835497835497836
+ 70%|█████████████████████████████▍            | 70/100 [07:43<02:46,  5.56s/it]Iteration 70: Avg f1: 0.6943541293757141, Std f1: 0.36572477325463176, micro f1: 0.7600767754318618
+ 80%|█████████████████████████████████▌        | 80/100 [08:48<02:12,  6.64s/it]Iteration 80: Avg f1: 0.6839150985636481, Std f1: 0.369366918439846, micro f1: 0.754325259515571
+ 90%|█████████████████████████████████████▊    | 90/100 [09:51<01:12,  7.25s/it]Iteration 90: Avg f1: 0.6835029934764566, Std f1: 0.372020539705546, micro f1: 0.7547169811320755
+100%|█████████████████████████████████████████| 100/100 [10:54<00:00,  6.55s/it]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.4, Std f1: 0.0, micro f1: 0.4
+ 10%|████▏                                     | 10/100 [01:02<09:18,  6.20s/it]Iteration 10: Avg f1: 0.5939393939393939, Std f1: 0.4296623484791783, micro f1: 0.7017543859649122
+ 20%|████████▍                                 | 20/100 [02:05<09:27,  7.10s/it]Iteration 20: Avg f1: 0.5870851370851371, Std f1: 0.39777949057272677, micro f1: 0.6818181818181818
+ 24%|██████████                                | 24/100 [02:29<08:06,  6.40s/it]Unable to match nonempty 1. Saturday | True | Saturday is an object that has a distinct and independent existence.
+Unable to match nonempty 2. On | False | On is not an entity as it is a preposition.
+ 30%|████████████▌                             | 30/100 [03:07<07:12,  6.17s/it]Iteration 30: Avg f1: 0.626376669925057, Std f1: 0.4011351173217043, micro f1: 0.6815642458100558
+ 40%|████████████████▊                         | 40/100 [04:14<05:56,  5.95s/it]Iteration 40: Avg f1: 0.6499753633899975, Std f1: 0.39573327593222624, micro f1: 0.7219917012448133
+ 50%|█████████████████████                     | 50/100 [05:16<05:06,  6.14s/it]Iteration 50: Avg f1: 0.615993265993266, Std f1: 0.4081852250997182, micro f1: 0.7055016181229773
+ 60%|█████████████████████████▏                | 60/100 [06:24<04:56,  7.42s/it]Iteration 60: Avg f1: 0.6215681404205994, Std f1: 0.4041302821074481, micro f1: 0.6984126984126984
+ 70%|█████████████████████████████▍            | 70/100 [07:36<03:45,  7.53s/it]Iteration 70: Avg f1: 0.622923398979737, Std f1: 0.39343194925498814, micro f1: 0.7125
+ 80%|█████████████████████████████████▌        | 80/100 [08:35<02:03,  6.17s/it]Iteration 80: Avg f1: 0.634474030770327, Std f1: 0.39694213774853976, micro f1: 0.7150837988826816
+ 90%|█████████████████████████████████████▊    | 90/100 [09:45<01:08,  6.89s/it]Iteration 90: Avg f1: 0.6416380238850871, Std f1: 0.38654919061352366, micro f1: 0.7169811320754716
+100%|█████████████████████████████████████████| 100/100 [10:42<00:00,  6.42s/it]
+f1_means: [0.67847257 0.63523259]
+f1_stds: 0.3907553785904908
+micro_f1s: [0.74224022 0.70430906]
+Saving file to results/GPT3_conllNone.csv
+Found cached dataset conll2003 (/home/dhananjay/.cache/huggingface/datasets/conll2003/conll2003/1.0.0/9a4d16a94f8674ba3466315300359b0acd891b68b6c8743ddf60b9c702adce98)
+100%|████████████████████████████████████████████| 3/3 [00:00<00:00, 795.48it/s]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 1.0, Std f1: 0.0, micro f1: 1.0
+ 10%|████▏                                     | 10/100 [00:43<06:39,  4.44s/it]Iteration 10: Avg f1: 0.6629345402072674, Std f1: 0.31756522197125714, micro f1: 0.8
+ 20%|████████▍                                 | 20/100 [01:27<05:42,  4.28s/it]Iteration 20: Avg f1: 0.685851714423143, Std f1: 0.3036052476068986, micro f1: 0.7642276422764228
+ 28%|███████████▊                              | 28/100 [01:58<04:39,  3.88s/it]Unable to match nonempty None, as this paragraph does not contain any entities.
+ 30%|████████████▌                             | 30/100 [02:08<05:15,  4.51s/it]Iteration 30: Avg f1: 0.6073127589256622, Std f1: 0.3389024106806349, micro f1: 0.7335423197492164
+ 40%|████████████████▊                         | 40/100 [02:49<04:02,  4.04s/it]Iteration 40: Avg f1: 0.5721958258543625, Std f1: 0.352398509439766, micro f1: 0.6961038961038961
+ 43%|██████████████████                        | 43/100 [03:02<04:18,  4.53s/it]Unable to match nonempty None, as dates, years and times are not entities.
+ 44%|██████████████████▍                       | 44/100 [03:06<04:01,  4.31s/it]Unable to match nonempty 1. Shearer
+Unable to match nonempty 2. Captaincy
+Unable to match nonempty 3. Glenn Hoddle
+Unable to match nonempty 4. Blackburn
+Unable to match nonempty 5. Southampton
+Unable to match nonempty 6. Skipper
+ 48%|████████████████████▏                     | 48/100 [03:23<03:36,  4.17s/it]Unable to match nonempty 1. Women
+Unable to match nonempty 2. 1,500 metres
+ 49%|████████████████████▌                     | 49/100 [03:27<03:29,  4.11s/it]Unable to match nonempty None; this sentence does not contain any entities.
+ 50%|█████████████████████                     | 50/100 [03:31<03:19,  3.99s/it]Iteration 50: Avg f1: 0.5723410576351753, Std f1: 0.36556675499937463, micro f1: 0.6817155756207675
+ 53%|██████████████████████▎                   | 53/100 [03:42<03:01,  3.87s/it]Unable to match nonempty None. This is not a sentence or a paragraph, so there are no entities to be identified.
+ 60%|█████████████████████████▏                | 60/100 [04:09<02:30,  3.76s/it]Iteration 60: Avg f1: 0.564700326995409, Std f1: 0.3731785773152832, micro f1: 0.676
+ 70%|█████████████████████████████▍            | 70/100 [04:51<02:01,  4.05s/it]Unable to match nonempty None, as this is not a paragraph but a sequence of numbers.
+Iteration 70: Avg f1: 0.5468239116126439, Std f1: 0.38052702903389074, micro f1: 0.6666666666666666
+ 73%|██████████████████████████████▋           | 73/100 [05:02<01:47,  3.97s/it]Unable to match nonempty None - a date and year are not entities.
+ 74%|███████████████████████████████           | 74/100 [05:06<01:40,  3.86s/it]Unable to match nonempty None; the phrase 'BOMBAY 1996-08-30' is not an entity.
+ 75%|███████████████████████████████▌          | 75/100 [05:10<01:37,  3.90s/it]Unable to match nonempty None, as all words are not entities.
+ 76%|███████████████████████████████▉          | 76/100 [05:14<01:34,  3.93s/it]Unable to match nonempty None
+ 78%|████████████████████████████████▊         | 78/100 [05:22<01:26,  3.93s/it]Unable to match nonempty None, as this is not a sentence or a paragraph.
+ 80%|█████████████████████████████████▌        | 80/100 [05:29<01:17,  3.87s/it]Iteration 80: Avg f1: 0.5466597874005281, Std f1: 0.38711627393347486, micro f1: 0.6545454545454545
+ 85%|███████████████████████████████████▋      | 85/100 [05:48<00:56,  3.74s/it]Unable to match nonempty No entities
+ 87%|████████████████████████████████████▌     | 87/100 [05:56<00:49,  3.83s/it]Unable to match nonempty No entities can be identified from the given sentence.
+ 90%|█████████████████████████████████████▊    | 90/100 [06:07<00:37,  3.79s/it]Iteration 90: Avg f1: 0.5756736870828661, Std f1: 0.37965488197484915, micro f1: 0.6636363636363637
+100%|█████████████████████████████████████████| 100/100 [06:50<00:00,  4.10s/it]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.8, Std f1: 0.0, micro f1: 0.8
+  9%|███▊                                       | 9/100 [00:37<06:54,  4.56s/it]Unable to match nonempty None, as there are no distinct and independent objects, places, individuals, beings, titles or processes mentioned in the sentence.
+ 10%|████▏                                     | 10/100 [00:41<06:43,  4.48s/it]Iteration 10: Avg f1: 0.4394726485635576, Std f1: 0.36737850824891605, micro f1: 0.42857142857142855
+ 14%|█████▉                                    | 14/100 [00:57<05:53,  4.12s/it]Unable to match nonempty None, the paragraph does not contain any entities.
+ 15%|██████▎                                   | 15/100 [01:01<05:38,  3.99s/it]Unable to match nonempty 1. KPD
+Unable to match nonempty 2. Iraqi
+Unable to match nonempty 3. Military
+Unable to match nonempty 4. Aid
+Unable to match nonempty 5. U.N.
+Unable to match nonempty 6. Official
+ 20%|████████▍                                 | 20/100 [01:21<05:28,  4.11s/it]Unable to match nonempty None, as this is not a paragraph but rather an expression.
+Iteration 20: Avg f1: 0.4841682127396413, Std f1: 0.42524222996619004, micro f1: 0.5048543689320388
+ 28%|███████████▊                              | 28/100 [01:54<05:06,  4.26s/it]Unable to match nonempty None, this is not a list of entities.
+ 30%|████████████▌                             | 30/100 [02:01<04:39,  4.00s/it]Iteration 30: Avg f1: 0.4876489102295555, Std f1: 0.4045738414738545, micro f1: 0.5291005291005291
+ 40%|████████████████▊                         | 40/100 [02:44<04:12,  4.20s/it]Iteration 40: Avg f1: 0.49682710361395416, Std f1: 0.40104214414997635, micro f1: 0.5765124555160143
+ 50%|█████████████████████                     | 50/100 [03:24<03:13,  3.86s/it]Iteration 50: Avg f1: 0.5116415837643459, Std f1: 0.38936714494935315, micro f1: 0.5994236311239193
+ 60%|█████████████████████████▏                | 60/100 [04:05<02:43,  4.10s/it]Iteration 60: Avg f1: 0.5337825752294747, Std f1: 0.3841141618510999, micro f1: 0.6022988505747127
+ 68%|████████████████████████████▌             | 68/100 [04:36<02:01,  3.79s/it]Unable to match nonempty No entities.
+ 70%|█████████████████████████████▍            | 70/100 [04:43<01:51,  3.73s/it]Iteration 70: Avg f1: 0.5273416418241892, Std f1: 0.3927003359917569, micro f1: 0.6004056795131846
+ 80%|█████████████████████████████████▌        | 80/100 [05:21<01:17,  3.90s/it]Iteration 80: Avg f1: 0.5314421250009012, Std f1: 0.39564918608266547, micro f1: 0.5996343692870201
+ 86%|████████████████████████████████████      | 86/100 [05:44<00:53,  3.80s/it]Unable to match nonempty No entities are identifiable in the given sentence.
+ 88%|████████████████████████████████████▉     | 88/100 [05:52<00:46,  3.84s/it]Unable to match nonempty None, as the sentence does not include any entities.
+ 90%|█████████████████████████████████████▊    | 90/100 [05:59<00:37,  3.76s/it]Iteration 90: Avg f1: 0.5667481851906123, Std f1: 0.3991184859662935, micro f1: 0.6305418719211823
+100%|█████████████████████████████████████████| 100/100 [06:39<00:00,  3.99s/it]
+f1_means: [0.58665815 0.55786206]
+f1_stds: 0.3996419987852351
+micro_f1s: [0.6585034  0.62255639]
+Saving file to results/GPT3_conllNone.csv
+Found cached dataset conll2003 (/home/dhananjay/.cache/huggingface/datasets/conll2003/conll2003/1.0.0/9a4d16a94f8674ba3466315300359b0acd891b68b6c8743ddf60b9c702adce98)
+100%|████████████████████████████████████████████| 3/3 [00:00<00:00, 811.96it/s]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 1.0, Std f1: 0.0, micro f1: 1.0
+ 10%|████▏                                     | 10/100 [00:40<05:45,  3.84s/it]Iteration 10: Avg f1: 0.8205627705627705, Std f1: 0.21344779108952727, micro f1: 0.8115942028985508
+ 20%|████████▍                                 | 20/100 [01:19<05:19,  3.99s/it]Iteration 20: Avg f1: 0.6472789115646259, Std f1: 0.330736798015819, micro f1: 0.6722689075630253
+ 25%|██████████▌                               | 25/100 [01:41<05:33,  4.45s/it]Unable to match nonempty 1. Phylis Smith
+Unable to match nonempty 2. Britain
+Unable to match nonempty 3. 52.05
+ 30%|████████████▌                             | 30/100 [02:01<04:44,  4.07s/it]Iteration 30: Avg f1: 0.5708106409719312, Std f1: 0.36066832898057194, micro f1: 0.631578947368421
+ 40%|████████████████▊                         | 40/100 [02:42<03:46,  3.78s/it]Iteration 40: Avg f1: 0.5395153626860943, Std f1: 0.38388497016692674, micro f1: 0.5811320754716981
+ 50%|█████████████████████                     | 50/100 [03:23<03:40,  4.41s/it]Iteration 50: Avg f1: 0.5075545369663017, Std f1: 0.3971639985084207, micro f1: 0.5512820512820513
+ 60%|█████████████████████████▏                | 60/100 [04:06<02:53,  4.34s/it]Iteration 60: Avg f1: 0.5240843249039969, Std f1: 0.3753879281108185, micro f1: 0.5843230403800475
+ 70%|█████████████████████████████▍            | 70/100 [04:48<02:03,  4.12s/it]Iteration 70: Avg f1: 0.508987715160043, Std f1: 0.36743497358103566, micro f1: 0.5582329317269076
+ 80%|█████████████████████████████████▌        | 80/100 [05:26<01:17,  3.86s/it]Iteration 80: Avg f1: 0.5290848974581728, Std f1: 0.3701446996615099, micro f1: 0.5785714285714286
+ 90%|█████████████████████████████████████▊    | 90/100 [06:10<00:44,  4.41s/it]Iteration 90: Avg f1: 0.536371755588916, Std f1: 0.3632821681120822, micro f1: 0.5822021116138764
+100%|█████████████████████████████████████████| 100/100 [06:51<00:00,  4.12s/it]
+  0%|                                                   | 0/100 [00:00<?, ?it/s]Iteration 0: Avg f1: 0.6666666666666666, Std f1: 0.0, micro f1: 0.6666666666666666
+ 10%|████▏                                     | 10/100 [00:41<06:30,  4.34s/it]Iteration 10: Avg f1: 0.42489177489177493, Std f1: 0.3341384272970419, micro f1: 0.4166666666666667
+ 20%|████████▍                                 | 20/100 [01:22<05:11,  3.90s/it]Iteration 20: Avg f1: 0.5317408781694496, Std f1: 0.3269202897656297, micro f1: 0.56
+ 30%|████████████▌                             | 30/100 [02:06<04:55,  4.22s/it]Iteration 30: Avg f1: 0.5321210528765706, Std f1: 0.30588875547245575, micro f1: 0.5770750988142292
+ 40%|████████████████▊                         | 40/100 [02:49<04:17,  4.30s/it]Iteration 40: Avg f1: 0.555011599901353, Std f1: 0.2899876421559095, micro f1: 0.5950413223140496
+ 50%|█████████████████████                     | 50/100 [03:31<03:36,  4.32s/it]Iteration 50: Avg f1: 0.5683936535011022, Std f1: 0.30737862014942896, micro f1: 0.6326963906581741
+ 60%|█████████████████████████▏                | 60/100 [04:15<02:47,  4.18s/it]Iteration 60: Avg f1: 0.5722111139014655, Std f1: 0.2956005702877087, micro f1: 0.6188034188034188
+ 70%|█████████████████████████████▍            | 70/100 [04:58<02:02,  4.08s/it]Iteration 70: Avg f1: 0.5775111358648182, Std f1: 0.2938560588887087, micro f1: 0.6251851851851852
+ 80%|█████████████████████████████████▌        | 80/100 [05:39<01:23,  4.19s/it]Iteration 80: Avg f1: 0.5582024908334965, Std f1: 0.2873078750690208, micro f1: 0.6045272969374168
+ 90%|█████████████████████████████████████▊    | 90/100 [06:21<00:39,  3.96s/it]Iteration 90: Avg f1: 0.566779949623506, Std f1: 0.2876128663442233, micro f1: 0.6232558139534884
+ 93%|███████████████████████████████████████   | 93/100 [06:32<00:26,  3.85s/it]Unable to match nonempty 1. Janet Dewey
+Unable to match nonempty 2. National Automobile Occupant Protection Campaign
+Unable to match nonempty 3. Children
+Unable to match nonempty 4. Seatbelts
+100%|█████████████████████████████████████████| 100/100 [07:00<00:00,  4.21s/it]
+f1_means: [0.51407052 0.56365864]
+f1_stds: 0.3031408589628188
+micro_f1s: [0.55967078 0.62280702]
+Saving file to results/GPT3_conllNone.csv
+

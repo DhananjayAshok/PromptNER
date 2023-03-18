@@ -177,7 +177,7 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
         eval_fn = eval_few_nerd_intra
 
     if gpt:
-        model = GPT3()
+        model = OpenAIGPT()
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
@@ -187,24 +187,48 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, limit=other_limit, add_info=subdataset)
-    print(f"Final Results For {name_meta} | {dataset} | {subdataset} | {cot} | {exemplar}")
+    print(f"Final Results For {name_meta} | {dataset} | {subdataset} | {coT} | {exemplar}")
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
     print(f"micro_f1s: {micro_f1}")
     print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
     mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
+    return f1_mean, micro_f1
+
+
+def ablation_1():
+    """
+    defn, exemplar, cot
+    :return:
+    """
+    res = {}
+    for defn in [False, True]:
+        for exemplar in [False, True]:
+            for cot in [False, True]:
+                d = {}
+                name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
+                macro, micro = run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
+                d["conll"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                for category in ['ai', 'science']:
+                    macro, micro = run(gpt=False, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
+                        name_meta=name_meta)
+                    d[f"crossner_{category}"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                for split in ["test"]:
+                    macro, micro = run(gpt=False, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=split,
+                        name_meta=name_meta)
+                    d[f"fewnerd_{split}"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                res[(defn, exemplar, cot)] = d
+    print(f"{'X'*10}")
+    for defn in [False, True]:
+        for exemplar in [False, True]:
+            for cot in [False, True]:
+                print(f"Definition: {defn}, Exemplar: {exemplar}, Chain of Thought: {cot}")
+                d = res[(defn, exemplar, cot)]
+                for key in d:
+                    formatted = [f"{i:.3f}" for i in d[key]]
+                    print(f"\t{key}: {formatted}")
 
 
 if __name__ == "__main__":
-    from models import T5, GPT3, T5XL
-    for cot in [True, False]:
-        for exemplar in [True, False]:
-            for defn in [True, False]:
-                name_meta = f"coT_{cot}_exemplar_{exemplar}_defn_{defn}"
-                run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
-                for category in ['ai', 'science']:
-                    run(gpt=False, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
-                        name_meta=name_meta)
-                for split in ["test"]:
-                    run(gpt=False, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
-                        name_meta=name_meta)
+    from models import T5, OpenAIGPT, T5XL
+    ablation_1()

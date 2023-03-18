@@ -1,0 +1,258 @@
+,idx,para,entities,preds,meta,f1
+0,941,The judge died later in hospital .,[],"['hospital', 'judge']","
+1. The judge | True | as it is the name of a person
+2. died | False | as it is an action
+3. later | False | as it is an adverb
+4. hospital | True | as it is the name of a place or location.",0.0
+1,110,"Panamanian boxing legend Roberto "" Hands of Stone "" Duran climbs into the ring on Saturday in another age-defying attempt to sustain his long career .","['Panamanian', 'Roberto', '""', 'Hands', 'of', 'Stone', '""', 'Duran']","['roberto', 'duran', 'panamanian']","
+1. Panamanian | True | as it is a nationality
+2. boxing | False | as it is an action
+3. Roberto | True | as it is the name of a person
+4. Hands of Stone | False | as it is an adjective phrase
+5. Duran | True | as it is the name of a person 
+6. ring | False | as it is a noun representing a physical space or place
+7. Saturday | False | as it is a day of the week, with no distinct and independant existence
+8. age-defying | False | as it is an adjective phrase
+9. career | False | as it is an abstract concept.",0.6
+2,720,"The December calendar spread continued to widen , also reflecting the market 's fear of rising inflation .",[],"['market', 'december']","
+1. December | True | as it is a month 
+2. calendar spread | False | as it is an abstract concept or activity
+3. widen | False | as it is an action
+4. market | True | as it is an entity describing a group of investors or participants in an activity
+5. fear | False | as it is an abstract concept or emotion
+6. rising | False | as it is an action
+7. inflation | False | as it is an abstract concept or activity",0.0
+3,3056,"Representatives of the five nations making up the committee -- Israel , Lebanon , Syria , France and the United States -- will meet at 11 a.m. ( 0800 GMT ) in Naqoura , the coastal headquarters of the U.N. Interim Force in Lebanon ( UNIFIL ) .","['Israel', 'Lebanon', 'Syria', 'France', 'United', 'States', 'GMT', 'Naqoura', 'U.N.', 'Interim', 'Force', 'in', 'Lebanon', 'UNIFIL']","['france', 'syria', 'united', 'states', 'israel', 'naqoura', 'unifil', 'lebanon']","
+1. Five nations | False | as it is an abstract concept. 
+2. Israel | True | as it is the name of a place or location 
+3. Lebanon | True | as it is the name of a place or location
+4. Syria | True | as it is the name of a place or location 
+5. France | True | as it is the name of a place or location
+6. United States | True | as it is the name of a place or location 
+7. 11 a.m. | False | as it represents a time of day, with no distinct and independant existence
+8. 0800 GMT | False | as it represents a time of day, with no distinct and independant existence
+9. Naqoura | True | as it is the name of a place or location 
+10. U.N. Interim Force in Lebanon | False | as it is an abstract concept 
+11. UNIFIL | True | as it is the name of a organization or title.",0.7619047619047619
+4,670,"The government of Canada 's cash balances fell in the week that ended August 28 , the Bank of Canada said on Friday .","['Canada', 'Bank', 'of', 'Canada']","['bank', 'government', 'canada']","
+1. The government of Canada | True | as it is the name of an organization
+2. cash balances | False | as it is an abstract concept
+3. week | False | as it denotes a period of time
+4. August 28 | False | as it is a date and not an entity
+5. Bank of Canada | True | as it the name of an organization
+6. Friday | False | as it denotes a day of the week",0.6666666666666666
+5,418,6. Steve Brown ( U.S. ) 13.53,"['Steve', 'Brown', 'U.S.']","['brown', 'steve', 'u.s']","
+1. Steve Brown | True | as it is the name of a person
+2. U.S. | True | as it is the abbreviation for a place or location
+3. 13.53 | False | as it is a number and is not an entity.",0.6666666666666666
+6,1407,"But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .",[],"['accounts', 'savings']"," 
+1. Savings Accounts | True | as it is a type of financial account
+2. Savings | False | as it is an action
+3. 5.3 cents | False | as it is a number
+4. June | False | as it is a month which is not an entity
+5. July | False | as it is a month which is not an entity
+6. Dollar | False | as it is a unit of currency which is not an entity",0.0
+7,1635,"Arafat , who made an interim peace deal with Israel in 1993 that set up self-rule , says he will only visit Jerusalem once Israeli occupation has ended .","['Arafat', 'Israel', 'Jerusalem', 'Israeli']","['israel', 'jerusalem', 'arafat']","
+1. Arafat | True | as it is the name of a person
+2. Israel | True | as it is the name of a place or location
+3. 1993 | False | as it is a number
+4. self-rule | False| as it is an abstract concept
+5. Jerusalem | True | as it is the name of a place or location
+6. Israeli occupation | False | as it is an action and not an entity",0.8571428571428571
+8,1668,"ESCHEN , Liechtenstein 1996-08-31","['ESCHEN', 'Liechtenstein']","['liechtenstein', 'esc', 'hen']","
+1. ESC HEN | True | as it is the name of a place or location
+2. Liechtenstein | True | as it is the name of a place or location
+3. 1996-08-31 | False | as it is a date which is not an entity.",0.4
+9,1613,"Bootleg brew kills 35 in China , police nab suspects .",['China'],[],"
+  1. Bootleg brew | False | as it is an abstract concept that is not an entity.
+  2. 35 | False | as it is a number and not an entity.
+  3. China | true | as it is the name of a place or location.
+  4. police | False | as it is an abstract concept that is not an entity.
+  5. nab | False | as it is an action rather than an entity.
+  6. suspects | False | as it is an abstract concept that is not an entity.",0.0
+10,2342,"The 20-year-old Woods , who turned professional Tuesday after winning an unprecedented third successive U.S. Amateur Championship , struggled on the front nine , bogeying the first and seventh holes and double-bogeying the par-four , 359-yard ninth hole .","['Woods', 'U.S.', 'Amateur', 'Championship']","['woods', 'amateur', 'championship', '20-year-old', 'u.s']","
+1. 20-year-old Woods | True | as it is the name of a person
+2. Tuesday | False | as it is a day of the week, without any distinct and independent existence
+3. U.S. Amateur Championship | True | as it is the name of an event
+4. front nine | False | as it is an abstract concept of a phase of a golf match
+5. bogeying | False | as it is an action 
+6. first | False | as it is a direction, without any distinct and independent existence
+7. seventh | False | as it is a direction, without any distinct and independent existence
+8. par-four | False | as it is a concept of measurement in golf
+9. 359-yard | False | as it is a concept of measurement in golf",0.6666666666666666
+11,1342,An Israeli roadblock stopped the 38-year-old Palestinian from answering Yasser Arafat 's call to worship at Jerusalem 's al-Aqsa mosque on Friday .,"['Israeli', 'Palestinian', 'Yasser', 'Arafat', 'Jerusalem', 'al-Aqsa']","['yasser', 'al-aqsa', 'palestinian', 'jerusalem', 'arafat', 'israeli', 'mosque']","
+1. Israeli | True | as it is the nationality of a person. 
+2. roadblock | False | as it is an object or structure
+3. 38 | False | as it is a number
+4. Palestinian | True | as it is the nationality of a person
+5. Yasser Arafat | True | as it is the name of a person 
+6. Jerusalem | True | as it is the name of a place or location
+7. al-Aqsa mosque | True | as it is the name of a place or location 
+8. Friday | False | as it represents a day of the week, with no distinct and independent existence",0.9230769230769231
+12,1072,""" It appears that August is showing an economy again reversing course and is not moving onto a significantly slower track at this point , "" said economist Lynn Reaser of Barnett Banks Inc. in Jacksonville , Fla .","['Lynn', 'Reaser', 'Barnett', 'Banks', 'Inc.', 'Jacksonville', 'Fla']","['banks', 'lynn', 'fla', 'august', 'reaser', 'barnett', 'inc', 'jacksonville']","
+1. August | True | as it is a month of the year
+2. economy | False | as it is an abstract concept 
+3. reversing course | False | as it is an action 
+4. significantly slower track | False | as it is an abstract concept
+5. Lynn Reaser | True | as it is the name of a person
+6. Barnett Banks Inc. | True | as it is the name of an organization
+7. Jacksonville | True | as it is the name of a place or location
+8. Fla. | True | as it is the name of a place or location.",0.8
+13,2151,"3. Bobby Rahal ( U.S. ) , Reynard Mercedes-Benz , 54.507","['Bobby', 'Rahal', 'U.S.', 'Reynard', 'Mercedes-Benz']","['mercedes-benz', 'reynard', 'rahal', 'u.s', 'bobby']","
+1. Bobby Rahal | True | as it is the name of a person
+2. U.S. | True | as it is the name of a place or location
+3. Reynard Mercedes-Benz | True | as it is the name of a car brand
+4. 54.507 | False | as it is a number, not an entity.",0.8
+14,3135,"They said 200 fighter planes , including 79 on the aircraft carrier Carl Vinson , were already in the Gulf ; the aircraft carrier Enterprise was in the eastern Mediterranean with 79 more , and an air expeditionary force with up to 40 more was ready to fly from the United States if ordered .","['Carl', 'Vinson', 'Gulf', 'Enterprise', 'Mediterranean', 'United', 'States']","['enterprise', 'united', 'states', 'vinson', 'carl']","
+
+1. 200 | False | as it is a number
+2. fighter planes | False | as it is a type of aircraft and not an entity
+3. 79 | False | as it is a number
+4. aircraft carrier | False | as it is a type of transportation and not an entity
+5. Carl Vinson | True | as it is the name of a ship
+6. Enterprise | True | as it is the name of a ship
+7. air expeditionary force | False | as it is an identifiable group of people and not an entity
+8. United States | True | as it is the name of a place or location",0.8333333333333334
+15,2760,"But many activists were dismayed when he abruptly decided earlier this year to hold a two-question referendum on the issue , asking Scots if they wanted a separate parliament and if it should have tax-raising powers .",['Scots'],"['scots', 'activists']","
+1. Activists | True | as it is an organization
+2. He | False | as it is a possessive pronoun
+3. Referendum | False | as it is an event
+4. Scots | True | as it is a nationality
+5. Separate Parliament | False | as it is an abstract concept
+6. Tax-raising Powers | False | as it is an abstract concept",0.6666666666666666
+16,150,LG 2 OB 0,"['LG', 'OB']",[],"
+1. LG | False | as it is an abbreviation and not a name
+2. OB | False | as it is an abbreviation and not a name
+3. 0 | False | as it is a number and not an entity",0.0
+17,1732,A. Stewart b Mushtaq Ahmed 46,"['A.', 'Stewart', 'Mushtaq', 'Ahmed']","['a', 'ahmed', 'mushtaq', 'stewart']","
+1. A. Stewart | True | as it is the name of a person
+2. Mushtaq Ahmed | True | as it is the name of a person
+3. 46 | False | as it is a number and not an entity.",0.75
+18,1267,Earnings per share ( markka ) 2.2 vs 7.2,[],['markka'],"
+1. Earnings per share | False | as it is an abstract concept or term
+2. markka | True | as it is the name of a currency
+3. 2.2 | False | as it is a number
+4. 7.2 | False | as it is a number",0.0
+19,3084,United Nations relief officials said on Saturday the fighting in Arbil in northern Iraq was between rival Kurdish factions and they were not aware of any Iraqi military advance on the city .,"['United', 'Nations', 'Arbil', 'Iraq', 'Kurdish', 'Iraqi']","['nations', 'kurdish', 'united', 'arbil', 'northern', 'factions', 'iraqi', 'military', 'iraq']","
+1. United Nations | True | as it is the name of an international organization
+2. relief | False | as it is an abstract concept
+3. Saturday | False | as it is a day which does not have a distinct and independant existence 
+4. Arbil | True | as it is the name of a place or location
+5. northern Iraq | True | as it is a place or location
+6. Kurdish factions | True | as it is a collective title for a group of people
+7. Iraqi military | True | as it is an organization or title
+8. city | False | as it is an abstract concept.",0.8
+20,770,"The September notional bond future on the MATIF in Paris settled at 123.14 , up 0.04 from Thursday 's settlement price .",['Paris'],"['paris', 'matif']","
+1. September | False | as it is the name of a month and not an entity.
+2. notional bond future | False | as it is an abstract concept which is not an entity.
+3. MATIF | True | as it is an acronym for the French financial derivatives market and can be considered an entity.
+4. Paris | True | as it is the name of a place or location.
+5. 123.14 | False | as it is a number.
+6. 0.04 | False | as it is a number.
+7. Thursday | False| as it is the name of a day and not an entity.
+8. settlement price | False | as it is an abstract concept which is not an entity.",0.6666666666666666
+21,2733,1930 - Belgian King Baudouin I born .,"['Belgian', 'Baudouin', 'I']","['belgian', 'baudouin', 'king']","
+1. 1930 | False | as it is a year which is not an entity. 
+2. Belgian | True | as it is a nationality
+3. King Baudouin I | True | as it is the name of a person
+4. born | False | as it is an action.",0.6666666666666666
+22,23,"Tunbridge Wells : Nottinghamshire 214 ( P. Johnson 84 ; M. McCague 4-55 ) , Kent 108-3 .","['Tunbridge', 'Wells', 'Nottinghamshire', 'P.', 'Johnson', 'M.', 'McCague', 'Kent']","['tunbridge', 'm', 'kent', 'wells', 'nottinghamshire', 'mccague', 'johnson', 'p']"," 
+1. Tunbridge Wells | True | as it is a place or location. 
+2. Nottinghamshire | True | as it is a county in the UK. 
+3. P. Johnson | True | as it is the name of a person
+4. 84 | False | as it is a number
+5. M. McCague | True | as it is the name of a person 
+6. 4-55 | False| as it is a score or set of numbers without a distinct and independent existence
+7. Kent | True | as it is the name of a county in the UK.",0.75
+23,1530,"The plane smashed into a snow-capped mountain on the Arctic island of Spitzbergen on Thursday , just east of Longyear .","['Arctic', 'Spitzbergen', 'Longyear']","['spitzbergen', 'longyear']","
+1. plane | False | as it is an object
+2. snow-capped mountain | False | as it is a description of an object
+3. Arctic island | False | as it is a description of a place
+4. Spitzbergen | True | as it is the name of an island
+5. Thursday | False | as it is a day of the week and not an entity
+6. Longyear | True | as it is the name of a place.",0.8
+24,2739,"1986 - Bishop Desmond Tutu was enthroned as Archbishop of Cape Town , South Africa .","['Desmond', 'Tutu', 'Cape', 'Town', 'South', 'Africa']","['south', 'africa', 'desmond', 'town', 'bishop', 'cape', 'tutu']","
+1. 1986 | False | as it is a year, which is not an entity.
+2. Bishop Desmond Tutu | True | as it is the name of a person
+3. Archbishop | False | as it is a title, not an entity
+4. Cape Town | True | as it is the name of a place or location
+5. South Africa | True | as it is the name of a place or location",0.9230769230769231
+25,3163,Liberte newspaper said the bomb was hidden in a bag in front of the restaurant and that a booby-trapped car was defused near the restaurant shortly before the bomb went off .,['Liberte'],"['restaurant', 'liberte', 'newspaper']","
+1. Liberte newspaper | True | as it is a title/publication
+2. bomb | False | as it is an abstract concept
+3. bag | False | as it is an object
+4. restaurant | True | as it is a location
+5. booby-trapped car | False | as it is a combination of two objects
+6. defused | False | as it is an action
+7. bomb went off | False | as it is an action",0.5
+26,1192,"A decision is expected by mid-September on whether Texas billionaire Ross Perot , the Reform Party candidate , will be allowed to participate in the debates , which are sponsored by the Commission on Presidential Debates , a non-profit , non-partisan organisation that took over the forums in 1988 from the League of Women Voters .","['Texas', 'Ross', 'Perot', 'Reform', 'Party', 'Commission', 'on', 'Presidential', 'Debates', 'League', 'of', 'Women', 'Voters']","['debates', 'league', 'commission', 'ross', 'voters', 'party', 'women', 'perot', 'presidential', 'reform']","
+1. Texas billionaire | False | as this is an adjective and not an entity
+2. Ross Perot | True | as it is the name of a person
+3. Reform Party | True | as it is the name of an organization or political party
+4. Commission on Presidential Debates | True | as it is the name of an organization
+5. non-profit | False | as this is an adjective and not an entity
+6. non-partisan | False | as this is an adjective and not an entity
+7. organisation | False | as this is a noun and not an entity
+8. 1988 | False | as it is a year and not an entity
+9. League of Women Voters | True | as it is the name of an organization",0.8695652173913043
+27,697,""" There was some profit-taking early on , and it 's just sitting there , "" a Texas trader said of heating oil 's and gasoline 's losses .",['Texas'],"['trader', 'texas']","
+1. Profit-taking | False | as it is an action or concept
+2. early on | False | as it represents a time without a distinct and independently existing presence
+3. Texas | True | as it is a place or location
+4. trader | True | as it represents a person
+5. heating oil's | False | as it refers to an item which is not an entity
+6. gasoline's | False | as it refers to an item which is not an entity 
+7. losses | False | as it is an abstract concept and not an entity.",0.6666666666666666
+28,677,All figures in billions of dollars .,[],['dollars'],"
+1. figures | False | as it is an abstract concept
+2. billions | False | as it is a numeric term
+3. dollars | True | as it is a currency and a form of legal tender.",0.0
+29,454,Women 's 100 metres,[],['women'],"
+1. Women | True | as it is a descriptive noun 
+2. 100 metres | False | as it is a measurement which does not have a distinct and independant existence",0.0
+30,1301,-- New York Newsdesk 212-859-1610 .,"['New', 'York', 'Newsdesk']","['york', 'new']","
+1. New York | True | as it is the name of a place or location
+2. Newsdesk | False | as it is not a distinct and independant entity
+3. 212-859-1610 | False | as it is a phone number and not an entity.",0.8
+31,1269,"Canadian bonds open softer , spreads to U.S. shrink .","['Canadian', 'U.S.']","['canadian', 'bonds', 'u.s']","
+1. Canadian bonds | True | as it is a reference to a kind of financial instrument
+2. softer | False | as it is an adjective describing something
+3. spreads | False | as it is an abstract concept which does not have an independant existence
+4. U.S. | True | as it is a country
+5. shrink | False | as it is an action",0.4
+32,1396,COMPETITIVE PRE-SALE CONTRIBUTED BY J.J. KENNY K-SHEETS :,"['J.J.', 'KENNY']","['kenny', 'j.j']","
+1. COMPETITIVE PRE-SALE | False | as it is an event or action, not an entity
+2. J.J. Kenny | True | as it is the name of a person
+3. K-SHEETS | False | as it is a product name, not an entity",0.5
+33,824,Paramilitary police detained more than 120 students in the protest .,[],"['paramilitary', 'police']","
+1. Paramilitary police | True | as it is the name of an organization
+2. 120 | False | as it is a number
+3. students | False | as it is a collective noun
+4. protest | False | as it is an action or an event with no distinct and independant existence",0.0
+34,3033,"The city 's industrial and commercial departments would confiscate disposable plastic containers and police would prevent new ones from entering the city , it said .",[],"['city', 'police']","
+1. The city | True | as it is a place or location 
+2. industrial | False | as it is an adjective
+3. commercial | False | as it is an adjective
+4. disposable | False | as it is an adjective
+5. plastic containers | False | as it is an object/item which does not have distinct and independant existence
+6. police | True | as it is a title
+7. new | False | as it is an adjective
+8. entering | False | as it is an action",0.0
+35,2913,"Albright will meet Foreign Minister Jose Miguel Insulza Monday for talks on issues currently up for debate on the council , of which Chile is a non-permanent member , a U.S. embassy statement said .","['Albright', 'Jose', 'Miguel', 'Insulza', 'Chile', 'U.S.']","['chile', 'miguel', 'u.s', 'embassy', 'insulza', 'albright', 'jose']","
+1. Albright | True | as it is the name of a person
+2. Jose Miguel Insulza | True | as it is the name of a person
+3. Monday | False | as it is a day of the week, with no distinct and independant existence
+4. talks | False | as it is an action
+5. issues | False | as it is an abstract concept
+6. council | False | as it is an abstract concept
+7. Chile | True | as it is the name of a place or location
+8. non-permanent member | False | as it is a status or label with no distinct and independant existence
+9. U.S. embassy | True | as it is the name of an organization
+10. statement | False | as it is an abstract concept.",0.7692307692307693
+36,175,Tim Henman ( Britain ) beat Doug Flach ( U.S. ) 6-3 6-4 6-2,"['Tim', 'Henman', 'Britain', 'Doug', 'Flach', 'U.S.']","['u.s', 'flach', 'henman', 'tim', 'britain', 'doug']"," 
+1. Tim Henman | True | as it is the name of a person
+2. Britain | True | as it is the name of a place or location
+3. beat | False | as it is an action
+4. Doug Flach | True | as it is the name of a person
+5. U.S. | True | as it is the name of a place or location
+6. 6-3 6-4 6-2 | False | as it is a score or set of numbers which is not an entity.",0.8333333333333334

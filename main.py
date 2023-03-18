@@ -30,19 +30,19 @@ class Quick:
 
 
     @staticmethod
-    def genia(i, model=GPT3.query, verbose=False):
+    def genia(i, model=OpenAIGPT.query, verbose=False):
         config = GeniaConfig()
         config.set_config(e)
         return Quick.dataset(i, train_dset=genia_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def conll(i, model=GPT3.query, verbose=False):
+    def conll(i, model=OpenAIGPT.query, verbose=False):
         config = ConllConfig()
         config.set_config(e)
         return Quick.dataset(i, train_dset=conll_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def crossner(i, model=GPT3.query, verbose=False, category="politics"):
+    def crossner(i, model=OpenAIGPT.query, verbose=False, category="politics"):
         cats = ['politics', 'literature', 'ai', 'science', 'music']
         confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
                  CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -54,7 +54,7 @@ class Quick:
         return Quick.dataset(i, train_dset=cross_ner_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def fewnerd(i, model=GPT3.query, verbose=False, split="train"):
+    def fewnerd(i, model=OpenAIGPT.query, verbose=False, split="train"):
         splits = ["train", "dev", "test"]
         confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
         assert split in splits

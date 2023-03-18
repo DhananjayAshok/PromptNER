@@ -9,20 +9,27 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 
-class GPT3:
+class OpenAIGPT:
     model = "text-davinci-003"
+    #model = "gpt-4"
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
     def request_model(prompt):
-        return openai.Completion.create(model=GPT3.model, prompt=prompt, max_tokens=250)
+        if OpenAIGPT.model in ["gpt-4"]:
+            return openai.ChatCompletion.create(model=OpenAIGPT.model, messages=[{"role": "user", "content": prompt}])
+        else:
+            return openai.Completion.create(model=OpenAIGPT.model, prompt=prompt, max_tokens=250)
 
     @staticmethod
     def decode_response(response):
-        return response["choices"][0]["text"]
+        if OpenAIGPT.model in ["gpt-4"]:
+            return response["choices"][0]["message"]["content"]
+        else:
+            return response["choices"][0]["text"]
 
     @staticmethod
     def query(prompt):
-        return GPT3.decode_response(GPT3.request_model(prompt))
+        return OpenAIGPT.decode_response(OpenAIGPT.request_model(prompt))
 
 
 class HugginFaceModel:

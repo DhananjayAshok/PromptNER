@@ -127,7 +127,6 @@ class Config:
 
 class ConllConfig(Config):
     defn = "An entity is a person, title, named organization, location, country or nationality." \
-                "The name of a collection of entities is also an entity. " \
            "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
@@ -294,6 +293,38 @@ class CrossNERPoliticsConfig(Config):
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    exemplar_1 = """
+    Assisted by his top aide Harry Hopkins and with very strong national support , 
+    he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
+    Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
+
+    Answer:
+    1. Harry Hopkins
+    2. British
+    3. Winston Churchill
+    4. Soviet
+    5. Joseph Stalin
+    6. Chinese
+    7. Chiang Kai-shek
+    8. Allied Powers
+    9. Axis Powers
+    """
+
+    exemplar_2 = """
+    Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
+    but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
+    who went on to win the 1952 United States presidential election .
+
+    Answer:
+    1. Hoover
+    2. Robert A. Taft
+    3. 1952 Republican National Convention
+    4. Dwight D. Eisenhower
+    5. 1952 United States presidential election
+    """
+
+    exemplars = [exemplar_1, exemplar_2]
+
 
 class CrossNERNaturalSciencesConfig(Config):
     defn = """
@@ -332,6 +363,34 @@ class CrossNERNaturalSciencesConfig(Config):
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    exemplar_1 = """
+    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
+    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
+
+    Answer:
+    1. August Kopff
+    2. Wolf
+    3. Heidelberg
+    4. 617 Patroclus
+    5. Achilles
+    6. Jupiter trojans
+    7. 624 Hektor
+    """
+
+    exemplar_2 = """
+    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
+    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
+
+    Answer:
+    1. Nüsslein-Volhard
+    2. University of Tübingen
+    3. PhD
+    4. Protein-DNA interaction
+    5. RNA polymerase
+    6. Escherichia coli
+    """
+    exemplars = [exemplar_1, exemplar_2]
+
 
 class CrossNERMusicConfig(Config):
     defn = """
@@ -369,6 +428,33 @@ class CrossNERMusicConfig(Config):
     
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    exemplar_1 = """
+    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
+    in the US by the Recording Industry Association of America .. BBC News .
+
+    Answer:
+    1. Stevens
+    2. Tea for Tillerman
+    3. Teaser and the Firecat
+    6. US
+    7. Recording Industry Association of America
+    8. BBC News
+    """
+
+    exemplar_2 = """
+    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
+    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
+
+    Answer:
+    1. Spice Girls
+    2. Brit Awards
+    3. American Music Awards
+    4. MTV Europe Music Awards
+    5. MTV Video Music Award
+    6. World Music Awards
+    """
+    exemplars = [exemplar_1, exemplar_2]
 
 
 class CrossNERLiteratureConfig(Config):
@@ -414,6 +500,41 @@ class CrossNERLiteratureConfig(Config):
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    exemplar_1 = """
+    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
+    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
+    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
+
+    Answer:
+    1. Emperor Toghon Temür
+    2. Yuan dynasty
+    3. Kong Huan
+    4. 孔浣
+    5. Kong Shao
+    6. 孔昭
+    7. China
+    8. Korea
+    9. Goryeo
+    10. Princess Noguk
+    11. Mongolian-born
+    12. Gongmin
+    """
+
+    exemplar_2 = """
+    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
+    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
+
+    Answer: 
+    1. anti-slavery writings
+    2. poems
+    3. Barbara Frietchie
+    4. The Barefoot Boy
+    5. Maud Muller
+    6. Snow-Bound
+    """
+
+    exemplars = [exemplar_1, exemplar_2]
+
 
 class CrossNERAIConfig(Config):
     defn = """
@@ -448,6 +569,32 @@ class CrossNERAIConfig(Config):
     3. MATLAB | True | as it is a product or tool
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    exemplar_1 = """
+    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
+    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
+    H. Zhang , 21 ( 5 ) : e12957 .
+
+    Answers:
+    1. opinion-based recommender system
+    2. text mining
+    3. information retrieval
+    4. sentiment analysis
+    5. Multimodal sentiment analysis
+    6. deep learning
+    7. X.Y. Feng
+    8. H. Zhang
+    """
+
+    exemplar_2 = """
+    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
+    using a that is mostly compatible with MATLAB.
+
+    Answers:
+    1. Octave
+    2. MATLAB
+    """
+    exemplars = [exemplar_1, exemplar_2]
 
 
 class FewNERDConfig(Config):
