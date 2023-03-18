@@ -110,25 +110,25 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
     return f1_means, f1_stds, micro_f1s, df
 
 
-def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, **kwargs):
+def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
-    config.set_config(algorithm, exemplar=exemplar, coT=coT)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
     conll = load_conll2003("validation")
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, **kwargs):
+def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True,
                    **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']
     confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
@@ -138,13 +138,13 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
     i = cats.index(category)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
     dataset = load_cross_ner(category=category)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True,
                         **kwargs):
     splits = ["train", "dev", "test"]
     confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
@@ -153,20 +153,19 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
     i = splits.index(split)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
     dataset = load_few_nerd(category="intra", split=split)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True,  name_meta=""):
+def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, name_meta=""):
     res_path = "results"
-    gpt_limit = 300
+    gpt_limit = 100
     gpt_nruns = 2
     other_limit = 100
-    other_nruns = 3
+    other_nruns = 2
     Algorithm_class = Algorithm
-
 
     if dataset == "conll":
         eval_fn = eval_conll
@@ -182,13 +181,13 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True,  n
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
-                                                      exemplar=exemplar, coT=coT, add_info=subdataset)
+                                                      exemplar=exemplar, coT=coT, defn=defn, add_info=subdataset)
     else:
         model = T5XL(size='xxl')
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
-                                                      coT=coT, limit=other_limit, add_info=subdataset)
-    print(f"Final Results For {dataset} | {subdataset} | {cot} | {exemplar}")
+                                                      coT=coT, defn=defn, limit=other_limit, add_info=subdataset)
+    print(f"Final Results For {name_meta} | {dataset} | {subdataset} | {cot} | {exemplar}")
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
     print(f"micro_f1s: {micro_f1}")
@@ -200,8 +199,12 @@ if __name__ == "__main__":
     from models import T5, GPT3, T5XL
     for cot in [True, False]:
         for exemplar in [True, False]:
-            run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar, subdataset=f"cot_{cot}_exemplar_{exemplar}")
-    for category in ['politics', 'literature', 'ai', 'science', 'music']:
-        run(gpt=True, dataset="crossner", coT=True, exemplar=True, subdataset=category)
-    for split in ["train", "dev", "test"]:
-        run(gpt=True, dataset="fewnerd", coT=True, exemplar=True, subdataset=category)
+            for defn in [True, False]:
+                name_meta = f"coT_{cot}_exemplar_{exemplar}_defn_{defn}"
+                run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
+                for category in ['ai', 'science']:
+                    run(gpt=False, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
+                        name_meta=name_meta)
+                for split in ["test"]:
+                    run(gpt=False, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
+                        name_meta=name_meta)

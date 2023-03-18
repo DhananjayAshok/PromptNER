@@ -87,8 +87,11 @@ class Config:
     2. Second Entity
     """
 
-    def set_config(self, alg, exemplar=True, coT=True):
-        alg.defn = self.defn
+    def set_config(self, alg, exemplar=True, coT=True, defn=True):
+        if defn:
+            alg.defn = self.defn
+        else:
+            alg.defn = ""
         if not exemplar:
             alg.exemplar_task = None
             if coT:
