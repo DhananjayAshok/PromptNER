@@ -242,7 +242,7 @@ def ablation_2():
     for defn in [False, True]:
         d = {}
         name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
-        macro, micro = run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
+        macro, micro = run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
         d["conll"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
         for category in ['ai', 'science']:
             macro, micro = run(gpt=True, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn,
