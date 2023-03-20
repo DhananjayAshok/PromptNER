@@ -71,7 +71,7 @@ class AnswerMapping:
 
     @staticmethod
     @verbose
-    def exemplar_format_list(output, verbose=False, indent_level=0, separator='|'):
+    def exemplar_format_list(output, verbose=False, indent_level=0, separator='|', true_only=True):
         if "\n" in output:
             listed = AnswerMapping.get_numbered_list_items(output, verbose=verbose, indent_level=indent_level+1)
         else:
@@ -97,7 +97,7 @@ class AnswerMapping:
                 else:
                     entity, status = split[0], split[1]
                     print(f"Got more than 3 values for {option} with separator '{separator}'")
-                if status.strip().lower() == "true":
+                if status.strip().lower() == "true" or not true_only:
                     final.append(entity.strip().lower())
                 else:
                     pass

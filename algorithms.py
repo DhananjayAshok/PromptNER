@@ -25,6 +25,17 @@ class BaseAlgorithm:
     def set_model_fn(self, model_fn):
         self.model_fn = model_fn
 
+    @staticmethod
+    def clean_output(answers):
+        answers = list(set(answers))
+        for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
+            while trivial in answers:
+                answers.remove(trivial)
+        for i in range(len(answers)):
+            ans = answers[i].strip().strip(''.join(string.punctuation)).strip()
+            answers[i] = ans
+        return answers
+
 
 class Algorithm(BaseAlgorithm):
     def perform(self, verbose=True):
@@ -46,19 +57,8 @@ class Algorithm(BaseAlgorithm):
                     for mini in minis:
                         new_answers.append(mini)
             answers = new_answers
-        answers = Algorithm.clean_output(answers)
+        answers = BaseAlgorithm.clean_output(answers)
         return answers, metadata
-
-    @staticmethod
-    def clean_output(answers):
-        answers = list(set(answers))
-        for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
-            while trivial in answers:
-                answers.remove(trivial)
-        for i in range(len(answers)):
-            ans = answers[i].strip().strip(''.join(string.punctuation)).strip()
-            answers[i] = ans
-        return answers
 
     def perform_single_query(self, verbose=True):
         if self.exemplar_task is not None:

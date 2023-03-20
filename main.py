@@ -2,7 +2,7 @@ from algorithms import *
 from models import *
 
 from data import *
-from eval import f1
+from run import f1
 
 
 class Quick:
