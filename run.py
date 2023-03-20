@@ -161,7 +161,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
 
 def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, name_meta=""):
     res_path = "results"
-    gpt_limit = 100
+    gpt_limit = 50
     gpt_nruns = 2
     other_limit = 100
     other_nruns = 2
@@ -208,15 +208,17 @@ def ablation_1():
                 d = {}
                 name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
                 macro, micro = run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
-                d["conll"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                d["conll"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
                 for category in ['ai', 'science']:
                     macro, micro = run(gpt=False, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
                         name_meta=name_meta)
-                    d[f"crossner_{category}"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                    d[f"crossner_{category}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
+                                                 (micro * 100).std()]
                 for split in ["test"]:
                     macro, micro = run(gpt=False, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=split,
                         name_meta=name_meta)
-                    d[f"fewnerd_{split}"] = [macro.mean(), macro.std(), micro.mean(), micro.std()]
+                    d[f"fewnerd_{split}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
+                                             (micro * 100).std()]
                 res[(defn, exemplar, cot)] = d
     print(f"{'X'*10}")
     for defn in [False, True]:
@@ -229,6 +231,40 @@ def ablation_1():
                     print(f"\t{key}: {formatted}")
 
 
+def ablation_2():
+    """
+    defn
+    :return:
+    """
+    res = {}
+    cot = True
+    exemplar = True
+    for defn in [False, True]:
+        d = {}
+        name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
+        macro, micro = run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
+        d["conll"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
+        for category in ['ai', 'science']:
+            macro, micro = run(gpt=True, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn,
+                               subdataset=category,
+                               name_meta=name_meta)
+            d[f"crossner_{category}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
+                                         (micro * 100).std()]
+        for split in ["test"]:
+            macro, micro = run(gpt=True, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=split,
+                               name_meta=name_meta)
+            d[f"fewnerd_{split}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
+                                     (micro * 100).std()]
+        res[defn] = d
+    print(f"{'X'*10}")
+    for defn in [False, True]:
+        print(f"Definition: {defn}:")
+        d = res[defn]
+        for key in d:
+            formatted = [f"{i:.3f}" for i in d[key]]
+            print(f"\t{key}: {formatted}")
+
+
 if __name__ == "__main__":
     from models import T5, OpenAIGPT, T5XL
-    ablation_1()
+    ablation_2()
