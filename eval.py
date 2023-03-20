@@ -29,7 +29,7 @@ def get_results_frame(filename, results_dir="results", split_phrases=False, clea
     df = pd.read_csv(results_dir+"/"+filename)
     df["fn"] = df.apply(fn, axis=1)
     df["fp"] = df.apply(fp, axis=1)
-    df["candidates"] = df.apply(lambda x: AnswerMapping.exemplar_format_list(x, true_only=False), axis=1)
+    df["candidates"] = df.apply(lambda x: AnswerMapping.exemplar_format_list(x["meta"], true_only=False), axis=1)
     if split_phrases:
         df["candidates"] = df["candidates"].apply(split)
     if clean_output:
