@@ -36,8 +36,8 @@ class AnswerMapping:
                 c = cand.strip()
                 if c.lower().strip() in ["", "answer:"]:
                     pass
-                elif re.match(r"\d+[.)]+ *", cand):
-                    final.append(cand[2:].strip())
+                elif re.match(r"\d+[.)]+ *", c):
+                    final.append(c[2:].strip())
                 else:
                     print(f"Unable to match nonempty {c}")
                     pass
