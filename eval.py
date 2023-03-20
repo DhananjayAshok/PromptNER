@@ -5,14 +5,14 @@ from algorithms import BaseAlgorithm
 
 
 def fn(x, pred_col="preds"):
-    preds = set(eval(x[pred_col]))
-    entities = set(eval(x["entities"]))
+    preds = set(x[pred_col])
+    entities = set(x["entities"])
     return list(entities.difference(preds))
 
 
 def fp(x, pred_col="preds"):
-    preds = set(eval(x[pred_col]))
-    entities = set(eval(x["entities"]))
+    preds = set(x[pred_col])
+    entities = set(x["entities"])
     return list(preds.difference(entities))
 
 
@@ -27,6 +27,8 @@ def get_results_frame(filename, results_dir="results", split_phrases=False, clea
     if ".csv" not in filename:
         filename = filename + ".csv"
     df = pd.read_csv(results_dir+"/"+filename)
+    df["preds"] = df["preds"].apply(eval)
+    df["entities"] = df["entities"].apply(eval)
     df["fn"] = df.apply(fn, axis=1)
     df["fp"] = df.apply(fp, axis=1)
     df["candidates"] = df.apply(lambda x: AnswerMapping.exemplar_format_list(x["meta"], true_only=False), axis=1)
