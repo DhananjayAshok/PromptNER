@@ -80,6 +80,18 @@ class Config:
     2. Second Candidate | False | Explanation why the word is not an entity
     """
 
+    no_tf_format = """
+    1. First Entity | Explanation why the word is an entity
+    2. Second Entity | Explanation why the word is not an entity
+    """
+
+    tf_format = """
+    Format: 
+
+    1. First Candidate | True
+    2. Second Candidate | False
+    """
+
     exemplar_format = """
     Format:    
     
@@ -87,7 +99,7 @@ class Config:
     2. Second Entity
     """
 
-    def set_config(self, alg, exemplar=True, coT=True, defn=True):
+    def set_config(self, alg, exemplar=True, coT=True, tf=True, defn=True):
         if defn:
             alg.defn = self.defn
         else:
@@ -95,30 +107,54 @@ class Config:
         if not exemplar:
             alg.exemplar_task = None
             if coT:
-                whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
-                             "and for each entry explain why it either is or is not an entity. Answer in the format: \n"
+                if tf:
+                    whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
+                                 "and for each entry explain why it either is or is not an entity. Answer in the format: \n"
 
-                alg.format_task = whole_task + self.cot_format
+                    alg.format_task = whole_task + self.cot_format
+                else:
+                    whole_task = "Q: Given the paragraph below, identify a list of entities " \
+                                 "and for each entry explain why it is an entity. Answer in the format: \n"
+
+                    alg.format_task = whole_task + self.no_tf_format
+
             else:
                 whole_task = "Q: Given the paragraph below, identify the list of entities " \
                              "Answer in the format: \n"
 
-                alg.format_task = whole_task + self.exemplar_format
+                if not tf:
+                    alg.format_task = whole_task + self.exemplar_format
+                else:
+                    alg.format_task = whole_task + self.tf_format
         else:
             alg.format_task = None
             if coT:
-                whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
-                             "and for each entry explain why it either is or is not an entity. \nParagraph:"
-                exemplar_construction = ""
-                for exemplar in self.cot_exemplars:
+                if tf:
+                    whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
+                                 "and for each entry explain why it either is or is not an entity. \nParagraph:"
+                    exemplar_construction = ""
+                    for exemplar in self.cot_exemplars:
+                        exemplar_construction = exemplar_construction + whole_task + "\n"
+                        exemplar_construction = exemplar_construction + exemplar + "\n"
                     exemplar_construction = exemplar_construction + whole_task + "\n"
-                    exemplar_construction = exemplar_construction + exemplar + "\n"
-                exemplar_construction = exemplar_construction + whole_task + "\n"
-                alg.exemplar_task = exemplar_construction
+                    alg.exemplar_task = exemplar_construction
+                else:
+                    whole_task = "Q: Given the paragraph below, identify a list of entities " \
+                                 "and for each entry explain why it is an entity. \nParagraph:"
+                    exemplar_construction = ""
+                    for exemplar in self.no_tf_exemplars:
+                        exemplar_construction = exemplar_construction + whole_task + "\n"
+                        exemplar_construction = exemplar_construction + exemplar + "\n"
+                    exemplar_construction = exemplar_construction + whole_task + "\n"
+                    alg.exemplar_task = exemplar_construction
             else:
                 whole_task = "Q: Given the paragraph below, identify the list of entities \nParagraph:"
                 exemplar_construction = ""
-                for exemplar in self.exemplars:
+                if not tf:
+                    e_list = self.exemplars
+                else:
+                    e_list = self.tf_exemplars
+                for exemplar in e_list:
                     exemplar_construction = exemplar_construction + whole_task + "\n"
                     exemplar_construction = exemplar_construction + exemplar + "\n"
                 exemplar_construction = exemplar_construction + whole_task + "\n"
@@ -171,6 +207,76 @@ class ConllConfig(Config):
     
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
+
+    no_tf_exemplar_1 = """
+        After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+        Answer:
+        1. Somerset | as it is a place
+        2. Grace Road | as it is a place or location
+        3. Leicestershire | as it is the name of a cricket team. 
+        4. England | as it is a place or location
+        5. Andy Caddick | as it is the name of a person. 
+        """
+    no_tf_exemplar_2 = """
+        Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+
+        Answer:
+        1. Florian Rousseau | as it is the name of a person
+        2. France | as it is the name of a place or location
+        3. Ainar Kiksis | as it is the name of a person
+        4. Latvia | as it is the name of a place or location
+
+        """
+
+    no_tf_exemplar_3 = """
+        But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
+
+        Answer:
+        1. 
+
+        """
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2, no_tf_exemplar_3]
+
+    tf_exemplar_1 = """
+        After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+        Answer:
+        1. bowling | False
+        2. Somerset | True
+        3. 83 | False
+        4. morning | False
+        5. Grace Road | True
+        6. Leicestershire | True
+        7. first innings | False
+        8. England | True
+        9. Andy Caddick | True
+        """
+    tf_exemplar_2 = """
+        Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+
+        Answer:
+        1. Florian Rousseau | True
+        2. France | True
+        3. beat | False
+        4. Ainar Kiksis | True
+        5. Latvia | True
+        6. 2-0 | False 
+
+        """
+
+    tf_exemplar_3 = """
+        But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
+
+        Answer:
+        1. money | False
+        2. savings account | False
+        3. 5.3 | False
+        4. June | False
+        5. July | False
+
+        """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2, tf_exemplar_3]
 
     exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
@@ -229,6 +335,56 @@ class GeniaConfig(Config):
 
         """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    no_tf_exemplar_1 = """
+        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+
+        Answer:
+        1. Immunoprecipitation | False | as it is a process
+        2. gp 160  | True | as Glycoprotein Gp 160 it is a type of protein
+        3. polyclonal antibodies | True | as it is a type of cell
+        4. Fos | True | as Fructo-oligosaccharides are proteins
+        5. Jun | True | as it is a type of protein
+        6. AP-1 | True | as Activator protein 1 (AP-1) is a protein
+        """
+    no_tf_exemplar_2 = """
+        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+
+        Answer:
+        1. gp 160 | True | as Glycoprotein Gp 160 it is a type of protein
+        2. mediated | False | as it is a verb
+        3. CD4 molecule | True | as CD4 (cluster of differentiation 4) is a glycoprotein a type of protien
+        4. CD4-IgG | True | as CD4-igG is a homodimer of a hybrid polypeptide
+        5. abrogates | False | as it is a verb
+        6. CD4 negative T cell lines | True | as they are a type of Cell Line
+
+        """
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+
+        Answer:
+        1. Immunoprecipitation | False
+        2. gp 160  | True
+        3. polyclonal antibodies | True
+        4. Fos | True
+        5. Jun | True
+        6. AP-1 | True
+        """
+    tf_exemplar_2 = """
+        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+
+        Answer:
+        1. gp 160 | True
+        2. mediated | False
+        3. CD4 molecule | True
+        4. CD4-IgG | True
+        5. abrogates | False
+        6. CD4 negative T cell lines | True
+
+        """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
         Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
@@ -292,6 +448,72 @@ class CrossNERPoliticsConfig(Config):
     """
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    no_tf_exemplar_1 = """
+        Assisted by his top aide Harry Hopkins and with very strong national support , 
+        he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
+        Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
+
+        Answer:
+        1. Harry Hopkins | as it is a person
+        2. British | as it is a nationality
+        3. Winston Churchill | as it is a person
+        4. Soviet | as it is a nationality
+        5. Joseph Stalin | as it is a person
+        6. Chinese | as it is a nationality
+        7. Chiang Kai-shek | as it is a person
+        8. Allied Powers | as it is an organization
+        9. Axis Powers | as it is an organization
+        """
+
+    no_tf_exemplar_2 = """
+        Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
+        but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
+        who went on to win the 1952 United States presidential election .
+
+        Answer:
+        1. Hoover | as it is a person
+        2. Robert A. Taft | as it is a person
+        3. 1952 Republican National Convention | as it is a political event
+        4. Dwight D. Eisenhower | as it is a person
+        5. 1952 United States presidential election | as it is an election
+        """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+        Assisted by his top aide Harry Hopkins and with very strong national support , 
+        he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
+        Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
+
+        Answer:
+        1. Harry Hopkins | True
+        2. British | True
+        3. Prime Minister | False
+        4. Winston Churchill | True
+        5. Soviet | True
+        6. Joseph Stalin | True
+        7. Chinese | True
+        8. Chiang Kai-shek | True
+        9. Allied Powers | True
+        10. Axis Powers | True
+        """
+
+    tf_exemplar_2 = """
+        Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
+        but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
+        who went on to win the 1952 United States presidential election .
+
+        Answer:
+        1. Hoover | True
+        2. conservative | False
+        3. Robert A. Taft | True
+        4. 1952 Republican National Convention | True
+        5. Dwight D. Eisenhower | True
+        6. 1952 United States presidential election | True
+        """
+
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
     Assisted by his top aide Harry Hopkins and with very strong national support , 
@@ -363,6 +585,64 @@ class CrossNERNaturalSciencesConfig(Config):
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    no_tf_exemplar_1 = """
+    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
+    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
+
+    Answer:
+    1. August Kopff | person
+    2. Wolf | person
+    3. Heidelberg | as it is a university or location
+    4. 617 Patroclus | as it is the name of a scientific discovery
+    5. Achilles | as it is the name of an asteroid
+    7. Jupiter trojans | as it is a group of astronomical objects 
+    8. 624 Hektor | as it is an astronomical object
+    """
+
+    no_tf_exemplar_2 = """
+    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
+    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
+
+    Answer:
+    1. Nüsslein-Volhard | as it is a person
+    2. University of Tübingen | as it is a university
+    3. PhD | True | as it is an award
+    4. Protein-DNA interaction | as it is a scientific discipline
+    5. RNA polymerase | as it is a chemical compound
+    6. Escherichia coli | as it is a scientific specimen
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
+    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
+
+    Answer:
+    1. August Kopff | True
+    2. Wolf | True
+    3. Heidelberg | True
+    4. 617 Patroclus | True
+    5. Achilles | True
+    6. 1907 | False
+    7. Jupiter trojans | True
+    8. 624 Hektor | True
+    """
+
+    tf_exemplar_2 = """
+    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
+    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
+
+    Answer:
+    1. Nüsslein-Volhard | True
+    2. University of Tübingen | True
+    3. PhD | True
+    4. Protein-DNA interaction | True
+    5. RNA polymerase | True
+    6. Escherichia coli | True
+    """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
+
     exemplar_1 = """
     August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
     and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
@@ -429,6 +709,65 @@ class CrossNERMusicConfig(Config):
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    no_tf_exemplar_1 = """
+    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
+    in the US by the Recording Industry Association of America .. BBC News .
+
+    Answer:
+    1. Stevens | as it is a name
+    2. Tea for Tillerman | as it is an album
+    3. Teaser and the Firecat | as it is an album
+    4. US | as it is a country
+    5. Recording Industry Association of America | as it is an organization
+    6. BBC News | as it is an organization
+    """
+
+    no_tf_exemplar_2 = """
+    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
+    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
+
+    Answer:
+    1. Spice Girls | as it is a band
+    2. Brit Awards | as it is an award
+    3. American Music Awards | as it is an award
+    4. MTV Europe Music Awards | as it is an award
+    5. MTV Video Music Award | as it is an award
+    6. World Music Awards | as it is an award
+
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
+    in the US by the Recording Industry Association of America .. BBC News .
+
+    Answer:
+    1. Stevens | True
+    2. Tea for Tillerman | True
+    3. Teaser and the Firecat | True
+    4. 1971 | False
+    5. triple platinum | False
+    6. US | True
+    7. Recording Industry Association of America | True
+    8. BBC News | True
+    """
+
+    tf_exemplar_2 = """
+    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
+    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
+
+    Answer:
+    1. Spice Girls | True
+    2. Brit Awards | True
+    3. American Music Awards | True
+    4. MTV Europe Music Awards | True
+    5. MTV Video Music Award | True
+    6. World Music Awards | True
+
+    """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
+
     exemplar_1 = """
     Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
     in the US by the Recording Industry Association of America .. BBC News .
@@ -437,9 +776,9 @@ class CrossNERMusicConfig(Config):
     1. Stevens
     2. Tea for Tillerman
     3. Teaser and the Firecat
-    6. US
-    7. Recording Industry Association of America
-    8. BBC News
+    4. US
+    5. Recording Industry Association of America
+    6. BBC News
     """
 
     exemplar_2 = """
@@ -499,6 +838,77 @@ class CrossNERLiteratureConfig(Config):
     """
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+
+    no_tf_exemplar_1 = """
+    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
+    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
+    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
+
+    Answer:
+    1. Emperor Toghon Temür | as it is a person
+    2. Yuan dynasty | as it is the name of a dynasty or organization
+    3. Kong Huan | as it is the name of a person
+    4. 孔浣 | as it is a person
+    5. Kong Shao | as it a person 
+    6. 孔昭 | as it a person
+    7. China | as it is a country
+    8. Korea | as it is a country
+    9. Goryeo | as it is a event
+    10. Princess Noguk | as it a person
+    11. Mongolian-born | as it a nationality
+    12. Gongmin | as it is a person 
+    """
+
+    no_tf_exemplar_2 = """
+    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
+    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
+
+    Answer: 
+    1. anti-slavery writings | as it is the theme of writing of some works
+    2. poems | as it is the word poem
+    3. Barbara Frietchie | as it is a poem
+    4. The Barefoot Boy | as it is a poem
+    5. Maud Muller | as it is a poem
+    6. Snow-Bound | as it is a poem 
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
+    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
+    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
+
+    Answer:
+    1. 1351 | False
+    2. Emperor Toghon Temür
+    3. Yuan dynasty | True
+    4. Kong Huan | True
+    5. 孔浣 | True
+    6. Kong Shao | True
+    7. 孔昭 | True
+    8. China | True
+    9. Korea | True
+    10. Goryeo | True
+    11. Princess Noguk | True
+    12. Mongolian-born | True
+    13. Gongmin | True
+    """
+
+    tf_exemplar_2 = """
+    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
+    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
+
+    Answer: 
+    1. anti-slavery writings | True 
+    2. poems | True 
+    3. Barbara Frietchie | True
+    4. The Barefoot Boy | True
+    5. Maud Muller | True
+    6. Snow-Bound | True 
+    """
+
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
     In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
@@ -570,6 +980,60 @@ class CrossNERAIConfig(Config):
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
+    no_tf_exemplar_1 = """
+    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
+    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
+    H. Zhang , 21 ( 5 ) : e12957 .
+
+    Answers:
+    1. opinion-based recommender system | as it is a type of system in AI
+    2. text mining | as it is a technique or method in AI
+    3. information retrieval | as it is a technique or method in AI
+    4. sentiment analysis | as it is a technique or method in AI
+    5. Multimodal sentiment analysis | as it is a technique or method in AI
+    6. deep learning | as it is a technique or method in AI
+    7. X.Y. Feng | as it is a person
+    8. H. Zhang | as it is a person
+    """
+
+    no_tf_exemplar_2 = """
+    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
+    using a that is mostly compatible with MATLAB.
+
+    Answers:
+    1. Octave | as it is a product or tool
+    2. MATLAB | as it is a product or tool
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
+
+    tf_exemplar_1 = """
+        Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
+        information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
+        H. Zhang , 21 ( 5 ) : e12957 .
+
+        Answers:
+        1. opinion-based recommender system | True
+        2. text mining | True
+        3. information retrieval | True
+        4. sentiment analysis | True
+        5. Multimodal sentiment analysis | True
+        6. deep learning | True
+        7. X.Y. Feng | True
+        8. H. Zhang | True
+        """
+
+    tf_exemplar_2 = """
+        Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
+        using a that is mostly compatible with MATLAB.
+
+        Answers:
+        1. Octave | True
+        2. linear and nonlinear problems | False
+        3. MATLAB | True
+        """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
+
     exemplar_1 = """
     Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
     information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
@@ -640,6 +1104,41 @@ class FewNERDINTRATrainConfig(FewNERDConfig):
         6. The Starry Night | True | as it is a piece of art
         """
 
+    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
+        """
+         Answer:
+         1. Albert Einstein | as this is the name of a person
+         2. USD | as this is the name of a currency
+        """
+
+    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
+        """
+        Answer:
+        1. Attila the Hun | as it is a person
+        2. The Starry Night | as it is a piece of art
+        """
+
+    tf_exemplar_1 = FewNERDConfig.q_1 + \
+                     """
+                      Answer:
+                      1. Albert Einstein | True
+                      2. USD | True
+                      3. purchase | False
+                      4. Eiffel tower | False
+                      5. Association of Artificial Intelligence | False
+                     """
+
+    tf_exemplar_2 = FewNERDConfig.q_2 + \
+                     """
+                     Answer:
+                     1. England | False
+                     2. festival | False
+                     3. Grand Jubilee | False
+                     4. 1982 | False
+                     5. Attila the Hun | True
+                     6. The Starry Night | True
+                     """
+
     exemplar_1 = FewNERDConfig.q_1 + \
         """
         Answer:
@@ -654,7 +1153,9 @@ class FewNERDINTRATrainConfig(FewNERDConfig):
         2. The Starry Night
         """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
     exemplars = [exemplar_1, exemplar_2]
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
 
 class FewNERDINTRADevConfig(FewNERDConfig):
@@ -684,6 +1185,39 @@ class FewNERDINTRADevConfig(FewNERDConfig):
          6. The Starry Night | False | as it is a piece of art
          """
 
+    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
+         """
+          Answer:
+          1. Eiffel tower | as this is the name of a building
+         """
+
+    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer:
+         1. Grand Jubilee | as it is an event
+         """
+
+    tf_exemplar_1 = FewNERDConfig.q_1 + \
+         """
+          Answer:
+          1. Albert Einstein | False
+          2. USD | False
+          3. purchase | False
+          4. Eiffel tower | True
+          5. Association of Artificial Intelligence | False
+         """
+
+    tf_exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer:
+         1. England | False
+         2. festival | False
+         3. Grand Jubilee | True 
+         4. 1982 | False
+         5. Attila the Hun | False
+         6. The Starry Night | False
+         """
+
     exemplar_1 = FewNERDConfig.q_1 + \
          """
          Answer:
@@ -696,7 +1230,9 @@ class FewNERDINTRADevConfig(FewNERDConfig):
          1. Grand Jubilee
          """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
     exemplars = [exemplar_1, exemplar_2]
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
 
 class FewNERDINTRATestConfig(FewNERDConfig):
@@ -726,6 +1262,39 @@ class FewNERDINTRATestConfig(FewNERDConfig):
          6. The Starry Night | False | as it is a piece of art
          """
 
+    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
+         """
+          Answer:
+          1. Association of Artificial Intelligence | as this is an organization
+         """
+
+    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
+         """
+         Answer:
+         1. England | as it is a location
+         """
+
+    tf_exemplar_1 = FewNERDConfig.q_1 + \
+                     """
+                      Answer:
+                      1. Albert Einstein | False
+                      2. USD | False
+                      3. purchase | False
+                      4. Eiffel tower | False
+                      5. Association of Artificial Intelligence | True
+                     """
+
+    tf_exemplar_2 = FewNERDConfig.q_2 + \
+                     """
+                     Answer:
+                     1. England | True
+                     2. festival | False
+                     3. Grand Jubilee | False
+                     4. 1982 | False
+                     5. Attila the Hun | False
+                     6. The Starry Night | False
+                     """
+
     exemplar_1 = FewNERDConfig.q_1 + \
          """
          Answer:
@@ -738,4 +1307,6 @@ class FewNERDINTRATestConfig(FewNERDConfig):
          1. England
          """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
     exemplars = [exemplar_1, exemplar_2]
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]

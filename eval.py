@@ -1,5 +1,6 @@
 from data import *
 import pandas as pd
+import string
 from utils import AnswerMapping
 from algorithms import BaseAlgorithm
 
@@ -77,3 +78,43 @@ def bulk_eval():
         split_phrases = "conll" in filename
         get_results_frame(filename, split_phrases=split_phrases)
 
+
+def is_eq(e1, e2):
+    return e1.lower().strip().strip(string.punctuation).strip() == e2.lower().strip().strip(string.punctuation).strip()
+
+
+def f1(true_list, pred_list):
+    true_list = list(set(true_list))
+    pred_list = list(set(pred_list))
+    tp = 0
+    fn = 0
+    fp = 0
+    if len(true_list) == 0:
+        if len(pred_list) != 0:
+            return 0, tp, len(pred_list), fn
+        else:
+            return 1, tp, fp, fn
+    if len(pred_list) == 0:
+        if len(true_list) != 0:
+            return 0, tp, fp, len(true_list)
+        else:
+            return 1, tp, fp, fn
+    for positive in true_list:
+        flag = False
+        for candidate in pred_list:
+            if is_eq(positive, candidate):
+                tp += 1
+                flag = True
+                break
+        if not flag:
+            fn += 1
+    for candidate in pred_list:
+        flag = False
+        for positive in true_list:
+            if is_eq(positive, candidate):
+                flag=True
+                break
+        if not flag:
+            fp += 1
+    f1_score = tp/(tp + 0.5*(fp+fn))
+    return f1_score, tp, fp, fn

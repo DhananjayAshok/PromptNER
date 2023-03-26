@@ -5,47 +5,7 @@ from tqdm import tqdm
 import time
 import pandas as pd
 import openai
-
-
-def is_eq(e1, e2):
-    return e1.lower() == e2.lower()
-
-
-def f1(true_list, pred_list):
-    true_list = list(set(true_list))
-    pred_list = list(set(pred_list))
-    tp = 0
-    fn = 0
-    fp = 0
-    if len(true_list) == 0:
-        if len(pred_list) != 0:
-            return 0, tp, len(pred_list), fn
-        else:
-            return 1, tp, fp, fn
-    if len(pred_list) == 0:
-        if len(true_list) != 0:
-            return 0, tp, fp, len(true_list)
-        else:
-            return 1, tp, fp, fn
-    for positive in true_list:
-        flag = False
-        for candidate in pred_list:
-            if is_eq(positive, candidate):
-                tp += 1
-                flag = True
-                break
-        if not flag:
-            fn += 1
-    for candidate in pred_list:
-        flag = False
-        for positive in true_list:
-            if is_eq(positive, candidate):
-                flag=True
-                break
-        if not flag:
-            fp += 1
-    f1_score = tp/(tp + 0.5*(fp+fn))
-    return f1_score, tp, fp, fn
+from eval import f1, is_eq
 
 
 def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
@@ -110,26 +70,28 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
     return f1_means, f1_stds, micro_f1s, df
 
 
-def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True, **kwargs):
+def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = True
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     conll = load_conll2003("validation")
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True, **kwargs):
+def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True,
-                   **kwargs):
+def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True, **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']
     confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
              CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -138,14 +100,14 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
     i = cats.index(category)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     dataset = load_cross_ner(category=category)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True, defn=True,
-                        **kwargs):
+def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True,  **kwargs):
     splits = ["train", "dev", "test"]
     confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
     split = kwargs.get("add_info")
@@ -153,13 +115,13 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
     i = splits.index(split)
     config = confs[i]
     algorithm.split_phrases = False
-    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn)
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     dataset = load_few_nerd(category="intra", split=split)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
-def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, name_meta=""):
+def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
     res_path = "results"
     gpt_limit = 50
     gpt_nruns = 2
@@ -181,13 +143,16 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
-                                                      exemplar=exemplar, coT=coT, defn=defn, add_info=subdataset)
+                                                      exemplar=exemplar, coT=coT, defn=defn, tf=tf,
+                                                      add_info=subdataset)
     else:
         model = T5XL(size='xxl')
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
-                                                      coT=coT, defn=defn, limit=other_limit, add_info=subdataset)
-    print(f"Final Results For {name_meta} | {dataset} | {subdataset} | {coT} | {exemplar}")
+                                                      coT=coT, defn=defn, tf=tf,
+                                                      limit=other_limit, add_info=subdataset)
+    print(f"Final Results For {name_meta} | {dataset} {'('+subdataset+')' if subdataset is not None else ''}) "
+          f"|CoT {coT} | Exemplar {exemplar} (tf {tf}) |Defn {defn}")
     print(f"f1_means: {f1_mean}")
     print(f"f1_stds: {f1_std}")
     print(f"micro_f1s: {micro_f1}")
@@ -196,75 +161,63 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
     return f1_mean, micro_f1
 
 
-def ablation_1():
-    """
-    defn, exemplar, cot
-    :return:
-    """
-    res = {}
-    for defn in [False, True]:
-        for exemplar in [False, True]:
-            for cot in [False, True]:
-                d = {}
-                name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
-                macro, micro = run(gpt=False, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
-                d["conll"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
-                for category in ['ai', 'science']:
-                    macro, micro = run(gpt=False, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn, subdataset=category,
-                        name_meta=name_meta)
-                    d[f"crossner_{category}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
-                                                 (micro * 100).std()]
-                for split in ["test"]:
-                    macro, micro = run(gpt=False, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=split,
-                        name_meta=name_meta)
-                    d[f"fewnerd_{split}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
-                                             (micro * 100).std()]
-                res[(defn, exemplar, cot)] = d
-    print(f"{'X'*10}")
-    for defn in [False, True]:
-        for exemplar in [False, True]:
-            for cot in [False, True]:
-                print(f"Definition: {defn}, Exemplar: {exemplar}, Chain of Thought: {cot}")
-                d = res[(defn, exemplar, cot)]
-                for key in d:
-                    formatted = [f"{i:.3f}" for i in d[key]]
-                    print(f"\t{key}: {formatted}")
+def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
+                     name_meta="",
+                     dataset_exclude=["genia"], subdataset_exclude=[]):
+    d = {}
+    datasets = ["conll", "genia", "crossner", "fewnerd"]
+    subdatasets = {"crossner": ['politics', 'literature', 'ai', 'science', 'music'],
+                   'fewnerd': ["train", "dev", "test"]}
+    for dataset in datasets:
+        if dataset in dataset_exclude:
+            continue
+        sub = subdatasets.get(dataset, None)
+        if sub is None:
+            macro, micro = run(gpt=gpt, dataset=dataset, coT=coT, exemplar=exemplar, defn=defn, tf=tf,
+                               name_meta=name_meta)
+            d[dataset] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
+        else:
+            for s in sub:
+                if s in subdataset_exclude:
+                    continue
+                macro, micro = run(gpt=gpt, dataset=dataset, subdataset=s,
+                                   coT=coT, exemplar=exemplar, defn=defn, tf=tf, name_meta=name_meta)
+                d[f"{dataset}_{s}"] = [(macro * 100).mean(), (macro * 100).std(),
+                                       (micro * 100).mean(), (micro * 100).std()]
+    return d
 
 
-def ablation_2():
-    """
-    defn
-    :return:
-    """
-    res = {}
-    cot = True
-    exemplar = True
-    for defn in [False, True]:
-        d = {}
-        name_meta = f"defn({defn})_exemplar({exemplar})_cot({cot})"
-        macro, micro = run(gpt=True, dataset="conll", coT=cot, exemplar=exemplar, defn=defn, name_meta=name_meta)
-        d["conll"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
-        for category in ['ai', 'science']:
-            macro, micro = run(gpt=True, dataset="crossner", coT=cot, exemplar=exemplar, defn=defn,
-                               subdataset=category,
-                               name_meta=name_meta)
-            d[f"crossner_{category}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
-                                         (micro * 100).std()]
-        for split in ["test"]:
-            macro, micro = run(gpt=True, dataset="fewnerd", coT=cot, exemplar=exemplar, defn=defn, subdataset=split,
-                               name_meta=name_meta)
-            d[f"fewnerd_{split}"] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(),
-                                     (micro * 100).std()]
-        res[defn] = d
-    print(f"{'X'*10}")
-    for defn in [False, True]:
-        print(f"Definition: {defn}:")
-        d = res[defn]
-        for key in d:
-            formatted = [f"{i:.3f}" for i in d[key]]
-            print(f"\t{key}: {formatted}")
+def ablate_all(gpt=False, vary_cot=True, vary_exemplar=True, vary_tf=True, vary_defn=True,
+               dataset_exclude=["genia"], subdataset_exclude=[]):
+    cot_options = [True, False] if vary_cot else [True]
+    exemplar_options = [True, False] if vary_exemplar else [True]
+    tf_options = [True, False] if vary_tf else [True]
+    defn_options = [True, False] if vary_defn else [True]
+    # first take off cot then tf then example then defn
+    res_d = {}
+    for defn in defn_options:
+        for exemplar in exemplar_options:
+            for cot in cot_options:
+                for tf in tf_options:
+                    key = (defn, exemplar, cot, tf)
+                    res_d[key] = run_all_datasets(gpt=gpt, exemplar=exemplar, coT=cot, defn=defn, tf=tf,
+                     dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+
+    print(f"Ablations Done.... \nFinal Results For All: f1 Macro Mean, f1 Macro Std, f1 Micro Mean, f1 Micro Std")
+    for defn in defn_options:
+        for exemplar in exemplar_options:
+            for cot in cot_options:
+                for tf in tf_options:
+                    key = (defn, exemplar, cot, tf)
+                    print(f"Defn: {key[0]}\tExemplar: {key[1]}\tCoT: {key[2]}\ttf:{key[3]}")
+                    for dataset_key in res_d[key]:
+                        print(f"\t{dataset_key}")
+                        formatted = [f"{i:.3f}" for i in res_d[key][dataset_key]]
+                        print(f"\t\t{formatted}")
+
+    return
 
 
 if __name__ == "__main__":
-    from models import T5, OpenAIGPT, T5XL
-    ablation_2()
+    from models import OpenAIGPT, T5XL
+    ablate_all()

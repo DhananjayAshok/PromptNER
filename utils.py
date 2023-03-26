@@ -90,8 +90,12 @@ class AnswerMapping:
                     print(f"Got only one value for {option} with separator '{separator}'")
                     continue
                 elif len(split) == 2:
-                    #print(f"Got two on {split}")
-                    entity, status = split
+                    entity, depends = split
+                    if depends.strip().lower() in ["true", "false"]:
+                        status = depends
+                    else:
+                        status = "true"
+                        explanation = depends
                 elif len(split) == 3:
                     entity, status, explanation = split
                 else:

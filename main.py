@@ -2,7 +2,8 @@ from algorithms import *
 from models import *
 
 from data import *
-from run import f1
+from eval import f1, is_eq
+import string
 
 
 class Quick:
@@ -14,7 +15,7 @@ class Quick:
         print(f"Paragraph: {para}")
         e.set_para(para)
         e.set_model_fn(model)
-        config.set_config(e, exemplar=True, coT=True)
+        config.set_config(e, exemplar=False, coT=False, tf=True)
         ans = e.perform(verbose=verbose)[0]
         Quick.analyze(entities, ans)
         return
@@ -23,7 +24,7 @@ class Quick:
     def analyze(entities, ans):
         print(entities)
         print(ans)
-        entities_small = [e.lower() for e in entities]
+        entities_small = [e.lower().strip().strip(string.punctuation).strip() for e in entities]
         print(f"False positives: {set(entities_small).difference(set(ans))}")
         print(f"False negatives: {set(ans).difference(set(entities_small))}")
         print(f"F1: {f1(entities, ans)}")
@@ -32,13 +33,11 @@ class Quick:
     @staticmethod
     def genia(i, model=OpenAIGPT.query, verbose=False):
         config = GeniaConfig()
-        config.set_config(e)
         return Quick.dataset(i, train_dset=genia_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
     def conll(i, model=OpenAIGPT.query, verbose=False):
         config = ConllConfig()
-        config.set_config(e)
         return Quick.dataset(i, train_dset=conll_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
@@ -50,7 +49,6 @@ class Quick:
         j = cats.index(category)
         print(j)
         config = confs[j]
-        config.set_config(e)
         return Quick.dataset(i, train_dset=cross_ner_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
@@ -60,7 +58,6 @@ class Quick:
         assert split in splits
         j = splits.index(split)
         config = confs[j]
-        config.set_config(e)
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
