@@ -215,10 +215,24 @@ def ablate_all(gpt=False, vary_cot=True, vary_exemplar=True, vary_tf=True, vary_
                         print(f"\t{dataset_key}")
                         formatted = [f"{i:.3f}" for i in res_d[key][dataset_key]]
                         print(f"\t\t{formatted}")
+    return
 
+
+def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["politics", "literature", "train", "dev"]):
+    ablate_all(gpt=gpt, vary_cot=True, vary_defn=False, vary_exemplar=False, vary_tf=False,
+               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+    ablate_all(gpt=gpt, vary_cot=False, vary_defn=True, vary_exemplar=False, vary_tf=False,
+               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+    ablate_all(gpt=gpt, vary_cot=False, vary_defn=False, vary_exemplar=True, vary_tf=False,
+               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+    ablate_all(gpt=gpt, vary_cot=False, vary_defn=False, vary_exemplar=False, vary_tf=True,
+               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
     return
 
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=True, dataset_exclude=["conll", "genia"], subdataset_exclude=["politics", "literature"])
+    OpenAIGPT.model = "davinci"
+    run_all_datasets(gpt=True, name_meta="GPT3")
+    OpenAIGPT.model = "gpt-4"
+    ablate_best(gpt=True)
