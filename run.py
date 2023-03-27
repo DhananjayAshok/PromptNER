@@ -23,7 +23,8 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         flag = False
         while not flag:
             try:
-                preds, metadata = algorithm.perform(verbose=False)
+                print(f"Paragraph: {algorithm.para}")
+                preds, metadata = algorithm.perform(verbose=True)
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
@@ -123,7 +124,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
 
 def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
     res_path = "results"
-    gpt_limit = 50
+    gpt_limit = 20
     gpt_nruns = 2
     other_limit = 100
     other_nruns = 2
@@ -140,14 +141,14 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
 
     if gpt:
         model = OpenAIGPT()
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=gpt_nruns,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
                                                       exemplar=exemplar, coT=coT, defn=defn, tf=tf,
                                                       add_info=subdataset)
     else:
         model = T5XL(size='xxl')
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model.query, Algorithm_class(), n_runs=other_nruns,
+        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, tf=tf,
                                                       limit=other_limit, add_info=subdataset)
@@ -220,4 +221,4 @@ def ablate_all(gpt=False, vary_cot=True, vary_exemplar=True, vary_tf=True, vary_
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    ablate_all()
+    run_all_datasets(gpt=True, dataset_exclude=["conll", "genia"], subdataset_exclude=["politics", "literature"])

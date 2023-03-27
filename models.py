@@ -10,19 +10,24 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 class OpenAIGPT:
-    model = "text-davinci-003"
-    #model = "gpt-4"
+    #model = "text-davinci-003"
+    model = "gpt-4"
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
     def request_model(prompt):
-        if OpenAIGPT.model in ["gpt-4"]:
-            return openai.ChatCompletion.create(model=OpenAIGPT.model, messages=[{"role": "user", "content": prompt}])
-        else:
-            return openai.Completion.create(model=OpenAIGPT.model, prompt=prompt, max_tokens=250)
+        return openai.Completion.create(model=OpenAIGPT.model, prompt=prompt, max_tokens=250)
+
+    @staticmethod
+    def request_chat_model(msgs):
+        messages = []
+        for message in msgs:
+            content, role = message
+            messages.append({"role": role, "content": content})
+        return openai.ChatCompletion.create(model=OpenAIGPT.model, messages=messages)
 
     @staticmethod
     def decode_response(response):
-        if OpenAIGPT.model in ["gpt-4"]:
+        if OpenAIGPT.is_chat():
             return response["choices"][0]["message"]["content"]
         else:
             return response["choices"][0]["text"]
@@ -30,6 +35,21 @@ class OpenAIGPT:
     @staticmethod
     def query(prompt):
         return OpenAIGPT.decode_response(OpenAIGPT.request_model(prompt))
+
+    @staticmethod
+    def chat_query(msgs):
+        return OpenAIGPT.decode_response(OpenAIGPT.request_chat_model(msgs))
+
+    @staticmethod
+    def is_chat():
+        return OpenAIGPT.model in ["gpt-4"]
+
+    @staticmethod
+    def __call__(inputs):
+        if OpenAIGPT.is_chat():
+            return OpenAIGPT.chat_query(inputs)
+        else:
+            return OpenAIGPT.query(inputs)
 
 
 class HugginFaceModel:

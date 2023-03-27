@@ -2,12 +2,14 @@ import string
 import utils
 from utils import AnswerMapping
 from nltk.corpus import stopwords
-
+from models import OpenAIGPT
 
 class BaseAlgorithm:
     defn = "An entity is an object, place, individual, being, title, proper noun or process that has a distinct and " \
            "independent existence. The name of a collection of entities is also an entity. Adjectives, verbs, numbers, " \
            "adverbs, abstract concepts are not entities. Dates, years and times are not entities"
+
+    chatbot_init = "You are an entity recognition system. "
 
     # if [] = n then there are O(n^2) phrase groupings
 
@@ -18,6 +20,7 @@ class BaseAlgorithm:
         self.split_phrases = split_phrases
         self.exemplar_task = None
         self.format_task = None
+        self.whole_task = None
 
     def set_para(self, para):
         self.para = para
@@ -45,7 +48,13 @@ class Algorithm(BaseAlgorithm):
         :param paragraph:
         :return:
         """
-        answers, metadata = self.perform_single_query(verbose=verbose)
+        if isinstance(self.model_fn, OpenAIGPT):
+            if self.model_fn.is_chat():
+                answers, metadata = self.perform_chat_query(verbose=verbose)
+            else:
+                answers, metadata = self.perform_single_query(verbose=verbose)
+        else:
+            answers, metadata = self.perform_single_query(verbose=verbose)
         answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
@@ -68,6 +77,26 @@ class Algorithm(BaseAlgorithm):
         else:
             task = self.defn + "\n" + self.format_task + f"\nParagraph: {self.para} \nAnswer:"
             output = self.model_fn(task)
+            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+        return final, output
+
+    def perform_chat_query(self, verbose=True):
+        if self.exemplar_task is not None:
+            system_msg = self.chatbot_init + self.defn + " " + self.whole_task
+            msgs = [(system_msg, "system")]
+            for exemplar in self.exemplars:
+                if "Answer:" not in exemplar:
+                    raise ValueError(f"Something is wrong, exemplar: \n{exemplar} \n Does not have an 'Answer:'")
+                ans_index = exemplar.index("Answer:")
+                msgs.append((exemplar[:ans_index+7].strip(), "user"))
+                msgs.append((exemplar[ans_index+7:].strip(), "assistant"))
+            msgs.append((f"\nParagraph: {self.para} \nAnswer:", "user"))
+            output = self.model_fn(msgs)
+            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+        else:
+            system_msg = self.chatbot_init + self.defn + " " + self.format_task
+            msgs = [(system_msg, "system"), (f"\nParagraph: {self.para} \nAnswer:", "user")]
+            output = self.model_fn(msgs)
             final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
         return final, output
 
@@ -132,6 +161,8 @@ class Config:
                 if tf:
                     whole_task = "Q: Given the paragraph below, identify a list of possible entities " \
                                  "and for each entry explain why it either is or is not an entity. \nParagraph:"
+                    alg.whole_task = whole_task
+                    alg.exemplars = self.cot_exemplars
                     exemplar_construction = ""
                     for exemplar in self.cot_exemplars:
                         exemplar_construction = exemplar_construction + whole_task + "\n"
@@ -141,6 +172,8 @@ class Config:
                 else:
                     whole_task = "Q: Given the paragraph below, identify a list of entities " \
                                  "and for each entry explain why it is an entity. \nParagraph:"
+                    alg.whole_task = whole_task
+                    alg.exemplars = self.no_tf_exemplars
                     exemplar_construction = ""
                     for exemplar in self.no_tf_exemplars:
                         exemplar_construction = exemplar_construction + whole_task + "\n"
@@ -154,6 +187,8 @@ class Config:
                     e_list = self.exemplars
                 else:
                     e_list = self.tf_exemplars
+                alg.whole_task = whole_task
+                alg.exemplars = e_list
                 for exemplar in e_list:
                     exemplar_construction = exemplar_construction + whole_task + "\n"
                     exemplar_construction = exemplar_construction + exemplar + "\n"
@@ -958,7 +993,7 @@ class CrossNERAIConfig(Config):
     information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
     H. Zhang , 21 ( 5 ) : e12957 .
     
-    Answers:
+    Answer:
     1. opinion-based recommender system | True | as it is a type of system in AI
     2. text mining | True | as it is a technique or method in AI
     3. information retrieval | True | as it is a technique or method in AI
@@ -973,7 +1008,7 @@ class CrossNERAIConfig(Config):
     Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
     using a that is mostly compatible with MATLAB.
     
-    Answers:
+    Answer:
     1. Octave | True | as it is a product or tool
     2. linear and nonlinear problems | False | as it is a type of problem
     3. MATLAB | True | as it is a product or tool
@@ -985,7 +1020,7 @@ class CrossNERAIConfig(Config):
     information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
     H. Zhang , 21 ( 5 ) : e12957 .
 
-    Answers:
+    Answer:
     1. opinion-based recommender system | as it is a type of system in AI
     2. text mining | as it is a technique or method in AI
     3. information retrieval | as it is a technique or method in AI
@@ -1000,7 +1035,7 @@ class CrossNERAIConfig(Config):
     Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
     using a that is mostly compatible with MATLAB.
 
-    Answers:
+    Answer:
     1. Octave | as it is a product or tool
     2. MATLAB | as it is a product or tool
     """
@@ -1012,7 +1047,7 @@ class CrossNERAIConfig(Config):
         information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
         H. Zhang , 21 ( 5 ) : e12957 .
 
-        Answers:
+        Answer:
         1. opinion-based recommender system | True
         2. text mining | True
         3. information retrieval | True
@@ -1027,7 +1062,7 @@ class CrossNERAIConfig(Config):
         Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
         using a that is mostly compatible with MATLAB.
 
-        Answers:
+        Answer:
         1. Octave | True
         2. linear and nonlinear problems | False
         3. MATLAB | True
@@ -1039,7 +1074,7 @@ class CrossNERAIConfig(Config):
     information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
     H. Zhang , 21 ( 5 ) : e12957 .
 
-    Answers:
+    Answer:
     1. opinion-based recommender system
     2. text mining
     3. information retrieval
@@ -1054,7 +1089,7 @@ class CrossNERAIConfig(Config):
     Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
     using a that is mostly compatible with MATLAB.
 
-    Answers:
+    Answer:
     1. Octave
     2. MATLAB
     """

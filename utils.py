@@ -73,7 +73,7 @@ class AnswerMapping:
     @verbose
     def exemplar_format_list(output, verbose=False, indent_level=0, separator='|', true_only=True):
         if "\n" in output:
-            listed = AnswerMapping.get_numbered_list_items(output, verbose=verbose, indent_level=indent_level+1)
+            listed = AnswerMapping.get_numbered_list_items(output, verbose=False, indent_level=indent_level+1)
         else:
             listed = []
             split = re.split(r"\d+[.)]", output)

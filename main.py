@@ -8,14 +8,14 @@ import string
 
 class Quick:
     @staticmethod
-    def dataset(i, train_dset, config, model, verbose):
+    def dataset(i, train_dset, config, model=OpenAIGPT(), verbose=True):
         q = train_dset.loc[i]
         para = q['text']
         entities = q['entities']
         print(f"Paragraph: {para}")
         e.set_para(para)
         e.set_model_fn(model)
-        config.set_config(e, exemplar=False, coT=False, tf=True)
+        config.set_config(e, exemplar=True, coT=True, tf=True)
         ans = e.perform(verbose=verbose)[0]
         Quick.analyze(entities, ans)
         return
@@ -31,17 +31,17 @@ class Quick:
 
 
     @staticmethod
-    def genia(i, model=OpenAIGPT.query, verbose=False):
+    def genia(i, model=OpenAIGPT(), verbose=True):
         config = GeniaConfig()
-        return Quick.dataset(i, train_dset=genia_train, config=config, model=model, verbose=verbose)
+        return Quick.dataset(i, train_dset=genia_train, config=config, verbose=verbose)
 
     @staticmethod
-    def conll(i, model=OpenAIGPT.query, verbose=False):
+    def conll(i, model=OpenAIGPT(), verbose=True):
         config = ConllConfig()
         return Quick.dataset(i, train_dset=conll_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def crossner(i, model=OpenAIGPT.query, verbose=False, category="politics"):
+    def crossner(i, model=OpenAIGPT(), verbose=True, category="politics"):
         cats = ['politics', 'literature', 'ai', 'science', 'music']
         confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
                  CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -52,7 +52,7 @@ class Quick:
         return Quick.dataset(i, train_dset=cross_ner_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def fewnerd(i, model=OpenAIGPT.query, verbose=False, split="train"):
+    def fewnerd(i, model=OpenAIGPT(), verbose=True, split="train"):
         splits = ["train", "dev", "test"]
         confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
         assert split in splits
