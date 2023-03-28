@@ -147,7 +147,7 @@ def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, de
                                                       exemplar=exemplar, coT=coT, defn=defn, tf=tf,
                                                       add_info=subdataset)
     else:
-        model = T5XL(size='xxl')
+        model = T5XL(size='xl')
         f1_mean, f1_std, micro_f1, mistakes = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, tf=tf,
@@ -219,20 +219,25 @@ def ablate_all(gpt=False, vary_cot=True, vary_exemplar=True, vary_tf=True, vary_
 
 
 def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["politics", "literature", "train", "dev"]):
-    ablate_all(gpt=gpt, vary_cot=True, vary_defn=False, vary_exemplar=False, vary_tf=False,
-               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
-    ablate_all(gpt=gpt, vary_cot=False, vary_defn=True, vary_exemplar=False, vary_tf=False,
-               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
-    ablate_all(gpt=gpt, vary_cot=False, vary_defn=False, vary_exemplar=True, vary_tf=False,
-               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
-    ablate_all(gpt=gpt, vary_cot=False, vary_defn=False, vary_exemplar=False, vary_tf=True,
-               dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+    configurations = [(True, True, True, True), (False, True, True, True),
+                      (True, False, True, True), (True, True, False, True), (True, True, True, False)]
+    res_d = {}
+    for defn, exemplar, cot, tf in configurations:
+        key = (defn, exemplar, cot, tf)
+        res_d[key] = run_all_datasets(gpt=gpt, exemplar=exemplar, coT=cot, defn=defn, tf=tf,
+         dataset_exclude=dataset_exclude, subdataset_exclude=subdataset_exclude)
+
+    print(f"Ablations Done.... \nFinal Results For All: f1 Macro Mean, f1 Macro Std, f1 Micro Mean, f1 Micro Std")
+    for defn, exemplar, cot, tf in configurations:
+        key = (defn, exemplar, cot, tf)
+        print(f"Defn: {key[0]}\tExemplar: {key[1]}\tCoT: {key[2]}\ttf:{key[3]}")
+        for dataset_key in res_d[key]:
+            print(f"\t{dataset_key}")
+            formatted = [f"{i:.3f}" for i in res_d[key][dataset_key]]
+            print(f"\t\t{formatted}")
     return
 
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    OpenAIGPT.model = "davinci"
-    run_all_datasets(gpt=True, name_meta="GPT3")
-    OpenAIGPT.model = "gpt-4"
-    ablate_best(gpt=True)
+    run_all_datasets(gpt=False)
