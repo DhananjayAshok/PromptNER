@@ -1,0 +1,525 @@
+,idx,para,entities,preds,meta,f1
+0,148,"Sowa received a BS in mathematics from Massachusetts Institute of Technology in 1962 , an MA in applied from Harvard University in 1966 , and a PhD in computer science from the Vrije Universiteit Brussel in 1999 on a dissertation titled Knowledge Representation : Logical , Philosophical , and Computational Foundations .","['Sowa', 'BS', 'mathematics', 'Massachusetts Institute of Technology', 'MA', 'applied', 'Harvard University', 'PhD', 'computer science', 'Vrije Universiteit Brussel', 'Knowledge Representation : Logical , Philosophical , and Computational Foundations']","['massachusetts institute of technology', 'sowa', 'vrije universiteit brussel', 'harvard university']","1. Sowa | True | as it is a person
+2. BS in mathematics | False | as it is a degree
+3. Massachusetts Institute of Technology | True | as it is a university
+4. 1962 | False | as it is a date
+5. MA in applied | False | as it is an incomplete degree
+6. Harvard University | True | as it is a university
+7. 1966 | False | as it is a date
+8. PhD in computer science | False | as it is a degree
+9. Vrije Universiteit Brussel | True | as it is a university
+10. 1999 | False | as it is a date
+11. Knowledge Representation: Logical, Philosophical, and Computational Foundations | False | as it is a dissertation title",0.5333333333333333
+1,295,An empirical whitening transform is obtained by estimating the covariance ( e.g. by maximum likelihood ) and subsequently constructing a corresponding estimated whitening matrix ( e.g. by Cholesky decomposition ) .,"['whitening transform', 'covariance', 'maximum likelihood', 'whitening matrix', 'Cholesky decomposition']","['cholesky decomposition', 'empirical whitening transform', 'estimated whitening matrix', 'maximum likelihood']","1. empirical whitening transform | True | as it is a technique or method in AI
+    2. covariance | False | as it is a statistical term or measure
+    3. maximum likelihood | True | as it is a statistical method in AI
+    4. estimated whitening matrix | True | as it is a concept in AI
+    5. Cholesky decomposition | True | as it is a mathematical method used in AI",0.4444444444444444
+2,238,"It is based on the Bilingual evaluation understudy metric , but with some alterations .",['Bilingual evaluation understudy metric'],['bilingual evaluation understudy metric'],1. Bilingual evaluation understudy metric | True | as it is a metric in artificial intelligence,1.0
+3,134,The following MATLAB code demonstrates a concrete solution for solving the non-linear system of equations presented in the previous section : See also,"['MATLAB', 'non-linear system']",['matlab'],"1. MATLAB | True | as it is a product or tool
+2. non-linear system of equations | False | as it is a type of problem
+3. previous section | False | as it is a reference to another part of a text",0.6666666666666666
+4,334,"In English , WordNet is an example of a semantic network .","['English', 'WordNet']","['wordnet', 'semantic network']","1. English | False | as it is a language
+2. WordNet | True | as it is a product or tool
+3. semantic network | True | as it is a concept in AI",0.5
+5,226,"In 2007 , at the International Conference on Computer Vision , Terzopoulos was awarded the inaugural IEEE PAMI Computer Vision Distinguished Researcher Award for pioneering and sustained research on deformable models and their applications .","['International Conference on Computer Vision', 'Terzopoulos', 'inaugural IEEE PAMI Computer Vision Distinguished Researcher Award']","['international conference on computer vision', 'terzopoulos', 'deformable models', 'ieee pami computer vision distinguished researcher award']","1. 2007 | False | as it is a date
+2. International Conference on Computer Vision | True | as it is an event/organization
+3. Terzopoulos | True | as it is a person
+4. IEEE PAMI Computer Vision Distinguished Researcher Award | True | as it is an award or recognition
+5. deformable models | True | as it is a field or technique in AI
+6. applications | False | as it is a general term",0.5714285714285714
+6,50,An example of a typical computer vision computation pipeline for Facial recognition system using k -NN including feature extraction and dimension reduction pre-processing steps ( usually implemented with OpenCV ) :,"['computer vision', 'Facial recognition system', 'k -NN', 'feature extraction', 'dimension reduction', 'OpenCV']","['facial recognition system', 'feature extraction', 'opencv', 'k-nn (k-nearest neighbors', 'computer vision', 'dimension reduction']","1. computer vision | True | as it is a field of Artificial Intelligence
+2. Facial recognition system | True | as it is a task in artificial intelligence
+3. k-NN (k-Nearest Neighbors) | True | as it is an algorithm
+4. feature extraction | True | as it is a technique or method in AI
+5. dimension reduction | True | as it is a technique or method in AI
+6. pre-processing steps | False | as it is a general concept, not an entity
+7. OpenCV | True | as it is a product or tool",0.8333333333333334
+7,102,"Unimate was the first industrial robot ,","['Unimate', 'industrial robot']",['unimate'],1. Unimate | True | as it is a product (industrial robot),0.6666666666666666
+8,149,"Since paraphrase recognition can be posed as a classification problem , most standard evaluations metrics such as accuracy , f1 score , or an ROC curve do relatively well .","['paraphrase recognition', 'classification', 'accuracy', 'f1 score', 'ROC curve']","['paraphrase recognition', 'accuracy', 'f1 score', 'roc curve']","1. paraphrase recognition | True | as it is a task in artificial intelligence
+    2. classification problem | False | as it is a type of problem, not an entity
+    3. accuracy | True | as it is a metric in artificial intelligence
+    4. f1 score | True | as it is a metric in artificial intelligence
+    5. ROC curve | True | as it is a metric in artificial intelligence",0.8888888888888888
+9,123,The method of defining the linked list specifies the use of a depth-first search or a breadth-first search .,"['depth-first search', 'breadth-first search']","['breadth-first search', 'linked list', 'depth-first search']","1. linked list | True | as it is a data structure in AI or computer science
+2. depth-first search | True | as it is an algorithm in AI or computer science
+3. breadth-first search | True | as it is an algorithm in AI or computer science",0.8
+10,342,"John McCarthy is one of the founding fathers of artificial intelligence , together with Alan Turing , Marvin Minsky , Allen Newell , and Herbert A. Simon .","['John McCarthy', 'artificial intelligence', 'Alan Turing', 'Marvin Minsky', 'Allen Newell', 'Herbert A. Simon']","['alan turing', 'marvin minsky', 'allen newell', 'john mccarthy', 'artificial intelligence', 'herbert a. simon']","1. John McCarthy | True | as it is a person
+2. artificial intelligence | True | as it is a field of AI
+3. Alan Turing | True | as it is a person
+4. Marvin Minsky | True | as it is a person
+5. Allen Newell | True | as it is a person
+6. Herbert A. Simon | True | as it is a person",1.0
+11,140,"In this process , which is known as cross-validation , the MSE is often called the mean squared prediction error , and is computed as","['cross-validation', 'MSE', 'mean squared prediction error']","['mse', 'mean squared prediction error', 'cross-validation']","1. cross-validation | True | as it is a technique or method in AI
+2. MSE | True | as it is a metric in artificial intelligence
+3. mean squared prediction error | True | as it is a metric in artificial intelligence",1.0
+12,131,"Where BLEU simply calculates n-gram precision adding equal weight to each one , NIST also calculates how informative a particular n-gram is .","['BLEU', 'n-gram precision', 'NIST', 'n-gram']","['bleu', 'nist']","1. BLEU | True | as it is a metric in artificial intelligence
+2. NIST | True | as it is a metric in artificial intelligence
+3. n-gram | False | as it is a concept or term, not an entity",0.6666666666666666
+13,51,"It has a rich set of features , libraries for constraint logic programming , multithreading , unit testing , GUI , interfacing to Java , ODBC and others , literate programming , a web server , SGML , RDF , RDFS , developer tools ( including an IDE with a GUI debugger and GUI profiler ) , and extensive documentation .","['constraint logic programming', 'multithreading', 'unit testing', 'GUI', 'Java', 'ODBC', 'literate programming', 'web server', 'SGML', 'RDF', 'RDFS', 'IDE', 'GUI debugger', 'GUI profiler']","['rdfs', 'gui', 'constraint logic programming', 'gui profiler', 'rdf', 'web server', 'multithreading', 'unit testing', 'ide', 'odbc', 'sgml', 'gui debugger', 'literate programming', 'java']","1. constraint logic programming | True | as it is a technique or method in AI
+2. multithreading | True | as it is a concept or technique in computer programming
+3. unit testing | True | as it is a software testing methodology
+4. GUI | True | as it is a type of user interface
+5. Java | True | as it is a programming language
+6. ODBC | True | as it is a standard for accessing database systems (Open Database Connectivity)
+7. literate programming | True | as it is a type of programming methodology
+8. web server | True | as it is a product/system used to host web applications
+9. SGML | True | as it is a markup language standard (Standard Generalized Markup Language)
+10. RDF | True | as it is a data format (Resource Description Framework)
+11. RDFS | True | as it is a data format (RDF Schema)
+12. developer tools | False | as it is a broad category of tools
+13. IDE | True | as it is a type of software application (Integrated Development Environment)
+14. GUI debugger | True | as it is a specific type of developer tool
+15. GUI profiler | True | as it is a specific type of developer tool
+16. extensive documentation | False | as it is a description and not a specific entity",1.0
+14,270,Machine learning is strongly related to pattern recognition and originates from artificial intelligence .,"['Machine learning', 'pattern recognition', 'artificial intelligence']","['pattern recognition', 'artificial intelligence', 'machine learning']","1. Machine learning | True | as it is a field of Artificial Intelligence
+2. pattern recognition | True | as it is a task in artificial intelligence
+3. artificial intelligence | True | as it is a field of study",1.0
+15,338,"His thesis advisor was Professor Cordell Green , and his thesis / oral committee included Professors Edward Feigenbaum Joshua Lederberg , Paul Cohen , Allen Newell , Herbert Simon , .","['Cordell Green', 'Edward Feigenbaum', 'Joshua Lederberg', 'Paul Cohen', 'Allen Newell', 'Herbert Simon']","['paul cohen', 'herbert simon', 'joshua lederberg', 'allen newell', 'cordell green', 'edward feigenbaum']","1. Cordell Green | True | as it is a person (Professor)
+2. Edward Feigenbaum | True | as it is a person (Professor)
+3. Joshua Lederberg | True | as it is a person (Professor)
+4. Paul Cohen | True | as it is a person (Professor)
+5. Allen Newell | True | as it is a person (Professor)
+6. Herbert Simon | True | as it is a person (Professor)",1.0
+16,246,"( February 20 , 1912 - August 11 , 2011 ) was an American inventor , best known for creating Unimate , the first industrial robot .","['American', 'Unimate']",['unimate'],"1. February 20, 1912 | False | as it is a date
+    2. August 11, 2011 | False | as it is a date
+    3. American inventor | False | as it is a description
+    4. Unimate | True | as it is a product (first industrial robot)",0.6666666666666666
+17,208,"The unknown parameters in each vector βsubk / sub are typically jointly estimated by maximum a posteriori ( MAP ) estimation , which is an extension of maximum likelihood using regularization of the weights to prevent pathological solutions ( usually a squared regularizing function , which is equivalent to placing a zero-mean Gaussian prior distribution on the weights , but other distributions are also possible ) .","['maximum a posteriori', 'MAP', 'maximum likelihood', 'regularization', 'squared regularizing function', 'zero-mean Gaussian prior distribution']","['zero-mean gaussian prior distribution', 'squared regularizing function', 'maximum a posteriori (map', 'maximum likelihood', 'regularization']","1. maximum a posteriori (MAP) | True | as it is a technique or method in AI
+2. maximum likelihood | True | as it is a technique or method in AI
+3. regularization | True | as it is a technique or method in AI
+4. squared regularizing function | True | as it is a technique or method in AI
+5. zero-mean Gaussian prior distribution | True | as it is an algorithm or concept in AI",0.7272727272727273
+18,30,"This research was fundamental to the development of modern techniques of speech synthesis , reading machines for the blind , the study of speech perception and speech recognition , and the development of the motor theory of speech perception .","['speech synthesis', 'reading machines for the blind', 'speech perception', 'speech recognition', 'motor theory of speech perception']","['modern techniques of speech synthesis', 'reading machines for the blind', 'speech recognition', 'motor theory of speech perception']","1. research | False | as it is a general process or activity
+2. modern techniques of speech synthesis | True | as it is a technique or method in AI
+3. reading machines for the blind | True | as it is a type of product or system in AI
+4. study of speech perception | False | as it is a research subject or field, not a specific entity
+5. speech recognition | True | as it is a technique or method in AI
+6. motor theory of speech perception | True | as it is a specific theory in speech recognition and AI",0.6666666666666666
+19,268,"It has been applied successfully to various problems , including robot control , elevator scheduling , telecommunications , , checkers and Go ( AlphaGo ) .","['robot control', 'elevator scheduling', 'telecommunications', 'checkers', 'Go', 'AlphaGo']",['alphago'],"1. robot control | False | as it is an application or use case, not an entity
+    2. elevator scheduling | False | as it is an application or use case, not an entity
+    3. telecommunications | False | as it is an industry, not an entity
+    4. checkers | False | as it is a game, not an entity
+    5. Go | False | as it is a game, not an entity
+    6. AlphaGo | True | as it is an AI product or algorithm",0.2857142857142857
+20,146,"The F-score is often used in the field of information retrieval for measuring search , document classification , and query classification performance. and so F_beta is seen in wide application .","['F-score', 'information retrieval', 'search', 'document classification', 'query classification', 'F_beta']","['f-score', 'document classification', 'query classification', 'f_beta', 'information retrieval']","1. F-score | True | as it is a metric in artificial intelligence
+    2. information retrieval | True | as it is a field of Artificial Intelligence
+    3. search | False | as it is a verb
+    4. document classification | True | as it is a task in artificial intelligence
+    5. query classification | True | as it is a task in artificial intelligence
+    6. F_beta | True | as it is a metric in artificial intelligence",0.9090909090909091
+21,106,"Since 2009 , the recurrent neural network s and deep feedforward neural networks developed in the research group of Jürgen Schmidhuber at the Swiss AI Lab IDSIA have won several international handwriting competitions ..","['recurrent neural network', 'deep feedforward neural networks', 'Jürgen Schmidhuber', 'Swiss AI Lab IDSIA', 'international handwriting competitions']","['swiss ai lab idsia', 'deep feedforward neural networks', 'recurrent neural network', 'jürgen schmidhuber']","1. recurrent neural network | True | as it is a technique or method in AI
+    2. deep feedforward neural networks | True | as it is a technique or method in AI
+    3. Jürgen Schmidhuber | True | as it is a person
+    4. Swiss AI Lab IDSIA | True | as it is an organization or research lab
+    5. international handwriting competitions | False | as it is an event rather than an entity
+    6. 2009 | False | as it is a date, not an entity",0.8888888888888888
+22,201,"Early interlingual MT systems were also built at Stanford in the 1970s by Roger Schank and Yorick Wilks ; the former became the basis of a commercial system for the transfer of funds , and the latter 's code is preserved at The Computer Museum at Boston as the first interlingual machine translation system .","['interlingual MT systems', 'Stanford', 'Roger Schank', 'Yorick Wilks', 'The Computer Museum', 'Boston', 'interlingual machine translation system']","['interlingual mt systems', 'roger schank', 'first interlingual machine translation system', 'stanford', 'yorick wilks', 'the computer museum at boston']","1. interlingual MT systems | True | as it refers to a type of machine translation system
+2. Stanford | True | as it is a location or university
+3. Roger Schank | True | as it is a person
+4. Yorick Wilks | True | as it is a person
+5. commercial system | False | as it is a category/type of system, rather than a specific system or entity
+6. transfer of funds | False | as it is an application, not an entity itself
+7. The Computer Museum at Boston | True | as it is an organization or location
+8. first interlingual machine translation system | True | as it is a specific system in AI",0.6153846153846154
+23,321,"Application areas of kernel methods are diverse and include geostatistics , kriging , inverse distance weighting , 3D reconstruction , bioinformatics , chemoinformatics , information extraction and handwriting recognition .","['kernel methods', 'geostatistics', 'kriging', 'inverse distance weighting', '3D reconstruction', 'bioinformatics', 'chemoinformatics', 'information extraction', 'handwriting recognition']","['kriging', 'bioinformatics', '3d reconstruction', 'inverse distance weighting', 'geostatistics', 'information extraction', 'handwriting recognition', 'kernel methods', 'chemoinformatics']","1. kernel methods | True | as it is a technique or method in AI
+2. geostatistics | True | as it is an application area or field
+3. kriging | True | as it is a technique or method in geostatistics
+4. inverse distance weighting | True | as it is a technique or method in geostatistics
+5. 3D reconstruction | True | as it is an application area or field
+6. bioinformatics | True | as it is an application area or field
+7. chemoinformatics | True | as it is an application area or field
+8. information extraction | True | as it is a technique or method in AI
+9. handwriting recognition | True | as it is a task in AI",1.0
+24,250,"If named entities cannot be recognized by the machine translator , they may be erroneously translated as common nouns , which would most likely not affect the Bilingual evaluation understudy rating of the translation but would change the text 's human readability .","['machine translator', 'Bilingual evaluation understudy']","['machine translator', 'bilingual evaluation understudy rating']","1. machine translator | True | as it is a type of AI system
+2. named entities | False | as it refers to a category, not a specific entity
+3. common nouns | False | as it is a type of word, not an entity
+4. Bilingual evaluation understudy rating | True | as it is a metric in artificial intelligence
+5. translation | False | as it is a process or action, not an entity
+6. human readability | False | as it is a quality or characteristic, not an entity",0.5
+25,192,"Or combine the F-measure with the R-square evaluated for the raw model output and the target ; or the cost / gain matrix with the correlation coefficient , and so on .","['F-measure', 'R-square', 'cost / gain matrix', 'correlation coefficient']","['cost/gain matrix', 'correlation coefficient', 'r-square', 'f-measure']","1. F-measure | True | as it is a metric in artificial intelligence
+2. R-square | True | as it is a metric in artificial intelligence
+3. raw model output | False | as it is a type of output, not an entity
+4. target | False | as it is a goal or objective, not an entity
+5. cost/gain matrix | True | as it is a concept in artificial intelligence
+6. correlation coefficient | True | as it is a metric in artificial intelligence",0.75
+26,175,"Rotten Tomatoes is a top 1000 site , placing around # 400 globally and top 150 for the US only , according to website ranker Alexa .","['Rotten Tomatoes', 'US', 'Alexa']","['alexa', 'rotten tomatoes']","1. Rotten Tomatoes | True | as it is an organization or website
+2. top 1000 site | False | as it is an adjective and not an entity
+3. # 400 globally | False | as it is a ranking and not an entity
+4. top 150 for the US only | False | as it is a ranking and not an entity
+5. website ranker | False | as it is an adjective and not an entity
+6. Alexa | True | as it is a product or tool for website ranking",0.8
+27,349,"Other active youth-led climate groups include Extinction Rebellion , the Sunrise Movement , SustainUS , the , among others working at both the transnational and local levels .","['Extinction Rebellion', 'Sunrise Movement', 'SustainUS']","['sustainus', 'sunrise movement', 'extinction rebellion']","1. Extinction Rebellion | True | as it is an organization
+2. Sunrise Movement | True | as it is an organization
+3. SustainUS | True | as it is an organization
+4. transnational and local levels | False | as they are not entities",1.0
+28,117,"The four outcomes can be formulated in a 2 × 2 contingency table or confusion matrix , as follows :","['contingency table', 'confusion matrix']","['2 × 2 contingency table', 'confusion matrix']","1. 2 × 2 contingency table | True | as it is a technique or method in AI
+2. confusion matrix | True | as it is a technique or method in AI",0.5
+29,157,"These Intelligent Chatbots make use of all kinds of artificial intelligence like image moderation and natural language understanding ( NLU ) , natural language generation ( NLG ) , machine learning and deep learning .","['Chatbots', 'artificial intelligence', 'image moderation', 'natural language understanding', 'NLU', 'natural language generation', 'NLG', 'machine learning', 'deep learning']","['intelligent chatbots', 'machine learning', 'natural language generation (nlg', 'deep learning', 'natural language understanding (nlu', 'image moderation', 'artificial intelligence']","1. Intelligent Chatbots | True | as it is a type of AI system
+2. artificial intelligence | True | as it is a field of AI
+3. image moderation | True | as it is a technique or method in AI
+4. natural language understanding (NLU) | True | as it is a technique or method in AI
+5. natural language generation (NLG) | True | as it is a technique or method in AI
+6. machine learning | True | as it is a technique or method in AI
+7. deep learning | True | as it is a technique or method in AI",0.5
+30,83,"She has held the positions of President , Vice President , and Secretary-Treasurer of the Association for Computational Linguistics and has been a board member and secretary of the board of the Computing Research Association .","['Association for Computational Linguistics', 'Computing Research Association']","['computing research association', 'association for computational linguistics']","1. President | False | as it is a position, not an entity
+    2. Vice President | False | as it is a position, not an entity
+    3. Secretary-Treasurer | False | as it is a position, not an entity
+    4. Association for Computational Linguistics | True | as it is an organization
+    5. board member | False | as it is a position, not an entity
+    6. secretary of the board | False | as it is a position, not an entity
+    7. Computing Research Association | True | as it is an organization",1.0
+31,259,"If the regularization function Many algorithms exist for solving such problems ; popular ones for linear classification include Stochastic gradient descent ) gradient descent , L-BFGS , coordinate descent and Newton method s .","['linear classification', 'Stochastic gradient descent', 'gradient descent', 'L-BFGS', 'coordinate descent', 'Newton method']","['newton method', 'coordinate descent', 'stochastic gradient descent', 'l-bfgs', 'gradient descent', 'linear classification']","1. regularization function | False | as it is a type of function, not an entity
+    2. algorithms | False | as it is a general term, not a specific entity
+    3. linear classification | True | as it is a task in artificial intelligence
+    4. Stochastic gradient descent | True | as it is an algorithm
+    5. gradient descent | True | as it is an algorithm
+    6. L-BFGS | True | as it is an algorithm
+    7. coordinate descent | True | as it is an algorithm
+    8. Newton method | True | as it is an algorithm",1.0
+32,13,", ( 2002 ) as the automatic metric for Machine translation ( MT ) evaluation , many other methods have been proposed to revise or improve it , such as TER , METEOR , Banerjee and Lavie , ( 2005 ) etc .","['Machine translation', 'MT', 'TER', 'METEOR', 'Banerjee', 'Lavie']","['ter', 'lavie', 'banerjee', 'meteor', 'machine translation (mt']","1. 2002 | False | as it is a date
+2. automatic metric | False | as it is an adjective describing a metric type
+3. Machine translation (MT) | True | as it is a task in artificial intelligence
+4. evaluation | False | as it is an activity or process, not an entity
+5. TER | True | as it is a metric in artificial intelligence
+6. METEOR | True | as it is a metric in artificial intelligence
+7. Banerjee | True | as it is a person
+8. Lavie | True | as it is a person
+9. 2005 | False | as it is a date",0.7272727272727273
+33,88,"In many practical applications , parameter estimation for naive Bayes models uses the method of maximum likelihood ; other words , one can work with the naive Bayes model without accepting Bayesian probability or using any Bayesian methods .","['parameter estimation', 'naive Bayes models', 'maximum likelihood', 'naive Bayes', 'Bayesian probability', 'Bayesian methods']","['bayesian probability', 'bayesian methods', 'maximum likelihood', 'naive bayes models']","1. parameter estimation | False | as it is a process or method
+2. naive Bayes models | True | as it is an algorithm in AI
+3. maximum likelihood | True | as it is a technique or method in AI
+4. Bayesian probability | True | as it is a concept or field within AI
+5. Bayesian methods | True | as it is a category of techniques or methods in AI",0.8
+34,64,"In 2001 , Mehler was elected a foreign honorary member of the American Academy of Arts and Sciences , and in 2003 , he was elected a Fellow of the American Association for the Advancement of Science .","['Mehler', 'American Academy of Arts and Sciences', 'American Association for the Advancement of Science']","['american academy of arts and sciences', 'mehler', 'american association for the advancement of science']","1. Mehler | True | as it is a person
+2. American Academy of Arts and Sciences | True | as it is an organization
+3. 2001 | False | as it is a date
+4. 2003 | False | as it is a date
+5. Fellow | False | as it is an adjective
+6. American Association for the Advancement of Science | True | as it is an organization",1.0
+35,145,"( Nevertheless , the ReLU activation function , which is non-differentiable at 0 , has become quite popular , e.g. in AlexNet )","['ReLU activation function', 'AlexNet']","['alexnet', 'relu activation function']","1. ReLU activation function | True | as it is a technique or method in AI
+2. AlexNet | True | as it is an algorithm or model in AI",1.0
+36,183,"Čapek was born in Hronov , Bohemia ( Austria-Hungary , later Czechoslovakia , now the Czech Republic ) in 1887 .","['Čapek', 'Hronov', 'Bohemia', 'Austria-Hungary', 'Czechoslovakia', 'Czech Republic']","['austria-hungary', 'czech republic', 'čapek', 'hronov', 'bohemia', 'czechoslovakia']","1. Čapek | True | as it is a person (Karel Čapek)
+2. Hronov | True | as it is a location (town)
+3. Bohemia | True | as it is a historical region (geographical entity)
+4. Austria-Hungary | True | as it is a historical country
+5. Czechoslovakia | True | as it is a historical country
+6. Czech Republic | True | as it is a country
+7. 1887 | False | as it is a date (year)",1.0
+37,189,"It involves the fields of computer vision or machine vision , and medical imaging , and makes heavy use of pattern recognition , digital geometry , and signal processing .","['computer vision', 'machine vision', 'medical imaging', 'pattern recognition', 'digital geometry', 'signal processing']","['pattern recognition', 'digital geometry', 'medical imaging', 'signal processing', 'machine vision', 'computer vision']","1. computer vision | True | as it is a field of Artificial Intelligence
+    2. machine vision | True | as it is a field of Artificial Intelligence
+    3. medical imaging | True | as it is an application in AI
+    4. pattern recognition | True | as it is a technique or method in AI
+    5. digital geometry | True | as it is a technique or method
+    6. signal processing | True | as it is a technique or method",1.0
+38,35,"Concepts are used as formal tools or models in mathematics , computer science , databases and artificial intelligence where they are sometimes called classes , schema or categories .","['mathematics', 'computer science', 'databases', 'artificial intelligence']","['mathematics', 'artificial intelligence', 'databases', 'computer science']","1. Concepts | False | as it is an abstract term and not an entity
+2. formal tools | False | as it is a term describing the usage of concepts
+3. models | False | as it is a general term describing representations
+4. mathematics | True | as it is a field of study
+5. computer science | True | as it is a field of study
+6. databases | True | as it is a field of study and technology
+7. artificial intelligence | True | as it is a field of study
+8. classes | False | as it is a term describing concepts in certain contexts
+9. schema | False | as it is a term describing concepts in certain contexts
+10. categories | False | as it is a term describing concepts in certain contexts",1.0
+39,324,"He spent his childhood years in Paris , France , where his parents had emigrated from Lithuania in the early 1920s .","['Paris', 'France', 'Lithuania']","['france', 'paris', 'lithuania']","1. Paris | True | as it is a location or city
+2. France | True | as it is a country
+3. Lithuania | True | as it is a country
+4. early 1920s | False | as it is a time period and not an entity",1.0
+40,225,"in their work for pedestrian detection , that was first described at the BMVC in 2009 .","['pedestrian detection', 'BMVC']","['pedestrian detection', 'bmvc (british machine vision conference']","1. pedestrian detection | True | as it is a task in artificial intelligence
+2. BMVC (British Machine Vision Conference) | True | as it is an organization or event",0.5
+41,325,"Previously , Dr. Paulos held the Cooper-Siegel Associate Professor Chair in the School of Computer Science at Carnegie Mellon University where he was faculty within the Human-Computer Interaction Institute with courtesy faculty appointments in the Robotics Institute and in the Entertainment Technology Center .","['Dr. Paulos', 'Cooper-Siegel Associate Professor Chair', 'School of Computer Science', 'Carnegie Mellon University', 'Human-Computer Interaction Institute', 'Robotics Institute', 'Entertainment Technology Center']","['carnegie mellon university', 'robotics institute', 'school of computer science', 'human-computer interaction institute', 'dr. paulos', 'entertainment technology center']","1. Dr. Paulos | True | as it is a person
+    2. Cooper-Siegel Associate Professor Chair | False | as it is a position or title, not an entity
+    3. School of Computer Science | True | as it is a part of an organization or university
+    4. Carnegie Mellon University | True | as it is a university
+    5. Human-Computer Interaction Institute | True | as it is a part of an organization or university
+    6. Robotics Institute | True | as it is a part of an organization or university
+    7. Entertainment Technology Center | True | as it is a part of an organization or university",0.9230769230769231
+42,313,They presented their method and results in SIGGRAPH 2000 .,['SIGGRAPH 2000'],['siggraph 2000'],1. SIGGRAPH 2000 | True | as it is an organization or conference event,1.0
+43,20,"Despite those humanoid robots for utilitarian uses , there are some humanoid robots which aims at entertainment uses , such as Sony ' s QRIO and Wow Wee ' s RoboSapien .","['Sony', 'QRIO', 'Wow Wee', 'RoboSapien']","['sony', 'wow wee', 'humanoid robots', 'qrio', 'robosapien']","1. humanoid robots | True | as it is a type of product in AI
+2. utilitarian uses | False | as it is a purpose or application, not an entity
+3. entertainment uses | False | as it is a purpose or application, not an entity
+4. Sony | True | as it is an organization
+5. QRIO | True | as it is a product
+6. Wow Wee | True | as it is an organization
+7. RoboSapien | True | as it is a product",0.8888888888888888
+44,67,"In machine learning , the perceptron is an algorithm for supervised learning of binary classification .","['machine learning', 'perceptron', 'supervised learning', 'binary classification']","['perceptron', 'machine learning', 'supervised learning', 'binary classification']","1. machine learning | True | as it is a field of Artificial Intelligence
+2. perceptron | True | as it is an algorithm in machine learning
+3. supervised learning | True | as it is a category of machine learning techniques
+4. binary classification | True | as it is a task in artificial intelligence",1.0
+45,256,"Continuing the example using the maximum likelihood estimator , the probability density function ( pdf ) of the noise for one sample mathw n / math is","['maximum likelihood estimator', 'probability density function', 'pdf']","['probability density function (pdf', 'maximum likelihood estimator']","1. maximum likelihood estimator | True | as it is a technique or method in AI
+2. probability density function (pdf) | True | as it is a mathematical concept related to AI",0.4
+46,108,"In 1857 , at the request of the Tokugawa Shogunate , a group of Dutch engineers began work on the Nagasaki Yotetsusho , a modern , Western-style foundry and shipyard near the Dutch settlement of Dejima , at Nagasaki .","['Tokugawa Shogunate', 'Dutch', 'Nagasaki Yotetsusho', 'Dutch', 'Dejima', 'Nagasaki']","['nagasaki', 'tokugawa shogunate', 'dutch engineers', 'nagasaki yotetsusho', 'dejima']","1. 1857 | False | as it is a date
+    2. Tokugawa Shogunate | True | as it is an organization or government entity
+    3. Dutch engineers | True | as it is a group of people by profession
+    4. Nagasaki Yotetsusho | True | as it is a location or facility
+    5. Dejima | True | as it is a location or settlement
+    6. Nagasaki | True | as it is a location or city",0.8
+47,317,Indy is written in Java and therefore runs on most modern operating system s .,"['Indy', 'Java', 'operating system']","['java', 'indy']","1. Indy | True | as it is a product or tool
+2. Java | True | as it is a programming language
+3. modern operating system | False | as this reference describes a category, but not a specific entity",0.8
+48,33,"Only a few non-Japanese companies ultimately managed to survive in this market , the major ones being : Adept Technology , Stäubli , the Sweden - Switzerland company ABB Asea Brown Boveri , the Germany company KUKA Robotics and the Italy company Comau .","['Adept Technology', 'Stäubli', 'Sweden', 'Switzerland', 'ABB Asea Brown Boveri', 'Germany', 'KUKA Robotics', 'Italy', 'Comau']","['italy', 'kuka robotics', 'adept technology', 'sweden', 'germany', 'switzerland', 'stäubli', 'comau', 'abb asea brown boveri']","1. non-Japanese companies | False | as it is a category but not a specific entity
+2. Adept Technology | True | as it is a company or organization
+3. Stäubli | True | as it is a company or organization
+4. ABB Asea Brown Boveri | True | as it is a company or organization
+5. Sweden | True | as it is a country
+6. Switzerland | True | as it is a country
+7. Germany | True | as it is a country
+8. KUKA Robotics | True | as it is a company or organization
+9. Italy | True | as it is a country
+10. Comau | True | as it is a company or organization",1.0
+49,119,"A popular application for serial robots in today 's industry is the pick-and-place assembly robot , called a SCARA robot , which has four degrees of freedom .","['assembly', 'SCARA robot']","['pick-and-place assembly robot', 'serial robots', 'scara robot']","1. serial robots | True | as it is a type of robot or system in AI
+2. pick-and-place assembly robot | True | as it is a type of robot or system in AI
+3. SCARA robot | True | as it is a type of robot or system in AI
+4. degrees of freedom | False | as it is a concept or characteristic, not an entity",0.4
+50,299,Collaborative filtering ( CF ) is a technique used by recommender system s .,"['Collaborative filtering', 'CF', 'recommender system']","['collaborative filtering', 'recommender systems']","1. Collaborative filtering | True | as it is a technique or method in AI
+2. recommender systems | True | as it is a type of system in AI",0.4
+51,58,"The natural gradient of mathE f ( x ) / math , complying with the Fisher information metric ( an informational distance measure between probability distributions and the curvature of the relative entropy ) , now reads","['natural gradient', 'Fisher information metric', 'relative entropy']",['fisher information metric'],"1. natural gradient | False | as it is a mathematical concept/term, not an entity
+2. mathE f ( x ) | False | as it is a mathematical term, not an entity
+3. Fisher information metric | True | as it is a metric in artificial intelligence
+4. informational distance measure | False | as it is a concept or term, not an entity
+5. probability distributions | False | as it is a mathematical concept, not an entity
+6. relative entropy | False | as it is a concept/term, not an entity",0.5
+52,139,"One of the first versions of the theorem was proved by George Cybenko in 1989 for sigmoid function activation functions. Cybenko G. ( 1989 ) , 2 ( 4 ) , 303-314 .","['George Cybenko', 'sigmoid function', 'Cybenko G.']","['george cybenko', 'sigmoid function activation functions', 'cybenko g']","1. theorem | False | as it is a concept or idea, not an entity
+2. George Cybenko | True | as it is a person
+3. 1989 | False | as it is a date, not an entity
+4. sigmoid function activation functions | True | as it is a technique or method in AI
+5. Cybenko G. | True | as it is a reference to a person, George Cybenko
+6. 2 (4), 303-314 | False | as it is a citation format or reference number, not an entity",0.6666666666666666
+53,348,"Natural language processing ( NLP ) is a subfield of linguistics , computer science , information engineering , and artificial intelligence concerned with the interactions between computers and human ( natural ) languages , in particular how to program computers to process and analyze large amounts of natural language data .","['Natural language processing', 'NLP', 'linguistics', 'computer science', 'information engineering', 'artificial intelligence']","['information engineering', 'linguistics', 'natural language processing (nlp', 'computer science', 'artificial intelligence']","1. Natural language processing (NLP) | True | as it is a field of Artificial Intelligence
+2. linguistics | True | as it is a field related to the study of language
+3. computer science | True | as it is a field or discipline
+4. information engineering | True | as it is a field or discipline
+5. artificial intelligence | True | as it is a field or discipline
+6. computers | False | as it is a general term and not a specific entity
+7. human (natural) languages | False | as it refers to a general group rather than a specific entity
+8. program computers | False | as it is an action or process
+9. natural language data | False | as it refers to a general category of data",0.7272727272727273
+54,223,"Time series are used in statistics , signal processing , pattern recognition , econometrics , mathematical finance , weather forecasting , earthquake prediction , electroencephalography , control engineering , astronomy , communications engineering , and largely in any domain of applied science and engineering which involves temporal measurements .","['Time series', 'statistics', 'signal processing', 'pattern recognition', 'econometrics', 'mathematical finance', 'weather forecasting', 'earthquake prediction', 'electroencephalography', 'control engineering', 'astronomy', 'communications engineering', 'applied science']","['pattern recognition', 'signal processing', 'mathematical finance', 'statistics', 'earthquake prediction', 'econometrics', 'weather forecasting', 'control engineering', 'communications engineering']","1. Time series | False | as it is a concept in statistics and not an entity
+2. statistics | True | as it is a field related to AI
+3. signal processing | True | as it is a field related to AI
+4. pattern recognition | True | as it is a field related to AI
+5. econometrics | True | as it is a field related to AI
+6. mathematical finance | True | as it is a field related to AI
+7. weather forecasting | True | as it is an application in AI
+8. earthquake prediction | True | as it is an application in AI
+9. electroencephalography | False | as it is a method in neuroscience and not an AI-related entity
+10. control engineering | True | as it is a field related to AI
+11. astronomy | False | as it is a field in science but not directly an AI-related entity
+12. communications engineering | True | as it is a field related to AI
+13. applied science | False | as it is a category in science and not an AI-related entity
+14. engineering | False | as it is a category in science and not an AI-related entity
+15. temporal measurements | False | as it is a concept and not an entity",0.8181818181818182
+55,239,This is an example implementation in MATLAB / Octave :,"['MATLAB', 'Octave']","['octave', 'matlab']","1. MATLAB | True | as it is a product or tool
+2. Octave | True | as it is a product or tool",1.0
+56,254,"SURF was first published by Herbert Bay , Tinne Tuytelaars , and Luc Van Gool , and presented at the 2006 European Conference on Computer Vision .","['SURF', 'Herbert Bay', 'Tinne Tuytelaars', 'Luc Van Gool', '2006 European Conference on Computer Vision']","['2006 european conference on computer vision', 'surf', 'tinne tuytelaars', 'luc van gool', 'herbert bay']","1. SURF | True | as it is an algorithm
+2. Herbert Bay | True | as it is a person
+3. Tinne Tuytelaars | True | as it is a person
+4. Luc Van Gool | True | as it is a person
+5. 2006 European Conference on Computer Vision | True | as it is an event or organization",1.0
+57,282,"In practice , machine learning algorithms cope with that either by employing a convex approximation to the 0-1 loss function ( like hinge loss for Support vector machine ) , which is easier to optimize , or by imposing assumptions on the distribution mathP ( x , y ) / math ( and thus stop being agnostic learning algorithms to which the above result applies ) .","['convex approximation', 'loss function', 'hinge loss', 'Support vector machine', 'agnostic learning algorithms']","['agnostic learning algorithms', 'support vector machine', 'machine learning algorithms', 'hinge loss']","1. machine learning algorithms | True | as it is a category of algorithms in AI
+    2. convex approximation | False | as it is a mathematical_term, not an entity specific to AI
+    3. 0-1 loss function | False | as it is a mathematical term, not an entity specific to AI
+    4. hinge loss | True | as it is a metric in artificial intelligence
+    5. Support vector machine | True | as it is an algorithm in AI
+    6. mathP(x, y) | False | as it is a mathematical representation, not an entity
+    7. agnostic learning algorithms | True | as it is a category of algorithms or method in AI",0.6666666666666666
+58,252,Improved maximum likelihood method ( IMLM ) is a combination of two MLM ( maximum likelihood ) estimators .,"['maximum likelihood method', 'IMLM', 'MLM', 'maximum likelihood']","['improved maximum likelihood method (imlm', 'mlm (maximum likelihood) estimators']","1. Improved maximum likelihood method (IMLM) | True | as it is an algorithm or method in AI
+2. MLM (maximum likelihood) estimators | True | as it is an algorithm or method in AI",0.0
+59,121,"As a platform , LinguaStream provides an extensive Java API .","['LinguaStream', 'Java API']","['linguastream', 'java api']","1. LinguaStream | True | as it is a product or tool
+2. Java API | True | as it is an application programming interface in AI",1.0
+60,279,"Typical discriminative models include logistic regression ( LR ) , support vector machine s ( SVM ) , conditional random fields ( CRFs ) ( specified over an undirected graph ) , decision trees , neural networks , and many others .","['logistic regression', 'LR', 'support vector machine', 'SVM', 'conditional random fields', 'CRFs', 'undirected graph', 'decision trees', 'neural networks']","['support vector machines', 'logistic regression', 'neural networks', 'discriminative models', 'conditional random fields', 'decision trees']","1. discriminative models | True | as it is a category of models in AI
+2. logistic regression | True | as it is a technique or method in AI
+3. LR | False | as it is an abbreviation of logistic regression, which is already listed above
+4. support vector machines | True | as it is a technique or method in AI
+5. SVM | False | as it is an abbreviation of support vector machines, which is already listed above
+6. conditional random fields | True | as it is a technique or method in AI
+7. CRFs | False | as it is an abbreviation of conditional random fields, which is already listed above
+8. undirected graph | False | as it is a description of a data structure, not an entity
+9. decision trees | True | as it is a technique or method in AI
+10. neural networks | True | as it is a technique or method in AI",0.5333333333333333
+61,25,"Expo II was announced as being the locale for the world premiere of several films never before seen in 3D , including The Diamond Wizard and the Universal short , Hawaiian Nights with Mamie Van Doren and Pinky Lee .","['Expo II', 'The Diamond Wizard', 'Hawaiian Nights', 'Mamie Van Doren', 'Pinky Lee']","['the diamond wizard', 'expo ii', 'hawaiian nights', 'mamie van doren', 'universal', 'pinky lee']","1. Expo II | True | as it is an event/location
+2. The Diamond Wizard | True | as it is a film or product
+3. Universal | True | as it is an organization (Universal Pictures or Universal Studios)
+4. Hawaiian Nights | True | as it is a film or product
+5. Mamie Van Doren | True | as it is a person
+6. Pinky Lee | True | as it is a person",0.9090909090909091
+62,68,"She has also served as Area Chair of several machine learning and vision conferences including Conference on Neural Information Processing Systems , International Conference on Learning Representations , Conference on Computer Vision and Pattern Recognition , International Conference on Computer Vision , and European Conference on Computer Vision .","['machine learning', 'vision', 'Conference on Neural Information Processing Systems', 'International Conference on Learning Representations', 'Conference on Computer Vision and Pattern Recognition', 'International Conference on Computer Vision', 'European Conference on Computer Vision']","['conference on neural information processing systems', 'international conference on computer vision', 'machine learning', 'european conference on computer vision', 'international conference on learning representations', 'conference on computer vision and pattern recognition']","1. Area Chair | False | as it is a role or position
+2. machine learning | True | as it is a field of Artificial Intelligence
+3. vision conferences | False | as it is a general term and not a specific entity
+4. Conference on Neural Information Processing Systems | True | as it is an organization or event
+5. International Conference on Learning Representations | True | as it is an organization or event
+6. Conference on Computer Vision and Pattern Recognition | True | as it is an organization or event
+7. International Conference on Computer Vision | True | as it is an organization or event
+8. European Conference on Computer Vision | True | as it is an organization or event",0.9230769230769231
+63,110,He subsequently extended an invitation for Wydner to attend the annual meeting of the American Translators Association that following October where the Weidner Machine Translation System hailed a hoped-for breakthrough in machine translation .,"['Wydner', 'American Translators Association', 'Weidner Machine Translation System', 'machine translation']","['wydner', 'american translators association', 'machine translation', 'weidner machine translation system']","1. Wydner | True | as it is a person
+2. American Translators Association | True | as it is an organization
+3. October | False | as it is a date or time
+4. Weidner Machine Translation System | True | as it is a product or system in AI
+5. machine translation | True | as it is a task in artificial intelligence",1.0
+64,79,"Several metrics use WordNet , a manually constructed lexical database of English words .","['WordNet', 'English']",['wordnet'],"1. WordNet | True | as it is a lexical database, a type of product or tool
+2. English words | False | as it is referring to a language's words and not an entity",0.6666666666666666
+65,86,A collaborative robot or cobot is a robot that can safely and effectively interact with human workers while performing simple industrial tasks .,"['collaborative robot', 'cobot']","['collaborative robot', 'cobot']","1. collaborative robot | True | as it is a type of robot or AI system
+2. cobot | True | as it is an abbreviation for collaborative robot and refers to the same type of robot
+3. human workers | False | as it is a general term for people who work, not a specific person or entity
+4. industrial tasks | False | as it is a general term for tasks, not a specific task or entity",1.0
+66,326,"In 1969 Victor Scheinman at Stanford University invented the Stanford arm , an all-electric , 6-axis articulated robot designed to permit an arm solution .","['Victor Scheinman', 'Stanford University', 'Stanford arm', '6-axis articulated robot', 'arm solution']","['victor scheinman', 'stanford arm', 'stanford university', '6-axis articulated robot']","1. 1969 | False | as it is a date
+    2. Victor Scheinman | True | as it is a person
+    3. Stanford University | True | as it is a university
+    4. Stanford arm | True | as it is a product (robotic arm)
+    5. 6-axis articulated robot | True | as it is a type of robot (product)",0.8888888888888888
+67,69,The condensation algorithm has also been used for facial recognition system in a video sequence .,"['condensation algorithm', 'facial recognition system']","['facial recognition system', 'condensation algorithm']","1. condensation algorithm | True | as it is an algorithm
+2. facial recognition system | True | as it is a system in AI
+3. video sequence | False | as it is a type of data or subject, not an entity",1.0
+68,216,ACM Fellow ( 2015 ) br Association for Computational Linguistics Fellow ( 2011 ) br AAAI Fellow ( 1994 ) br International Speech Communication Association Fellow ( 2011 ) br Honorary Doctorate ( Hedersdoktor ) KTH Royal Institute of Technology ( 2007 ) br Columbia Engineering School Alumni Association Distinguished Faculty Teaching award ( 2009 ) br IEEE James L. Flanagan Speech and Audio Processing Award ( 2011 ) br ISCA Medal for Scientific Achievement ( 2011 ),"['ACM Fellow', 'Association for Computational Linguistics Fellow', 'AAAI Fellow', 'International Speech Communication Association Fellow', 'Honorary Doctorate', 'KTH Royal Institute of Technology', 'Columbia Engineering School Alumni Association Distinguished Faculty Teaching award', 'IEEE James L. Flanagan Speech and Audio Processing Award', 'ISCA Medal for Scientific Achievement']","['association for computational linguistics fellow', 'columbia engineering school alumni association distinguished faculty teaching award', 'aaai fellow', 'ieee james l. flanagan speech and audio processing award', 'international speech communication association fellow', 'acm fellow', 'isca medal for scientific achievement', 'kth royal institute of technology']","1. ACM Fellow | True | as it is an award or recognition from an organization
+2. 2015 | False | as it is a date (not an entity)
+3. Association for Computational Linguistics Fellow | True | as it is an award or recognition from an organization
+4. 2011 | False | as it is a date (not an entity)
+5. AAAI Fellow | True | as it is an award or recognition from an organization
+6. 1994 | False | as it is a date (not an entity)
+7. International Speech Communication Association Fellow | True | as it is an award or recognition from an organization
+8. Hedersdoktor | False | as it is a title (not an entity)
+9. KTH Royal Institute of Technology | True | as it is a university
+10. 2007 | False | as it is a date (not an entity)
+11. Columbia Engineering School Alumni Association Distinguished Faculty Teaching award | True | as it is an award or recognition from an organization
+12. 2009 | False | as it is a date (not an entity)
+13. IEEE James L. Flanagan Speech and Audio Processing Award | True | as it is an award or recognition from an organization
+14. 2011 | False | as it is a date (not an entity)
+15. ISCA Medal for Scientific Achievement | True | as it is an award or recognition from an organization",0.9411764705882353
+69,130,The most recent school of thought on Honda 's strategy was put forward by Gary Hamel and C. K. Prahalad in 1989 .,"['Honda', 'Gary Hamel', 'C. K. Prahalad']","['honda', 'c. k. prahalad', 'gary hamel']","1. Honda | True | as it is an organization
+2. Gary Hamel | True | as it is a person
+3. C. K. Prahalad | True | as it is a person
+4. 1989 | False | as it is a date",1.0
+70,329,"The formal RoboCup competition was preceded by the ( often unacknowledged ) first International Micro Robot World Cup Soccer Tournament ( MIROSOT ) held by KAIST in Taejon , Korea , in November 1996 .","['RoboCup competition', 'International Micro Robot World Cup Soccer Tournament', 'MIROSOT', 'KAIST', 'Taejon', 'Korea']","['taejon', 'robocup', 'mirosot', 'kaist', 'korea', 'international micro robot world cup soccer tournament']","1. RoboCup | True | as it is a competition or organization
+    2. International Micro Robot World Cup Soccer Tournament | True | as it is a competition or event
+    3. MIROSOT | True | as it is an acronym for the competition/event
+    4. KAIST | True | as it is a university
+    5. Taejon | True | as it is a location (city)
+    6. Korea | True | as it is a location (country)
+    7. November 1996 | False | as it is a date",0.8333333333333334
+71,162,SSIM is designed to improve on traditional methods such as peak signal-to-noise ratio ( PSNR ) and mean squared error ( MSE ) .,"['SSIM', 'peak signal-to-noise ratio', 'PSNR', 'mean squared error', 'MSE']","['peak signal-to-noise ratio (psnr', 'ssim', 'mean squared error (mse']","1. SSIM | True | as it is an algorithm or metric in AI
+2. peak signal-to-noise ratio (PSNR) | True | as it is a metric in AI
+3. mean squared error (MSE) | True | as it is a metric in AI",0.25
+72,347,"Other ways anomalous propagation is recorded is by troposcatter s causing irregularities in the troposphere , scattering due to meteor s , refraction in the ionized regions and layers of the ionosphere , and reflection from the ionosphere .","['anomalous propagation', 'troposcatter', 'troposphere', 'ionized regions', 'ionosphere', 'ionosphere']","['troposcatter', 'ionosphere', 'layers of the ionosphere', 'troposphere']","1. anomalous propagation | False | as it is a phenomenon, not an entity
+    2. troposcatter | True | as it is a method of communication or technique
+    3. troposphere | True | as it is a location (layer of Earth's atmosphere)
+    4. meteors | False | as it is a phenomenon, not an entity
+    5. ionized regions | False | as it is a condition or state
+    6. layers of the ionosphere | True | as it is a location (part of Earth's atmosphere)
+    7. ionosphere | True | as it is a location (layer of Earth's atmosphere)
+    8. reflection | False | as it is a phenomenon or process, not an entity",0.6666666666666666
+73,177,The SSD is also known as mean squared error .,"['SSD', 'mean squared error']","['mean squared error', 'ssd']","1. SSD | True | as it is an abbreviation for the Sum of Squared Differences, which is an algorithm or metric in artificial intelligence
+2. mean squared error | True | as it is an algorithm or metric in artificial intelligence",1.0
+74,308,A number of WordNet-based word similarity algorithms are implemented in a Perl package called WordNet :: Similarity .,"['WordNet-based word similarity algorithms', 'Perl', 'WordNet :: Similarity']","['wordnet-based word similarity algorithms', 'wordnet :: similarity', 'perl']","1. WordNet-based word similarity algorithms | True | as it is a type of algorithm
+2. Perl | True | as it is a programming language
+3. WordNet :: Similarity | True | as it is a package or product",1.0
+75,230,"At UCSD , Norman was a founder of the Institute for Cognitive Science and one of the organizers of the Cognitive Science Society ( along with Roger Schank , Allan M. Collins , and others ) , which held its first meeting at the UCSD campus in 1979 .","['UCSD', 'Norman', 'the Institute for Cognitive Science', 'Cognitive Science Society', 'Roger Schank', 'Allan M. Collins', 'UCSD']","['cognitive science society', 'roger schank', 'norman', 'allan m. collins', 'ucsd', 'institute for cognitive science']","1. UCSD | True | as it is a university
+    2. Norman | True | as it is a person (founder)
+    3. Institute for Cognitive Science | True | as it is an organization
+    4. Cognitive Science Society | True | as it is an organization
+    5. Roger Schank | True | as it is a person
+    6. Allan M. Collins | True | as it is a person
+    7. 1979 | False | as it is a date",0.8333333333333334
+76,87,"This overall framework has been applied to a large variety of problems in computer vision , including feature detection , feature classification , image segmentation , image matching , motion estimation , computation of shape cues and object recognition .","['computer vision', 'feature detection', 'feature classification', 'image segmentation', 'image matching', 'motion estimation', 'computation of shape cues', 'object recognition']","['object recognition', 'image segmentation', 'motion estimation', 'feature detection', 'computer vision', 'feature classification', 'image matching']","1. computer vision | True | as it is a field in Artificial Intelligence
+    2. feature detection | True | as it is a task in Artificial Intelligence
+    3. feature classification | True | as it is a task in Artificial Intelligence
+    4. image segmentation | True | as it is a task in Artificial Intelligence
+    5. image matching | True | as it is a task in Artificial Intelligence
+    6. motion estimation | True | as it is a task in Artificial Intelligence
+    7. computation of shape cues | False | as it is a description of a process
+    8. object recognition | True | as it is a task in Artificial Intelligence",0.9333333333333333
+77,111,At the 2018 Conference on Neural Information Processing Systems ( NeurIPS ) researchers from Google presented the work .,"['2018 Conference on Neural Information Processing Systems', 'NeurIPS', 'Google']","['2018 conference on neural information processing systems', 'neurips', 'google']","1. 2018 Conference on Neural Information Processing Systems | True | as it is an organization or event
+2. NeurIPS | True | as it is an organization or event (abbreviation of the conference mentioned)
+3. Google | True | as it is a company or organization",1.0
+78,294,"They rose to great prominence with the popularity of the support vector machine ( SVM ) in the 1990s , when the SVM was found to be competitive with neural networks on tasks such as handwriting recognition .","['support vector machine', 'SVM', 'SVM', 'neural networks', 'handwriting recognition']","['neural networks', 'support vector machine (svm', 'handwriting recognition']","1. support vector machine (SVM) | True | as it is an algorithm in AI
+    2. neural networks | True | as it is a technique or method in AI
+    3. handwriting recognition | True | as it is a task in AI",0.5714285714285714
+79,152,"An example of non-linear normalization is when the normalization follows a sigmoid function , in that case , the normalized image is computed according to the formula","['non-linear normalization', 'normalization', 'sigmoid function']","['sigmoid function', 'non-linear normalization']","1. non-linear normalization | True | as it is a technique or method in AI
+2. sigmoid function | True | as it is an algorithm or mathematical function used in AI
+3. normalized image | False | as it is a result and not an entity",0.8
+80,125,"An example of a semantic network is WordNet , a lexical database of English .","['semantic network', 'WordNet', 'English']","['wordnet', 'semantic network']","1. semantic network | True | as it is a concept in artificial intelligence
+2. WordNet | True | as it is a product or database
+3. lexical database | False | as it is a type of database, not a specific product or entity
+4. English | False | as it is a language, not an entity within the given context",0.8
+81,275,It is written in Python .,['Python'],['python'],1. Python | True | as it is a programming language,1.0
+82,144,Two examples of popular parallel robots are the Stewart platform and the Delta robot .,"['parallel robots', 'Stewart platform', 'Delta robot']","['parallel robots', 'delta robot', 'stewart platform']","1. parallel robots | True | as it is a subcategory of robots
+2. Stewart platform | True | as it is a type of parallel robot
+3. Delta robot | True | as it is a type of parallel robot",1.0
+83,36,"He has won awards from the American Psychological Association , the National Academy of Sciences , the Royal , the Cognitive Neuroscience Society and the American Humanist Association .","['American Psychological Association', 'National Academy of Sciences', 'Royal', 'Cognitive Neuroscience Society', 'American Humanist Association']","['national academy of sciences', 'cognitive neuroscience society', 'american psychological association', 'american humanist association']","1. American Psychological Association | True | as it is an organization
+2. National Academy of Sciences | True | as it is an organization
+3. the Royal | False | as it is incomplete and does not specify an organization or entity
+4. Cognitive Neuroscience Society | True | as it is an organization
+5. American Humanist Association | True | as it is an organization",0.8888888888888888
+84,318,"NMF is an instance of nonnegative quadratic programming ( NQP ) , just like the support vector machine ( SVM ) .","['NMF', 'nonnegative quadratic programming', 'NQP', 'support vector machine', 'SVM']","['nonnegative quadratic programming (nqp', 'support vector machine (svm', 'nmf (non-negative matrix factorization']","1. NMF (Non-negative Matrix Factorization) | True | as it is an algorithm in AI
+    2. nonnegative quadratic programming (NQP) | True | as it is a field or technique in AI
+    3. support vector machine (SVM) | True | as it is an algorithm in AI",0.0
+85,29,The EM algorithm is used to find ( local ) maximum likelihood parameters of a statistical model in cases where the equations cannot be solved directly .,"['EM algorithm', 'maximum likelihood']",['em algorithm'],"1. EM algorithm | True | as it is an algorithm
+2. maximum likelihood parameters | False | as it is a concept in statistical modeling
+3. statistical model | False | as it is a general concept rather than a specific entity",0.6666666666666666
+86,63,In many applications the units of these networks apply a sigmoid function as an activation function .,"['sigmoid function', 'activation function']","['sigmoid function', 'activation function']","1. networks | False | as it is a general term and not specific to an AI field, task or organization
+2. sigmoid function | True | as it is a technique or method in AI
+3. activation function | True | as it is a technique or method in AI",1.0
+87,133,"Sycara is a Fellow of Institute of Electrical and Electronics Engineers ( IEEE ) , and a Fellow of American Association for Artificial Intelligence ( AAAI ) .","['Sycara', 'Institute of Electrical and Electronics Engineers', 'IEEE', 'American Association for Artificial Intelligence', 'AAAI']","['institute of electrical and electronics engineers', 'ieee', 'american association for artificial intelligence', 'sycara', 'aaai']","1. Sycara | True | as it is a person
+2. Institute of Electrical and Electronics Engineers | True | as it is an organization
+3. IEEE | True | as it is an acronym for an organization (same as #2)
+4. Fellow | False | as it is a title, not an entity
+5. American Association for Artificial Intelligence | True | as it is an organization
+6. AAAI | True | as it is an acronym for an organization (same as #5)",1.0
+88,52,"In computer vision and image processing , the notion of scale space representation and Gaussian derivative operators is as a canonical multi-scale representation .","['computer vision', 'image processing', 'scale space representation', 'Gaussian derivative operators', 'canonical multi-scale representation']","['canonical multi-scale representation', 'scale space representation', 'computer vision', 'gaussian derivative operators', 'image processing']","1. computer vision | True | as it is a field of Artificial Intelligence
+2. image processing | True | as it is a field of Artificial Intelligence
+3. scale space representation | True | as it is a concept in image processing and computer vision
+4. Gaussian derivative operators | True | as these are mathematical methods related to computer vision and image processing
+5. canonical multi-scale representation | True | as it is a concept in image processing and computer vision",1.0
+89,82,"Researchers have attempted a number of methods such as optical flow , Kalman filtering , Hidden Markov model s , etc .","['optical flow', 'Kalman filtering', 'Hidden Markov model']","['optical flow', 'kalman filtering', 'hidden markov models']","1. Researchers | False | as it is a general term, not a specific person or organization
+    2. optical flow | True | as it is a technique or method in AI
+    3. Kalman filtering | True | as it is a technique or method in AI
+    4. Hidden Markov models | True | as it is a technique or method in AI",0.6666666666666666
+90,37,"Starring Harrison Ford , Rutger Hauer and Sean Young , it is loosely based on Philip K. Dick ' s novel Do Androids Dream of Electric Sheep ? ( 1968 ) .","['Harrison Ford', 'Rutger Hauer', 'Sean Young', 'Philip K. Dick', 'Do Androids Dream of Electric Sheep ?']","['sean young', 'harrison ford', 'rutger hauer', 'philip k. dick', 'do androids dream of electric sheep']","1. Harrison Ford | True | as it is a person
+    2. Rutger Hauer | True | as it is a person
+    3. Sean Young | True | as it is a person
+    4. Philip K. Dick | True | as it is a person
+    5. Do Androids Dream of Electric Sheep? | True | as it is a product (book)
+    6. 1968 | False | as it is a date",1.0
+91,99,"Zurada has served the engineering profession as a long-time volunteer of IEEE : as 2014 IEEE Vice-President-Technical Activities ( TAB Chair ) , as President of IEEE Computational Intelligence Society in 2004-05 and the ADCOM member in 2009-14 , 2016-18 and earlier years .","['Zurada', 'IEEE', '2014 IEEE Vice-President-Technical Activities', 'IEEE Computational Intelligence Society', 'ADCOM']","['zurada', 'tab chair', 'ieee', '2014 ieee vice-president-technical activities', 'ieee computational intelligence society', 'adcom member']","1. Zurada | True | as it is a person
+2. engineering profession | False | as it is a subject area or domain, not an entity
+3. IEEE | True | as it is an organization
+4. 2014 IEEE Vice-President-Technical Activities | True | as it is a position or role within an organization
+5. TAB Chair | True | as it is a position or role within an organization
+6. IEEE Computational Intelligence Society | True | as it is an organization within IEEE
+7. President | False | as it is a common title or role
+8. ADCOM member | True | as it is a position or role within an organization
+9. 2009-14, 2016-18 | False | as these are date ranges, not entities",0.7272727272727273
+92,196,"Challenges in natural language processing frequently involve speech recognition , natural language understanding , and natural language generation .","['natural language processing', 'speech recognition', 'natural language understanding', 'natural language generation']","['natural language processing', 'natural language understanding', 'speech recognition', 'natural language generation']","1. Challenges | False | as it is a general term, not a specific entity
+2. natural language processing | True | as it is a field of Artificial Intelligence
+3. speech recognition | True | as it is a task in artificial intelligence
+4. natural language understanding | True | as it is a task in artificial intelligence
+5. natural language generation | True | as it is a task in artificial intelligence",1.0
+93,307,Collaborative filtering encompasses techniques for matching people with similar interests and making recommender system on this basis .,"['Collaborative filtering', 'recommender system']","['collaborative filtering', 'recommender system']","1. Collaborative filtering | True | as it is a technique or method in AI
+2. recommender system | True | as it is a type of system in AI",1.0
+94,109,"We make as well as possible precise by measuring the mean squared error between mathy / math and math \ hat { f } ( x ; D ) / math : we want math ( y - \ hat { f } ( x ; D ) ) ^ 2 / math to be minimal , both for mathx _ 1 , \ dots , x _ n / math and for points outside of our sample .",['mean squared error'],['mean squared error'],"1. mean squared error | True | as it is a metric in artificial intelligence
+2. mathy / math | False | as it is a symbol used in mathematical notation and not a specific entity
+3. math \ hat { f } ( x ; D ) / math | False | as it is a symbol used in mathematical notation and not a specific entity
+4. math ( y - \ hat { f } ( x ; D ) ) ^ 2 / math | False | as it is a symbol used in mathematical notation and not a specific entity
+5. mathx _ 1 , \ dots , x _ n / math | False | as it is a symbol used in mathematical notation and not a specific entity
+6. points | False | as it is a generic term and not a specific entity
+7. sample | False | as it is a generic term and not a specific entity",1.0
+95,66,An updated measurement noise variance estimate can be obtained from the maximum likelihood calculation,['maximum likelihood'],['maximum likelihood calculation'],1. maximum likelihood calculation | True | as it is a technique or method in AI,0.0
+96,266,"The counts of TP , TN , FP , and FN are usually kept on a table known as the confusion matrix .","['TP', 'TN', 'FP', 'FN', 'confusion matrix']",['confusion matrix'],"1. TP (True Positive) | False | as it is a classification term, not an entity
+2. TN (True Negative) | False | as it is a classification term, not an entity
+3. FP (False Positive) | False | as it is a classification term, not an entity
+4. FN (False Negative) | False | as it is a classification term, not an entity
+5. confusion matrix | True | as it is a method or technique used in AI",0.3333333333333333
+97,7,"Since the Google acquisition , the company has notched up a number of significant achievements , perhaps the most notable being the creation of AlphaGo , a program that defeated world champion Lee Sedol at the complex game of Go .","['Google', 'AlphaGo', 'Lee Sedol', 'Go']","['the game of go', 'lee sedol', 'alphago', 'google']","1. Google | True | as it is an organization
+2. AlphaGo | True | as it is an AI program or product
+3. Lee Sedol | True | as it is a person
+4. the game of Go | True | as it is a specific game, which serves as an AI-related benchmark",0.75
+98,164,"Further pulse training is not differentiable , eliminating backpropagation -based training methods like gradient descent .","['backpropagation', 'gradient descent']","['backpropagation', 'gradient descent']","1. pulse training | False | as it is a concept, not an entity
+    2. backpropagation | True | as it is an algorithm involved in training systems in AI
+    3. gradient descent | True | as it is an optimization algorithm used in AI",1.0
+99,57,"Apertium is a shallow-transfer machine translation system , which uses finite state transducer s for all of its lexical transformations , and hidden Markov model s for part-of-speech tagging or word category disambiguation .","['Apertium', 'shallow-transfer machine translation system', 'finite state transducer', 'hidden Markov model', 'part-of-speech tagging', 'word category disambiguation']","['apertium', 'shallow-transfer machine translation system', 'hidden markov model', 'part-of-speech tagging', 'word category disambiguation', 'finite state transducer']","1. Apertium | True | as it is a product or tool in AI
+2. shallow-transfer machine translation system | True | as it is a type of system in AI
+3. finite state transducer | True | as it is a technique or method in AI
+4. lexical transformations | False | as it is a process
+5. hidden Markov model | True | as it is a technique or method in AI
+6. part-of-speech tagging | True | as it is a task in AI
+7. word category disambiguation | True | as it is a task in AI",1.0

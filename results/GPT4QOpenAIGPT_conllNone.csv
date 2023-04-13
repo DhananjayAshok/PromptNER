@@ -1,0 +1,477 @@
+,idx,para,entities,preds,meta,f1
+0,269,CALIFORNIA 14 New York 3,"['CALIFORNIA', 'New', 'York']","['california', 'new', 'york']","1. California | True | as it is the name of a place or location
+2. 14 | False | as it is a number
+3. New York | True | as it is the name of a place or location
+4. 3 | False | as it is a number",1.0
+1,2890,"Kaczmarek said in May he was unhappy that only one investor ended up bidding for Ruch , in which the government was initially offering up to 35 percent of shares with an option to extend the holding after investment promises are fulfilled .","['Kaczmarek', 'Ruch']","['ruch', 'kaczmarek']","1. Kaczmarek | True | as it is a last name, potentially referring to a person
+2. May | False | as it is a date
+3. investor | False | as it is a generic term, not referring to a specific named organization or person
+4. Ruch | True | as it is the name of a company or organization
+5. government | False | as it is a generic term, not referring to a specific named organization
+6. 35 percent | False | as it is a number
+7. shares | False | as it is not a person, organization or location
+8. holding | False | as it is not a person, organization, or location, but rather an abstract concept
+9. investment promises | False | as it is not a person, organization, or location, but rather an abstract concept",1.0
+2,701,Friday 's low in September gasoline was 62.75 .,[],[],"1. Friday | False | as it is a day of the week
+2. September | False | as it is a month
+3. gasoline | False | as it is a commodity or product, not a person, title, named organization, location, country or nationality
+4. 62.75 | False | as it is a number and not an entity.",1.0
+3,2339,"Nolan Henke , who led by two strokes entering the third round , carded a four-under 67 and was one stroke back at 18-under 195 .","['Nolan', 'Henke']","['nolan', 'henke']","1. Nolan Henke | True | as it is the name of a person
+    2. two strokes | False | as it is a number and not an entity
+    3. third round | False | as it represents a phase or part of a competition, which is not an entity
+    4. four-under 67 | False | as it is a score and not an entity
+    5. one stroke | False | as it is a number and not an entity
+    6. 18-under 195 | False | as it is a score and not an entity",1.0
+4,2259,BELGRADE 1996-08-31,['BELGRADE'],['belgrade'],"1. BELGRADE | True | as it is the name of a city or location
+2. 1996-08-31 | False | as it is a date",1.0
+5,2088,Division one,[],[],"1. Division one | False | as it is a classification or category, not a person, organization, or location",1.0
+6,1316,- Net Income N / A N / A,[],[],"1. Net Income | False | as it is an abstract concept related to finance
+2. N/A | False | as it stands for ""Not Applicable"" and is not a named person, organization, or location.",1.0
+7,2648,"Miller , who went into the contest with a record of 24 knock-out wins in 32 fights , took charge from the opening bell and had his opponent on the canvas inside 90 seconds when he landed a deft left-hook to the head .",['Miller'],['miller'],"1. Miller | True | as it is the last name of a person (assuming a person in context)
+    2. contest | False | as it is an abstract concept, not an entity
+    3. record | False | as it is an abstract concept, not an entity
+    4. 24 knock-out wins | False | as it is a number and a summary of an achievement, not an entity
+    5. 32 fights | False | as it is a number and a summary of an achievement, not an entity
+    6. opening bell | False | as it is a moment in time, not an entity
+    7. opponent | False | as it is a general term without a specific name or title
+    8. canvas | False | as it is an object used in context, but not specific enough to constitute an entity
+    9. 90 seconds | False | as it is a measure of time, not an entity
+    10. left-hook | False | as it is an action or technique, not an entity
+    11. head | False | as it is a body part, not a specific entity.",1.0
+8,1491,"Flavio Cotti , the chairman of the Organisation for Security and Cooperation in Europe ( OSCE ) , told German radio the Vienna-based body viewed the conflict in Chechnya as an internal Russian problem .","['Flavio', 'Cotti', 'Organisation', 'for', 'Security', 'and', 'Cooperation', 'in', 'Europe', 'OSCE', 'German', 'Vienna-based', 'Chechnya', 'Russian']","['flavio', 'cooperation', 'russian', 'cotti', 'organisation', 'vienna', 'chechnya', 'osce', 'security', 'europe', 'german', 'radio']","1. Flavio Cotti | True | as it is the name of a person
+2. chairman | False | as it is a title but not a named title
+3. Organisation for Security and Cooperation in Europe | True | as it is the name of an organization
+4. OSCE | True | as it is an abbreviation for a named organization
+5. German radio | True | as it refers to a named medium for communication
+6. Vienna | True | as it is a place or location
+7. Chechnya | True | as it is a place or location
+8. Russian | True | as it is a nationality, even though it is an adjective.",0.7692307692307693
+9,969,-- Bucharest Newsroom 40-1 3120264,"['Bucharest', 'Newsroom']","['newsroom', 'bucharest']","1. Bucharest Newsroom | True | as it is the name of an organization
+    2. 40-1 3120264 | False | as it is a telephone number, which is not an entity.",1.0
+10,615,R. Kaluwitharana b S. Waugh 8,"['R.', 'Kaluwitharana', 'S.', 'Waugh']","['s', 'kaluwitharana', 'r', 'waugh']","1. R. Kaluwitharana | True | as it is the name of a person
+2. S. Waugh | True | as it is the name of a person
+3. 8 | False | as it is a number.",1.0
+11,1579,KOMPAS,['KOMPAS'],['kompas'],1. KOMPAS | True | as it is the name of a media company or organization,1.0
+12,1681,"284 Robert Allenby ( Australia ) 69 71 71 73 , Miguel Angel Martin ( Spain ) 75 70 71 68 ( Allenby won at first play-off hole )","['Robert', 'Allenby', 'Australia', 'Miguel', 'Angel', 'Martin', 'Spain', 'Allenby']","['australia', 'spain', 'miguel', 'robert', 'angel', 'allenby', 'martin']","1. 284 | False | as it is a number
+2. Robert Allenby | True | as it is the name of a person
+3. Australia | True | as it is the name of a place or location
+4. 69, 71, 73 | False | as these are numbers
+5. Miguel Angel Martin | True | as it is the name of a person
+6. Spain | True | as it is the name of a place or location
+7. 75, 70, 68 | False | as these are numbers
+8. Allenby won | False | as this represents the outcome of a game
+9. first play-off hole | False | as it is not a person, organization or location",1.0
+13,904,""" Help me , help me , "" said a chorus of women begging soldiers for food .",[],[],"1. chorus of women | False | as it is a group descriptor and not a named organization or specific group
+    2. soldiers | False | as it is a general term for a group of people and not a specific named organization or group
+    3. food | False | as it is not a named person, organization, or location",1.0
+14,2359,"Steve Stricker , who tied for second at last week 's World Series of Golf , and Stuart Appleby were both five shots off the lead at 14 under .","['Steve', 'Stricker', 'World', 'Series', 'of', 'Golf', 'Stuart', 'Appleby']","['golf', 'appleby', 'stricker', 'series', 'steve', 'world', 'stuart']","1. Steve Stricker | True | as it is the name of a person
+2. last week | False | as it is a time, not an entity
+3. World Series of Golf | True | as it is a named event
+4. Stuart Appleby | True | as it is the name of a person
+5. 14 under | False | as it is a score, not an entity",0.9333333333333333
+15,442,6. Isaac Viciosa ( Spain ) 3:53.85,"['Isaac', 'Viciosa', 'Spain']","['spain', 'isaac', 'viciosa']","1. Isaac Viciosa | True | as it is the name of a person
+2. Spain | True | as it is the name of a country
+3. 3:53.85 | False | as it is a time and not an entity",1.0
+16,2154,"6. Paul Tracy ( Canada ) , Penske Mercedes-Benz , 54.620","['Paul', 'Tracy', 'Canada', 'Penske', 'Mercedes-Benz']","['mercedes-benz', 'penske', 'tracy', 'canada', 'paul']","1. Paul Tracy | True | as it is the name of a person
+2. Canada | True | as it is the name of a place or location
+3. Penske Mercedes-Benz | True | as it is the name of a racing team and organization
+4. 54.620 | False | as it is a number or time value",1.0
+17,764,"GERMANY - Bunds extended losses , flirting with session lows after falling victim to sharply higher U.S. economic data which revived fears that interest rates may soon turn higher .","['GERMANY', 'U.S.']","['u.s', 'bunds', 'germany']","1. GERMANY | True | as it is the name of a country
+2. Bunds | True | as it is a specific type of financial instrument (German government bonds)
+3. U.S. | True | as it stands for the United States, which is a country
+4. economic data | False | as it is an abstract concept, not a specific named entity
+5. interest rates | False | as it refers to a financial term, not a specific named entity",0.8
+18,2140,"At Tunbridge Wells : Nottinghamshire 214 and 167-6 ( C. Tolley 64 not out ) , Kent 244 ( C. Hooper 58 ; C. Tolley 4-68 , K. Evans 4-71 )","['Tunbridge', 'Wells', 'Nottinghamshire', 'C.', 'Tolley', 'Kent', 'C.', 'Hooper', 'C.', 'Tolley', 'K.', 'Evans']","['hooper', 'evans', 'k', 'c', 'tunbridge', 'nottinghamshire', 'kent', 'wells', 'tolley']","1. Tunbridge Wells | True | as it is a place or location
+2. Nottinghamshire | True | as it is the name of a cricket team
+3. 214 | False | as it is a number
+4. 167-6 | False | as it is a cricket score, not an entity
+5. C. Tolley | True | as it is the name of a person
+6. 64 | False | as it is a number
+7. Kent | True | as it is the name of a cricket team
+8. C. Hooper | True | as it is the name of a person
+9. 58 | False | as it is a number
+10. 4-68 | False | as it is a cricket statistic, not an entity
+11. K. Evans | True | as it is the name of a person
+12. 4-71 | False | as it is a cricket statistic, not an entity",1.0
+19,1669,The Republic of Ireland 's new-look side dispelled painful memories of their last visit to Liechtenstein by beating the Alpine part-timers 5-0 in a World Cup qualifier on Saturday .,"['Republic', 'of', 'Ireland', 'Liechtenstein', 'Alpine', 'World', 'Cup']","['liechtenstein', 'cup', 'ireland', 'republic', 'world']","1. Republic of Ireland | True | as it is the name of a country
+2. Liechtenstein | True | as it is the name of a country
+3. Alpine | False | as it is an adjective describing the part-timers
+4. World Cup | True | as it is the name of a named organization (event)
+5. Saturday | False | as it is a date or day of the week",0.8333333333333334
+20,1644,""" We expect the international community to take a clear and firm position , based on international law and in accordance with U.N. resolutions , against all such Israeli violations and illegal practices , "" he said .","['U.N.', 'Israeli']","['u.n', 'israeli']","1. international community | False | as it is an abstract concept and not referring to a specific named organization or place
+2. international law | False | as it is a concept, not a specific entity
+3. U.N. | True | as it is an abbreviation for the United Nations, a named organization
+4. Israeli | True | as it is a nationality
+5. violations | False | as it refers to actions or practices, not a specific entity
+6. illegal practices | False | as it refers to actions or practices, not a specific entity",1.0
+21,3174,"The Iranian ambassador was also summoned to the ministry in Bonn to hear a sharp protest and "" disapproval of this glaring breach of the principles of international law "" , he added .","['Iranian', 'Bonn']","['bonn', 'iranian']","1. Iranian | True | as it refers to the nationality of the ambassador
+2. ambassador | False | as it is a title, but not a specific named person
+3. ministry | False | as it is not a specific named organization or location
+4. Bonn | True | as it is a place or location
+5. international law | False | as it is an abstract concept",1.0
+22,253,SAN FRANCISCO 57 74 .435 16,"['SAN', 'FRANCISCO']","['san', 'francisco']","1. SAN FRANCISCO | True | as it is the name of a place or location
+2. 57 | False | as it is a number
+3. 74 | False | as it is a number
+4. .435 | False | as it is a number
+5. 16 | False | as it is a number",1.0
+23,714,"One U.S. firm bought 35,000 September 97 mid-curve put options at a strike price of 93.25 to 93.30 in the last two sessions , while a French firm bought 4,000 September 93.30 to 93.32 put spreads .","['U.S.', 'French']","['french', 'u.s']","1. U.S. | True | as it represents the United States, which is a country
+2. firm | False | as it is an abstract concept, not a specific named organization
+3. 35,000 | False | as it is a number
+4. September 97 | False | as it is a date
+5. mid-curve | False | as it is a financial term, not an entity
+6. 93.25 | False | as it is a number
+7. 93.30 | False | as it is a number
+8. French | True | as it is an adjective representing the nationality of France
+9. 4,000 | False | as it is a number
+10. September | False | as it is a date
+11. 93.30 to 93.32 | False | as it is a range of numbers, not an entity",1.0
+24,333,"MILWAUKEE , Wisconsin 1996-08-29","['MILWAUKEE', 'Wisconsin']","['milwaukee', 'wisconsin']","1. MILWAUKEE | True | as it is the name of a city or location
+2. Wisconsin | True | as it is the name of a state or location
+3. 1996-08-29 | False | as it is a date",1.0
+25,1152,Mercantile and Commerce did not return phone calls seeking comment .,"['Mercantile', 'Commerce']","['commerce', 'mercantile']","1. Mercantile | True | as it is likely the name of a named organization
+2. Commerce | True | as it is likely the name of a named organization
+3. phone calls | False | as it represents a method of communication and not a specific entity
+4. seeking comment | False | as it is an action and not an entity",1.0
+26,3236,"One of the assumptions is his interpretation of the murky circumstances surrounding the shooting death of Collins , who had broken with his comrades when he sought a negotiated settlement with Britain , in an ambush in 1922 .","['Collins', 'Britain']","['collins', 'britain']","1. Collins | True | as it is the last name of a person
+2. Britain | True | as it is the name of a place or location
+3. 1922 | False | as it is a date or year
+4. ambush | False | as it is an action or event",1.0
+27,3204,It was the second arms robbery this week .,[],"['specific', 'locations', 'sentence', 'named', 'organizations', 'entities', 'persons', 'events']","There are no entities in this sentence as there are no named persons, organizations, locations or specific events.",0.0
+28,589,CRICKET - AUSTRALIA V SRI LANKA SCOREBOARD .,"['AUSTRALIA', 'SRI', 'LANKA']","['australia', 'lanka', 'sri']","1. Cricket | False | as it is a sport or abstract concept
+    2. Australia | True | as it is a country or location
+    3. Sri Lanka | True | as it is a country or location
+    4. Scoreboard | False | as it is an object or abstract concept",1.0
+29,517,1. Stefka Kostadinova ( Bulgaria ) 2.03,"['Stefka', 'Kostadinova', 'Bulgaria']","['bulgaria', 'stefka', 'kostadinova']","1. Stefka Kostadinova | True | as it is the name of a person
+2. Bulgaria | True | as it is the name of a place or location
+3. 2.03 | False | as it is a number",1.0
+30,3195,Nato declines comment on fighting in Iraq .,['Iraq'],"['nato', 'iraq']","1. Nato | True | as it is the name of a named organization
+2. Iraq | True | as it is the name of a country",0.6666666666666666
+31,2587,"Leboeuf was dismissed two minutes from time for a second bookable offence , fouling Mexican substitute Ricardo Pelaez who minutes earlier had also been shown the yellow card for pushing the Chelsea defender in the back .","['Leboeuf', 'Mexican', 'Ricardo', 'Pelaez', 'Chelsea']","['leboeuf', 'chelsea', 'ricardo', 'pelaez', 'mexican']","1. Leboeuf | True | as it is the last name of a person
+    2. Mexican | True | as it is a nationality
+    3. Ricardo Pelaez | True | as it is the name of a person
+    4. Chelsea | True | as it is the name of a football club and can act as an organization.",1.0
+32,1738,D. Gough run out 0,"['D.', 'Gough']","['d', 'gough']","1. D. Gough | True | as it is the name of a person
+2. run out | False | as it is an action
+3. 0 | False | as it is a number",1.0
+33,2055,Leyton Orient 4 1 1 2 3 3 4,"['Leyton', 'Orient']","['leyton', 'orient']",1. Leyton Orient | True | as it is the name of a football team (organization),1.0
+34,2861,"It 's our only dream , "" said a 30-year-old woman , Mubatik Dagayeva .","['Mubatik', 'Dagayeva']","['dagayeva', 'mubatik']","1. 30-year-old woman | False | as it is a description, not a specific named individual
+2. Mubatik Dagayeva | True | as it is the name of a person",1.0
+35,1474,""" The starting of this production base in China has for our group an undoubted strategic value , representing an important enhancement of our presence in Asia , "" said Pirelli SpA chairman and chief executive officer Marco Tonchetti Provera .","['China', 'Asia', 'Pirelli', 'SpA', 'Marco', 'Tonchetti', 'Provera']","['china', 'spa', 'pirelli', 'marco', 'asia', 'tonchetti', 'provera']","1. China | True | as it is the name of a location and country
+    2. group | False | as it is an abstract concept and not a named organization or entity
+    3. strategic value | False | as it is an abstract concept and not an entity
+    4. Asia | True | as it is the name of a location (continent)
+    5. Pirelli SpA | True | as it is the name of an organization
+    6. chairman | False | as it is a title but doesn't indicate a specific person
+    7. chief executive officer | False | as it is a title but doesn't indicate a specific person
+    8. Marco Tonchetti Provera | True | as it is the name of a person.",1.0
+36,3189,It gave no details of their talks .,[],"['specific', 'entities', 'locations', 'organizations', 'information', 'sentence', 'provide', 'persons']","There are no entities in this sentence as it does not provide any specific information about persons, organizations, or locations.",0.0
+37,2057,Hereford 4 1 1 2 2 3 4,['Hereford'],['hereford'],1. Hereford | True | as it is the name of a location,1.0
+38,1552,Spitzbergen lies some 500 miles ( 800 km ) off the northern tip of Norway and endures one of the most extreme climates on the planet .,"['Spitzbergen', 'Norway']","['spitzbergen', 'norway']","1. Spitzbergen | True | as it is the name of a location or place
+2. 500 miles | False | as it is a distance, not an entity
+3. 800 km | False | as it is a distance, not an entity
+4. northern tip | False | as it is a description of a position, not an entity
+5. Norway | True | as it is the name of a country or location
+6. extreme climates | False | as it is an adjective-description, not an entity
+7. planet | False | as it is a general term and not a specific named entity",1.0
+39,2107,Millwall 2 Burnley 1,"['Millwall', 'Burnley']","['millwall', 'burnley']","1. Millwall | True | as it is the name of a football team
+2. Burnley | True | as it is the name of a football team
+3. 2 | False | as it is a number
+4. 1 | False | as it is a number",1.0
+40,2459,"SATURDAY , AUGUST 31 SCHEDULE",[],[],"1. SATURDAY | False | as it is a day of the week which is not an entity
+2. AUGUST 31 | False | as it is a date and not an entity
+3. SCHEDULE | False | as it is an abstract concept and not an entity",1.0
+41,1639,"Responding to a letter from the the Palestinian U.N. observer mission , Security Council President Tono Eitel of Germany said that members asked him to convey their views to Israel 's charge d'affaires , David Peleg .","['Palestinian', 'U.N.', 'Security', 'Council', 'Tono', 'Eitel', 'Germany', 'Israel', 'David', 'Peleg']","['eitel', 'observer', 'mission', 'u.n', 'germany', 'security', 'israel', 'council', 'palestinian', 'peleg', 'tono', 'david']","1. Palestinian | True | as it is a nationality
+    2. U.N. observer mission | True | as it is a named organization
+    3. Security Council | True | as it is a named organization
+    4. President | False | as it is a title, and not a singular, distinct entity
+    5. Tono Eitel | True | as it is the name of a person
+    6. Germany | True | as it is the name of a place or location
+    7. members | False | as it is a general term referring to people, with no distinct entity
+    8. Israel | True | as it is a country or location
+    9. charge d'affaires | False | as it is a title, and not a singular, distinct entity
+    10. David Peleg | True | as it is the name of a person.",0.9090909090909091
+42,1617,"Between late June and July , a total of 192 people were poisoned by the toxic liquor , and 35 of them died and six were left severely handicapped , it said .",[],[],"1. late June | False | as it is a date
+2. July | False | as it is a date
+3. 192 | False | as it is a number
+4. people | False | as it is a general term and not a named person, organization or location
+5. toxic liquor | False | as it is an object, not a named person, organization or location
+6. 35 | False | as it is a number
+7. six | False | as it is a number
+8. severely handicapped | False | as it is a description or state, but not a named person, organization or location",1.0
+43,1198,"It fell as recovery crews were trying to haul the piece into more shallow water and several of the bags burst and cables snapped , she said .",[],[],"1. recovery crews | False | as it is a collective term for a group of people, without referencing a specific named organization
+2. shallow water | False | as it is an adjective describing a body of water without specifying a named body of water
+3. bags | False | as it is a noun but not a person, title or named organization
+4. cables | False | as it is a noun but not a person, title or named organization
+5. she | False | as it is a pronoun, but no specific named person is mentioned",1.0
+44,2958,"The Burmese government last week confirmed the recent sentencing of nine democracy activists who were arrested in the May crackdown , including Suu Kyi 's assistant Win Htein .","['Burmese', 'Suu', 'Kyi', 'Win', 'Htein']","['burmese', 'kyi', 'win', 'htein', 'government', 'suu']","1. Burmese government | True | as it is a named organization
+2. last week | False | as it is a time reference
+3. nine | False | as it is a number
+4. democracy activists | False | as it is a general category of people, not a specific person or organization
+5. May crackdown | False | as it is an event or action
+6. Suu Kyi | True | as it is the name of a person
+7. assistant | False | as it is a role or position, not a specific person or organization
+8. Win Htein | True | as it is the name of a person",0.9090909090909091
+45,2151,"3. Bobby Rahal ( U.S. ) , Reynard Mercedes-Benz , 54.507","['Bobby', 'Rahal', 'U.S.', 'Reynard', 'Mercedes-Benz']","['bobby', 'mercedes-benz', 'u.s', 'rahal', 'reynard']","1. Bobby Rahal | True | as it is the name of a person
+    2. U.S. | True | as it stands for the United States, which is a place or location
+    3. Reynard Mercedes-Benz | True | as it is the name of an organization or named entity associated to a car brand
+    4. 54.507 | False | as it is a number",1.0
+46,1797,12. Giovanna Troldi ( Italy ) 38.285,"['Giovanna', 'Troldi', 'Italy']","['troldi', 'giovanna', 'italy']","1. Giovanna Troldi | True | as it is the name of a person
+2. Italy | True | as it is the name of a place or location
+3. 38.285 | False | as it is a number",1.0
+47,877,""" The world community should not be indifferent to the fact that President Lukashenko , who leads this European state of 10 million people , is trying to establish a dictatorship with his new constitution , "" Sharetsky said .","['Lukashenko', 'European', 'Sharetsky']","['sharetsky', 'president', 'lukashenko', 'european']","1. world community | False | as it is not a specific named organization or location
+    2. President Lukashenko | True | as it is the name of a person and their title
+    3. European | True | as it is a nationality
+    4. state of 10 million people | False | as it is not a specific named organization, location, or a number
+    5. dictatorship | False | as it is not a person, organization or location
+    6. new constitution | False | as it is not a person, organization or location
+    7. Sharetsky | True | as it is the last name of a person.",0.8571428571428571
+48,54,May 27-29 v Gloucestershire or Sussex or Surrey ( three,"['Gloucestershire', 'Sussex', 'Surrey']","['gloucestershire', 'sussex', 'surrey']","1. May 27-29 | False | as it is a date range
+2. Gloucestershire | True | as it is a place or named organization (cricket team)
+3. Sussex | True | as it is a place or named organization (cricket team)
+4. Surrey | True | as it is a place or named organization (cricket team)
+5. three | False | as it is a number",1.0
+49,1851,The Orioles remained tied with the White Sox for the American League wild card with the Mariners a game back .,"['Orioles', 'White', 'Sox', 'American', 'League', 'Mariners']","['white', 'league', 'orioles', 'american', 'mariners', 'sox']","1. Orioles | True | as it is the name of a sports team
+2. White Sox | True | as it is the name of a sports team
+3. American League | True | as it is the name of an organization
+4. Mariners | True | as it is the name of a sports team
+5. game back | False | as it is an abstract concept related to sports standings or rankings",1.0
+50,1249,"The list was being studied for possible links to previous child kidnappings and prostitution , a prosecutors ' spokesman said .",[],"['prosecutors', 'spokesman']","1. possible links | False | as it is an abstract concept
+2. child kidnappings | False | as it is an action or crime
+3. prostitution | False | as it is an action or crime
+4. prosecutors | True | as it is a title
+5. spokesman | True | as it is a title",0.0
+51,3228,"Leeson , the Northern Ireland-born actor who was nominated for an Oscar for best actor for his performance in "" Schindler 's List "" , plays the lead role in Jordan 's film .","['Leeson', 'Northern', 'Ireland-born', 'Oscar', 'Schindler', ""'s"", 'List', 'Jordan']","['list', 'northern', 'leeson', 'jordan', ""schindler's"", 'oscar', 'ireland']","1. Leeson | True | as it is the last name of a person
+    2. Northern Ireland | True | as it is a location
+    3. Oscar | True | as it is the name of a specific award
+    4. best actor | False | as it is a category for an award rather than a named entity
+    5. Schindler's List | True | as it is the name of a film
+    6. Jordan | True | as here it represents the last name of a person (director).",0.6666666666666666
+52,2397,Austria at Croatia,"['Austria', 'Croatia']","['austria', 'croatia']","1. Austria | True | as it is the name of a country
+2. Croatia | True | as it is the name of a country",1.0
+53,2302,"Attendance : 6,000",[],[],"1. Attendance | False | as it is an abstract concept, not a named person, organization, or location
+2. 6,000 | False | as it is a number",1.0
+54,933,Russian peacemaker Alexander Lebed and Chechen separatist military leader Aslan Maskhadov started a new round of peace talks on Friday in this settlement just outside the rebel region .,"['Russian', 'Alexander', 'Lebed', 'Chechen', 'Aslan', 'Maskhadov']","['chechen', 'alexander', 'russian', 'maskhadov', 'aslan', 'lebed']","1. Russian | True | as it is a nationality
+    2. Alexander Lebed | True | as it is the name of a person
+    3. Chechen | True | as it is a nationality
+    4. separatist military leader | False | as it is a title or job position, but is not a specifically named title
+    5. Aslan Maskhadov | True | as it is the name of a person
+    6. Friday | False | as it is a day of the week, not an entity
+    7. settlement | False | as it is not a specific or named location
+    8. rebel region | False | as it is not a specific or named location",1.0
+55,2902,"The book , which has been translated into 40 languages , deals with a day in the life of Santiago de Cuba , Puig 's native city , under the pre-Castro government of Fulgencio Batista .","['Santiago', 'de', 'Cuba', 'Puig', 'pre-Castro', 'Fulgencio', 'Batista']","['batista', 'cuba', 'castro', 'puig', 'fulgencio', 'de', 'santiago']","1. The book | False | as it is an object, not a named person, organization, or location
+    2. 40 | False | as it is a number
+    3. languages | False | as they are not named person, organization, or location
+    4. Santiago de Cuba | True | as it is the name of a city, a location
+    5. Puig | True | as it is a last name, part of a person's name
+    6. Castro | True | as it is a last name, part of a person's name
+    7. government | False | as it is an abstract concept, not a named person, organization, or location
+    8. Fulgencio Batista | True | as it is the name of a person",0.8571428571428571
+56,2414,EASTERN DIVISION,"['EASTERN', 'DIVISION']",[],1. EASTERN DIVISION | False | as it is a designation or title for a group but not a named organization or entity.,0.0
+57,2181,A quick penalty from Van der Westhuizen five metres from the All Black line set up the third try for Venter five minutes later and when Joubert kicked his third penalty the Springboks held an unassailable 32-8 lead going into the last quarter .,"['Van', 'der', 'Westhuizen', 'All', 'Black', 'Venter', 'Joubert', 'Springboks']","['der', 'venter', 'van', 'westhuizen', 'springboks', 'joubert', 'black']","1. Van der Westhuizen | True | as it is the name of a person
+2. All Black | True | as it is the name of a sports team
+3. Venter | True | as it is the name of a person
+4. Joubert | True | as it is the name of a person
+5. Springboks | True | as it is the name of a sports team
+6. 32-8 | False | as it is a score which is not an entity
+7. last quarter | False | as it is a game phase, which is not an entity",0.9333333333333333
+58,1330,Egypt police detain 26 suspected Moslem militants .,"['Egypt', 'Moslem']",['egypt'],"1. Egypt | True | as it is the name of a country
+2. police | False | as it is a general term for law enforcement, not a named organization
+3. 26 | False | as it is a number
+4. suspected Moslem militants | False | as it is not a specific named organization or person.",0.6666666666666666
+59,661,"-- Luli Popescu , Bucharest Newsroom 40-1 3120264","['Luli', 'Popescu', 'Bucharest', 'Newsroom']","['luli', 'bucharest', 'newsroom', 'popescu']","1. Luli Popescu | True | as it is the name of a person
+2. Bucharest Newsroom | True | as it is the name of an organization
+3. 40-1 3120264 | False | as it is a phone number, which is not an entity.",1.0
+60,2563,VIENNA 1996-08-31,['VIENNA'],['vienna'],"1. VIENNA | True | as it is the name of a place or location
+2. 1996-08-31 | False | as it is a date",1.0
+61,1993,Queens Park Rangers 3 2 1 0 5 3 7,"['Queens', 'Park', 'Rangers']","['queens', 'park', 'rangers']","1. Queens Park Rangers | True | as it is the name of a football team, which is considered as a named organization. 
+    2. 3 | False | as it is a number
+    3. 2 | False | as it is a number
+    4. 1 | False | as it is a number
+    5. 0 | False | as it is a number
+    6. 5 | False | as it is a number
+    7. 3 | False | as it is a number
+    8. 7 | False | as it is a number",1.0
+62,2985,"Tianjin boasts a range of infrastructure facilities , attracting several multinational oil companies to invest in recent years .",['Tianjin'],"['tianjin', 'companies', 'multinational', 'oil']","1. Tianjin | True | as it is the name of a place or location
+2. infrastructure facilities | False | as it is a general term referring to a type of facility, not a specific named organization or location
+3. multinational oil companies | True | as it is referring to companies which are named organizations
+4. recent years | False | as it is a vague reference to time, not a specific named entity",0.4
+63,1362,""" Abu Ammar ( Arafat ) is right .","['Abu', 'Ammar', 'Arafat']","['arafat', 'ammar', 'abu']","1. Abu Ammar | True | as it is a nickname or alternate name for a person
+2. Arafat | True | as it is the last name of a person (Yasser Arafat)",1.0
+64,1501,"Chechnya must be accorded the maximum autonomy possible within the framework of Russian integrity , "" said Cotti .","['Chechnya', 'Russian', 'Cotti']","['chechnya', 'cotti']","1. Chechnya | True | as it is a place or location
+2. maximum autonomy | False | as it is an abstract concept
+3. framework | False | as it is an aspect or portion of an abstract concept
+4. Russian integrity | False | as it is an abstract concept
+5. Cotti | True | as it is the name of a person",0.8
+65,2651,SOCCER - DUTCH DRAW 2-2 WITH BRAZIL IN FRIENDLY INTERNATIONAL .,"['DUTCH', 'BRAZIL']","['dutch', 'brazil']","1. SOCCER | False | as it is a sport
+    2. DUTCH | True | as it refers to the nationality of the people from the Netherlands
+    3. DRAW | False | as it is an action
+    4. 2-2 | False | as it is a score or set of numbers which is not an entity
+    5. BRAZIL | True | as it is the name of a country
+    6. FRIENDLY INTERNATIONAL | False | as it is a description of an event, not an entity.",1.0
+66,529,4. El Hassane Lahssini ( Morocco ) 13:06.57,"['El', 'Hassane', 'Lahssini', 'Morocco']","['morocco', 'el', 'hassane', 'lahssini']","1. El Hassane Lahssini | True | as it is the name of a person
+2. Morocco | True | as it is the name of a place or location
+3. 13:06.57 | False | as it is a time or number, not an entity.",1.0
+67,2279,"Attendence : 9,000",[],[],"1. 9,000 | False | as it is a number and not an entity.",1.0
+68,2780,"All the hostages were freed on Tuesday after the plane landed at Stansted airport , north of London .","['Stansted', 'London']","['airport', 'stansted', 'london']","1. Tuesday | False | as it is a date
+2. Stansted airport | True | as it is a named location
+3. north | False | as it is a direction
+4. London | True | as it is the name of a place or location",0.8
+69,113,""" I want a fifth title .",[],[],"1. fifth title | False | as it is an abstract concept and not a named person, organization, or location.",1.0
+70,1827,Juan Gonzalez homered twice and Ivan Rodriguez added a two-run shot as the Texas Rangers defeated the Cleveland Indians 5-3 in a matchup of division leaders Friday .,"['Juan', 'Gonzalez', 'Ivan', 'Rodriguez', 'Texas', 'Rangers', 'Cleveland', 'Indians']","['gonzalez', 'rangers', 'indians', 'rodriguez', 'ivan', 'texas', 'cleveland', 'juan']","1. Juan Gonzalez | True | as it is the name of a person
+2. Ivan Rodriguez | True | as it is the name of a person
+3. Texas Rangers | True | as it is the name of a sports team (organization)
+4. Cleveland Indians | True | as it is the name of a sports team (organization)
+5. 5-3 | False | as it is a score or set of numbers, which is not an entity
+6. Friday | False | as it is a day of the week, and not a named person, organization, or location.",1.0
+71,2526,St Louis defeated Colorado for just the second time in 12 meetings dating back to last season .,"['St', 'Louis', 'Colorado']","['louis', 'colorado', 'st']","1. St Louis | True | as it is the name of a sports team
+2. Colorado | True | as it is the name of a sports team
+3. second | False | as it is a number
+4. 12 meetings | False | as it is a reference to a number of events
+5. last season | False | as it is a reference to a time period, not an independent entity",1.0
+72,1393,"2009 95,000",[],[],"1. 2009 | False | as it is a year
+2. 95,000 | False | as it is a number",1.0
+73,1371,DUE : 11/1/96-11 SR MGR :,[],[],"No entities found in this paragraph. 
+- DUE | False | as it represents a status or deadline
+- 11/1/96 | False | as it is a date
+- 11 SR | False | as it seems to represent a numerical value or code
+- MGR | False | as it represents an abbreviation for a position or title, not a specific named person, organization or location.",1.0
+74,1888,"5. Costantino Rocca ( Italy ) 297,157","['Costantino', 'Rocca', 'Italy']","['rocca', 'costantino', 'italy']","1. Costantino Rocca | True | as it is the name of a person
+2. Italy | True | as it is the name of a country
+3. 297,157 | False | as it is a number",1.0
+75,2391,United States at Netherlands,"['United', 'States', 'Netherlands']","['states', 'united', 'netherlands']","1. United States | True | as it is a country
+2. Netherlands | True | as it is a country",1.0
+76,2016,Chesterfield 4 3 0 1 4 2 9,['Chesterfield'],['chesterfield'],1. Chesterfield | True | as it is the name of a place or could be the name of a sports team,1.0
+77,235,NATIONAL LEAGUE,"['NATIONAL', 'LEAGUE']","['national', 'league']",1. NATIONAL LEAGUE | True | as it is the name of an organization,1.0
+78,37,The tourists will play nine first-class matches against,[],"['full', 'entities', 'provided', 'partial', 'incomplete', 'analysis', 'give', 'please', 'sentence', 'given', 'proper', 'paragraph', 'identifiable']","The given paragraph is incomplete, and there are no identifiable entities in the partial sentence provided. Please give the full sentence or paragraph for a proper analysis.",0.0
+79,1238,Missing German girl found alive at Dutch campsite .,"['German', 'Dutch']","['dutch', 'german']","1. German | True | as it is a nationality
+    2. girl | False | as it is not a named person, organization or location
+    3. Dutch | True | as it is a nationality
+    4. campsite | False | as it is not a named person, organization or location",1.0
+80,3144,"U.S. plans rely heavily on U.S. air attacks on Iraqi forces , but there are also 23,000 U.S. troops in the region , according to defense officials .","['U.S.', 'U.S.', 'Iraqi', 'U.S.']",['u.s'],"1. U.S. | True | as it is the abbreviation for the United States, a country
+2. U.S. air attacks | False | as it is a compound term that refers to an action, not an entity
+3. Iraqi forces | False | as it is a group, but not a named one
+4. 23,000 | False | as it is a number
+5. U.S. troops | False | as it is a group, but not a named one
+6. region | False | as it is not a specific named location
+7. defense officials | False | as they are a group of people, but not individually named",0.6666666666666666
+81,833,"Lebed , whom Yeltsin ordered to restore peace in Chechnya , struck a military deal with separatist rebels last week ending the worst fighting in the region in more than a year .","['Lebed', 'Yeltsin', 'Chechnya']","['chechnya', 'yeltsin', 'lebed']","1. Lebed | True | as it is the last name of a person (Alexander Lebed)
+2. Yeltsin | True | as it is the last name of a person (Boris Yeltsin)
+3. Chechnya | True | as it is a location
+4. separatist rebels | False | as it is a general term for a group of people, not a specific named organization
+5. last week | False | as it represents a time period and not an entity
+6. region | False | as it is a general term for a geographical area without a specific named location
+7. a year | False | as it represents a unit of time and not an entity",1.0
+82,1589,- - - -,[],"['analysis', 'provide', 'please', 'entities', 'paragraph', 'information', 'identify', 'provided']",There is no information provided to identify entities. Please provide a paragraph for analysis.,0.0
+83,2750,"Trevor Holland , a 52 year-old with who has been convicted twice of gross indecency with children , was captured after being spotted in Worthing , a town on England 's southern coast .","['Trevor', 'Holland', 'Worthing', 'England']","['worthing', 'england', 'holland', 'trevor']","1. Trevor Holland | True | as it is the name of a person
+    2. 52 year-old | False | as it is an age, which is not an entity
+    3. gross indecency | False | as it is an abstract concept or legal charge
+    4. children | False | as it is a general term for young humans, not specifying any named person, place or organization
+    5. Worthing | True | as it is the name of a town or location
+    6. England | True | as it is the name of a country
+    7. southern coast | False | as it is a descriptive reference to a location, not a specific named place or location.",1.0
+84,56,May 31 - June 2 v Derbyshire ( three days ),['Derbyshire'],['derbyshire'],"1. May 31 | False | as it is a date
+    2. June 2 | False | as it is a date
+    3. Derbyshire | True | as it is a place or location
+    4. three days | False | as it is a duration and not an entity",1.0
+85,2371,"That is our sole goal . """,[],"['focused', 'goal', 'word', 'possessive', 'entities', 'contain', 'abstract', 'person', 'statement', 'paragraph', 'our', 'country', 'nationality', 'named', 'location', 'concept', 'organization']","There are no entities in this paragraph as it does not contain any named person, organization, location, country, or nationality. The statement is focused on an abstract concept (goal) and a possessive word (""our"").",0.0
+86,1873,Essex need another 148 with five wickets in hand to beat Yorkshire after a maiden first-class century from Richard Kettleborough transformed a match which his side had seemed certain to lose .,"['Essex', 'Yorkshire', 'Richard', 'Kettleborough']","['richard', 'kettleborough', 'essex', 'yorkshire']","1. Essex | True | as it is the name of a cricket team
+    2. 148 | False | as it is a number
+    3. five | False | as it is a number
+    4. wickets | False | as it is a concept in cricket and not an entity
+    5. Yorkshire | True | as it is the name of a cricket team
+    6. maiden | False | as it is an adjective
+    7. first-class | False | as it is an adjective
+    8. century | False | as it is a concept in cricket and not an entity
+    9. Richard Kettleborough | True | as it is the name of a person",1.0
+87,2860,""" We hope for the best , that it really has ended so we can live in peace .",[],"['locations', 'found', 'paragraph', 'named', 'organizations', 'mentioned', 'entities', 'persons', 'nationalities', 'titles']","No entities are found in this paragraph, as there are no named persons, organizations, locations, titles, or nationalities mentioned.",0.0
+88,1881,Leading money winners on the,[],"['text', 'entities', 'information', 'sufficient', 'paragraph', 'please', 'identify', 'provided', 'complete', 'provide', 'context']",There is no sufficient context or information to identify entities in the provided text. Please provide a more complete paragraph.,0.0
+89,1943,"With the first day of the league season briefly shifting the spotlight away from the discord between the clubs and the Rugby Football Union , there were also emphatic victories for champions Bath , 56-13 winners over Orrell , and Northampton and narrow successes for Wasps and Bristol .","['Rugby', 'Football', 'Union', 'Bath', 'Orrell', 'Northampton', 'Wasps', 'Bristol']","['wasps', 'orrell', 'football', 'union', 'northampton', 'rugby', 'bristol', 'champions', 'bath']","1. league season | False | as it is an abstract concept
+    2. clubs | False | as it is a general term and does not name specific clubs
+    3. Rugby Football Union | True | as it is a named organization
+    4. victories | False | as it is an abstract concept
+    5. champions Bath | True | as it is the name of a sports team
+    6. 56-13 | False | as it is a score or set of numbers which is not an entity
+    7. winners | False | as it is an abstract concept
+    8. Orrell | True | as it is a place and a sports team
+    9. Northampton | True | as it is a place and a sports team
+    10. narrow successes | False | as it is an abstract concept
+    11. Wasps | True | as it is a sports team
+    12. Bristol | True | as it is a place and a sports team",0.9411764705882353
+90,525,"Men 's 5,000 metres",[],[],"1. Men's | False | as it is a possessive word, not a named person, organization, or location
+2. 5,000 metres | False | as it is a distance, not a named person, organization, or location",1.0
+91,1676,"Scorers : Andy Townsend ( 5th ) , Keith O'Neill ( 7th ) , Niall Quinn ( 11th , 61st ) , Ian Harte ( 19th ) .","['Andy', 'Townsend', 'Keith', ""O'Neill"", 'Niall', 'Quinn', 'Ian', 'Harte']","['keith', 'andy', 'quinn', 'townsend', 'niall', 'harte', ""o'neill"", 'ian']","1. Scorers | False | as it is a noun referring to a group of people without specific names
+    2. Andy Townsend | True | as it is the name of a person
+    3. 5th | False | as it is a number or position indicator
+    4. Keith O'Neill | True | as it is the name of a person
+    5. 7th | False | as it is a number or position indicator
+    6. Niall Quinn | True | as it is the name of a person
+    7. 11th | False | as it is a number or position indicator
+    8. 61st | False | as it is a number or position indicator
+    9. Ian Harte | True | as it is the name of a person
+    10. 19th | False | as it is a number or position indicator.",1.0
+92,488,7. Linda Kisabaka ( Germany ) 52.41,"['Linda', 'Kisabaka', 'Germany']","['kisabaka', 'linda', 'germany']","1. Linda Kisabaka | True | as it is the name of a person
+2. Germany | True | as it is the name of a place, country or location
+3. 52.41 | False | as it is a number",1.0
+93,1091,""" The economy is not going to be expanding at the 4.8 percent ( annual ) rate that we had in the second quarter but it is likely to keep expanding in the 3 percent range , "" she said , above the 2 percent to 2-1/4 percent that the Fed considers to be non-inflationary .",['Fed'],['fed'],"1. economy | False | as it is an abstract concept
+    2. 4.8 percent | False | as it is a number
+    3. second quarter | False | as it is a period of time
+    4. 3 percent range | False | as it is a numerical value
+    5. Fed | True | as it refers to the Federal Reserve, a named organization
+    6. 2 percent | False | as it is a number
+    7. 2-1/4 percent | False | as it is a number",1.0
+94,2242,Loznica 4 2 0 2 7 4 6,['Loznica'],['loznica'],"1. Loznica | True | as it is the name of a place or location
+2. 4 | False | as it is a number
+3. 2 | False | as it is a number
+4. 0 | False | as it is a number
+5. 7 | False | as it is a number
+6. 6 | False | as it is a number",1.0
+95,3,"Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .","['Essex', 'Derbyshire', 'Surrey', 'Kent', 'Nottinghamshire']","['essex', 'derbyshire', 'nottinghamshire', 'kent', 'surrey']","1. Essex | True | as it is the name of a cricket team, representing a named organization
+    2. Derbyshire | True | as it is the name of a cricket team, representing a named organization
+    3. Surrey | True | as it is the name of a cricket team, representing a named organization
+    4. Kent | True | as it is the name of a cricket team, representing a named organization
+    5. Nottinghamshire | True | as it is the name of a cricket team, representing a named organization
+    6. rain-affected match | False | as it is an adjective describing the condition of the match, not an entity.",1.0
+96,2460,ATLANTA AT CHICAGO,"['ATLANTA', 'CHICAGO']","['atlanta', 'chicago']","1. Atlanta | True | as it is the name of a place or location
+2. Chicago | True | as it is the name of a place or location",1.0
+97,1798,13. Rita Razmaite ( Lithuania ) 38.546,"['Rita', 'Razmaite', 'Lithuania']","['rita', 'razmaite', 'lithuania']","1. Rita Razmaite | True | as it is the name of a person
+    2. Lithuania | True | as it is the name of a place or location
+    3. 38.546 | False | as it is a number or score",1.0
+98,2185,"New Zealand - 15 - Christian Cullen ( Alama Ieremia , 70 ) , 14 - Jeff Wilson , 13 - Walter Little , 12 - Frank Bunce , 11 - Glen Osborne ; 10 - Andrew Mehrtens , 9 - Justin Marshall ; 8 - Zinzan Brooke , 7 - Josh Kronfeld , 6 - Michael Jones ( Glenn Taylor , 53 ) , 5 - Robin Brooke , 4 - Ian Jones , 3 - Olo Brown , 2 - Sean Fitzpatrick ( captain ) , 1 - Craig Dowd .","['New', 'Zealand', 'Christian', 'Cullen', 'Alama', 'Ieremia', 'Jeff', 'Wilson', 'Walter', 'Little', 'Frank', 'Bunce', 'Glen', 'Osborne', 'Andrew', 'Mehrtens', 'Justin', 'Marshall', 'Zinzan', 'Brooke', 'Josh', 'Kronfeld', 'Michael', 'Jones', 'Glenn', 'Taylor', 'Robin', 'Brooke', 'Ian', 'Jones', 'Olo', 'Brown', 'Sean', 'Fitzpatrick', 'Craig', 'Dowd']","['craig', 'glen', 'dowd', 'mehrtens', 'little', 'alama', 'osborne', 'wilson', 'walter', 'olo', 'robin', 'andrew', 'kronfeld', 'marshall', 'ian', 'ieremia', 'sean', 'brooke', 'michael', 'frank', 'josh', 'zealand', 'glenn', 'taylor', 'brown', 'zinzan', 'justin', 'bunce', 'fitzpatrick', 'jeff', 'cullen', 'new', 'christian', 'jones']","1. New Zealand | True | as it is the name of a country
+    2. 15 | False | as it is a number
+    3. Christian Cullen | True | as it is the name of a person
+    4. Alama Ieremia | True | as it is the name of a person
+    5. 70 | False | as it is a number
+    6. 14 | False | as it is a number
+    7. Jeff Wilson | True | as it is the name of a person
+    8. 13 | False | as it is a number
+    9. Walter Little | True | as it is the name of a person
+    10. 12 | False | as it is a number
+    11. Frank Bunce | True | as it is the name of a person
+    12. 11 | False | as it is a number
+    13. Glen Osborne | True | as it is the name of a person
+    14. 10 | False | as it is a number
+    15. Andrew Mehrtens | True | as it is the name of a person
+    16. 9 | False | as it is a number
+    17. Justin Marshall | True | as it is the name of a person
+    18. 8 | False | as it is a number
+    19. Zinzan Brooke | True | as it is the name of a person
+    20. 7 | False | as it is a number
+    21. Josh Kronfeld | True | as it is the name of a person
+    22. 6 | False | as it is a number
+    23. Michael Jones | True | as it is the name of a person
+    24. Glenn Taylor | True | as it is the name of a person
+    25. 53 | False | as it is a number
+    26. 5 | False | as it is a number
+    27. Robin Brooke | True | as it is the name of a person
+    28. 4 | False | as it is a number
+    29. Ian Jones | True | as it is the name of a person
+    30. 3 | False | as it is a number
+    31. Olo Brown | True | as it is the name of a person
+    32. 2 | False | as it is a number
+    33. Sean Fitzpatrick | True | as it is the name of a person
+    34. captain | False | as it is a title but not a person, organization or location
+    35. 1 | False | as it is a number
+    36. Craig Dowd | True | as it is the name of a person",1.0
+99,2120,Scarborough 1 Northampton 1,"['Scarborough', 'Northampton']","['scarborough', 'northampton']","1. Scarborough | True | as it is the name of a place or location
+2. Northampton | True | as it is the name of a place or location
+3. 1 | False | as it is a score or number, which is not an entity.",1.0

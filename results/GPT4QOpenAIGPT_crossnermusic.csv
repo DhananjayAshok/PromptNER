@@ -1,0 +1,829 @@
+,idx,para,entities,preds,meta,f1
+0,193,"Of the other seven songs that were on the British release , two were released on the US version of the next Beatles album , Rubber Soul , two were back-to-back on the next US single and then appeared on Yesterday and Today , and three had already been on Beatles VI .","['British', 'US', 'Beatles', 'Rubber Soul', 'US', 'Yesterday and Today', 'Beatles VI']","['beatles', 'yesterday and today', 'beatles vi', 'rubber soul']","1. British release | False | as it is referring to the release type and not an entity
+2. US version | False | as it is referring to the release type and not an entity
+3. Beatles | True | as it is a band
+4. Rubber Soul | True | as it is an album
+5. Yesterday and Today | True | as it is an album
+6. Beatles VI | True | as it is an album",0.8
+1,139,"For the majority of its existence , the group was composed of Mike D ( vocals , drums ) , Adam Yauch ( vocals , bass ) and Ad-Rock ( vocals , guitar , programming ) .","['Mike D', 'drums', 'Adam Yauch', 'bass', 'Ad-Rock', 'guitar', 'programming']","['mike d', 'ad-rock', 'adam yauch']","1. Mike D | True | as it is a person (artist)
+2. Adam Yauch | True | as it is a person (artist)
+3. Ad-Rock | True | as it is a person (artist)
+4. vocals | False | as it is an activity, not an entity
+5. drums | False | as it is an action performed on a musical instrument
+6. bass | False | as it is an activity or instrument played, not an entity
+7. guitar | False | as it is an activity or instrument played, not an entity
+8. programming | False | as it is a task or activity, not an entity",0.6
+2,52,"Originally based in West Germany , the four original members of the group 's official line-up were Liz Mitchell and Marcia Barrett from Jamaica , Maizie Williams from Montserrat and Bobby Farrell , a performing artist from Aruba .","['West Germany', 'Liz Mitchell', 'Marcia Barrett', 'Jamaica', 'Maizie Williams', 'Montserrat', 'Bobby Farrell', 'Aruba']","['montserrat', 'bobby farrell', 'jamaica', 'west germany', 'maizie williams', 'marcia barrett', 'aruba', 'liz mitchell']","1. West Germany | True | as it is a location
+   2. Liz Mitchell | True | as it is a person
+   3. Marcia Barrett | True | as it is a person
+   4. Jamaica | True | as it is a country
+   5. Maizie Williams | True | as it is a person
+   6. Montserrat | True | as it is a location
+   7. Bobby Farrell | True | as it is a person
+   8. Aruba | True | as it is a country",1.0
+3,121,"The venue was the site of several Commonwealth Games sports in 1978 Commonwealth Games , and part of Universiade ( the World University Games ) in 1983 .","['Commonwealth Games sports', '1978 Commonwealth Games', 'Universiade', 'World University Games']","['commonwealth games', 'universiade', '1978 commonwealth games']","1. Commonwealth Games | True | as it is an event
+    2. 1978 Commonwealth Games | True | as it is a specific event edition
+    3. Universiade | True | as it is an event (World University Games)
+    4. 1983 | False | as it is a date",0.5714285714285714
+4,298,"Mostly well received by critics , and with a special mention to Elfman 's gothic score , the film won an Academy Awards for Academy Award for Best Production Design , as well as two British Academy of Film and Television Arts s for Best Costume Design and Best Production Design .","['Elfman', 'Academy Awards', 'Academy Award for Best Production Design', 'British Academy of Film and Television Arts s for Best Costume Design and Best Production Design']","['elfman', 'british academy of film and television arts', 'best costume design', 'academy award for best production design', 'best production design', 'academy awards']","1. Elfman | True | as it is a person (an artist)
+    2. gothic score | False | as it is a description of music
+    3. Academy Awards | True | as it is an award
+    4. Academy Award for Best Production Design | True | as it is an award
+    5. British Academy of Film and Television Arts | True | as it is an organization
+    6. Best Costume Design | True | as it is an award
+    7. Best Production Design | True | as it is an award",0.6
+5,232,"Examples of this include Michael Jackson from The Jackson 5 , Donny Osmond from The Osmonds , Ricky Martin from Menudo , Justin Timberlake from * NSYNC , and Ronan Keating from Boyzone .","['Michael Jackson', 'The Jackson 5', 'Donny Osmond', 'The Osmonds', 'Ricky Martin', 'Menudo', 'Justin Timberlake', 'NSYNC', 'Ronan Keating', 'Boyzone']","['ronan keating', 'ricky martin', 'michael jackson', 'menudo', 'the jackson 5', 'the osmonds', 'justin timberlake', 'donny osmond', 'boyzone', 'nsync']","1. Michael Jackson | True | as he is an artist
+2. The Jackson 5 | True | as it is a band
+3. Donny Osmond | True | as he is an artist
+4. The Osmonds | True | as it is a band
+5. Ricky Martin | True | as he is an artist
+6. Menudo | True | as it is a band
+7. Justin Timberlake | True | as he is an artist
+8. *NSYNC | True | as it is a band
+9. Ronan Keating | True | as he is an artist
+10. Boyzone | True | as it is a band",1.0
+6,276,"During this period he designed album sleeves and additional material for such acts as the Sutherland Brothers , Kevin Coyne , Edgar Broughton Band , Chilli Willi and the Red Hot Peppers , Quiver , the Kursaal Flyers and Michael Moorcock and the Deep Fix .","['Sutherland Brothers', 'Kevin Coyne', 'Edgar Broughton Band', 'Chilli Willi and the Red Hot Peppers', 'Quiver', 'the Kursaal Flyers', 'Michael Moorcock and the Deep Fix']","['sutherland brothers', 'chilli willi and the red hot peppers', 'edgar broughton band', 'deep fix', 'quiver', 'michael moorcock', 'kevin coyne', 'kursaal flyers']","1. Sutherland Brothers | True | as it is a band
+    2. Kevin Coyne | True | as it is an artist
+    3. Edgar Broughton Band | True | as it is a band
+    4. Chilli Willi and the Red Hot Peppers | True | as it is a band
+    5. Quiver | True | as it is a band
+    6. Kursaal Flyers | True | as it is a band
+    7. Michael Moorcock | True | as it is a person
+    8. Deep Fix | True | as it is a band",0.6666666666666666
+7,304,"Schayes played on the US basketball team that won a gold medal at the 1977 Maccabiah Games in Tel Aviv , Israel ; he also played for Team USA at the 1981 Maccabiah Games , which won a gold medal .","['Schayes', 'US basketball team', '1977 Maccabiah Games', 'Tel Aviv', 'Israel', 'Team USA', '1981 Maccabiah Games']","['team usa', 'tel aviv', 'us basketball team', '1981 maccabiah games', 'schayes', 'israel', '1977 maccabiah games']","1. Schayes | True | as it is a person (a basketball player)
+2. US basketball team | True | as it is an organization or team
+3. gold medal | False | as it is a type of award, not a specific, distinct object or award
+4. 1977 Maccabiah Games | True | as it is an event
+5. Tel Aviv | True | as it is a location
+6. Israel | True | as it is a country
+7. Team USA | True | as it is an organization or team
+8. 1981 Maccabiah Games | True | as it is an event",1.0
+8,239,The album was certified gold by the British Phonographic Industry on 1 October 1987 and also by the Recording Industry Association of America on 19 September 1990 .,"['British Phonographic Industry', 'Recording Industry Association of America']","['british phonographic industry', 'recording industry association of america']","1. album | False | as it is an object but the specific album name is not mentioned
+    2. gold | False | as it is an album certification and not an award
+    3. British Phonographic Industry | True | as it is an organization
+    4. 1 October 1987 | False | as it is a date
+    5. Recording Industry Association of America | True | as it is an organization
+    6. 19 September 1990 | False | as it is a date",1.0
+9,78,"In 2005 Jamieson won Best Male Performer in the second annual Jack Awards , Jamieson showcased the sounds of Grinspoon to millions of viewers in March 2006 , playing live at Melbourne Cricket Ground as part of the closing ceremony of the 2006 Commonwealth Games .","['Jamieson', 'second annual Jack Awards', 'Jamieson', 'Grinspoon', 'Melbourne Cricket Ground', '2006 Commonwealth Games']","['melbourne cricket ground', 'commonwealth games', 'grinspoon', 'jamieson', 'jack awards']","1. Jamieson | True | as it is a person (performer)
+2. Best Male Performer | False | as it is an award category and not a distinct award
+3. Jack Awards | True | as it is an award event
+4. Grinspoon | True | as it is a band
+5. Melbourne Cricket Ground | True | as it is a location
+6. Commonwealth Games | True | as it is an event
+7. 2006 | False | as it is a date",0.6
+10,275,"Phillips was signed as a solo artist with Myrrh Records under her given name and recorded four Christian pop albums : Beyond Saturday Night , Dancing with Danger , Black and White in a Grey World and , The Turning .","['Phillips', 'Myrrh Records', 'Christian pop albums', 'Beyond Saturday Night', 'Dancing with Danger', 'Black and White in a Grey World', 'The Turning']","['myrrh records', 'black and white in a grey world', 'phillips', 'the turning', 'dancing with danger', 'christian pop', 'beyond saturday night']","1. Phillips | True | as it is a person (name)
+    2. Myrrh Records | True | as it is an organization (record label)
+    3. Beyond Saturday Night | True | as it is an album
+    4. Dancing with Danger | True | as it is an album
+    5. Black and White in a Grey World | True | as it is an album
+    6. The Turning | True | as it is an album
+    7. Christian pop | True | as it is a music genre",0.8571428571428571
+11,62,"142 He returned to the stage on 8 September 2005 , appearing with Arcade Fire for the US nationally televised event Fashion Rocks , and performed with the Canadian band for the second time a week later during the CMJ Music Marathon . Thompson ( 2006 ) : pp. 291-92 He contributed backing vocals on TV on the Radio ' s song Province for their album Return to Cookie Mountain ,","['Arcade Fire', 'US', 'Fashion Rocks', 'Canadian', 'CMJ Music Marathon', 'Thompson', 'TV on the Radio', 'Province', 'Return to Cookie Mountain']","['province', 'fashion rocks', 'arcade fire', 'tv on the radio', 'return to cookie mountain', 'cmj music marathon', 'us']","1. He | False | as it is a pronoun and not an entity
+    2. 8 September 2005 | False | as it is a date
+    3. Arcade Fire | True | as it is a band
+    4. US | True | as it is a country
+    5. Fashion Rocks | True | as it is an event
+    6. Canadian | False | as it is an adjective
+    7. CMJ Music Marathon | True | as it is an event
+    8. Thompson (2006) | False | as it is a citation and not an entity
+    9. TV on the Radio | True | as it is a band
+    10. Province | True | as it is a song
+    11. Return to Cookie Mountain | True | as it is an album",0.875
+12,183,"In February 1984 , Queen released their eleventh studio album , The Works , which included the successful singles Radio Ga Ga , Hammer to Fall and I Want to Break Free .","['Queen', 'The Works', 'Radio Ga Ga', 'Hammer to Fall', 'I Want to Break Free']","['hammer to fall', 'queen', 'i want to break free', 'radio ga ga', 'the works']","1. February 1984 | False | as it is a date
+2. Queen | True | as it is a band
+3. The Works | True | as it is an album
+4. Radio Ga Ga | True | as it is a song
+5. Hammer to Fall | True | as it is a song
+6. I Want to Break Free | True | as it is a song",1.0
+13,258,"It features songs from both The Better Life and Away from the Sun , and even some early sketches of It 's Not Me and Father 's Son , which were both eventually released on Seventeen Days .","['The Better Life', 'Away from the Sun', ""It 's Not Me"", ""Father 's Son"", 'Seventeen Days']","['seventeen days', ""it's not me"", 'the better life', ""father's son"", 'away from the sun']","1. The Better Life | True | as it is an album
+2. Away from the Sun | True | as it is an album
+3. It's Not Me | True | as it is a song
+4. Father's Son | True | as it is a song
+5. Seventeen Days | True | as it is an album",0.6
+14,148,"In the 1990s , country music became a worldwide phenomenon thanks to Garth Brooks , Other artists that experienced success during this time included Clint Black , Sammy Kershaw , Aaron Tippin , Travis Tritt , Alan Jackson and the newly formed duo of Brooks & amp ; Dunn ; George Strait , whose career began in the 1980s , also continued to have widespread success in this decade and beyond .","['country music', 'Garth Brooks', 'Clint Black', 'Sammy Kershaw', 'Aaron Tippin', 'Travis Tritt', 'Alan Jackson', 'Brooks & amp ; Dunn', 'George Strait']","['aaron tippin', 'country music', 'alan jackson', 'brooks & dunn', 'travis tritt', 'george strait', 'garth brooks', 'sammy kershaw', 'clint black']","1. 1990s | False | as it is a time period
+    2. country music | True | as it is a music genre
+    3. Garth Brooks | True | as it is an artist
+    4. Clint Black | True | as it is an artist
+    5. Sammy Kershaw | True | as it is an artist
+    6. Aaron Tippin | True | as it is an artist
+    7. Travis Tritt | True | as it is an artist
+    8. Alan Jackson | True | as it is an artist
+    9. Brooks & Dunn | True | as it is a duo
+    10. George Strait | True | as it is an artist
+    11. 1980s | False | as it is a time period",0.8888888888888888
+15,220,"The instrument is played in Guinea , Guinea-Bissau , Mali , Senegal , Burkina Faso and the Gambia .","['Guinea', 'Guinea-Bissau', 'Mali', 'Senegal', 'Burkina Faso', 'the Gambia']","['burkina faso', 'senegal', 'guinea', 'mali', 'guinea-bissau', 'gambia']","1. Guinea | True | as it is a country
+2. Guinea-Bissau | True | as it is a country
+3. Mali | True | as it is a country
+4. Senegal | True | as it is a country
+5. Burkina Faso | True | as it is a country
+6. Gambia | True | as it is a country
+7. instrument | False | as it is an incomplete description of a musical instrument without a specified name",0.8333333333333334
+16,336,"As a film-score composer , Sakamoto has won an Academy Awards , a British Academy Film Awards , a Grammy Award , and 2 Golden Globe Award s .","['Sakamoto', 'Academy Awards', 'British Academy Film Awards', 'Grammy Award', 'Golden Globe Award']","['sakamoto', 'golden globe awards', 'british academy film awards', 'academy awards', 'grammy award']","1. Sakamoto | True | as it is a person (composer)
+    2. Academy Awards | True | as it is an award
+    3. British Academy Film Awards | True | as it is an award
+    4. Grammy Award | True | as it is an award
+    5. Golden Globe Awards | True | as it is an award",0.8
+17,334,"During the 20th century , many styles were influenced by the music of the United States giving rise to genres such as Latin pop , Latin rock , Latin jazz , hip hop , and reggaeton .","['the United States', 'Latin pop', 'Latin rock', 'Latin jazz', 'hip hop', 'reggaeton']","['latin pop', 'hip hop', 'united states', 'reggaeton', 'latin jazz', 'latin rock']","1. 20th century | False | as it is a time period
+    2. United States | True | as it is a country
+    3. Latin pop | True | as it is a music genre
+    4. Latin rock | True | as it is a music genre
+    5. Latin jazz | True | as it is a music genre
+    6. hip hop | True | as it is a music genre
+    7. reggaeton | True | as it is a music genre",0.8333333333333334
+18,260,He later also became an ambassador for the 2010 Shanghai Expo and the 2010 Asian Games .,"['2010 Shanghai Expo', '2010 Asian Games']","['2010 shanghai expo', '2010 asian games']","1. Ambassador | False | as it is a role, not an entity
+2. 2010 Shanghai Expo | True | as it is an event
+3. 2010 Asian Games | True | as it is an event",1.0
+19,203,"Brad Shoup of Stereogum surmised that , thanks to the Ramones ' praise for the group , many punk , pop punk , or punk-adjacent artists showed influence from the Beach Boys , noting cover versions of the band 's songs recorded by Slickee Boys , Agent Orange , Bad Religion , Shonen Knife , the Queers , Hi-Standard , the Descendents , the Donnas , M.O.D. , and the Vandals .","['Brad Shoup', 'Stereogum', 'Ramones', 'punk', 'pop punk', 'punk-adjacent', 'Beach Boys', 'Slickee Boys', 'Agent Orange', 'Bad Religion', 'Shonen Knife', 'the Queers', 'Hi-Standard', 'the Descendents', 'the Donnas', 'M.O.D.', 'the Vandals']","['beach boys', 'brad shoup', 'the donnas', 'm.o.d', 'agent orange', 'pop punk', 'ramones', 'slickee boys', 'bad religion', 'the queers', 'stereogum', 'the descendents', 'the vandals', 'punk', 'hi-standard', 'shonen knife']","1. Brad Shoup | True | as it is a person
+    2. Stereogum | True | as it is an organization or platform
+    3. Ramones | True | as it is a band
+    4. Beach Boys | True | as it is a band
+    5. punk | True | as it is a music genre
+    6. pop punk | True | as it is a music genre
+    7. Slickee Boys | True | as it is a band
+    8. Agent Orange | True | as it is a band
+    9. Bad Religion | True | as it is a band
+    10. Shonen Knife | True | as it is a band
+    11. the Queers | True | as it is a band
+    12. Hi-Standard | True | as it is a band
+    13. the Descendents | True | as it is a band
+    14. the Donnas | True | as it is a band
+    15. M.O.D. | True | as it is a band
+    16. the Vandals | True | as it is a band",0.9696969696969697
+20,12,"Pop 's music has encompassed a number of styles over the course of his career , including garage rock , punk rock , hard rock , Heavy metal music , art rock , New wave music , jazz , blues , and Electronic music .","['Pop', 'garage rock', 'punk rock', 'hard rock', 'Heavy metal music', 'art rock', 'New wave music', 'jazz', 'blues', 'Electronic music']","['electronic music', 'blues', 'jazz', 'new wave music', 'punk rock', 'garage rock', 'heavy metal music', 'art rock', 'hard rock']","1. Pop's music | False | as it is a possessive form and not an independent entity
+    2. garage rock | True | as it is a music genre
+    3. punk rock | True | as it is a music genre
+    4. hard rock | True | as it is a music genre
+    5. Heavy metal music | True | as it is a music genre
+    6. art rock | True | as it is a music genre
+    7. New wave music | True | as it is a music genre
+    8. jazz | True | as it is a music genre
+    9. blues | True | as it is a music genre
+    10. Electronic music | True | as it is a music genre",0.9473684210526315
+21,293,"He has performed at venues including Lincoln Center , Carnegie Hall , CBGB ' s and Madison Square Garden .","['Lincoln Center', 'Carnegie Hall', 'CBGB', 'Madison Square Garden']","['madison square garden', 'carnegie hall', ""cbgb's"", 'lincoln center']","1. Lincoln Center | True | as it is a location
+    2. Carnegie Hall | True | as it is a location
+    3. CBGB's | True | as it is a location
+    4. Madison Square Garden | True | as it is a location",0.75
+22,16,"Since the introduction of the 50 / 50 voting system in 2009 , the juries and the voters have disagreed on the winner on five occasions , in Eurovision Song Contest 2011 , Eurovision Song Contest 2015 , Eurovision Song Contest 2016 , Eurovision Song Contest 2018 and Eurovision Song Contest 2019 .","['Eurovision Song Contest 2011', 'Eurovision Song Contest 2015', 'Eurovision Song Contest 2016', 'Eurovision Song Contest 2018', 'Eurovision Song Contest 2019']","['eurovision song contest 2011', 'eurovision song contest 2015', 'eurovision song contest 2019', 'eurovision song contest 2018', 'eurovision song contest 2016']","1. 50 / 50 voting system | False | as it is a system and not an entity
+    2. 2009 | False | as it is a date
+    3. juries | False | as it is a collective term for members and not an entity
+    4. voters | False | as it is a collective term for individuals and not an entity
+    5. Eurovision Song Contest 2011 | True | as it is an event
+    6. Eurovision Song Contest 2015 | True | as it is an event
+    7. Eurovision Song Contest 2016 | True | as it is an event
+    8. Eurovision Song Contest 2018 | True | as it is an event
+    9. Eurovision Song Contest 2019 | True | as it is an event",1.0
+23,49,"Material from the 1966-1968 sessions was released on Miles Smiles ( 1966 ) , Sorcerer ( 1967 ) , Nefertiti ( 1967 ) , Miles in the Sky ( 1968 ) , and Filles de Kilimanjaro ( 1968 ) .","['Miles Smiles', 'Sorcerer', 'Nefertiti', 'Miles in the Sky', 'Filles de Kilimanjaro']","['nefertiti', 'filles de kilimanjaro', 'miles in the sky', 'sorcerer', 'miles smiles']","1. Miles Smiles | True | as it is an album
+    2. Sorcerer | True | as it is an album
+    3. Nefertiti | True | as it is an album
+    4. Miles in the Sky | True | as it is an album
+    5. Filles de Kilimanjaro | True | as it is an album
+    6. 1966-1968 | False | as these are dates
+    7. 1966 | False | as it is a date
+    8. 1967 | False | as it is a date
+    9. 1968 | False | as it is a date",1.0
+24,270,"In 1974 he returned to the No. 1 spot on the R & B charts with The Payback , with the The Payback reaching the same spot on the album charts ; he would reach No. 1 two more times in 1974 , with My Thang and Papa Don 't Take No Mess .","['R & B', 'The Payback', 'The Payback', 'My Thang', ""Papa Don 't Take No Mess""]","['the payback', ""papa don't take no mess"", 'my thang']","1. 1974 | False | as it is a date
+    2. No. 1 spot | False | as it is a position and not an entity
+    3. R & B charts | False | as it is a chart type and not an entity
+    4. The Payback | True | as it is a song
+    5. album charts | False | as it is a chart type and not an entity
+    6. My Thang | True | as it is a song
+    7. Papa Don't Take No Mess | True | as it is a song",0.5714285714285714
+25,173,"Their eighth album , Hesitation Marks ( 2013 ) , was followed by a trilogy consisting of the EPs Not the Actual Events ( 2016 ) and Add Violence ( 2017 ) and their ninth album Bad Witch ( 2018 ) .","['Hesitation Marks', 'EPs', 'Not the Actual Events', 'Add Violence', 'Bad Witch']","['bad witch', 'add violence', 'not the actual events', 'hesitation marks']","1. Hesitation Marks | True | as it is an album
+2. 2013 | False | as it is a date
+3. trilogy | False | as it is a description and not an entity
+4. EPs | False | as it is a category (short for ""extended plays"") but not a specific entity
+5. Not the Actual Events | True | as it is an EP
+6. 2016 | False | as it is a date
+7. Add Violence | True | as it is an EP
+8. 2017 | False | as it is a date
+9. ninth album | False | as it is a description and not an entity
+10. Bad Witch | True | as it is an album
+11. 2018 | False | as it is a date",0.8888888888888888
+26,151,"Drawing influences from hip hop , dub , pop , Gorillaz released their self-titled debut album in 2001 to worldwide success , spawning successful follow-ups Demon Days ( 2005 ) , Plastic Beach , The Fall ( both released in 2010 ) , Humanz ( 2017 ) , and The Now Now ( 2018 ) .","['hip hop', 'dub', 'pop', 'Gorillaz', 'Demon Days', 'Plastic Beach', 'The Fall', 'Humanz', 'The Now Now']","['plastic beach', 'gorillaz', 'hip hop', 'the now now', 'pop', 'self-titled debut album', 'demon days', 'the fall', 'humanz', 'dub']","1. Hip hop | True | as it is a music genre
+   2. Dub | True | as it is a music genre
+   3. Pop | True | as it is a music genre
+   4. Gorillaz | True | as it is a band
+   5. Self-titled debut album | True | as it refers to an album
+   6. 2001 | False | as it is a date
+   7. Demon Days | True | as it is an album
+   8. 2005 | False | as it is a date
+   9. Plastic Beach | True | as it is an album
+   10. The Fall | True | as it is an album
+   11. 2010 | False | as it is a date
+   12. Humanz | True | as it is an album
+   13. 2017 | False | as it is a date
+   14. The Now Now | True | as it is an album
+   15. 2018 | False | as it is a date",0.9473684210526315
+27,150,"These included depictions of local Civil Defence during World War II including St. John Ambulance , the British Red Cross and the fire services along with air raid wardens , police officers , the Home Guard and the Royal Voluntary Service .","['local Civil Defence', 'World War II', 'St. John Ambulance', 'British Red Cross', 'Home Guard', 'Royal Voluntary Service']","['british red cross', 'world war ii', 'home guard', 'police officers', 'royal voluntary service', 'civil defence', 'st. john ambulance', 'fire services', 'air raid wardens']","1. Civil Defence | True | as it is an organization
+    2. World War II | True | as it is an event
+    3. St. John Ambulance | True | as it is an organization
+    4. British Red Cross | True | as it is an organization
+    5. fire services | True | as it is an organization
+    6. air raid wardens | True | as it is a role/position, representing people
+    7. police officers | True | as it is a role/position, representing people
+    8. Home Guard | True | as it is an organization
+    9. Royal Voluntary Service | True | as it is an organization",0.6666666666666666
+28,53,"Morricone 's best-known compositions include The Ecstasy of Gold , Se Telefonando , Man with a Harmonica , Here 's to You , the UK No. 2 single Chi Mai , Gabriel 's Oboe and E Più Ti Penso .","['Morricone', 'The Ecstasy of Gold', 'Se Telefonando', 'Man with a Harmonica', ""Here 's to You"", 'UK', 'Chi Mai', ""Gabriel 's Oboe"", 'E Più Ti Penso']","['the ecstasy of gold', 'morricone', ""here's to you"", 'man with a harmonica', 'se telefonando', 'chi mai', ""gabriel's oboe"", 'e più ti penso']","1. Morricone | True | as it is an artist
+    2. The Ecstasy of Gold | True | as it is a composition/song
+    3. Se Telefonando | True | as it is a composition/song
+    4. Man with a Harmonica | True | as it is a composition/song
+    5. Here's to You | True | as it is a composition/song
+    6. UK No. 2 single | False | as it is a ranking and not an entity
+    7. Chi Mai | True | as it is a composition/song
+    8. Gabriel's Oboe | True | as it is a composition/song
+    9. E Più Ti Penso | True | as it is a composition/song",0.7058823529411765
+29,91,"Black Holes and Revelations ( 2006 ) incorporated Electronic music and Pop music elements , displayed in singles such as Supermassive Black Hole , Their seventh album , Drones ( 2015 ) , was a concept album about drone warfare and returned to a harder rock sound .","['Black Holes and Revelations', 'Electronic music', 'Pop music', 'Supermassive Black Hole', 'Drones', 'drone warfare', 'rock']","['black holes and revelations', 'drones', 'electronic music', 'pop music', 'supermassive black hole']","1. Black Holes and Revelations | True | as it is an album
+    2. 2006 | False | as it is a date
+    3. Electronic music | True | as it is a music genre
+    4. Pop music | True | as it is a music genre
+    5. Supermassive Black Hole | True | as it is a song
+    6. Their seventh album | False | as it is a description and not an entity itself
+    7. Drones | True | as it is an album
+    8. 2015 | False | as it is a date
+    9. drone warfare | False | as it is a concept and not an entity
+    10. harder rock sound | False | as it is a description and not an entity",0.8333333333333334
+30,188,"They were inducted by Chuck D and LL Cool J on April 14 , 2012 therefore the group didn 't perform ; instead Black Thought , Travie from Gym Class Heroes and Kid Rock performed a medley of their songs .","['Chuck D', 'LL Cool J', 'Black Thought', 'Travie', 'Gym Class Heroes', 'Kid Rock', 'medley']","['kid rock', 'gym class heroes', 'black thought', 'chuck d', 'll cool j', 'travie']","1. Chuck D | True | as it is a person (artist)
+    2. LL Cool J | True | as it is a person (artist)
+    3. April 14 | False | as it is a date
+    4. 2012 | False | as it is a year
+    5. Black Thought | True | as it is a person (artist)
+    6. Travie | True | as it is a person (artist)
+    7. Gym Class Heroes | True | as it is a band
+    8. Kid Rock | True | as it is a person (artist)",0.9230769230769231
+31,249,The Family Values Tour was created by the American nu metal band Korn in 1998 to be an annual Rock music and Hip hop music tour .,"['Family Values Tour', 'American', 'nu metal', 'Korn', 'Rock music', 'Hip hop music']","['nu metal', 'hip hop music', 'korn', 'family values tour', 'rock music']","1. Family Values Tour | True | as it is an event
+2. American | False | as it is an adjective
+3. nu metal | True | as it is a music genre
+4. Korn | True | as it is a band
+5. 1998 | False | as it is a date
+6. Rock music | True | as it is a music genre
+7. Hip hop music | True | as it is a music genre
+8. tour | False | as it is a general term and not a specific event or object",0.9090909090909091
+32,192,"Grunge began as a mixture of Heavy metal music , punk rock and indie rock in the 1980s and gained mainstream prominence in the early 1990s .","['Grunge', 'Heavy metal music', 'punk rock', 'indie rock']","['heavy metal music', 'grunge', 'punk rock', 'indie rock']","1. Grunge | True | as it is a music genre
+    2. Heavy metal music | True | as it is a music genre
+    3. Punk rock | True | as it is a music genre
+    4. Indie rock | True | as it is a music genre
+    5. 1980s | False | as it is a date
+    6. 1990s | False | as it is a date",1.0
+33,66,"In 1984 , Loverboy recorded the United States at the 1984 Summer Olympics theme for the 1984 Summer Olympics , Nothing 's Gonna Stop You Now .","['Loverboy', 'United States', '1984 Summer Olympics', '1984 Summer Olympics', ""Nothing 's Gonna Stop You Now""]","['1984 summer olympics', ""nothing's gonna stop you now"", 'united states', 'loverboy']","1. Loverboy | True | as it is a band
+    2. United States | True | as it is a country
+    3. 1984 Summer Olympics | True | as it is an event
+    4. Nothing's Gonna Stop You Now | True | as it is a song
+    5. 1984 | False | as it is a date",0.75
+34,255,"Since 2001 , the dominance of traditional boy bands on pop charts began to fade in the western hemisphere , although Gil Kaufman of MTV has described new boy bands that are more likely to resemble My Chemical Romance , Sum 41 , and Simple Plan .","['pop', 'western hemisphere', 'Gil Kaufman', 'MTV', 'My Chemical Romance', 'Sum 41', 'Simple Plan']","['my chemical romance', 'western hemisphere', 'simple plan', 'gil kaufman', 'mtv', 'sum 41']","1. 2001 | False | as it is a date
+    2. Gil Kaufman | True | as it is a person
+    3. MTV | True | as it is an organization
+    4. My Chemical Romance | True | as it is a band
+    5. Sum 41 | True | as it is a band
+    6. Simple Plan | True | as it is a band
+    7. western hemisphere | True | as it is a location",0.9230769230769231
+35,35,"Construction commenced in 1975 and the venue opened ahead of the 1978 Commonwealth Games ( hence its name ) , replacing the adjacent Clarke Stadium as the Eskimos home .","['1978 Commonwealth Games', 'Clarke Stadium', 'Eskimos']","['eskimos', 'clarke stadium', '1978 commonwealth games']","1. Construction | False | as it is a process, not an entity
+    2. 1975 | False | as it is a date
+    3. 1978 Commonwealth Games | True | as it is an event
+    4. Clarke Stadium | True | as it is a location
+    5. Eskimos | True | as it is a sports team",1.0
+36,175,"Dimmu Borgir 's following full-length albums Spiritual Black Dimensions in 1999 and 2001 's Puritanical Euphoric Misanthropia , both met critical acclaim. only to be replaced with Nicholas Barker of Cradle of Filth .","['Dimmu Borgir', 'Spiritual Black Dimensions', 'Puritanical Euphoric Misanthropia', 'Nicholas Barker', 'Cradle of Filth']","['spiritual black dimensions', 'puritanical euphoric misanthropia', 'cradle of filth', 'dimmu borgir', 'nicholas barker']","1. Dimmu Borgir | True | as it is a band
+2. Spiritual Black Dimensions | True | as it is an album
+3. 1999 | False | as it is a date
+4. Puritanical Euphoric Misanthropia | True | as it is an album
+5. 2001 | False | as it is a date
+6. Nicholas Barker | True | as it is a person
+7. Cradle of Filth | True | as it is a band",1.0
+37,349,"In the days following his death , tributes were paid by then-President George W. Bush , the United States House of Representatives , and many musicians and performers , including B. B. King , Ronnie Hawkins , Mick Jagger , Ronnie Wood , George Thorogood , Eric Clapton , Tom Petty , Robert Plant , Elvis Costello , Bonnie Raitt , Robert Randolph and the Family Band and Eric Burdon .","['George W. Bush', 'United States House of Representatives', 'B. B. King', 'Ronnie Hawkins', 'Mick Jagger', 'Ronnie Wood', 'George Thorogood', 'Eric Clapton', 'Tom Petty', 'Robert Plant', 'Elvis Costello', 'Bonnie Raitt', 'Robert Randolph and the Family Band', 'Eric Burdon']","['ronnie hawkins', 'b. b. king', 'tom petty', 'united states house of representatives', 'bonnie raitt', 'eric clapton', 'mick jagger', 'george thorogood', 'george w. bush', 'eric burdon', 'ronnie wood', 'elvis costello', 'robert plant', 'robert randolph and the family band']","1. George W. Bush | True | as it is a person
+    2. United States House of Representatives | True | as it is an organization
+    3. B. B. King | True | as it is a person
+    4. Ronnie Hawkins | True | as it is a person
+    5. Mick Jagger | True | as it is a person
+    6. Ronnie Wood | True | as it is a person
+    7. George Thorogood | True | as it is a person
+    8. Eric Clapton | True | as it is a person
+    9. Tom Petty | True | as it is a person
+    10. Robert Plant | True | as it is a person
+    11. Elvis Costello | True | as it is a person
+    12. Bonnie Raitt | True | as it is a person
+    13. Robert Randolph and the Family Band | True | as it is a band
+    14. Eric Burdon | True | as it is a person",1.0
+38,136,"Dalida employed various musical styles ranging from Pop music and easy listening to disco and adult contemporary , employing even Folk music and Rock music .","['Dalida', 'Pop music', 'easy listening', 'disco', 'adult contemporary', 'Folk music', 'Rock music']","['easy listening', 'adult contemporary', 'pop music', 'disco', 'rock music', 'dalida', 'folk music']","1. Dalida | True | as it is an artist
+    2. Pop music | True | as it is a music genre
+    3. Easy listening | True | as it is a music genre
+    4. Disco | True | as it is a music genre
+    5. Adult contemporary | True | as it is a music genre
+    6. Folk music | True | as it is a music genre
+    7. Rock music | True | as it is a music genre",1.0
+39,180,"Alexander von Meilenwald from German band Nagelfar considers Ungod ' s 1993 debut Circle of the Seven Infernal Pacts , Desaster ' s 1994 demo Lost in the Ages , Tha-Norr ' s 1995 album Wolfenzeitalter , Lunar Aurora ' s 1996 debut Weltengänger and Katharsis ' s 2000 debut 666 Alexander von Meilenwald : 5 Klassiker .","['Alexander von Meilenwald', 'German', 'Nagelfar', 'Ungod', 'Circle of the Seven Infernal Pacts', 'Desaster', 'Lost in the Ages', 'Tha-Norr', 'Wolfenzeitalter', 'Lunar Aurora', 'Weltengänger', 'Katharsis', '666', 'Alexander von Meilenwald', '5 Klassiker']","['circle of the seven infernal pacts', 'wolfenzeitalter', 'lost in the ages', 'tha-norr', 'nagelfar', 'weltengänger', 'desaster', 'ungod', 'katharsis', '666 alexander von meilenwald', 'lunar aurora', 'alexander von meilenwald']","1. Alexander von Meilenwald | True | as it is a person
+2. German | False | as it is an adjective describing the nationality of the band
+3. Nagelfar | True | as it is a band
+4. Ungod | True | as it is a band
+5. Circle of the Seven Infernal Pacts | True | as it is an album
+6. 1993 | False | as it is a date
+7. Desaster | True | as it is a band
+8. Lost in the Ages | True | as it is a demo
+9. 1994 | False | as it is a date
+10. Tha-Norr | True | as it is a band
+11. Wolfenzeitalter | True | as it is an album
+12. 1995 | False | as it is a date
+13. Lunar Aurora | True | as it is a band
+14. Weltengänger | True | as it is an album
+15. 1996 | False | as it is a date
+16. Katharsis | True | as it is a band
+17. 666 Alexander von Meilenwald | True | as it is an album and an artist name
+18. 2000 | False | as it is a date
+19. 5 Klassiker | False | as it is a descriptor for the listed albums",0.8461538461538461
+40,335,"In addition to Underwood , American Idol launched the careers of Kellie Pickler , Josh Gracin , Bucky Covington , Kristy Lee Cook , Danny Gokey , Lauren Alaina and Scotty McCreery ( as well as that of occasional country singer Kelly Clarkson ) in the decade , and would continue to launch country careers in the 2010s .","['Underwood', 'American Idol', 'Kellie Pickler', 'Josh Gracin', 'Bucky Covington', 'Kristy Lee Cook', 'Danny Gokey', 'Lauren Alaina', 'Scotty McCreery', 'country', 'Kelly Clarkson']","['american idol', 'lauren alaina', 'scotty mccreery', 'danny gokey', 'kristy lee cook', 'underwood', 'bucky covington', 'kellie pickler', 'kelly clarkson', 'josh gracin']","1. Underwood | True | as it is a person (referring to Carrie Underwood)
+2. American Idol | True | as it is a TV show (event/organization)
+3. Kellie Pickler | True | as it is a person (artist)
+4. Josh Gracin | True | as it is a person (artist)
+5. Bucky Covington | True | as it is a person (artist)
+6. Kristy Lee Cook | True | as it is a person (artist)
+7. Danny Gokey | True | as it is a person (artist)
+8. Lauren Alaina | True | as it is a person (artist)
+9. Scotty McCreery | True | as it is a person (artist)
+10. Kelly Clarkson | True | as it is a person (artist)
+11. 2010s | False | as it is a time period",0.9523809523809523
+41,191,It was designed by Kenzo Tange and built between 1961 and 1964 to house Swimming at the 1964 Summer Olympics and Diving at the 1964 Summer Olympics events in the 1964 Summer Olympics .,"['Kenzo Tange', '1964 Summer Olympics', '1964 Summer Olympics', '1964 Summer Olympics']","['1964 summer olympics', 'kenzo tange']","1. Kenzo Tange | True | as it is a person (architect)
+2. Swimming | False | as it is a sport, not an entity
+3. 1961 | False | as it is a date
+4. 1964 | False | as it is a date
+5. 1964 Summer Olympics | True | as it is an event
+6. Diving | False | as it is a sport, not an entity",1.0
+42,237,"The Spectral Sorrows , Until Eternity Ends , and Purgatory Afterglow continued the trend , so that by the release of Crimson ( 1996 ) , Edge of Sanity was a progressive metal band .","['The Spectral Sorrows', 'Until Eternity Ends', 'Purgatory Afterglow', 'Crimson', 'Edge of Sanity', 'progressive metal']","['the spectral sorrows', 'crimson', 'until eternity ends', 'purgatory afterglow', 'edge of sanity', 'progressive metal']","1. The Spectral Sorrows | True | as it is an album
+    2. Until Eternity Ends | True | as it is an album
+    3. Purgatory Afterglow | True | as it is an album
+    4. Crimson | True | as it is an album
+    5. 1996 | False | as it is a date
+    6. Edge of Sanity | True | as it is a band
+    7. progressive metal | True | as it is a music genre",1.0
+43,266,"Country influences combined with Punk rock and alternative rock to forge the cowpunk scene in Southern California during the 1980s , which included bands such as The Long Ryders , Lone Justice and The Beat Farmers , as well as the established punk group X , whose music had begun to include country and rockabilly influences .","['Country', 'Punk rock', 'alternative rock', 'cowpunk', 'Southern California', 'The Long Ryders', 'Lone Justice', 'The Beat Farmers', 'punk', 'X', 'country', 'rockabilly']","['lone justice', 'alternative rock', 'the beat farmers', 'southern california', 'country', 'cowpunk', 'punk rock', 'x', 'the long ryders', 'rockabilly']","1. Country | True | as it is a music genre
+2. Punk rock | True | as it is a music genre
+3. Alternative rock | True | as it is a music genre
+4. Cowpunk | True | as it is a music subgenre
+5. Southern California | True | as it is a location
+6. 1980s | False | as it is a time period
+7. The Long Ryders | True | as it is a band
+8. Lone Justice | True | as it is a band
+9. The Beat Farmers | True | as it is a band
+10. X | True | as it is a band
+11. Rockabilly | True | as it is a music genre",0.9565217391304348
+44,71,"The Bee Gees used Barry Gibb ' s falsetto to garner hits such as You Should Be Dancing , Stayin ' Alive , Night Fever , More Than A Woman and Love You Inside Out .","['Bee Gees', 'Barry Gibb', 'falsetto', 'You Should Be Dancing', ""Stayin ' Alive"", 'Night Fever', 'More Than A Woman', 'Love You Inside Out']","['more than a woman', ""stayin' alive"", 'love you inside out', 'night fever', 'you should be dancing', 'barry gibb', 'bee gees']","1. Bee Gees | True | as it is a band
+    2. Barry Gibb | True | as it is a person (artist)
+    3. falsetto | False | as it is a singing technique and not an entity
+    4. You Should Be Dancing | True | as it is a song
+    5. Stayin' Alive | True | as it is a song
+    6. Night Fever | True | as it is a song
+    7. More Than A Woman | True | as it is a song
+    8. Love You Inside Out | True | as it is a song",0.8
+45,171,"Juliana Hatfield is an American musician and singer-songwriter from the Boston area , formerly of the indie rock bands Blake Babies , Some Girls , and The Lemonheads .","['Juliana Hatfield', 'American', 'Boston area', 'rock', 'Blake Babies', 'Some Girls', 'The Lemonheads']","['blake babies', 'the lemonheads', 'indie rock', 'juliana hatfield', 'boston', 'some girls']","1. Juliana Hatfield | True | as it is a person (musician and singer-songwriter)
+2. American | False | as it is an adjective describing the nationality of the person
+3. Boston | True | as it is a location (city)
+4. Blake Babies | True | as it is an indie rock band
+5. Some Girls | True | as it is an indie rock band
+6. The Lemonheads | True | as it is an indie rock band
+7. indie rock | True | as it is a music genre",0.6153846153846154
+46,130,"Following the number-one success of MARRS ' Pump Up The Volume in October , in 1987 to 1989 , UK acts such as The Beatmasters , Krush , Coldcut , Yazz , Bomb The Bass , S-Express , and Italy 's Black Box opened the doors to house music success on the UK charts .","['MARRS', 'Pump Up The Volume', 'UK', 'The Beatmasters', 'Krush', 'Coldcut', 'Yazz', 'Bomb The Bass', 'S-Express', 'Italy', 'Black Box', 'house music', 'UK']","['italy', 'yazz', 'pump up the volume', 'marrs', 'the beatmasters', 'coldcut', 'krush', 's-express', 'bomb the bass', 'house music', 'uk', 'black box']","1. MARRS | True | as it is a band
+    2. Pump Up The Volume | True | as it is a song
+    3. October | False | as it is a time (month)
+    4. 1987 to 1989 | False | as they are dates
+    5. UK | True | as it is a country
+    6. The Beatmasters | True | as it is a band
+    7. Krush | True | as it is a band
+    8. Coldcut | True | as it is a band
+    9. Yazz | True | as it is an artist
+    10. Bomb The Bass | True | as it is a band
+    11. S-Express | True | as it is a band
+    12. Italy | True | as it is a country
+    13. Black Box | True | as it is a band
+    14. house music | True | as it is a music genre
+    15. UK charts | False | as it is not an distinct entity, but a reference to a ranking system",1.0
+47,318,"Brooks & amp ; Dunn has 17 Country Music Association awards , 26 Academy of Country Music awards and 2 Grammy Award s .","['Brooks & amp ; Dunn', 'Country Music Association awards', 'Academy of Country Music awards', 'Grammy Award']","['brooks & dunn', 'academy of country music awards', 'country music association awards', 'grammy award']","1. Brooks & Dunn | True | as it is a band
+    2. Country Music Association awards | True | as it is an award
+    3. Academy of Country Music awards | True | as it is an award
+    4. Grammy Award | True | as it is an award",0.75
+48,252,"He liked to surround himself with jazz musicians such as John McLaughlin and Binky McKenzie and often performed with a horn section drawn from a pool that included , among others , saxophone players Art Themen , Mel Collins , Dick Heckstall-Smith , Lol Coxhill , Dick Morrissey , John Surman and trombonist Mike Zwerin .","['jazz', 'John McLaughlin', 'Binky McKenzie', 'horn', 'saxophone', 'Art Themen', 'Mel Collins', 'Dick Heckstall-Smith', 'Lol Coxhill', 'Dick Morrissey', 'John Surman', 'Mike Zwerin']","['mel collins', 'john surman', 'john mclaughlin', 'jazz', 'binky mckenzie', 'art themen', 'lol coxhill', 'mike zwerin', 'dick heckstall-smith', 'dick morrissey']","1. jazz | True | as it is a music genre
+2. John McLaughlin | True | as it is an artist (person)
+3. Binky McKenzie | True | as it is an artist (person)
+4. horn section | False | as it is a musical arrangement, not an entity
+5. Art Themen | True | as it is an artist (person)
+6. Mel Collins | True | as it is an artist (person)
+7. Dick Heckstall-Smith | True | as it is an artist (person)
+8. Lol Coxhill | True | as it is an artist (person)
+9. Dick Morrissey | True | as it is an artist (person)
+10. John Surman | True | as it is an artist (person)
+11. Mike Zwerin | True | as it is an artist (person)
+12. saxophone players | False | as it is a group category not a specific entity
+13. trombonist | False | as it is a group category not a specific entity",0.9090909090909091
+49,44,"There are many kinds of bubens , including def , daf , or qaval ( Azerbaijan ) , daf or khaval ( Armenia ) , daira ( Georgia ) , doira ( Uzbekistan and Tajikistan ) , daire or def ( Iran ) , bendeir ( Arab countries ) , pandero ( Spain ) .","['bubens', 'def', 'daf', 'qaval', 'Azerbaijan', 'daf', 'khaval', 'Armenia', 'daira', 'Georgia', 'doira', 'Uzbekistan', 'Tajikistan', 'daire', 'def', 'Iran', 'bendeir', 'Arab', 'pandero', 'Spain']","['georgia', 'daira', 'spain', 'qaval', 'arab countries', 'daf', 'doira', 'iran', 'daire', 'pandero', 'azerbaijan', 'bubens', 'khaval', 'bendeir', 'uzbekistan', 'armenia', 'tajikistan', 'def']","1. bubens | True | as it is a musical instrument
+    2. def | True | as it is a type of buben
+    3. daf | True | as it is a type of buben
+    4. qaval | True | as it is a type of buben
+    5. Azerbaijan | True | as it is a country
+    6. khaval | True | as it is a type of buben
+    7. Armenia | True | as it is a country
+    8. daira | True | as it is a type of buben
+    9. Georgia | True | as it is a country
+    10. doira | True | as it is a type of buben
+    11. Uzbekistan | True | as it is a country
+    12. Tajikistan | True | as it is a country
+    13. daire | True | as it is a type of buben
+    14. Iran | True | as it is a country
+    15. bendeir | True | as it is a type of buben
+    16. Arab countries | True | as it refers to a group of countries
+    17. pandero | True | as it is a type of buben
+    18. Spain | True | as it is a country",0.9444444444444444
+50,4,"ABBA were soon recognised and embraced by other acts : Evan Dando of the Lemonheads recorded a cover version of Knowing Me , Knowing You ; Sinéad O 'Connor and Boyzone 's Stephen Gately have recorded Chiquitita ; Tanita Tikaram , Blancmange and Steven Wilson paid tribute to The Day Before You Came .","['ABBA', 'Evan Dando', 'the Lemonheads', 'Knowing Me , Knowing You', ""Sinéad O 'Connor"", 'Boyzone', 'Stephen Gately', 'Chiquitita', 'Tanita Tikaram', 'Blancmange', 'Steven Wilson', 'The Day Before You Came']","['tanita tikaram', 'knowing me, knowing you', 'stephen gately', ""sinéad o'connor"", 'boyzone', 'evan dando', 'the day before you came', 'abba', 'steven wilson', 'chiquitita', 'blancmange', 'lemonheads']","1. ABBA | True | as it is a band
+    2. Evan Dando | True | as it is a person
+    3. Lemonheads | True | as it is a band
+    4. Knowing Me, Knowing You | True | as it is a song
+    5. Sinéad O'Connor | True | as it is a person
+    6. Boyzone | True | as it is a band
+    7. Stephen Gately | True | as it is a person
+    8. Chiquitita | True | as it is a song
+    9. Tanita Tikaram | True | as it is a person
+    10. Blancmange | True | as it is a band
+    11. Steven Wilson | True | as it is a person
+    12. The Day Before You Came | True | as it is a song",0.75
+51,221,"BBC Radio 4 - The Reunion - Four Weddings and a Funeral , 13 April 2014 and became an unexpected success and the highest-grossing British film in history at the time , with worldwide box office in excess of $ 245.7 million ! --infobox says pounds-- , and receiving Academy Awards nominations for Academy Award for Best Picture and Academy Award for Best Original Screenplay .","['BBC Radio 4', 'The Reunion', 'Four Weddings and a Funeral', 'British', 'Academy Awards', 'Academy Award for Best Picture', 'Academy Award for Best Original Screenplay']","['four weddings and a funeral', 'academy award for best original screenplay', 'bbc radio 4', 'academy awards', 'the reunion', 'academy award for best picture']","1. BBC Radio 4 | True | as it is a radio station
+    2. The Reunion | True | as it is a radio program
+    3. Four Weddings and a Funeral | True | as it is a film
+    4. 13 April 2014 | False | as it is a date
+    5. British | False | as it is an adjective
+    6. $245.7 million | False | as it is an amount
+    7. Academy Awards | True | as it is an award
+    8. Academy Award for Best Picture | True | as it is an award
+    9. Academy Award for Best Original Screenplay | True | as it is an award",0.9230769230769231
+52,101,"The film received several Golden Globe Awards and Academy Awards nominations , and earned Kidman a fourth Screen Actors Guild Award nomination , as part of the Screen Actors Guild Award for Outstanding Performance by a Cast in a Motion Picture .","['Golden Globe Awards', 'Academy Awards', 'Screen Actors Guild Award', 'Screen Actors Guild Award for Outstanding Performance by a Cast in a Motion Picture']","['golden globe awards', 'screen actors guild award', 'screen actors guild award for outstanding performance by a cast in a motion picture', 'academy awards', 'kidman']","1. Golden Globe Awards | True | as it is an award
+2. Academy Awards | True | as it is an award
+3. Kidman | True | as it refers to a person, likely actress Nicole Kidman
+4. Screen Actors Guild Award | True | as it is an award
+5. Screen Actors Guild Award for Outstanding Performance by a Cast in a Motion Picture | True | as it is an award
+6. Motion Picture | False | as it refers to a category of film and not a specific movie title.",0.8888888888888888
+53,46,"The group gave two particularly noteworthy concerts in New York City : once in 2000 at the Zee Gold Bollywood Awards in the Nassau Coliseum , and again in 2002 at the Bollywood Music Awards in the Hammerstein Ballroom .","['New York City', 'Zee Gold Bollywood Awards', 'Nassau Coliseum', 'Bollywood Music Awards', 'Hammerstein Ballroom']","['new york city', 'hammerstein ballroom', 'zee gold bollywood awards', 'nassau coliseum', 'bollywood music awards']","1. New York City | True | as it is a location
+    2. 2000 | False | as it is a date
+    3. Zee Gold Bollywood Awards | True | as it is an event
+    4. Nassau Coliseum | True | as it is a location
+    5. 2002 | False | as it is a date
+    6. Bollywood Music Awards | True | as it is an event
+    7. Hammerstein Ballroom | True | as it is a location",1.0
+54,377,"In 2001 , he released Word of Mouf , followed by Chicken-n-Beer in 2003 and The Red Light District in 2004 .","['Word of Mouf', 'Chicken-n-Beer', 'The Red Light District']","['word of mouf', 'the red light district', 'chicken-n-beer']","1. 2001 | False | as it is a date
+    2. Word of Mouf | True | as it is an album
+    3. Chicken-n-Beer | True | as it is an album
+    4. The Red Light District | True | as it is an album
+    5. 2003 | False | as it is a date
+    6. 2004 | False | as it is a date",1.0
+55,228,"Popular contemporary performers of Australian country music include John Williamson ( who wrote the iconic TRUE Blue ) , Lee Kernaghan ( whose hits include Boys from the Bush and The Outback Club ) , Gina Jeffreys , Forever Road and Sara Storer .","['Popular contemporary performers', 'Australian country music', 'John Williamson', 'TRUE Blue', 'Lee Kernaghan', 'Boys from the Bush', 'The Outback Club', 'Gina Jeffreys', 'Forever Road', 'Sara Storer']","['sara storer', 'true blue', 'boys from the bush', 'the outback club', 'john williamson', 'forever road', 'australian country music', 'lee kernaghan', 'gina jeffreys']","1. Australian country music | True | as it is a music genre
+    2. John Williamson | True | as it is an artist
+    3. TRUE Blue | True | as it is a song
+    4. Lee Kernaghan | True | as it is an artist
+    5. Boys from the Bush | True | as it is a song
+    6. The Outback Club | True | as it is a song
+    7. Gina Jeffreys | True | as it is an artist
+    8. Forever Road | True | as it is an artist or band
+    9. Sara Storer | True | as it is an artist",0.9473684210526315
+56,158,"At the 51st Academy Awards , it was nominated for nine Academy Awards , and won five : Academy Award for Best Picture , Academy Award for Best Director for Cimino , Academy Award for Best Supporting Actor for Walken , Academy Award for Best Sound Mixing , and Best Film Editing .","['51st Academy Awards', 'Academy Awards', 'Academy Award for Best Picture', 'Academy Award for Best Director', 'Cimino', 'Academy Award for Best Supporting Actor', 'Walken', 'Academy Award for Best Sound Mixing', 'Best Film Editing']","['best film editing', 'academy award for best director', 'academy award for best supporting actor', '51st academy awards', 'cimino', 'walken', 'academy awards', 'academy award for best picture', 'academy award for best sound mixing']","1. 51st Academy Awards | True | as it is an event
+    2. Academy Awards | True | as it is an award
+    3. Academy Award for Best Picture | True | as it is an award
+    4. Academy Award for Best Director | True | as it is an award
+    5. Cimino | True | as it is a person (director)
+    6. Academy Award for Best Supporting Actor | True | as it is an award
+    7. Walken | True | as it is a person (actor)
+    8. Academy Award for Best Sound Mixing | True | as it is an award
+    9. Best Film Editing | True | as it is an award",1.0
+57,374,"The Hives have released five studio albums : Barely Legal ( 1997 ) , Veni Vidi Vicious ( 2000 ) , Tyrannosaurus Hives ( 2004 ) , The Black and White Album ( 2007 ) and Lex Hives ( 2012 ) .","['The Hives', 'Barely Legal', 'Veni Vidi Vicious', 'Tyrannosaurus Hives', 'The Black and White Album', 'Lex Hives']","['the hives', 'barely legal', 'veni vidi vicious', 'tyrannosaurus hives', 'lex hives', 'the black and white album']","1. The Hives | True | as it is a band
+    2. Barely Legal | True | as it is an album
+    3. Veni Vidi Vicious | True | as it is an album
+    4. Tyrannosaurus Hives | True | as it is an album
+    5. The Black and White Album | True | as it is an album
+    6. Lex Hives | True | as it is an album
+    7. 1997, 2000, 2004, 2007, 2012 | False | as these are dates",1.0
+58,310,"Sangeet Natak Akademi is the national level academy for performing arts set up by the Government of India in 1952 , which bestows Sangeet Natak Akademi Award as the highest official Indian goernment 's recognition given to practicing artists , Sattriya Centre , Kathak Kendra ( National Institute of Kathak Dance ) at New Delhi , Centre for Kutiyattam at Thiruvananthapuram , Chhau Centre at Baripada in Jamshedpur , and the Northeast Centre .","['Sangeet Natak Akademi', 'India', 'Sangeet Natak Akademi Award', 'Indian', 'Sattriya Centre', 'Kathak Kendra', 'National Institute of Kathak Dance', 'New Delhi', 'Centre for Kutiyattam', 'Thiruvananthapuram', 'Chhau Centre', 'Baripada', 'Jamshedpur', 'Northeast Centre']","['kathak kendra', 'sangeet natak akademi award', 'sattriya centre', 'jamshedpur', 'chhau centre', 'government of india', 'new delhi', 'baripada', 'centre for kutiyattam', 'thiruvananthapuram', 'sangeet natak akademi', 'northeast centre']","1. Sangeet Natak Akademi | True | as it is an organization
+2. Government of India | True | as it is an organization
+3. 1952 | False | as it is a date
+4. Sangeet Natak Akademi Award | True | as it is an award
+5. Sattriya Centre | True | as it is a location related to performing arts
+6. Kathak Kendra | True | as it is an institute (National Institute of Kathak Dance)
+7. New Delhi | True | as it is a location
+8. Centre for Kutiyattam | True | as it is a location related to performing arts
+9. Thiruvananthapuram | True | as it is a location
+10. Chhau Centre | True | as it is a location related to performing arts
+11. Baripada | True | as it is a location
+12. Jamshedpur | True | as it is a location
+13. Northeast Centre | True | as it is a location related to performing arts",0.8461538461538461
+59,131,"Organised by the European Broadcasting Union ( EBU ) and host broadcaster Eesti Televisioon ( ETV ) , the contest was held at the Saku Suurhall , with the final on 25 May 2002 .","['European Broadcasting Union', 'EBU', 'Eesti Televisioon', 'ETV', 'Saku Suurhall']","['eesti televisioon', 'european broadcasting union', 'etv', 'ebu', 'saku suurhall']","1. European Broadcasting Union | True | as it is an organization
+    2. EBU | True | as it is an abbreviation for European Broadcasting Union (an organization)
+    3. Eesti Televisioon | True | as it is an organization
+    4. ETV | True | as it is an abbreviation for Eesti Televisioon (an organization)
+    5. Saku Suurhall | True | as it is a location
+    6. 25 May 2002 | False | as it is a date",1.0
+60,215,"That year , she also recorded a duet with singer Randy Stonehill for his Love Beyond Reason album , titled I Could Never Say Goodbye , and recorded The Animals ' Christmas with Art Garfunkel .","['Randy Stonehill', 'Love Beyond Reason', 'I Could Never Say Goodbye', ""The Animals ' Christmas"", 'Art Garfunkel']","['randy stonehill', 'art garfunkel', ""the animals' christmas"", 'i could never say goodbye', 'love beyond reason']","1. Randy Stonehill | True | as it is a person
+2. Love Beyond Reason | True | as it is an album
+3. I Could Never Say Goodbye | True | as it is a song
+4. The Animals' Christmas | True | as it is an album or musical work
+5. Art Garfunkel | True | as it is a person",0.8
+61,154,"In recognition of her film career , she received BAFTA 's Lifetime Achievement Award , the Golden Globe Cecil B. DeMille Award , the Screen Actors Guild Life Achievement Award , and the Special Tony Award .","[""BAFTA 's Lifetime Achievement Award"", 'Golden Globe Cecil B. DeMille Award', 'Screen Actors Guild Life Achievement Award', 'Special Tony Award']","['special tony award', 'golden globe cecil b. demille award', 'bafta', 'lifetime achievement award', 'screen actors guild life achievement award']","1. BAFTA | True | as it is an organization
+    2. Lifetime Achievement Award | True | as it is an award
+    3. Golden Globe Cecil B. DeMille Award | True | as it is an award
+    4. Screen Actors Guild Life Achievement Award | True | as it is an award
+    5. Special Tony Award | True | as it is an award",0.6666666666666666
+62,7,"It was Recording Industry Association of America triple platinum in America , Two more singles from the album - Policy of Truth and World in My Eyes - were hits in the UK , with the former also charting in the US .","['Recording Industry Association of America', 'America', 'Policy of Truth', 'World in My Eyes', 'UK', 'US']","['recording industry association of america', 'policy of truth', 'america', 'uk', 'world in my eyes', 'us']","1. Recording Industry Association of America | True | as it is an organization
+    2. America | True | as it is a country
+    3. Policy of Truth | True | as it is a song
+    4. World in My Eyes | True | as it is a song 
+    5. UK | True | as it is a country
+    6. US | True | as it is a country",1.0
+63,79,Funds raised by the project will go to Amazon Watch and Extinction Rebellion .,"['Amazon Watch', 'Extinction Rebellion']","['amazon watch', 'extinction rebellion']","1. Amazon Watch | True | as it is an organization
+2. Extinction Rebellion | True | as it is an organization",1.0
+64,18,"Andrews has won an Academy Award , a BAFTA , five Golden Globes , three Grammy Award , two Emmy Award , the AFI Life Achievement Award , the Screen Actors Guild Life Achievement Award , the Kennedy Center Honors Award , and the Disney Legends Award .","['Andrews', 'Academy Award', 'BAFTA', 'Golden Globes', 'Grammy Award', 'Emmy Award', 'AFI Life Achievement Award', 'Screen Actors Guild Life Achievement Award', 'Kennedy Center Honors Award', 'Disney Legends Award']","['andrews', 'emmy award', 'afi life achievement award', 'bafta', 'screen actors guild life achievement award', 'disney legends award', 'kennedy center honors award', 'grammy award', 'golden globes', 'academy award']","1. Andrews | True | as it is a person
+    2. Academy Award | True | as it is an award
+    3. BAFTA | True | as it is an award
+    4. Golden Globes | True | as it is an award
+    5. Grammy Award | True | as it is an award
+    6. Emmy Award | True | as it is an award
+    7. AFI Life Achievement Award | True | as it is an award
+    8. Screen Actors Guild Life Achievement Award | True | as it is an award
+    9. Kennedy Center Honors Award | True | as it is an award
+    10. Disney Legends Award | True | as it is an award",1.0
+65,43,"Olympia 71 , Olympia 74 , and Olympia 77 are live albums .","['Olympia 71', 'Olympia 74', 'Olympia 77']","['olympia 77', 'olympia 74', 'olympia 71']","1. Olympia 71 | True | as it is an album
+2. Olympia 74 | True | as it is an album
+3. Olympia 77 | True | as it is an album
+4. live albums | False | as it is a category/type of album and not an entity itself",1.0
+66,248,"Fellow blues artist B.B. King credited Jefferson as one of his biggest musical influences , next to Lonnie Johnson , Louis Jordan and T-Bone Walker .","['blues', 'B.B. King', 'Jefferson', 'Lonnie Johnson', 'Louis Jordan', 'T-Bone Walker']","['t-bone walker', 'louis jordan', 'b.b. king', 'lonnie johnson', 'jefferson']","1. B.B. King | True | as it is an artist
+    2. Jefferson | True | as it is an artist (presumably Blind Lemon Jefferson)
+    3. Lonnie Johnson | True | as it is an artist
+    4. Louis Jordan | True | as it is an artist
+    5. T-Bone Walker | True | as it is an artist",0.9090909090909091
+67,339,"Lengthy sleeve notes are included with the albums Black Seeds of Vengeance , In Their Darkened Shrines , Annihilation of the Wicked , Those Whom the Gods Detest , At the Gate of Sethu , and What Should Not Be Unearthed , explaining the inspiration or source for the lyrics of each song .","['Black Seeds of Vengeance', 'In Their Darkened Shrines', 'Annihilation of the Wicked', 'Those Whom the Gods Detest', 'At the Gate of Sethu', 'What Should Not Be Unearthed']","['those whom the gods detest', 'at the gate of sethu', 'in their darkened shrines', 'what should not be unearthed', 'black seeds of vengeance', 'annihilation of the wicked']","1. Black Seeds of Vengeance | True | as it is an album
+2. In Their Darkened Shrines | True | as it is an album
+3. Annihilation of the Wicked | True | as it is an album
+4. Those Whom the Gods Detest | True | as it is an album
+5. At the Gate of Sethu | True | as it is an album
+6. What Should Not Be Unearthed | True | as it is an album
+7. sleeve notes | False | as it is a description and not an entity
+8. lyrics | False | as it is a general term for words in songs and not an entity",1.0
+68,147,"Western music , influenced by the cowboy ballads , New Mexico music , Texas country music and Tejano music rhythms of the Southwestern United States and Northern Mexico , reached its peak in popularity in the late 1950s , most notably with the song El Paso , first recorded by Marty Robbins in September 1959 .","['Western music', 'cowboy ballads', 'New Mexico music', 'Texas country music', 'Tejano music', 'Southwestern United States', 'Northern Mexico', 'El Paso', 'Marty Robbins']","['new mexico music', 'southwestern united states', 'texas country music', 'western music', 'cowboy ballads', 'tejano music', 'marty robbins', 'northern mexico', 'el paso']","1. Western music | True | as it is a music genre
+    2. cowboy ballads | True | as it is a music genre
+    3. New Mexico music | True | as it is a music genre
+    4. Texas country music | True | as it is a music genre
+    5. Tejano music | True | as it is a music genre
+    6. Southwestern United States | True | as it is a location
+    7. Northern Mexico | True | as it is a location
+    8. late 1950s | False | as it is a time period
+    9. El Paso | True | as it is a song
+    10. Marty Robbins | True | as it is an artist
+    11. September 1959 | False | as it is a date",1.0
+69,204,"The music of Honduras varies from Punta and Paranda ( the local genre of the Garifunas ) to Caribbean music such as Salsa music , Merengue music , reggae and reggaeton ( all widely heard , especially in the north ) .","['Honduras', 'Punta', 'Paranda', 'Garifunas', 'Caribbean music', 'Salsa music', 'Merengue music', 'reggae', 'reggaeton']","['salsa music', 'caribbean', 'punta', 'reggae', 'paranda', 'reggaeton', 'garifunas', 'merengue music', 'honduras']","1. Honduras | True | as it is a country
+    2. Punta | True | as it is a music genre
+    3. Paranda | True | as it is a music genre
+    4. Garifunas | True | as it is an ethnic group, which can be considered an entity
+    5. Caribbean | True | as it is a location/region
+    6. Salsa music | True | as it is a music genre
+    7. Merengue music | True | as it is a music genre
+    8. Reggae | True | as it is a music genre
+    9. Reggaeton | True | as it is a music genre
+    10. North | False | as it is a direction, not an independently identified location in this context",0.8888888888888888
+70,262,"He won seven Grammy Award s , seven Brit Awards , six American Music Awards , four MTV Video Music Award s , an Academy Award , and a Golden Globe Award .","['Grammy Award', 'Brit Awards', 'American Music Awards', 'MTV Video Music Award', 'Academy Award', 'Golden Globe Award']","['academy award', 'grammy awards', 'brit awards', 'mtv video music awards', 'golden globe award', 'american music awards']","1. Grammy Awards | True | as it is an award
+    2. Brit Awards | True | as it is an award
+    3. American Music Awards | True | as it is an award
+    4. MTV Video Music Awards | True | as it is an award
+    5. Academy Award | True | as it is an award
+    6. Golden Globe Award | True | as it is an award",0.6666666666666666
+71,341,"A favorite technique of contemporary jazz writers , ostinati are often used in Modal jazz and Latin jazz and traditional African music including Gnawa music .","['contemporary jazz', 'ostinati', 'Modal jazz', 'Latin jazz', 'African music', 'Gnawa music']","['traditional african music', 'modal jazz', 'contemporary jazz', 'gnawa music', 'latin jazz']","1. contemporary jazz | True | as it is a music genre
+    2. ostinati | False | as it is a musical technique, not an entity
+    3. Modal jazz | True | as it is a music genre
+    4. Latin jazz | True | as it is a music genre
+    5. traditional African music | True | as it is a music genre
+    6. Gnawa music | True | as it is a music genre",0.7272727272727273
+72,81,"Featuring LaLonde and Alexander , Primus recorded the live album Suck on This in 1989 , followed by four studio albums : Frizzle Fry , Sailing the Seas of Cheese , Pork Soda , and Tales from the Punchbowl .","['LaLonde', 'Alexander', 'Primus', 'Suck on This', 'Frizzle Fry', 'Sailing the Seas of Cheese', 'Pork Soda', 'Tales from the Punchbowl']","['primus', 'sailing the seas of cheese', 'alexander', 'lalonde', 'suck on this', 'frizzle fry', 'tales from the punchbowl', 'pork soda']","1. LaLonde | True | as it is a person (artist)
+2. Alexander | True | as it is a person (artist)
+3. Primus | True | as it is a band
+4. Suck on This | True | as it is an album (live)
+5. 1989 | False | as it is a date
+6. Frizzle Fry | True | as it is an album (studio)
+7. Sailing the Seas of Cheese | True | as it is an album (studio)
+8. Pork Soda | True | as it is an album (studio)
+9. Tales from the Punchbowl | True | as it is an album (studio)",1.0
+73,242,"Bedrock Records is an English record label for trance , house and techno started by Nick Muir and John Digweed .","['Bedrock Records', 'English', 'trance', 'house', 'techno', 'Nick Muir', 'John Digweed']","['house', 'bedrock records', 'nick muir', 'techno', 'trance', 'john digweed']","1. Bedrock Records | True | as it is a record label
+2. English | False | as it is an adjective
+3. trance | True | as it is a music genre
+4. house | True | as it is a music genre
+5. techno | True | as it is a music genre
+6. Nick Muir | True | as it is a person
+7. John Digweed | True | as it is a person",0.9230769230769231
+74,142,"The set includes the first round of the remastered series plus the long-awaited remastered versions of On Your Feet or on Your Knees ( 1975 ) , Mirrors , Cultösaurus Erectus , Fire Of Unknown Origin , Extraterrestrial Live , The Revölution by Night , Club Ninja and Imaginos .","['On Your Feet or on Your Knees', 'Mirrors', 'Cultösaurus Erectus', 'Fire Of Unknown Origin', 'Extraterrestrial Live', 'The Revölution by Night', 'Club Ninja', 'Imaginos']","['club ninja', 'cultösaurus erectus', 'the revölution by night', 'on your feet or on your knees', 'fire of unknown origin', 'imaginos', 'extraterrestrial live', 'mirrors']","1. The set | False | as it is a general term, not a specific entity
+    2. first round | False | as it is a general term, not a specific entity
+    3. remastered series | False | as it is a general term, not a specific entity
+    4. On Your Feet or on Your Knees | True | as it is an album
+    5. 1975 | False | as it is a date
+    6. Mirrors | True | as it is an album
+    7. Cultösaurus Erectus | True | as it is an album
+    8. Fire Of Unknown Origin | True | as it is an album
+    9. Extraterrestrial Live | True | as it is an album
+    10. The Revölution by Night | True | as it is an album
+    11. Club Ninja | True | as it is an album
+    12. Imaginos | True | as it is an album",1.0
+75,33,"In 2007 , Standing on the Outside : The Songs of Cold Chisel was released , featuring a collection of the band 's songs as performed by artists including The Living End , Evermore , Something for Kate , Pete Murray , Katie Noonan , You Am I , Paul Kelly , Alex Lloyd , Thirsty Merc and Ben Lee ,","['Standing on the Outside : The Songs of Cold Chisel', 'The Living End', 'Evermore', 'Something for Kate', 'Pete Murray', 'Katie Noonan', 'You Am I', 'Paul Kelly', 'Alex Lloyd', 'Thirsty Merc', 'Ben Lee']","['cold chisel', 'thirsty merc', 'something for kate', 'alex lloyd', 'katie noonan', 'evermore', 'standing on the outside: the songs of cold chisel', 'you am i', 'the living end', 'paul kelly', 'pete murray', 'ben lee']","1. 2007 | False | as it is a date
+    2. Standing on the Outside: The Songs of Cold Chisel | True | as it is an album
+    3. Cold Chisel | True | as it is a band
+    4. The Living End | True | as it is a band
+    5. Evermore | True | as it is a band
+    6. Something for Kate | True | as it is a band
+    7. Pete Murray | True | as it is an artist
+    8. Katie Noonan | True | as it is an artist
+    9. You Am I | True | as it is a band
+    10. Paul Kelly | True | as it is an artist
+    11. Alex Lloyd | True | as it is an artist
+    12. Thirsty Merc | True | as it is a band
+    13. Ben Lee | True | as it is an artist",0.8695652173913043
+76,268,"In April 2005 , members of the band visited Israel and the Palestinian territories with the UK charity War on Want ;","['Israel', 'Palestinian territories', 'UK', 'War on Want']","['war on want', 'uk', 'palestinian territories', 'israel']","1. April 2005 | False | as it is a date
+2. Israel | True | as it is a country
+3. Palestinian territories | True | as it is a location
+4. UK | True | as it is a country
+5. War on Want | True | as it is an organization
+6. band | False | as it is not a specific band, just a general term",1.0
+77,352,"Tens of thousands of medieval tombstones called Stećci are found in Bosnia and Hercegovina and neighboring areas in Montenegro , Serbia and Croatia .","['Stećci', 'Bosnia and Hercegovina', 'Montenegro', 'Serbia', 'Croatia']","['stećci', 'bosnia and hercegovina', 'montenegro', 'croatia', 'serbia']","1. Stećci | True | as it is a type of tombstone
+2. Bosnia and Hercegovina | True | as it is a country
+3. Montenegro | True | as it is a country
+4. Serbia | True | as it is a country
+5. Croatia | True | as it is a country",1.0
+78,120,"Spears has earned numerous awards and accolades , including a Grammy Award ; seven Guinness World Records ; six MTV Video Music Awards , including the Michael Jackson Video Vanguard Award ; seven Billboard Music Awards , including the Millennium Award ; the inaugural Radio Disney Icon Award ; the GLAAD Media Award ' s Vanguard Award and a star on the Hollywood Walk of Fame .","['Grammy Award', 'Guinness World Records', 'MTV Video Music Awards', 'Michael Jackson Video Vanguard Award', 'Billboard Music Awards', 'Millennium Award', 'inaugural Radio Disney Icon Award', 'GLAAD Media Award', 'Vanguard Award', 'Hollywood Walk of Fame']","['spears', 'guinness world records', 'glaad media award', 'vanguard award', 'michael jackson video vanguard award', 'billboard music awards', 'hollywood walk of fame', 'millennium award', 'mtv video music awards', 'radio disney icon award', 'grammy award']","1. Spears | True | as it is a person (an artist)
+    2. Grammy Award | True | as it is an award
+    3. Guinness World Records | True | as it is an organization and an award
+    4. MTV Video Music Awards | True | as it is an award
+    5. Michael Jackson Video Vanguard Award | True | as it is an award
+    6. Billboard Music Awards | True | as it is an award
+    7. Millennium Award | True | as it is an award
+    8. Radio Disney Icon Award | True | as it is an award
+    9. GLAAD Media Award | True | as it is an award
+   10. Vanguard Award | True | as it is an award
+   11. Hollywood Walk of Fame | True | as it is a location and an award",0.8571428571428571
+79,119,"The group had since released seven more albums : Paul 's Boutique ( 1989 ) , Check Your Head ( 1992 ) , Ill Communication ( 1994 ) , Hello Nasty ( 1998 ) , To the 5 Boroughs ( 2004 ) , The Mix-Up ( 2007 ) , and Hot Sauce Committee Part Two ( 2011 ) .","[""Paul 's Boutique"", 'Check Your Head', 'Ill Communication', 'Hello Nasty', 'To the 5 Boroughs', 'The Mix-Up', 'Hot Sauce Committee Part Two']","['hello nasty', 'the mix-up', 'hot sauce committee part two', 'ill communication', ""paul's boutique"", 'check your head', 'to the 5 boroughs']","1. Paul's Boutique | True | as it is an album
+    2. Check Your Head | True | as it is an album
+    3. Ill Communication | True | as it is an album
+    4. Hello Nasty | True | as it is an album
+    5. To the 5 Boroughs | True | as it is an album
+    6. The Mix-Up | True | as it is an album
+    7. Hot Sauce Committee Part Two | True | as it is an album
+    8. 1989 | False | as it is a date
+    9. 1992 | False | as it is a date
+    10. 1994 | False | as it is a date
+    11. 1998 | False | as it is a date
+    12. 2004 | False | as it is a date
+    13. 2007 | False | as it is a date
+    14. 2011 | False | as it is a date",0.8571428571428571
+80,100,"Taylor Momsen , Marcus Durant , Brandi Carlile and Taylor Hawkins contributed vocals to Soundgarden , who performed Rusty Cage , Flower , Outshined , Drawing Flies , Loud Love , I Awake , The Day I Tried to Live and Black Hole Sun , making this their only performance since Cornell 's death .","['Taylor Momsen', 'Marcus Durant', 'Brandi Carlile', 'Taylor Hawkins', 'Soundgarden', 'Rusty Cage', 'Flower', 'Outshined', 'Drawing Flies', 'Loud Love', 'I Awake', 'The Day I Tried to Live', 'Black Hole Sun', 'Cornell']","['i awake', 'brandi carlile', 'outshined', 'loud love', 'flower', 'marcus durant', 'taylor momsen', 'soundgarden', 'taylor hawkins', 'drawing flies', 'black hole sun', 'rusty cage', 'the day i tried to live', 'cornell']","1. Taylor Momsen | True | as it is a person
+    2. Marcus Durant | True | as it is a person
+    3. Brandi Carlile | True | as it is a person
+    4. Taylor Hawkins | True | as it is a person
+    5. Soundgarden | True | as it is a band
+    6. Rusty Cage | True | as it is a song
+    7. Flower | True | as it is a song
+    8. Outshined | True | as it is a song
+    9. Drawing Flies | True | as it is a song
+    10. Loud Love | True | as it is a song
+    11. I Awake | True | as it is a song
+    12. The Day I Tried to Live | True | as it is a song
+    13. Black Hole Sun | True | as it is a song
+    14. Cornell | True | as it is a person (referring to Chris Cornell)
+    15. death | False | as it is a state or event, not an entity",1.0
+81,122,"Kraftwerk 's musical style and image can be heard and seen in 1980s synthpop groups such as Gary Numan , Ultravox , John Foxx , Orchestral Manoeuvres in the Dark , Human League , Depeche Mode , Visage , and Soft Cell .","['Kraftwerk', 'synthpop', 'Gary Numan', 'Ultravox', 'John Foxx', 'Orchestral Manoeuvres in the Dark', 'Human League', 'Depeche Mode', 'Visage', 'Soft Cell']","['orchestral manoeuvres in the dark', 'soft cell', 'depeche mode', 'ultravox', 'human league', 'gary numan', 'synthpop', 'visage', 'john foxx', 'kraftwerk']","1. Kraftwerk | True | as it is a band
+    2. Gary Numan | True | as it is an artist
+    3. Ultravox | True | as it is a band
+    4. John Foxx | True | as it is an artist
+    5. Orchestral Manoeuvres in the Dark | True | as it is a band
+    6. Human League | True | as it is a band
+    7. Depeche Mode | True | as it is a band
+    8. Visage | True | as it is a band
+    9. Soft Cell | True | as it is a band
+    10. 1980s | False | as it is a time period
+    11. synthpop | True | as it is a music genre",1.0
+82,234,Bonnie received two Grammy Award nominations - for Grammy Award for Best Female Pop Vocal Performance and Grammy Award for Best Female Rock Vocal Performance .,"['Bonnie', 'Grammy Award', 'Grammy Award for Best Female Pop Vocal Performance', 'Grammy Award for Best Female Rock Vocal Performance']","['grammy award for best female pop vocal performance', 'bonnie', 'grammy award for best female rock vocal performance']","1. Bonnie | True | as it is a name
+2. Grammy Award nominations | False | as it is a nomination and not an actual award
+3. Grammy Award for Best Female Pop Vocal Performance | True | as it is an award
+4. Grammy Award for Best Female Rock Vocal Performance | True | as it is an award",0.8571428571428571
+83,285,"Flush with artistic freedom , ' N Sync heads straight for the past : specifically the 1980s Rhythm and blues that sought to balance pretty melody atop Hip hop music ' s street-level beat .","['N Sync', 'Rhythm and blues', 'Hip hop music']","['n sync', 'rhythm and blues', 'hip hop music']","1. 'N Sync | True | as it is a band
+    2. 1980s | False | as it is a decade
+    3. Rhythm and blues | True | as it is a music genre
+    4. Hip hop music | True | as it is a music genre
+    5. street-level beat | False | as it is a description of a style, not an independent entity",1.0
+84,179,"He also collected in Moldavia , Wallachia , and ( in 1913 ) Algeria .","['Moldavia', 'Wallachia', 'Algeria']","['algeria', 'wallachia', 'moldavia']","1. Moldavia | True | as it is a location
+2. Wallachia | True | as it is a location
+3. 1913 | False | as it is a date
+4. Algeria | True | as it is a country",1.0
+85,1,"Squarepusher continues to push new boundaries to this day , where he still calls Warp Records his home , having released numerous albums to critical acclaim in the years to follow , such as Go Plastic , Do You Know Squarepusher , Ultravisitor , Hello Everything , Just a Souvenir , Solo Electric Bass 1 , Ufabulum and Damogen Furies .","['Squarepusher', 'Warp Records', 'Go Plastic', 'Do You Know Squarepusher', 'Ultravisitor', 'Hello Everything', 'Just a Souvenir', 'Solo Electric Bass 1', 'Ufabulum', 'Damogen Furies']","['hello everything', 'warp records', 'go plastic', 'ufabulum', 'do you know squarepusher', 'ultravisitor', 'just a souvenir', 'solo electric bass 1', 'squarepusher', 'damogen furies']","1. Squarepusher | True | as it is an artist
+2. Warp Records | True | as it is an organization (record label)
+3. Go Plastic | True | as it is an album
+4. Do You Know Squarepusher | True | as it is an album
+5. Ultravisitor | True | as it is an album
+6. Hello Everything | True | as it is an album
+7. Just a Souvenir | True | as it is an album
+8. Solo Electric Bass 1 | True | as it is an album
+9. Ufabulum | True | as it is an album
+10. Damogen Furies | True | as it is an album",1.0
+86,206,"B-Real appeared with Busta Rhymes , Coolio , LL Cool J and Method Man on Hit Em High from the multi-platinum Space Jam Soundtrack .","['B-Real', 'Busta Rhymes', 'Coolio', 'LL Cool J', 'Method Man', 'Hit Em High', 'Space Jam Soundtrack']","['space jam soundtrack', 'method man', 'busta rhymes', 'b-real', 'hit em high', 'coolio', 'll cool j']","1. B-Real | True | as it is an artist
+2. Busta Rhymes | True | as it is an artist
+3. Coolio | True | as it is an artist
+4. LL Cool J | True | as it is an artist
+5. Method Man | True | as it is an artist
+6. Hit Em High | True | as it is a song
+7. Space Jam Soundtrack | True | as it is an album",1.0
+87,127,"This period on the RCA label ( 1971-75 ) produced Muswell Hillbillies , Everybody 's in Show-Biz , Preservation Act 1 and Preservation Act 2 , Soap Opera and Schoolboys in Disgrace .","['RCA label', 'Muswell Hillbillies', ""Everybody 's in Show-Biz"", 'Preservation Act 1', 'Preservation Act 2', 'Soap Opera', 'Schoolboys in Disgrace']","['schoolboys in disgrace', 'muswell hillbillies', 'rca label', 'preservation act 2', ""everybody 's in show-biz"", 'soap opera', 'preservation act 1']","1. RCA label | True | as it is a music label/organization
+    2. 1971-75 | False | as it is a range of years/date 
+    3. Muswell Hillbillies | True | as it is an album
+    4. Everybody 's in Show-Biz | True | as it is an album
+    5. Preservation Act 1 | True | as it is an album
+    6. Preservation Act 2 | True | as it is an album
+    7. Soap Opera | True | as it is an album
+    8. Schoolboys in Disgrace | True | as it is an album",1.0
+88,97,"A more extensive tribute was given later that year in December at the Southbank Centre in the Queen Elizabeth Hall called The Lady : A Tribute to Sandy Denny with a band composed of members of Bellowhead , the evening featured a mix of young folk acts like Jim Moray and Lisa Knapp alongside those that had known and worked with Denny such as Dave Swarbrick and Jerry Donahue .","['Southbank Centre', 'Queen Elizabeth Hall', 'The Lady : A Tribute to Sandy Denny', 'Bellowhead', 'Jim Moray', 'Lisa Knapp', 'Denny', 'Dave Swarbrick', 'Jerry Donahue']","['queen elizabeth hall', 'bellowhead', 'sandy denny', 'dave swarbrick', 'jim moray', 'southbank centre', 'lisa knapp', 'the lady: a tribute to sandy denny', 'jerry donahue']","1. Southbank Centre | True | as it is a location
+   2. Queen Elizabeth Hall | True | as it is a location
+   3. The Lady: A Tribute to Sandy Denny | True | as it is an event
+   4. Bellowhead | True | as it is a band
+   5. Jim Moray | True | as it is a person
+   6. Lisa Knapp | True | as it is a person
+   7. Dave Swarbrick | True | as it is a person
+   8. Jerry Donahue | True | as it is a person
+   9. Sandy Denny | True | as it is a person
+   10. December | False | as it is a date",0.7777777777777778
+89,27,"Under the current voting system , in place since 2016 , the highest-scoring winner is Salvador Sobral of Portugal who won the Eurovision Song Contest 2017 in Kiev , Ukraine , with 758 points ; under the previous system , the highest-scoring winner was Alexander Rybak of Norway with 387 points in Eurovision Song Contest 2009 .","['Salvador Sobral', 'Portugal', 'Eurovision Song Contest 2017', 'Kiev', 'Ukraine', 'Alexander Rybak', 'Norway', 'Eurovision Song Contest 2009']","['portugal', 'eurovision song contest 2009', 'eurovision song contest 2017', 'ukraine', 'salvador sobral', 'norway', 'alexander rybak', 'kiev']","1. Salvador Sobral | True | as it is a person
+2. Portugal | True | as it is a country
+3. Eurovision Song Contest 2017 | True | as it is an event
+4. Kiev | True | as it is a location
+5. Ukraine | True | as it is a country
+6. 758 points | False | as it is a score, not an entity
+7. Alexander Rybak | True | as it is a person
+8. Norway | True | as it is a country
+9. Eurovision Song Contest 2009 | True | as it is an event
+10. 387 points | False | as it is a score, not an entity
+11. 2016 | False | as it is a date",1.0
+90,379,"Mambo was developed as an offshoot of danzón , the national dance of Cuba , in the late 1930s by Orestes López and his brother Cachao , of Arcaño y sus Maravillas .","['Mambo', 'danzón', 'Cuba', 'Orestes López', 'Cachao', 'Arcaño y sus Maravillas']","['orestes lópez', 'mambo', 'arcaño y sus maravillas', 'cachao', 'cuba', 'danzón']","1. Mambo | True | as it is a music genre
+    2. danzón | True | as it is a dance
+    3. Cuba | True | as it is a country
+    4. Orestes López | True | as it is a person
+    5. Cachao | True | as it is a person
+    6. Arcaño y sus Maravillas | True | as it is a band",1.0
+91,345,"225 Other influential bands identified with metal emerged in the U.S. , such as Sir Lord Baltimore ( Kingdom Come , 1970 ) , Blue Öyster Cult ( Blue Öyster Cult , 1972 ) , Aerosmith ( Aerosmith , 1973 ) and Kiss ( Kiss , 1974 ) .","['metal', 'U.S.', 'Sir Lord Baltimore', 'Kingdom Come', 'Blue Öyster Cult', 'Blue Öyster Cult', 'Aerosmith', 'Aerosmith', 'Kiss', 'Kiss']","['aerosmith (album', 'sir lord baltimore', 'u.s', 'blue öyster cult (album', 'kiss (album', 'blue öyster cult (band', 'kiss (band', 'kingdom come', 'aerosmith (band']","1. U.S. | True | as it is a country
+2. Sir Lord Baltimore | True | as it is a band
+3. Kingdom Come | True | as it is an album
+4. 1970 | False | as it is a date
+5. Blue Öyster Cult (band) | True | as it is a band
+6. Blue Öyster Cult (album) | True | as it is an album
+7. 1972 | False | as it is a date
+8. Aerosmith (band) | True | as it is a band
+9. Aerosmith (album) | True | as it is an album
+10. 1973 | False | as it is a date
+11. Kiss (band) | True | as it is a band
+12. Kiss (album) | True | as it is an album
+13. 1974 | False | as it is a date",0.375
+92,72,"They were accompanied by a varying number of session musicians and some relatively consistent band members such as guitarist Ian Bairnson , arranger Andrew Powell , bassist and vocalist David Paton , drummer Stuart Elliott , and vocalists Lenny Zakatek and Chris Rainbow .","['Ian Bairnson', 'Andrew Powell', 'David Paton', 'Stuart Elliott', 'Lenny Zakatek', 'Chris Rainbow']","['ian bairnson', 'andrew powell', 'stuart elliott', 'chris rainbow', 'david paton', 'lenny zakatek']","1. Ian Bairnson | True | as it is a person (guitarist)
+2. Andrew Powell | True | as it is a person (arranger)
+3. David Paton | True | as it is a person (bassist and vocalist)
+4. Stuart Elliott | True | as it is a person (drummer)
+5. Lenny Zakatek | True | as it is a person (vocalist)
+6. Chris Rainbow | True | as it is a person (vocalist)",1.0
+93,15,"The best-selling album in the band 's catalog , I Against I is an album that mixes American hardcore punk with funk , Soul music , reggae and Heavy metal music .","['Against', 'American', 'hardcore punk', 'funk', 'Soul music', 'reggae', 'Heavy metal music']","['reggae', 'heavy metal music', 'soul music', 'funk', 'i against i', 'american hardcore punk']","1. I Against I | True | as it is an album
+2. American hardcore punk | True | as it is a music genre
+3. funk | True | as it is a music genre
+4. Soul music | True | as it is a music genre
+5. reggae | True | as it is a music genre
+6. Heavy metal music | True | as it is a music genre",0.6153846153846154
+94,167,"It is generally divided into two major subgenres , with the jazz -influenced New Orleans blues based on the musical traditions of that city and the slower tempo swamp blues incorporating influences from zydeco and Cajun music from around Baton Rouge .","['jazz', 'New Orleans blues', 'swamp blues', 'zydeco', 'Cajun music', 'Baton Rouge']","['jazz', 'swamp blues', 'new orleans blues', 'cajun music', 'zydeco', 'baton rouge']","1. New Orleans blues | True | as it is a music genre
+    2. jazz | True | as it is a music genre
+    3. musical traditions | False | as it is a concept, not a distinct object or entity
+    4. swamp blues | True | as it is a music genre
+    5. zydeco | True | as it is a music genre
+    6. Cajun music | True | as it is a music genre
+    7. Baton Rouge | True | as it is a location",1.0
+95,30,"Some modern artists that primarily or entirely produce country pop music include Kacey Musgraves , Maren Morris , Kelsea Ballerini , Sam Hunt , Kane Brown , Chris Lane , and Dan + Shay .","['country pop music', 'Kacey Musgraves', 'Maren Morris', 'Kelsea Ballerini', 'Sam Hunt', 'Kane Brown', 'Chris Lane', 'Dan + Shay']","['country pop', 'kelsea ballerini', 'kane brown', 'dan + shay', 'sam hunt', 'kacey musgraves', 'chris lane', 'maren morris']","1. Country pop | True | as it is a music genre
+    2. Kacey Musgraves | True | as it is an artist
+    3. Maren Morris | True | as it is an artist
+    4. Kelsea Ballerini | True | as it is an artist
+    5. Sam Hunt | True | as it is an artist
+    6. Kane Brown | True | as it is an artist
+    7. Chris Lane | True | as it is an artist
+    8. Dan + Shay | True | as it is a band",0.875
+96,83,"The film drew many of the biggest living influencers of the rhythm and blues genre together , such as Ray Charles , James Brown , Cab Calloway , Aretha Franklin , and John Lee Hooker .","['rhythm and blues', 'Ray Charles', 'James Brown', 'Cab Calloway', 'Aretha Franklin', 'John Lee Hooker']","['rhythm and blues', 'aretha franklin', 'ray charles', 'cab calloway', 'john lee hooker', 'james brown']","1. rhythm and blues | True | as it is a music genre
+    2. Ray Charles | True | as it is an artist
+    3. James Brown | True | as it is an artist
+    4. Cab Calloway | True | as it is an artist
+    5. Aretha Franklin | True | as it is an artist
+    6. John Lee Hooker | True | as it is an artist",1.0
+97,217,"Philanthropy and charity work are very important to Tyler , and she regularly does volunteer work for the American Red Cross , The Trust for Public Land , Planned Parenthood Federation of America , and the International Rescue Committee .","['Tyler', 'American Red Cross', 'The Trust for Public Land', 'Planned Parenthood Federation of America', 'International Rescue Committee']","['the trust for public land', 'american red cross', 'tyler', 'planned parenthood federation of america', 'international rescue committee']","1. Tyler | True | as it is a person
+2. American Red Cross | True | as it is an organization
+3. The Trust for Public Land | True | as it is an organization
+4. Planned Parenthood Federation of America | True | as it is an organization
+5. International Rescue Committee | True | as it is an organization",1.0
+98,378,"The duo released the double platinum , The Jerky Boys 2 in 1994 , followed by The Jerky Boys 3 in 1996 , The Jerky Boys 4 in 1997 , Stop Staring at Me ! in 1999 , and The Jerky Tapes in 2001 .","['The Jerky Boys 2', 'The Jerky Boys 3', 'The Jerky Boys 4', 'Stop Staring at Me !', 'The Jerky Tapes']","['the jerky boys 4', 'stop staring at me', 'the jerky tapes', 'the jerky boys 3', 'the jerky boys 2']","1. The duo | False | as it is a generic reference to a pair of people, but their specific identity is not clear
+    2. double platinum | False | as it is an album certification and not an entity
+    3. The Jerky Boys 2 | True | as it is an album
+    4. 1994 | False | as it is a date
+    5. The Jerky Boys 3 | True | as it is an album
+    6. 1996 | False | as it is a date
+    7. The Jerky Boys 4 | True | as it is an album
+    8. 1997 | False | as it is a date
+    9. Stop Staring at Me! | True | as it is an album
+    10. 1999 | False | as it is a date
+    11. The Jerky Tapes | True | as it is an album
+    12. 2001 | False | as it is a date",1.0
+99,56,"Subsequent releases , such as The Force Behind the Power ( 1991 ) , Take Me Higher ( 1995 ) , and Every Day Is a New Day ( 1999 ) produced similar results .","['The Force Behind the Power', 'Take Me Higher', 'Every Day Is a New Day']","['take me higher', 'the force behind the power', 'every day is a new day']","1. The Force Behind the Power | True | as it is an album
+    2. 1991 | False | as it is a date
+    3. Take Me Higher | True | as it is an album
+    4. 1995 | False | as it is a date
+    5. Every Day Is a New Day | True | as it is an album
+    6. 1999 | False | as it is a date",1.0
