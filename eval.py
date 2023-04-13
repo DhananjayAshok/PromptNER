@@ -71,12 +71,17 @@ def get_results_frame(filename, results_dir="results", split_phrases=False, clea
     return df
 
 
-def bulk_eval():
-    filenames = [ "GPT3_conllNone.csv", "GPT3_crossnerai.csv", "GPT3_crossnerliterature.csv",
-                  "GPT3_crossnermusic.csv", "GPT3_crossnerpolitics.csv", "GPT3_crossnerscience.csv"]
-    for filename in filenames:
+def bulk_eval(filenames=[ "GPT4QOpenAIGPT_conllNone.csv", "GPT4QOpenAIGPT_crossnerai.csv",
+                          "GPT4QOpenAIGPT_crossnerliterature.csv", "GPT4QOpenAIGPT_crossnermusic.csv",
+                          "GPT4QOpenAIGPT_crossnerpolitics.csv", "GPT4QOpenAIGPT_crossnerscience.csv",
+                          "GPT4QOpenAIGPT_fewnerdtest.csv"],
+              keys=["conll", "ai", "lit", "music", "pol", "science", "fewnerd"]):
+    dfs = {}
+    for i, filename in enumerate(filenames):
         split_phrases = "conll" in filename
-        get_results_frame(filename, split_phrases=split_phrases)
+        df = get_results_frame(filename, split_phrases=split_phrases)
+        dfs[keys[i]] = df
+    return dfs
 
 
 def is_eq(e1, e2):
