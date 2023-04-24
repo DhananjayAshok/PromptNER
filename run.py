@@ -23,8 +23,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         flag = False
         while not flag:
             try:
-                print(f"Paragraph: {algorithm.para}")
-                preds, metadata = algorithm.perform(verbose=True)
+                preds, metadata = algorithm.perform(verbose=False)
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
@@ -32,7 +31,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         tp += tp_a
         fp += fp_a
         fn += fn_a
-        if f1_score != 1:
+        if f1_score != 1 or True:
             mistake_data.append([index, para, entities, preds, metadata, f1_score])
         f1s.append(f1_score)
         if print_every is not None:
@@ -240,4 +239,4 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=True)
+    run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
