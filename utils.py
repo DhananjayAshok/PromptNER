@@ -76,12 +76,13 @@ class AnswerMapping:
             listed = AnswerMapping.get_numbered_list_items(output, verbose=False, indent_level=indent_level+1)
         else:
             listed = []
-            split = re.split(r"\d+[.)]", output)
-            for item in split:
-                if item.strip().lower() == "" or "answer" in item.strip().lower():
-                    pass
-                else:
-                    listed.append(item.strip())
+            if "1" in output:
+                split = re.split(r"\d+[.)]", output)
+                for item in split:
+                    if item.strip().lower() == "" or "answer" in item.strip().lower():
+                        pass
+                    else:
+                        listed.append(item.strip())
         final = []
         for option in listed:
             if separator in option:

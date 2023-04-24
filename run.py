@@ -240,4 +240,4 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=False)
+    run_all_datasets(gpt=True)

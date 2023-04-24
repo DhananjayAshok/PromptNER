@@ -1,9 +1,11 @@
 from data import *
 import pandas as pd
+import numpy as np
 import string
 from utils import AnswerMapping
 from algorithms import BaseAlgorithm
-
+from data import scroll
+import random
 
 def fn(x, pred_col="preds"):
     preds = set(x[pred_col])
@@ -123,3 +125,126 @@ def f1(true_list, pred_list):
             fp += 1
     f1_score = tp/(tp + 0.5*(fp+fn))
     return f1_score, tp, fp, fn
+
+
+def_pre = "Named entities are phrases that represent the name of a "
+defn_map = {'conll': "person, organization or location",
+            'ai': "field, task, product, algorithm, researcher, metrics, university, country, person, organization or location",
+            'lit': "book, writer, award, poem, event, magazine, person, location, organization, country, miscellaneous",
+            'music': "music genre, song, band, album, musical artist, musical instrument, award, event, country, location, organization or person",
+            'pol': "politician, person, organization, political party, event, election, country or location",
+            'science': "scientist, person, university, organization, country, location, discipline, enzyme, protein, chemical compound, chemical element, event, astronomical object, academic journal, award or theory"}
+
+
+def get_survey_format(dfs, save_name="survey_data", examples_per_dataset=20, n_attentions=2, n_workers=10, n_examples_per_worker=30):
+    columns = ["defn", "sentence", "list1", "list2", "gptlist", "f1", "dataset"]
+    data = []
+    for dataset in dfs:
+        if dataset in ["fewnerd", "conll"]:
+            continue
+        df = dfs[dataset]
+        defn = def_pre + defn_map[dataset]
+        for i in df.index:
+            f1 = df.loc[i, "f1"]
+            if f1 == 1:
+                keep = random.random()
+                if keep < 0.85:
+                    continue
+            sentence = df.loc[i, "para"]
+            pred = df.loc[i, "preds"]
+            true = df.loc[i, "entities"]
+            pred = list(set(pred))
+            true = list(set(true))
+            np.random.shuffle(pred)
+            np.random.shuffle(true)
+            pred = ", ".join(pred)
+            true = ", ".join(true)
+            if len(true) == 0:
+                continue
+            flip = random.random()
+            if flip > 0.5:
+                gptlist = 1
+                list1 = pred
+                list2 = true
+            else:
+                gptlist = 2
+                list1 = true
+                list2 = pred
+            mdata = [defn, sentence, list1, list2, gptlist, f1, dataset]
+            data.append(mdata)
+    df = pd.DataFrame(columns=columns, data=data)
+    attentions = df[df.f1 == 1].reset_index(drop=True)
+    attentions['id'] = -1
+    sample_dfs = []
+    for dataset in df['dataset'].unique():
+        samples = df[(df.dataset == dataset) & (df.f1 != 1)].sample(examples_per_dataset).reset_index(drop=True)
+        sample_dfs.append(samples)
+    df = pd.concat(sample_dfs, ignore_index=True)
+    df = df.sample(len(df)).reset_index(drop=True)
+    df['id'] = df.index
+    save_total = f"results/survey/{save_name}"
+    df.to_csv(f"{save_total}.csv", index=False)
+    n_examples = len(df)
+    workers_per_example = (n_examples_per_worker * n_workers) // n_examples
+    workers = list(range(n_workers))
+    split_dfs = [pd.DataFrame(columns=df.columns, data=[]) for i in workers]
+    for i in df.index:
+        selected = np.random.choice(workers, workers_per_example, replace=False)
+        for sel in selected:
+            split_dfs[sel] = pd.concat([split_dfs[sel], df.loc[i:i]], ignore_index=True)
+            if len(split_dfs[sel]) >= n_examples_per_worker:
+                workers.remove(sel)
+            if len(workers) < workers_per_example:
+                workers = list(range(n_workers))
+    for i, split_df in enumerate(split_dfs):
+        split_dfs[i] = pd.concat([split_df, attentions.sample(n_attentions)], ignore_index=True)
+
+        print(f"worker: {i} assigned {len(split_dfs[i])} examples")
+        split_dfs[i].sample(len(split_dfs[i])).reset_index(drop=True).to_csv(f"{save_total}_{i}.csv", index=False)
+    return df, split_dfs
+
+
+def gen_survey_format():
+    dfs = bulk_eval()
+    df, split_dfs = get_survey_format(dfs)
+    return df, split_dfs
+
+
+def process_batch(turk_name="batch", worker=0):
+    batch = pd.read_csv(f"results/survey/{turk_name}_{worker}.csv")
+    batch.drop(['HITId', 'HITTypeId', 'Title', 'Description', 'Keywords', 'Reward',
+       'CreationTime', 'MaxAssignments', 'RequesterAnnotation',
+       'AssignmentDurationInSeconds', 'AutoApprovalDelayInSeconds',
+       'Expiration', 'NumberOfSimilarHITs', 'LifetimeInSeconds',
+       'AssignmentId', 'WorkerId', 'AssignmentStatus', 'AcceptTime',
+       'SubmitTime', 'AutoApprovalTime', 'ApprovalTime', 'RejectionTime',
+       'RequesterFeedback', 'WorkTimeInSeconds', 'LifetimeApprovalRate',
+       'Last30DaysApprovalRate', 'Last7DaysApprovalRate'], axis=1, inplace=True)
+    inputs = []
+    answers = []
+    for column in batch:
+        if "Input" in column:
+            inputs.append(column)
+        elif "Answer" in column:
+            answers.append(column)
+
+    for inp in inputs + answers:
+        col = inp.split(".")[1]
+        batch[col] = batch[inp]
+        batch.drop(inp, axis=1, inplace=True)
+
+    if "l1add" not in batch.columns:
+        batch['l1add'] = None
+
+    if "l2add" not in batch.columns:
+        batch["l2add"] = None
+
+    return batch
+
+
+def connect_turk_output(turk_name="batch", save_name="survey_data", n_workers=10):
+    all_batches = pd.concat([process_batch(turk_name, worker) for worker in range(n_workers)], ignore_index=True)
+    df = pd.read_csv(f"results/survey/{save_name}.csv")
+    return df, all_batches
+
+
