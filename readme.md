@@ -26,9 +26,9 @@ All PromptNER needs to perform Named Entity Recognition on a completely unseen t
 - A definition of the concept of a named entity, written in natural language
 - A few examples (3-5 is usually good) of the task being done succesfully
 - 
-Head on to the [custom]() file and follow the ExampleConfig class to add in your desired specifications in the CustomClass, after this you should be able to import the 'get_ner_system' function and query it to get a function which takes in a sentence in text and outputs a list of extracted entities. 
+Head on to the [custom](custom.py) file and follow the ExampleConfig class to add in your desired specifications in the CustomClass, after this you should be able to import the 'get_ner_system' function and query it to get a function which takes in a sentence in text and outputs a list of extracted entities. 
 
 ## Reproducing Experiments
-To reproduce the experiments in the paper visit the [run]() file, you can adapt the main function to call either 'run_all_datasets' or 'ablate_best' to get all the results from the paper. 
+To reproduce the experiments in the paper visit the [run](run.py) file, you can adapt the main function to call either 'run_all_datasets' or 'ablate_best' to get all the results from the paper. 
 
-You will have to download the data from the [drive link]() and extract it at root level of the repository. 
+You will have to download the data from the [drive link](https://drive.google.com/file/d/1GQZbHvjsBFYZ1sLsP30Muq_-qK1htsfg/view?usp=share_link) and extract it at root level of the repository. 
