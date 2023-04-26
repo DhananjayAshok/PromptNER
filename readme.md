@@ -8,7 +8,6 @@ Very little is needed by way of installation, simply clone and install the requi
 
 You will also need to download nltk stopwords:
 ```sh
-git clone https://github.com/GitGudAtNLP/PromptNER PromptNER 
 cd PromptNER
 pip install -r requirements.txt
 python -m nltk.downloader stopwords
