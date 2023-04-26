@@ -1,5 +1,5 @@
 # PromptNER
-## Chain of Thought Prompting For Named Entity Recognition
+## Prompting For Named Entity Recognition
 
 This is the home of the PromptNER tool, currently anonymized for conference submission purposes. 
 
