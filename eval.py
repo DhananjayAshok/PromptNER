@@ -233,18 +233,100 @@ def process_batch(turk_name="batch", worker=0):
         batch[col] = batch[inp]
         batch.drop(inp, axis=1, inplace=True)
 
-    if "l1add" not in batch.columns:
-        batch['l1add'] = None
-
-    if "l2add" not in batch.columns:
-        batch["l2add"] = None
-
     return batch
 
 
-def connect_turk_output(turk_name="batch", save_name="survey_data", n_workers=10):
+def connect_turk_output(turk_name="survey_result", save_name="survey_data", n_workers=10):
     all_batches = pd.concat([process_batch(turk_name, worker) for worker in range(n_workers)], ignore_index=True)
     df = pd.read_csv(f"results/survey/{save_name}.csv")
     return df, all_batches
+
+
+def process_batch_row(row):
+    gptno = row['gptlist']
+    trueno = 1 if gptno == 2 else 2
+    gptcorrect = int(row[f"l{gptno}correct"])
+    truecorrect = int(row[f"l{trueno}correct"])
+
+    gptbetter = int(row["better"] == gptno)
+    gptworse = int(row["better"] == trueno)
+    if row[f"l{gptno}missing"] is not None and not isinstance(row[f"l{gptno}missing"], float):
+        gptmissing = len(row[f"l{gptno}missing"].split(","))
+    else:
+        gptmissing = 0
+    if row[f"l{gptno}extra"] is not None and not isinstance(row[f"l{gptno}extra"], float):
+        gptextra = len(row[f"l{gptno}extra"].split(","))
+    else:
+        gptextra = 0
+    if row[f"l{trueno}missing"] is not None and not isinstance(row[f"l{trueno}missing"], float):
+        truemissing = len(row[f"l{trueno}missing"].split(","))
+    else:
+        truemissing = 0
+    if row[f"l{trueno}extra"] is not None and not isinstance(row[f"l{trueno}extra"], float):
+        trueextra = len(row[f"l{trueno}extra"].split(","))
+    else:
+        trueextra = 0
+    return gptcorrect, truecorrect, gptbetter, gptworse, gptmissing, gptextra, truemissing, trueextra
+
+
+def summarize(df, i, column, array):
+    df.loc[i, f"{column}"] = pd.Series(array).value_counts().index[0]
+    avg = sum(array) / len(array)
+    if avg == pd.Series(array).value_counts().index[0]:
+        df.loc[i, f"{column}_agreement"] = 1
+    elif len(array) == 2:
+        df.loc[i, f"{column}_agreement"] = 0
+    else:
+        df.loc[i, f"{column}_agreement"] = 0.5
+    return
+
+
+def process_turk():
+    df, all_batches = connect_turk_output()
+    for i in df.index:
+        subset = all_batches[all_batches['id'] == i]
+        df.loc[i, "num"] = len(subset)
+        gptcorrects, truecorrects, gptbetters, gptworses, gptmissings, gptextras, truemissings, trueextras = [], [], \
+            [], [], [], [], [], []
+        for j in subset.index:
+            gptcorrect, truecorrect, gptbetter, gptworse, gptmissing, gptextra, truemissing, trueextra = \
+                process_batch_row(subset.loc[j])
+            gptcorrects.append(gptcorrect)
+            truecorrects.append(truecorrect)
+            gptbetters.append(gptbetter)
+            gptworses.append(gptworse)
+            gptmissings.append(gptmissing)
+            gptextras.append(gptextra)
+            truemissings.append(truemissing)
+            trueextras.append(trueextra)
+        summarize(df, i, "gptcorrect", gptcorrects)
+        summarize(df, i, "truecorrect", truecorrects)
+        summarize(df, i, "gptbetter", gptbetters)
+        summarize(df, i, "gptworse", gptworses)
+        df.loc[i, "gptmissing"] = sum(gptmissings) / len(gptmissings)
+        df.loc[i, "gptextra"] = sum(gptextras) / len(gptextras)
+        df.loc[i, "truemissing"] = sum(truemissings) / len(truemissings)
+        df.loc[i, "trueextra"] = sum(trueextras) / len(trueextras)
+    df.to_csv(f"results/survey/final_results.csv")
+    return df
+
+
+def analyze_turk():
+    df = process_turk()
+    slices = [(df, "All")]
+    for dataset in df['dataset'].unique():
+        slices.append((df[df['dataset'] == dataset], dataset))
+    for slice, name in slices:
+        print(f"For {name}")
+        print(f"\tGPTCorrect: {slice['gptcorrect'].mean()}, Agreement: {slice['gptcorrect_agreement'].mean()}")
+        print(f"\tTrueCorrect: {slice['truecorrect'].mean()}, Agreement: {slice['truecorrect_agreement'].mean()}")
+        print(f"\tGPTBetter: {slice['gptbetter'].mean()}, Agreement: {slice['gptbetter_agreement'].mean()}")
+        print(f"\tGPTWorse: {slice['gptworse'].mean()}, Agreement: {slice['gptworse_agreement'].mean()}")
+        print(f"\tAvg GPT Missing and Extra: {slice['gptmissing'].mean()}, {slice['gptextra'].mean()}")
+        print(f"\tAvg True Missing and Extra: {slice['truemissing'].mean()}, {slice['trueextra'].mean()}")
+
+
+if __name__ == "__main__":
+    analyze_turk()
 
 
