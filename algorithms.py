@@ -13,7 +13,7 @@ class BaseAlgorithm:
 
     # if [] = n then there are O(n^2) phrase groupings
 
-    def __init__(self, model_fn=None, split_phrases=True):
+    def __init__(self, model_fn=None, split_phrases=True, identify_types=False):
         self.defn = self.defn
         self.para = None
         self.model_fn = model_fn
@@ -21,6 +21,7 @@ class BaseAlgorithm:
         self.exemplar_task = None
         self.format_task = None
         self.whole_task = None
+        self.identify_types = identify_types
 
     def set_para(self, para):
         self.para = para
@@ -73,12 +74,17 @@ class Algorithm(BaseAlgorithm):
         if self.exemplar_task is not None:
             task = self.defn + "\n" + self.exemplar_task + f" '{self.para}' \nAnswer:"
             output = self.model_fn(task)
-            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+            final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
         else:
             task = self.defn + "\n" + self.format_task + f"\nParagraph: {self.para} \nAnswer:"
             output = self.model_fn(task)
-            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
-        return final, output
+            final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
+            if self.identify_final:
+                final, typestrings = final
+        if not self.identify_types:
+            return final, output
+        else:
+            return final, typestrings, output
 
     def perform_chat_query(self, verbose=True):
         if self.exemplar_task is not None:
@@ -97,8 +103,13 @@ class Algorithm(BaseAlgorithm):
             system_msg = self.chatbot_init + self.defn + " " + self.format_task
             msgs = [(system_msg, "system"), (f"\nParagraph: {self.para} \nAnswer:", "user")]
             output = self.model_fn(msgs)
-            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
-        return final, output
+            final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
+        if self.identify_final:
+            final, typestrings = final
+        if not self.identify_types:
+            return final, output
+        else:
+            return final, typestrings, output
 
 
 class Config:

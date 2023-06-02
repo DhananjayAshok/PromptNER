@@ -127,6 +127,28 @@ def f1(true_list, pred_list):
     return f1_score, tp, fp, fn
 
 
+def type_acc(q, true_list, pred_list, pred_types):
+    correct = 0
+    for i, item in enumerate(true_list):
+        if item not in pred_list:
+            pass
+        else:
+            index = pred_list.index(item)
+            if item in q["types"]:
+                if q["types"][item] in pred_types[index]:
+                    correct += 1
+    if len(true_list) == 0:
+        if len(pred_list) == 0:
+            return 1
+        else:
+            return 0
+    return correct / len(true_list), 1, 1, 1
+
+
+
+
+
+
 def_pre = "Named entities are phrases that represent the name of a "
 defn_map = {'conll': "person, organization or location",
             'ai': "field, task, product, algorithm, researcher, metrics, university, country, person, organization or location",

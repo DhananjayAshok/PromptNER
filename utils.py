@@ -25,7 +25,6 @@ def verbose(func):
 
 
 class AnswerMapping:
-
     @staticmethod
     @verbose
     def get_numbered_list_items(output, verbose=False, indent_level=0):
@@ -71,7 +70,7 @@ class AnswerMapping:
 
     @staticmethod
     @verbose
-    def exemplar_format_list(output, verbose=False, indent_level=0, separator='|', true_only=True):
+    def exemplar_format_list(output, verbose=False, indent_level=0, separator='|', true_only=True, identify_types=False):
         if "\n" in output:
             listed = AnswerMapping.get_numbered_list_items(output, verbose=False, indent_level=indent_level+1)
         else:
@@ -84,9 +83,11 @@ class AnswerMapping:
                     else:
                         listed.append(item.strip())
         final = []
+        typstring = []
         for option in listed:
             if separator in option:
                 split = option.split(separator)
+                explanation = None
                 if len(split) == 1:
                     print(f"Got only one value for {option} with separator '{separator}'")
                     continue
@@ -103,12 +104,17 @@ class AnswerMapping:
                     entity, status = split[0], split[1]
                     print(f"Got more than 3 values for {option} with separator '{separator}'")
                 if status.strip().lower() == "true" or not true_only:
+                    if explanation is not None:
+                        typestring.append(explanation.strip())
                     final.append(entity.strip().lower())
                 else:
                     pass
             else:
                 final.append(option.strip().lower())
-        return final
+        if not identify_types:
+            return final
+        else:
+            return final, typestring
 
 
 class Parameters:
