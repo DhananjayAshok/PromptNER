@@ -8,6 +8,16 @@ import string
 
 class Quick:
     @staticmethod
+    def example_span(para, config=ConllConfig(), model = OpenAIGPT(), verbose=True):
+        e.set_para(para)
+        e.set_model_fn(model)
+        e.split_phrases = False
+        config.set_config(e, exemplar=True, coT=True, tf=True)
+        ret = e.perform_span(verbose=verbose)
+        return ret
+
+
+    @staticmethod
     def dataset(i, train_dset, config, model=OpenAIGPT(), verbose=True):
         q = train_dset.loc[i]
         para = q['text']

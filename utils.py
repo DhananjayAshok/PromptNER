@@ -3,6 +3,13 @@ import string
 import re
 
 
+def find_nth(haystack, needle, n):
+    start = haystack.find(needle)
+    while start >= 0 and n > 1:
+        start = haystack.find(needle, start+len(needle))
+        n -= 1
+    return start
+
 def separate_single_multi(l):
     singles, multis = [], []
     for item in l:

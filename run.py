@@ -115,8 +115,8 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
 
 def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                         defn=True, tf=True,  **kwargs):
-    splits = ["train", "dev", "test"]
-    confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
+    splits = ["test"]
+    confs = [FewNERDINTRATestConfig()]
     split = kwargs.get("add_info")
     assert split in splits
     i = splits.index(split)
@@ -131,7 +131,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
 def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
     res_path = "results"
     gpt_limit = 20
-    gpt_nruns = 2
+    gpt_nruns = 1
     other_limit = 100
     other_nruns = 2
     Algorithm_class = Algorithm
@@ -174,7 +174,7 @@ def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
     d = {}
     datasets = ["conll", "genia", "crossner", "fewnerd"]
     subdatasets = {"crossner": ['politics', 'literature', 'ai', 'science', 'music'],
-                   'fewnerd': ["train", "dev", "test"]}
+                   'fewnerd': ["test"]}
     for dataset in datasets:
         if dataset in dataset_exclude:
             continue
@@ -246,6 +246,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    #run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
-    run()
+    run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
 

@@ -14,8 +14,6 @@ def get_row(func):
         return func(frame, i=None)
     return infunc
 
-
-
 def read_ob2(file_path):
     with open(file_path) as file:
         lines = file.readlines()
@@ -77,8 +75,6 @@ def read_ob2(file_path):
 
     df = pd.DataFrame(columns=["text", "entities", "types"], data=data)
     return df
-
-
 
 def load_conll2003(split="validation"):
     dset = load_dataset("conll2003")[split]

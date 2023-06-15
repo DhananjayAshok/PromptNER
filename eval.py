@@ -128,16 +128,8 @@ def f1(true_list, pred_list):
 
 
 def type_f1(q, pred_list, pred_types):
-    # pred_types is in string format
     entities = list(set(q['entities']))
     types = q["types"]
-    print(f"For Sentence: ")
-    print(q["text"])
-    print(f"Got Real types: ")
-    print(types)
-    print(f"Predictions: ")
-    for i in range(len(pred_list)):
-        print(pred_list[i], " ", pred_types[i])
     if len(entities) == 0:
         if len(pred_list) == 0:
             return 1, 1, 0, 0
@@ -165,7 +157,6 @@ def type_f1(q, pred_list, pred_types):
                     break
             if not flag:
                 fn += 1  # it means we did not succesfully mark this entity as the correct type
-        # This might be double counting fp/fn, but it will only make our results worse?
     if tp == 0:
         return 0, tp, fp, fn
     else:

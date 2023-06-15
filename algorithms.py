@@ -47,7 +47,10 @@ class BaseAlgorithm:
                 new_answers.append(ans)
                 new_typestrings.append(typestrings[i])
         for i in range(len(answers)):
-            ans = answers[i].strip().strip(''.join(string.punctuation)).strip()
+            ans = answers[i]
+            if "(" in ans:
+                ans = ans[:ans.find("(")]
+            ans = ans.strip().strip(''.join(string.punctuation)).strip()
             answers[i] = ans
         if typestrings is None:
             return answers
@@ -56,7 +59,26 @@ class BaseAlgorithm:
 
 
 class Algorithm(BaseAlgorithm):
-    def perform(self, verbose=True):
+    def perform_span(self, verbose=False):
+        assert self.identify_types and not self.split_phrases
+        answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
+        para = self.para.lower()
+        completed_answers = []
+        span_predictions = {}
+        for i, answer in enumerate(answers):
+            if "(" in answer:
+                answer = answer[:answer.find("(")].strip()
+            if answer in para:
+                n_th = completed_answers.count(answer.strip()) + 1
+                start_span = utils.find_nth(para, answer, n_th)
+                types = typestrings[i]
+                if "(" in types:
+                    types = types[types.find("("):]
+                span_predictions[(start_span, start_span + len(answer)-1)] = types
+                completed_answers.append(answer.strip())
+        return span_predictions
+
+    def perform(self, verbose=True, deduplicate=True):
         """
 
         :param model:
@@ -99,10 +121,11 @@ class Algorithm(BaseAlgorithm):
             answers = new_answers
             if self.identify_types:
                 typestrings = new_typestrings
-        if self.identify_types:
-            answers, typestrings = BaseAlgorithm.clean_output(answers, typestrings)
-        else:
-            answers = BaseAlgorithm.clean_output(answers)
+        if deduplicate:
+            if self.identify_types:
+                answers, typestrings = BaseAlgorithm.clean_output(answers, typestrings)
+            else:
+                answers = BaseAlgorithm.clean_output(answers)
         if not self.identify_types:
             return answers, metadata
         else:
@@ -136,7 +159,7 @@ class Algorithm(BaseAlgorithm):
                 msgs.append((exemplar[ans_index+7:].strip(), "assistant"))
             msgs.append((f"\nParagraph: {self.para} \nAnswer:", "user"))
             output = self.model_fn(msgs)
-            final = AnswerMapping.exemplar_format_list(output, verbose=verbose)
+            final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
         else:
             system_msg = self.chatbot_init + self.defn + " " + self.format_task
             msgs = [(system_msg, "system"), (f"\nParagraph: {self.para} \nAnswer:", "user")]
@@ -154,27 +177,27 @@ class Config:
     cot_format = """
     Format: 
     
-    1. First Candidate | True | Explanation why the word is an entity
-    2. Second Candidate | False | Explanation why the word is not an entity
+    1. First Candidate | True | Explanation why the word is an entity (entity_type)
+    2. Second Candidate | False | Explanation why the word is not an entity (entity_type)
     """
 
     no_tf_format = """
-    1. First Entity | Explanation why the word is an entity
-    2. Second Entity | Explanation why the word is not an entity
+    1. First Entity | Explanation why the word is an entity (entity_type)
+    2. Second Entity | Explanation why the word is not an entity (entity_type)
     """
 
     tf_format = """
     Format: 
 
-    1. First Candidate | True
-    2. Second Candidate | False
+    1. First Candidate | True | (entity_type)
+    2. Second Candidate | False | (entity_type)
     """
 
     exemplar_format = """
     Format:    
     
-    1. First Entity
-    2. Second Entity
+    1. First Entity | (entity_type)
+    2. Second Entity | (entity_type)
     """
 
     def set_config(self, alg, exemplar=True, coT=True, tf=True, defn=True):
