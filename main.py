@@ -17,7 +17,6 @@ class Quick:
         e.set_model_fn(model)
         config.set_config(e, exemplar=True, coT=True, tf=True)
         ret = e.perform(verbose=verbose)
-        print(ret)
         ans = ret[0]
         Quick.analyze(q, ret)
         return
@@ -26,7 +25,8 @@ class Quick:
     def analyze(q, ret):
         ans = ret[0]
         entities = q['entities']
-        print(entities)
+        true_types = q['types']
+        print(true_types)
         print(ans)
         entities_small = [e.lower().strip().strip(string.punctuation).strip() for e in entities]
         print(f"False positives: {set(entities_small).difference(set(ans))}")

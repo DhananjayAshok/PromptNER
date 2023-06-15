@@ -246,36 +246,41 @@ class Config:
 
 
 class ConllConfig(Config):
-    defn = "An entity is a person, title, named organization, location, country or nationality." \
+    defn = "An entity is a person (person), title, named organization (org), location (loc), country (loc) or nationality (misc)." \
            "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
-           "Possessive words like I, you, him and me are not entities."
+           "Possessive words like I, you, him and me are not entities. " \
+           "If a sporting team has the name of their location and the location is used to refer to the team, " \
+           "it is an entity which is an organisation, not a location"
 
     cot_exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
     
     Answer:
     1. bowling | False | as it is an action
-    2. Somerset | True | as it is a place
-    3. 83 | False | as it is a number
+    2. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (org)
+    3. 83 | False | as it is a number 
     4. morning | False| as it represents a time of day, with no distinct and independant existence
-    5. Grace Road | True | as it is a place or location
-    6. Leicestershire | True | as it is the name of a cricket team. 
+    5. Grace Road | True | the game is played at Grace Road, hence it is a place or location (loc)
+    6. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (org). 
     7. first innings | False | as it is an abstract concept of a phase in play of cricket
-    8. England | True | as it is a place or location
-    9. Andy Caddick | True | as it is the name of a person. 
+    8. England | True | as it is a place or location (loc)
+    9. Andy Caddick | True | as it is the name of a person. (person) 
     """
     cot_exemplar_2 = """
-    Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
     
     Answer:
-    1. Florian Rousseau | True | as it is the name of a person
-    2. France | True | as it is the name of a place or location
-    3. beat | False | as it is an action
-    4. Ainar Kiksis | True | as it is the name of a person
-    5. Latvia | True | as it is the name of a place or location
-    6. 2-0 | False | as it is a score or set of numbers which is not an entity. 
+    1. Their | False | as it is a possessive pronoun
+    2. stay | False | as it is an action
+    3. title rivals | False | as it is an abstract concept
+    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (org)
+    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (org)
+    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (org)
+    7. victory | False | as it is an abstract concept
+    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
+    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
     
     """
 
@@ -294,22 +299,23 @@ class ConllConfig(Config):
 
     no_tf_exemplar_1 = """
         After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
-
+        
         Answer:
-        1. Somerset | as it is a place
-        2. Grace Road | as it is a place or location
-        3. Leicestershire | as it is the name of a cricket team. 
-        4. England | as it is a place or location
-        5. Andy Caddick | as it is the name of a person. 
+        1. Somerset | Somerset is used as a sporting team here, not a location hence it is an organisation (org)
+        2. Grace Road | the game is played at Grace Road, hence it is a place or location (loc)
+        3. Leicestershire | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (org). 
+        4. England | as it is a place or location (loc)
+        5. Andy Caddick | as it is the name of a person. (person) 
         """
     no_tf_exemplar_2 = """
-        Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
-
+        Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+        
         Answer:
-        1. Florian Rousseau | as it is the name of a person
-        2. France | as it is the name of a place or location
-        3. Ainar Kiksis | as it is the name of a person
-        4. Latvia | as it is the name of a place or location
+        1. Essex | since Essex are title rivals is it a sporting team organisation not a location (org)
+        2. Derbyshire | since Derbyshire are title rivals is it a sporting team organisation not a location (org)
+        3. Surrey | since Surrey are title rivals is it a sporting team organisation not a location (org)
+        4. Kent | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
+        5. Nottinghamshire | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
 
         """
 
@@ -326,26 +332,29 @@ class ConllConfig(Config):
         After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
 
         Answer:
-        1. bowling | False
-        2. Somerset | True
-        3. 83 | False
-        4. morning | False
-        5. Grace Road | True
-        6. Leicestershire | True
-        7. first innings | False
-        8. England | True
-        9. Andy Caddick | True
+        1. bowling | False | None 
+        2. Somerset | True | (org)
+        3. 83 | False | None
+        4. morning | False | None
+        5. Grace Road | True | (loc)
+        6. Leicestershire | True | (org)
+        7. first innings | False | None
+        8. England | True | (loc)
+        9. Andy Caddick | True | (person)
         """
     tf_exemplar_2 = """
-        Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+        Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
 
         Answer:
-        1. Florian Rousseau | True
-        2. France | True
-        3. beat | False
-        4. Ainar Kiksis | True
-        5. Latvia | True
-        6. 2-0 | False 
+        1. Their | False | None
+        2. stay | False | None
+        3. title rivals | False | None
+        4. Essex | True | (org)
+        5. Derbyshire | True | (org)
+        6. Surrey | True | (org)
+        7. victory | False | None
+        8. Kent | True | (org)
+        9. Nottinghamshire | True | (org)
 
         """
 
@@ -353,33 +362,34 @@ class ConllConfig(Config):
         But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
 
         Answer:
-        1. money | False
-        2. savings account | False
-        3. 5.3 | False
-        4. June | False
-        5. July | False
+        1. money | False | None
+        2. savings account | False | None
+        3. 5.3 | False | None
+        4. June | False | None
+        5. July | False | None
 
         """
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2, tf_exemplar_3]
 
     exemplar_1 = """
-    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
-
-    Answer:
-    1. Somerset
-    2. Grace Road
-    3. Leicestershire
-    4. England
-    5. Andy Caddick
+        After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+        
+        Answer:
+        1. Somerset | (org)
+        2. Grace Road | (loc)
+        3. Leicestershire | (org). 
+        4. England | (loc)
+        5. Andy Caddick | (person) 
     """
     exemplar_2 = """
-    Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
-
-    Answer:
-    1. Florian Rousseau
-    2. France
-    3. Ainar Kiksis
-    4. Latvia
+        Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+        
+        Answer:
+        1. Essex | (org)
+        2. Derbyshire | (org)
+        3. Surrey | (org)
+        4. Kent | (org)
+        5. Nottinghamshire | (org)
     """
 
     exemplar_3 = """
@@ -392,241 +402,226 @@ class ConllConfig(Config):
 
 
 class GeniaConfig(Config):
-    defn = "An entity is a protien, group of protiens, DNA, RNA, Cell Type or Cell Line. " \
+    defn = "An entity is a protein (protein), group of proteins (protein), DNA, RNA, Cell Type (cell_type) or Cell Line (cell_line). " \
            "Abstract concepts, processes and adjectives are not entities"
 
     cot_exemplar_1 = """
-        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+        In primary T lymphocytes we show that CD28 ligation leads to the rapid intracellular formation of reactive oxygen intermediates ( ROIs ) which are required for CD28 -mediated activation of the NF-kappa B / CD28-responsive complex and IL-2 expression
 
         Answer:
-        1. Immunoprecipitation | False | as it is a process
-        2. gp 160  | True | as Glycoprotein Gp 160 it is a type of protein
-        3. polyclonal antibodies | True | as it is a type of cell
-        4. Fos | True | as Fructo-oligosaccharides are proteins
-        5. Jun | True | as it is a type of protein
-        6. AP-1 | True | as Activator protein 1 (AP-1) is a protein
+        1. primary T lymphocytes | True | as they are a kind of cell type (cell_type) 
+        2. CD28 | True | CD28 is one of the proteins expressed on T cells (protein)
+        3. reactive oxygen intermediates ( ROIs ) | False | as they are not a protein, DNA, RNA, Cell Type or Cell Line
+        4. NF-kappa B | True | Nuclear factor kappa B (NF-κB) is an ancient protein transcription factor (protein)
+        5. CD28-responsive complex | True | it is a complex of the protein (protein)
+        6. IL-2 | True | as it is a protein (protein)
         """
     cot_exemplar_2 = """
-        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+        The peri-kappa B site mediates human immunodeficiency virus type 2 enhancer activation in monocytes but not in T cells
 
         Answer:
-        1. gp 160 | True | as Glycoprotein Gp 160 it is a type of protein
-        2. mediated | False | as it is a verb
-        3. CD4 molecule | True | as CD4 (cluster of differentiation 4) is a glycoprotein a type of protien
-        4. CD4-IgG | True | as CD4-igG is a homodimer of a hybrid polypeptide
-        5. abrogates | False | as it is a verb
-        6. CD4 negative T cell lines | True | as they are a type of Cell Line
-
+        1. peri-kappa B site | True | as it is a  is a cis-acting element that is a DNA (DNA)
+        2. human immunodeficiency virus type 2 enhancer | True | as it is a DNA (DNA)
+        3. Activation | False | as it is a process
+        4. monocytes | True | as they are a type of cell (cell_type)
+        5. T cells | True | as they are a type of cell (cell_type)
+        
         """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+        In primary T lymphocytes we show that CD28 ligation leads to the rapid intracellular formation of reactive oxygen intermediates ( ROIs ) which are required for CD28 -mediated activation of the NF-kappa B / CD28-responsive complex and IL-2 expression
 
         Answer:
-        1. Immunoprecipitation | False | as it is a process
-        2. gp 160  | True | as Glycoprotein Gp 160 it is a type of protein
-        3. polyclonal antibodies | True | as it is a type of cell
-        4. Fos | True | as Fructo-oligosaccharides are proteins
-        5. Jun | True | as it is a type of protein
-        6. AP-1 | True | as Activator protein 1 (AP-1) is a protein
+        1. primary T lymphocytes | as they are a kind of cell type (cell_type) 
+        2. CD28 | CD28 is one of the proteins expressed on T cells (protein)
+        3. NF-kappa B | Nuclear factor kappa B (NF-κB) is an ancient protein transcription factor (protein)
+        4. CD28-responsive complex | it is a complex of the protein (protein)
+        5. IL-2 | as it is a protein (protein)
+        
         """
     no_tf_exemplar_2 = """
-        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+        The peri-kappa B site mediates human immunodeficiency virus type 2 enhancer activation in monocytes but not in T cells
 
         Answer:
-        1. gp 160 | True | as Glycoprotein Gp 160 it is a type of protein
-        2. mediated | False | as it is a verb
-        3. CD4 molecule | True | as CD4 (cluster of differentiation 4) is a glycoprotein a type of protien
-        4. CD4-IgG | True | as CD4-igG is a homodimer of a hybrid polypeptide
-        5. abrogates | False | as it is a verb
-        6. CD4 negative T cell lines | True | as they are a type of Cell Line
+        1. peri-kappa B site | as it is a  is a cis-acting element that is a DNA (DNA)
+        2. human immunodeficiency virus type 2 enhancer | as it is a DNA (DNA)
+        3. monocytes | as they are a type of cell (cell_type)
+        4. T cells | as they are a type of cell (cell_type)
 
         """
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+        In primary T lymphocytes we show that CD28 ligation leads to the rapid intracellular formation of reactive oxygen intermediates ( ROIs ) which are required for CD28 -mediated activation of the NF-kappa B / CD28-responsive complex and IL-2 expression
 
         Answer:
-        1. Immunoprecipitation | False
-        2. gp 160  | True
-        3. polyclonal antibodies | True
-        4. Fos | True
-        5. Jun | True
-        6. AP-1 | True
+        1. primary T lymphocytes | True | (cell_type) 
+        2. CD28 | True | (protein)
+        3. reactive oxygen intermediates ( ROIs ) | False | None
+        4. NF-kappa B | True | (protein)
+        5. CD28-responsive complex | True | (protein)
+        6. IL-2 | True | (protein)
         """
     tf_exemplar_2 = """
-        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+        The peri-kappa B site mediates human immunodeficiency virus type 2 enhancer activation in monocytes but not in T cells
 
         Answer:
-        1. gp 160 | True
-        2. mediated | False
-        3. CD4 molecule | True
-        4. CD4-IgG | True
-        5. abrogates | False
-        6. CD4 negative T cell lines | True
+        1. peri-kappa B site | True | (DNA) 
+        2. human immunodeficiency virus type 2 enhancer | True | (DNA)
+        3. Activation | False | None
+        4. monocytes | True | (cell_type)
+        5. T cells | True | (cell_type)
 
         """
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-        Immunoprecipitation of the gp 160 -induced nuclear extracts with polyclonal antibodies to Fos and Jun proteins indicates that AP-1 complex is comprised of members of these family of proteins.
+        In primary T lymphocytes we show that CD28 ligation leads to the rapid intracellular formation of reactive oxygen intermediates ( ROIs ) which are required for CD28 -mediated activation of the NF-kappa B / CD28-responsive complex and IL-2 expression
 
         Answer:
-        1. gp 160
-        2. polyclonal antibodies
-        3. Fos
-        4. Jun
-        5. AP-1
+        1. primary T lymphocytes | (cell_type) 
+        2. CD28 | (protein)
+        3. NF-kappa B | (protein)
+        4. CD28-responsive complex | (protein)
+        5. IL-2 | (protein)
         """
     exemplar_2 = """
-        The stimulatory effects of gp160 are mediated through the CD4 molecule , since treatment of gp160 with soluble CD4-IgG abrogates its activity , and CD4 negative T cell lines fail to be stimulated with gp160 
+        The peri-kappa B site mediates human immunodeficiency virus type 2 enhancer activation in monocytes but not in T cells
 
         Answer:
-        1. gp 160
-        2. CD4 molecule
-        3. CD4-IgG
-        4. CD4 negative T cell lines
+        1. peri-kappa B site | (DNA) 
+        2. human immunodeficiency virus type 2 enhancer | (DNA)
+        3. monocytes | (cell_type)
+        4. T cells | (cell_type)
         """
     exemplars = [exemplar_1, exemplar_2]
 
 
 class CrossNERPoliticsConfig(Config):
     defn = """
-    An entity is a person, organization, politician, political party, event, election, country, location or 
-    other object that has an independent and distinct existence. Dates, times, abstract concepts, 
-    adjectives and verbs are not entities
+    An entity is a person(person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location(location) or 
+    other political entity (misc). Dates, times, abstract concepts, adjectives and verbs are not entities
     """
 
     cot_exemplar_1 = """
-    Assisted by his top aide Harry Hopkins and with very strong national support , 
-    he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
-    Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
+     Sitting as a Liberal Party of Canada Member of Parliament ( MP ) for Niagara Falls , she joined the Canadian Cabinet after the Liberals defeated the Progressive Conservative Party of Canada government of John Diefenbaker in the 1963 Canadian federal election .
     
     Answer:
-    1. Harry Hopkins | True | as it is a person
-    2. British | True | as it is a nationality
-    3. Prime Minister | False | as it is a title and not a person or politician
-    4. Winston Churchill | True | as it is a person
-    5. Soviet | True | as it is a nationality
-    6. Joseph Stalin | True | as it isa person
-    7. Chinese | True | as it is a nationality
-    8. Chiang Kai-shek | True | as it is a person
-    9. Allied Powers | True | as it is an organization
-    10. Axis Powers | True | as it is an organization
+    1. Liberal Party of Canada | True | as it is a political party (politicalparty)
+    2. Parliament | True | as it is an organisation (organisation)
+    3. Niagara Falls | True | as it is a location (misc)
+    4. Canadian Cabinet | True | as it is a political entity (misc)
+    5. Liberals | True | as it is a political group but not the party name (misc)
+    6. Progressive Conservative Party of Canada | True | as it is a political party (politicalparty)
+    7. government | False | as it is not actually an entity in this sentence
+    8. John Diefenbaker | True | as it is a politician (politician)
+    9. 1963 Canadian federal election | True | as it is an election (election)
     """
 
     cot_exemplar_2 = """
-    Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
-    but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
-    who went on to win the 1952 United States presidential election .
+    The MRE took part to the consolidation of The Olive Tree as a joint electoral list both for the 2004 
+    European Parliament election and the 2006 Italian general election , along with the Democrats of the Left and 
+    Democracy is Freedom - The Daisy .
 
     Answer:
-    1. Hoover | True | as it is a person
-    2. conservative | False | as it is an ideology and not a political party
-    3. Robert A. Taft | True | as it is a person
-    4. 1952 Republican National Convention | True | as it is a political event
-    5. Dwight D. Eisenhower | True | as it is a person
-    6. 1952 United States presidential election | True | as it is an election
+    1. MRE | True | as it is a political party (politicalparty)
+    2. consolidation | False | as it is an action
+    3. The Olive Tree | True | as it is a group or organization (organisation)
+    4. 2004 European Parliament election | True | as it is an election (election)
+    5. 2006 Italian general election | True | as it is an election (election)
+    6. Democrats of the Left | True | as it is a political party (politicalparty)
+    7. Democracy is Freedom - The Daisy | True | as it is a political party (politicalparty)
     """
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-        Assisted by his top aide Harry Hopkins and with very strong national support , 
-        he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
-        Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
-
+         Sitting as a Liberal Party of Canada Member of Parliament ( MP ) for Niagara Falls , she joined the Canadian Cabinet after the Liberals defeated the Progressive Conservative Party of Canada government of John Diefenbaker in the 1963 Canadian federal election .
+        
         Answer:
-        1. Harry Hopkins | as it is a person
-        2. British | as it is a nationality
-        3. Winston Churchill | as it is a person
-        4. Soviet | as it is a nationality
-        5. Joseph Stalin | as it is a person
-        6. Chinese | as it is a nationality
-        7. Chiang Kai-shek | as it is a person
-        8. Allied Powers | as it is an organization
-        9. Axis Powers | as it is an organization
+        1. Liberal Party of Canada | as it is a political party (politicalparty)
+        2. Parliament | as it is an organisation (organisation)
+        3. Niagara Falls | as it is a location (misc)
+        4. Canadian Cabinet | as it is a political entity (misc)
+        5. Liberals | as it is a political group but not the party name (misc)
+        6. Progressive Conservative Party of Canada | as it is a political party (politicalparty)
+        7. John Diefenbaker | as it is a politician (politician)
+        8. 1963 Canadian federal election | as it is an election (election)
         """
 
     no_tf_exemplar_2 = """
-        Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
-        but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
-        who went on to win the 1952 United States presidential election .
+        The MRE took part to the consolidation of The Olive Tree as a joint electoral list both for the 2004 
+        European Parliament election and the 2006 Italian general election , along with the Democrats of the Left and 
+        Democracy is Freedom - The Daisy .
 
         Answer:
-        1. Hoover | as it is a person
-        2. Robert A. Taft | as it is a person
-        3. 1952 Republican National Convention | as it is a political event
-        4. Dwight D. Eisenhower | as it is a person
-        5. 1952 United States presidential election | as it is an election
+        1. MRE | as it is a political party (politicalparty)
+        2. The Olive Tree | as it is a group or organization (organization)
+        3. 2004 European Parliament election | as it is an election (election)
+        4. 2006 Italian general election | as it is an election (election)
+        5. Democrats of the Left | as it is a political party (politicalparty)
+        6. Democracy is Freedom - The Daisy | as it is a political party (politicalparty)
         """
 
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-        Assisted by his top aide Harry Hopkins and with very strong national support , 
-        he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
-        Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
-
-        Answer:
-        1. Harry Hopkins | True
-        2. British | True
-        3. Prime Minister | False
-        4. Winston Churchill | True
-        5. Soviet | True
-        6. Joseph Stalin | True
-        7. Chinese | True
-        8. Chiang Kai-shek | True
-        9. Allied Powers | True
-        10. Axis Powers | True
+        Sitting as a Liberal Party of Canada Member of Parliament ( MP ) for Niagara Falls , she joined the Canadian Cabinet after the Liberals defeated the Progressive Conservative Party of Canada government of John Diefenbaker in the 1963 Canadian federal election .
+             
+        1. Liberal Party of Canada | True | (politicalparty)
+        2. Parliament | True | (organisation)
+        3. Niagara Falls | True | (misc)
+        4. Canadian Cabinet | True | (misc)
+        5. Liberals | True | (misc)
+        6. Progressive Conservative Party of Canada | True | (politicalparty)
+        7. government | False | None
+        8. John Diefenbaker | True | (politician)
+        9. 1963 Canadian federal election | True | (election)
         """
 
     tf_exemplar_2 = """
-        Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
-        but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
-        who went on to win the 1952 United States presidential election .
-
+        The MRE took part to the consolidation of The Olive Tree as a joint electoral list both for the 2004 
+        European Parliament election and the 2006 Italian general election , along with the Democrats of the Left and 
+        Democracy is Freedom - The Daisy .
+    
         Answer:
-        1. Hoover | True
-        2. conservative | False
-        3. Robert A. Taft | True
-        4. 1952 Republican National Convention | True
-        5. Dwight D. Eisenhower | True
-        6. 1952 United States presidential election | True
+        1. MRE | True | (politicalparty)
+        2. consolidation | False | None
+        3. The Olive Tree | True | (organisation)
+        4. 2004 European Parliament election | True | (election)
+        5. 2006 Italian general election | True | (election)
+        6. Democrats of the Left | True | (politicalparty)
+        7. Democracy is Freedom - The Daisy | True | (politicalparty)
         """
 
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-    Assisted by his top aide Harry Hopkins and with very strong national support , 
-    he worked closely with British Prime Minister Winston Churchill , Soviet leader Joseph Stalin and 
-    Chinese Generalissimo Chiang Kai-shek in leading the Allied Powers against the Axis Powers .
-
-    Answer:
-    1. Harry Hopkins
-    2. British
-    3. Winston Churchill
-    4. Soviet
-    5. Joseph Stalin
-    6. Chinese
-    7. Chiang Kai-shek
-    8. Allied Powers
-    9. Axis Powers
+        Sitting as a Liberal Party of Canada Member of Parliament ( MP ) for Niagara Falls , she joined the Canadian Cabinet after the Liberals defeated the Progressive Conservative Party of Canada government of John Diefenbaker in the 1963 Canadian federal election .
+             
+        1. Liberal Party of Canada | (politicalparty)
+        2. Parliament | (organisation)
+        3. Niagara Falls | (misc)
+        4. Canadian Cabinet | (misc)
+        5. Liberals | (misc)
+        6. Progressive Conservative Party of Canada | (politicalparty)
+        7. John Diefenbaker | (politician)
+        8. 1963 Canadian federal election | (election)
     """
 
     exemplar_2 = """
-    Hoover backed conservative leader Robert A. Taft at the 1952 Republican National Convention , 
-    but the party 's presidential nomination instead went to Dwight D. Eisenhower , 
-    who went on to win the 1952 United States presidential election .
+        The MRE took part to the consolidation of The Olive Tree as a joint electoral list both for the 2004 
+        European Parliament election and the 2006 Italian general election , along with the Democrats of the Left and 
+        Democracy is Freedom - The Daisy .
 
-    Answer:
-    1. Hoover
-    2. Robert A. Taft
-    3. 1952 Republican National Convention
-    4. Dwight D. Eisenhower
-    5. 1952 United States presidential election
+        Answer:
+        1. MRE | (politicalparty)
+        2. The Olive Tree | (organization)
+        3. 2004 European Parliament election | (election)
+        4. 2006 Italian general election | (election)
+        5. Democrats of the Left | (politicalparty)
+        6. Democracy is Freedom - The Daisy | (politicalparty)
     """
 
     exemplars = [exemplar_1, exemplar_2]
@@ -634,235 +629,254 @@ class CrossNERPoliticsConfig(Config):
 
 class CrossNERNaturalSciencesConfig(Config):
     defn = """
-    An entity is a person, university, scientist, organization, country, location, scientific discipline, enzyme, 
-    protein, chemical compound, chemical element, event, astronomical object, academic journal, award, or theory. 
-    Abstract scientific concepts can be entities if they have a name associated with them. 
+    An entity is a person(person), university(university), scientist(scientist), organisation(organisation), country(country), location(location), scientific discipline(discipline), enzyme(enzyme), 
+    protein(protein), chemical compound(chemicalcompound), chemical element(chemicalelement), event(event), astronomical object(astronomicalobject), academic journal(academicjournal), award(award), or theory(theory). 
+    Abstract scientific concepts can be entities if they have a name associated with them. If an entity does not fit the types above it is (misc)
     Dates, times, adjectives and verbs are not entities
     """
 
     cot_exemplar_1 = """
-    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
-    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
+    He attended the U.S. Air Force Institute of Technology for a year , earning a bachelor 's degree in aeromechanics , and received his test pilot training at Edwards Air Force Base in California before his assignment as a test pilot at Wright-Patterson Air Force Base in Ohio .
     
     Answer:
-    1. August Kopff | True | person
-    2. Wolf | True | person
-    3. Heidelberg | True | as it is a university or location
-    4. 617 Patroclus | True | as it is the name of a scientific discovery
-    5. Achilles | True | as it is the name of an asteroid
-    6. 1907 | False | as it is a date
-    7. Jupiter trojans | True | as it is a group of astronomical objects 
-    8. 624 Hektor | True | as it is an astronomical object
+    1. U.S. Air Force Institute of Technology | True | as he attended this institute is likely a university (university)
+    2. bachelor 's degree | False | as it is not a university, award or any other entity type
+    3. aeromechanics | True | as it is a scientific discipline (discipline)
+    4. Edwards Air Force Base | True | as an Air Force Base is an organised unit (organisation)
+    5. California | True | as in this case California refers to the state of California itself (location)
+    6. Wright-Patterson Air Force Base | True | as an Air Force Base is an organisation (organisation)
+    7. Ohio | True | as it is a state (location)
     """
 
     cot_exemplar_2 = """
-    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
-    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
+    In addition , there would probably have been simple hydride s such as those now found in gas giants like Jupiter and Saturn , notably water vapor , methane , and ammonia .
     
     Answer:
-    1. Nüsslein-Volhard | True | as it is a person
-    2. University of Tübingen | True | as it is a university
-    3. PhD | True | as it is an award
-    4. Protein-DNA interaction | True | as it is a scientific discipline
-    5. RNA polymerase | True | as it is a chemical compound
-    6. Escherichia coli | True | as it is a scientific specimen
+    1. hydride | True | as it is a chemical (chemicalcompound)
+    2. gas giants | True | as it is a category of astronomical object (misc)
+    3. Jupiter | True | as it is a planet (astronomicalobject)
+    4. water vapor | True | as it is a chemical (chemicalcompound)
+    5. methane | True | as it is a chemical (chemicalcompound)
+    6. ammonia | True | as it is a chemical (chemicalcompound)
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
-    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
-
+    He attended the U.S. Air Force Institute of Technology for a year , earning a bachelor 's degree in aeromechanics , and received his test pilot training at Edwards Air Force Base in California before his assignment as a test pilot at Wright-Patterson Air Force Base in Ohio .
+    
     Answer:
-    1. August Kopff | person
-    2. Wolf | person
-    3. Heidelberg | as it is a university or location
-    4. 617 Patroclus | as it is the name of a scientific discovery
-    5. Achilles | as it is the name of an asteroid
-    7. Jupiter trojans | as it is a group of astronomical objects 
-    8. 624 Hektor | as it is an astronomical object
+    1. U.S. Air Force Institute of Technology | as he attended this institute is likely a university (university)
+    3. aeromechanics | as it is a scientific discipline (discipline)
+    4. Edwards Air Force Base | as an Air Force Base is an organised unit (organisation)
+    5. California | as in this case California refers to the state of California itself (location)
+    6. Wright-Patterson Air Force Base | as an Air Force Base is an organisation (organisation)
+    7. Ohio | as it is a state (location)
     """
 
     no_tf_exemplar_2 = """
-    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
-    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
-
+    In addition , there would probably have been simple hydride s such as those now found in gas giants like Jupiter and Saturn , notably water vapor , methane , and ammonia .
+    
     Answer:
-    1. Nüsslein-Volhard | as it is a person
-    2. University of Tübingen | as it is a university
-    3. PhD | True | as it is an award
-    4. Protein-DNA interaction | as it is a scientific discipline
-    5. RNA polymerase | as it is a chemical compound
-    6. Escherichia coli | as it is a scientific specimen
+    1. hydride | as it is a chemical (chemicalcompound)
+    2. gas giants | as it is a category of astronomical object (misc)
+    3. Jupiter | as it is a planet (astronomicalobject)
+    4. water vapor | as it is a chemical (chemicalcompound)
+    5. methane | as it is a chemical (chemicalcompound)
+    6. ammonia | as it is a chemical (chemicalcompound)
     """
 
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
-    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
-
-    Answer:
-    1. August Kopff | True
-    2. Wolf | True
-    3. Heidelberg | True
-    4. 617 Patroclus | True
-    5. Achilles | True
-    6. 1907 | False
-    7. Jupiter trojans | True
-    8. 624 Hektor | True
+    He attended the U.S. Air Force Institute of Technology for a year , earning a bachelor 's degree in aeromechanics , and received his test pilot training at Edwards Air Force Base in California before his assignment as a test pilot at Wright-Patterson Air Force Base in Ohio .
+        
+    1. U.S. Air Force Institute of Technology | True | (university)
+    2. bachelor 's degree | False | None
+    3. aeromechanics | True | (discipline)
+    4. Edwards Air Force Base | True | (organisation)
+    5. California | True | (location)
+    6. Wright-Patterson Air Force Base | True | (organisation)
+    7. Ohio | True | (location)
     """
 
     tf_exemplar_2 = """
-    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
-    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
-
+    In addition , there would probably have been simple hydride s such as those now found in gas giants like Jupiter and Saturn , notably water vapor , methane , and ammonia .
+    
     Answer:
-    1. Nüsslein-Volhard | True
-    2. University of Tübingen | True
-    3. PhD | True
-    4. Protein-DNA interaction | True
-    5. RNA polymerase | True
-    6. Escherichia coli | True
+    1. hydride | True | (chemicalcompound)
+    2. gas giants | True | (misc)
+    3. Jupiter | True | (astronomicalobject)
+    4. water vapor | True | (chemicalcompound)
+    5. methane | True | (chemicalcompound)
+    6. ammonia | True | (chemicalcompound)
     """
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-    August Kopff , a colleague of Wolf at Heidelberg , then discovered 617 Patroclus eight months after Achilles , 
-    and , in early 1907 , he discovered the largest of all Jupiter trojans , 624 Hektor .
-
+    He attended the U.S. Air Force Institute of Technology for a year , earning a bachelor 's degree in aeromechanics , and received his test pilot training at Edwards Air Force Base in California before his assignment as a test pilot at Wright-Patterson Air Force Base in Ohio .
+    
     Answer:
-    1. August Kopff
-    2. Wolf
-    3. Heidelberg
-    4. 617 Patroclus
-    5. Achilles
-    6. Jupiter trojans
-    7. 624 Hektor
+    1. U.S. Air Force Institute of Technology | (university)
+    3. aeromechanics | (discipline)
+    4. Edwards Air Force Base | (organisation)
+    5. California | (location)
+    6. Wright-Patterson Air Force Base | (organisation)
+    7. Ohio | (location)
     """
 
     exemplar_2 = """
-    Nüsslein-Volhard was educated at the University of Tübingen where she earned a PhD in 1974 for research into 
-    Protein-DNA interaction s and the binding of RNA polymerase in Escherichia coli .
-
+    In addition , there would probably have been simple hydride s such as those now found in gas giants like Jupiter and Saturn , notably water vapor , methane , and ammonia .
+    
     Answer:
-    1. Nüsslein-Volhard
-    2. University of Tübingen
-    3. PhD
-    4. Protein-DNA interaction
-    5. RNA polymerase
-    6. Escherichia coli
+    1. hydride | (chemicalcompound)
+    2. gas giants | (misc)
+    3. Jupiter | (astronomicalobject)
+    4. water vapor | (chemicalcompound)
+    5. methane | (chemicalcompound)
+    6. ammonia | (chemicalcompound)
     """
     exemplars = [exemplar_1, exemplar_2]
 
 
 class CrossNERMusicConfig(Config):
     defn = """
-    An entity is a person, country, location, organization, music genre, song, band, album, artist, musical instrument, 
-    award, event or other object with an independent and distinct existence. 
+    An entity is a person(person), country(country), location(location), organisation(organisation), 
+    music genre(musicgenre), song(song), band(band), album(album), artist(musicalartist), 
+    musical instrument(musicalinstrument), award(award), event(event) or musical entity (misc)
     Dates, times, adjectives and verbs are not entities. 
     """
 
     cot_exemplar_1 = """
-    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
-    in the US by the Recording Industry Association of America .. BBC News .
+    Artists from outside California who were associated with early alternative country included singer-songwriters 
+    such as Lucinda Williams , Lyle Lovett and Steve Earle , the Nashville country rock band Jason and the Scorchers and the British post-punk band The Mekons .
     
     Answer:
-    1. Stevens | True | as it is a name
-    2. Tea for Tillerman | True | as it is an album
-    3. Teaser and the Firecat | True | as it is an album
-    4. 1971 | False | as it is a date
-    5. triple platinum | False | as it is an album certification and not an award
-    6. US | True | as it is a country
-    7. Recording Industry Association of America | True | as it is an organization
-    8. BBC News | True | as it is an organization
+    1. Artists | False | because it is not a specific artist, it is a common noun
+    2. California | True | it is a state (location)
+    3. alternative country | True | as it is a musical genre (musicgenre)
+    4. Lucinda Williams | True | as this is an artist (musicalartist)
+    5. Lyle Lovett | True | as this is an artist (musicalartist)
+    6. Steve Earle | True | as this is an artist (musicalartist)
+    7. Nashville country rock band | True | as it is an entity related to music (misc)
+    8. Jason and the Scorchers | True | as it is the name of a band not a person (band)
+    9. British | True | as it is a nationality (misc)
+    10. post-punk | True | as it is a music genre (musicalgenre)
+    11. The Mekons | True | as it is a band (band)
     """
 
     cot_exemplar_2 = """
-    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
-    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
+    The film was nominated for the Academy Awards for Academy Award for Best Picture , as well as Academy Award for 
+    Best Production Design ( Carroll Clark and Van Nest Polglase ) , Academy Award for 
+    Best Original Song ( Irving Berlin for Cheek to Cheek ) , and Dance Direction ( Hermes Pan for Piccolino and Top Hat ) .
     
     Answer:
-    1. Spice Girls | True | as it is a band
-    2. Brit Awards | True | as it is an award
-    3. American Music Awards | True | as it is an award
-    4. MTV Europe Music Awards | True | as it is an award
-    5. MTV Video Music Award | True | as it is an award
-    6. World Music Awards | True | as it is an award
+    1. Academy Awards | True | as it is an award (award)
+    2. Academy Award for Best Picture | True | as it is the name of a specific award (award)
+    3. Academy Award for Best Production Design | True | as it is the name of an award (award)
+    4. Carroll Clark | True | it is a person but not a musician (person)
+    5. Van Nest Polglase | True | person but not a musician (person)
+    6. Academy Award for Best Original Song | True | an award (award)
+    7. Irving Berlin | True | a person who recieved an award for a song is a musician or artist (musicalartist)
+    8. Dance Direction | True | an award (award)
+    9. Hermes Pan | True | a person who is not a musician (person)
+    10. Piccolino | True | a dance performance name (misc)
+    11. Top Hat | True | name of a dance (misc)
     
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
-    in the US by the Recording Industry Association of America .. BBC News .
-
+    Artists from outside California who were associated with early alternative country included singer-songwriters 
+    such as Lucinda Williams , Lyle Lovett and Steve Earle , the Nashville country rock band Jason and the Scorchers and the British post-punk band The Mekons .
+    
     Answer:
-    1. Stevens | as it is a name
-    2. Tea for Tillerman | as it is an album
-    3. Teaser and the Firecat | as it is an album
-    4. US | as it is a country
-    5. Recording Industry Association of America | as it is an organization
-    6. BBC News | as it is an organization
+    1. California | it is a state (location)
+    2. alternative country | as it is a musical genre (musicgenre)
+    3. Lucinda Williams | as this is an artist (musicalartist)
+    4. Lyle Lovett | as this is an artist (musicalartist)
+    5. Steve Earle | as this is an artist (musicalartist)
+    6. Nashville country rock band | as it is an entity related to music (misc)
+    7. Jason and the Scorchers | as it is the name of a band not a person (band)
+    8. British | as it is a nationality (misc)
+    9. post-punk | as it is a music genre (musicalgenre)
+    10. The Mekons | as it is a band (band)
     """
 
     no_tf_exemplar_2 = """
-    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
-    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
-
+    The film was nominated for the Academy Awards for Academy Award for Best Picture , as well as Academy Award for 
+    Best Production Design ( Carroll Clark and Van Nest Polglase ) , Academy Award for 
+    Best Original Song ( Irving Berlin for Cheek to Cheek ) , and Dance Direction ( Hermes Pan for Piccolino and Top Hat ) .
+    
     Answer:
-    1. Spice Girls | as it is a band
-    2. Brit Awards | as it is an award
-    3. American Music Awards | as it is an award
-    4. MTV Europe Music Awards | as it is an award
-    5. MTV Video Music Award | as it is an award
-    6. World Music Awards | as it is an award
-
+    1. Academy Awards | as it is an award (award)
+    2. Academy Award for Best Picture |  as it is the name of a specific award (award)
+    3. Academy Award for Best Production Design | as it is the name of an award (award)
+    4. Carroll Clark | it is a person but not a musician (person)
+    5. Van Nest Polglase | person but not a musician (person)
+    6. Academy Award for Best Original Song | an award (award)
+    7. Irving Berlin | a person who recieved an award for a song is a musician or artist (musicalartist)
+    8. Dance Direction | an award (award)
+    9. Hermes Pan | a person who is not a musician (person)
+    10. Piccolino | a dance performance name (misc)
+    11. Top Hat | name of a dance (misc)
     """
 
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
-    in the US by the Recording Industry Association of America .. BBC News .
-
+    Artists from outside California who were associated with early alternative country included singer-songwriters 
+    such as Lucinda Williams , Lyle Lovett and Steve Earle , the Nashville country rock band Jason and the Scorchers and the British post-punk band The Mekons .
+    
     Answer:
-    1. Stevens | True
-    2. Tea for Tillerman | True
-    3. Teaser and the Firecat | True
-    4. 1971 | False
-    5. triple platinum | False
-    6. US | True
-    7. Recording Industry Association of America | True
-    8. BBC News | True
+    1. Artists | False | None
+    2. California | True | (location)
+    3. alternative country | True | (musicgenre)
+    4. Lucinda Williams | True | (musicalartist)
+    5. Lyle Lovett | True | (musicalartist)
+    6. Steve Earle | True | (musicalartist)
+    7. Nashville country rock band | True | (misc)
+    8. Jason and the Scorchers | True | (band)
+    9. British | True | (misc)
+    10. post-punk | True | (musicalgenre)
+    11. The Mekons | True | (band)
     """
 
     tf_exemplar_2 = """
-    As a group , the Spice Girls have received a number of notable awards including five Brit Awards , 
-    three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
-
+    The film was nominated for the Academy Awards for Academy Award for Best Picture , as well as Academy Award for 
+    Best Production Design ( Carroll Clark and Van Nest Polglase ) , Academy Award for 
+    Best Original Song ( Irving Berlin for Cheek to Cheek ) , and Dance Direction ( Hermes Pan for Piccolino and Top Hat ) .
+    
     Answer:
-    1. Spice Girls | True
-    2. Brit Awards | True
-    3. American Music Awards | True
-    4. MTV Europe Music Awards | True
-    5. MTV Video Music Award | True
-    6. World Music Awards | True
+    1. Academy Awards | True | (award)
+    2. Academy Award for Best Picture | True | (award)
+    3. Academy Award for Best Production Design | True | (award)
+    4. Carroll Clark | True | (person)
+    5. Van Nest Polglase | True | (person)
+    6. Academy Award for Best Original Song | True | (award)
+    7. Irving Berlin | True | (musicalartist)
+    8. Dance Direction | True | (award)
+    9. Hermes Pan | True | (person)
+    10. Piccolino | True | (misc)
+    11. Top Hat | True | (misc)
 
     """
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-    Stevens ' albums Tea for the Tillerman ( 1970 ) and Teaser and the Firecat ( 1971 ) were certified triple platinum 
-    in the US by the Recording Industry Association of America .. BBC News .
-
+    Artists from outside California who were associated with early alternative country included singer-songwriters 
+    such as Lucinda Williams , Lyle Lovett and Steve Earle , the Nashville country rock band Jason and the Scorchers and the British post-punk band The Mekons .
+    
     Answer:
-    1. Stevens
-    2. Tea for Tillerman
-    3. Teaser and the Firecat
-    4. US
-    5. Recording Industry Association of America
-    6. BBC News
+    1. California | (location)
+    2. alternative country | (musicgenre)
+    3. Lucinda Williams | (musicalartist)
+    4. Lyle Lovett | (musicalartist)
+    5. Steve Earle | (musicalartist)
+    6. Nashville country rock band | (misc)
+    7. Jason and the Scorchers | (band)
+    8. British | (misc)
+    9. post-punk | (musicalgenre)
+    10. The Mekons | (band)
     """
 
     exemplar_2 = """
@@ -870,161 +884,180 @@ class CrossNERMusicConfig(Config):
     three American Music Awards , three MTV Europe Music Awards , one MTV Video Music Award and three World Music Awards.
 
     Answer:
-    1. Spice Girls
-    2. Brit Awards
-    3. American Music Awards
-    4. MTV Europe Music Awards
-    5. MTV Video Music Award
-    6. World Music Awards
+    1. Academy Awards | (award)
+    2. Academy Award for Best Picture | (award)
+    3. Academy Award for Best Production Design | (award)
+    4. Carroll Clark | (person)
+    5. Van Nest Polglase | (person)
+    6. Academy Award for Best Original Song | (award)
+    7. Irving Berlin | (musicalartist)
+    8. Dance Direction | (award)
+    9. Hermes Pan | (person)
+    10. Piccolino | (misc)
+    11. Top Hat | (misc)
     """
     exemplars = [exemplar_1, exemplar_2]
 
 
 class CrossNERLiteratureConfig(Config):
     defn = """
-    An entity is a person, country, location, organization, book, writer, poem, magazine, 
-    award, event or other object with an independent and distinct existence. 
+    An entity is a person(person), country(country), location(location), organisation(organisation), book(book), writer(writer), poem(poem), magazine(magazine), 
+    award(award), event(event), country(country), literary genre (literarygenre), nationality(misc) or other enitity in literature (misc). 
     Dates, times, adjectives and verbs are not entities. 
     """
 
     cot_exemplar_1 = """
-    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
-    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
-    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
+     The poor conditions of the hospital in Lambaréné were also famously criticized by Nigerian professor and 
+     novelist Chinua Achebe in his essay on Joseph Conrad ' s novel Heart of Darkness : 
+     In a comment which has often been quoted Schweitzer says : ' The African is indeed my brother but my junior brother .
     
     Answer:
-    1. 1351 | False | as it is a date
-    2. Emperor Toghon Temür | True | as it is a person
-    3. Yuan dynasty | True | as it is the name of a dynasty or organization
-    4. Kong Huan | True | as it is the name of a person
-    5. 孔浣 | True | as it is a person
-    6. Kong Shao | True | as it a person 
-    7. 孔昭 | True | as it a person
-    8. China | True | as it is a country
-    9. Korea | True | as it is a country
-    10. Goryeo | True | as it is a event
-    11. Princess Noguk | True | as it a person
-    12. Mongolian-born | True | as it a nationality
-    13. Gongmin | True | as it is a person 
+    1. hospital | False | as it is a building type not a named location
+    2. Lambaréné | True | as it is a location in which the hospital is located (location)
+    3. Nigerian | True | as it is a nationality (misc)
+    4. professor | False | as it is not an entity type as defined by the list
+    5. Chinua Achebe | True | as this is a write who is a novelist (writer)
+    6. Joseph Conrad | True | as this is a writer who wrote a novel called the Heart of Darkness (writer)
+    7. novel | True | as this is a genre or type of literature (literarygenre)
+    8. Heart of Darkness | True | as this is the name of a book (book)
+    9. Schweitzer | True | as this is a person, not a writer (person)
+    10. African | True | as this is like a nationality (misc)
     """
 
     cot_exemplar_2 = """
-    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
-    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
+    During this period , he covered Timothy Leary and Richard Alpert ' s Millbrook , New York -based 
+    Castalia Foundation at the instigation of Alan Watts in The Realist , cultivated important friendships with 
+    William S. Burroughs and Allen Ginsberg , and lectured at the Free University of New York on ' Anarchist and Synergetic Politics ' in 1965 .
     
     Answer: 
-    1. anti-slavery writings | True | as it is the theme of writing of some works
-    2. poems | True | as it is the word poem
-    3. Barbara Frietchie | True | as it is a poem
-    4. The Barefoot Boy | True | as it is a poem
-    5. Maud Muller | True | as it is a poem
-    6. Snow-Bound | True | as it is a poem 
+    1. period | False | as this indicates a time period
+    2. Timothy Leary | True | as this is a person who has not written a literary work (person)
+    3. Richard Alpert | True | as this person hasn't written a literary work(person)
+    4. Millbrook | True | as it is a location inside New York (location)
+    5. New York | True | as it is a state (location)
+    6. Castalia Foundation | True | as it is an organisation (organisation)
+    7. instigation | False | as it is an action 
+    8. Alan Watts | True | as it is a person who has written in a magazine (writer)
+    9. The Realist | True | the name of a magazine (magazine)
+    10. William S. Burroughs | True | the name of famous author  (writer)
+    11. Allen Gibsberg | True | a person who has written literary works (writer)
+    12. Free University of New York | True | a university is an organisation (organisation)
+    13. Anarchist and Synergetic Politics | True | some formal academic work (misc)
     """
 
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
-    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
-    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
-
+     The poor conditions of the hospital in Lambaréné were also famously criticized by Nigerian professor and 
+     novelist Chinua Achebe in his essay on Joseph Conrad ' s novel Heart of Darkness : 
+     In a comment which has often been quoted Schweitzer says : ' The African is indeed my brother but my junior brother .
+    
     Answer:
-    1. Emperor Toghon Temür | as it is a person
-    2. Yuan dynasty | as it is the name of a dynasty or organization
-    3. Kong Huan | as it is the name of a person
-    4. 孔浣 | as it is a person
-    5. Kong Shao | as it a person 
-    6. 孔昭 | as it a person
-    7. China | as it is a country
-    8. Korea | as it is a country
-    9. Goryeo | as it is a event
-    10. Princess Noguk | as it a person
-    11. Mongolian-born | as it a nationality
-    12. Gongmin | as it is a person 
+    1. Lambaréné | as it is a location in which the hospital is located (location)
+    2. Nigerian | as it is a nationality (misc)
+    3. Chinua Achebe | as this is a write who is a novelist (writer)
+    4. Joseph Conrad | as this is a writer who wrote a novel called the Heart of Darkness (writer)
+    5. novel | as this is a genre or type of literature (literarygenre)
+    6. Heart of Darkness | as this is the name of a book (book)
+    7. Schweitzer | as this is a person, not a writer (person)
+    8. African | as this is like a nationality (misc)
     """
 
     no_tf_exemplar_2 = """
-    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
-    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
-
+    During this period , he covered Timothy Leary and Richard Alpert ' s Millbrook , New York -based 
+    Castalia Foundation at the instigation of Alan Watts in The Realist , cultivated important friendships with 
+    William S. Burroughs and Allen Ginsberg , and lectured at the Free University of New York on ' Anarchist and Synergetic Politics ' in 1965 .
+    
     Answer: 
-    1. anti-slavery writings | as it is the theme of writing of some works
-    2. poems | as it is the word poem
-    3. Barbara Frietchie | as it is a poem
-    4. The Barefoot Boy | as it is a poem
-    5. Maud Muller | as it is a poem
-    6. Snow-Bound | as it is a poem 
+    1. Timothy Leary | as this is a person who has not written a literary work (person)
+    2. Richard Alpert | as this person hasn't written a literary work(person)
+    3. Millbrook | as it is a location inside New York (location)
+    4. New York | as it is a state (location)
+    5. Castalia Foundation | as it is an organisation (organisation)
+    6. Alan Watts | as it is a person who has written in a magazine (writer)
+    7. The Realist | the name of a magazine (magazine)
+    8. William S. Burroughs | the name of famous author  (writer)
+    9. Allen Gibsberg | a person who has written literary works (writer)
+    10. Free University of New York | a university is an organisation (organisation)
+    11. Anarchist and Synergetic Politics | some formal academic work (misc)
     """
 
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
-    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
-    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
-
+     The poor conditions of the hospital in Lambaréné were also famously criticized by Nigerian professor and 
+     novelist Chinua Achebe in his essay on Joseph Conrad ' s novel Heart of Darkness : 
+     In a comment which has often been quoted Schweitzer says : ' The African is indeed my brother but my junior brother .
+    
     Answer:
-    1. 1351 | False
-    2. Emperor Toghon Temür
-    3. Yuan dynasty | True
-    4. Kong Huan | True
-    5. 孔浣 | True
-    6. Kong Shao | True
-    7. 孔昭 | True
-    8. China | True
-    9. Korea | True
-    10. Goryeo | True
-    11. Princess Noguk | True
-    12. Mongolian-born | True
-    13. Gongmin | True
+    1. hospital | False | None
+    2. Lambaréné | True | (location)
+    3. Nigerian | True | (misc)
+    4. professor | False | None
+    5. Chinua Achebe | True | (writer)
+    6. Joseph Conrad | True | (writer)
+    7. novel | True | (literarygenre)
+    8. Heart of Darkness | True | (book)
+    9. Schweitzer | True | (person)
+    10. African | True | (misc)
     """
 
     tf_exemplar_2 = """
-    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
-    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
-
+    During this period , he covered Timothy Leary and Richard Alpert ' s Millbrook , New York -based 
+    Castalia Foundation at the instigation of Alan Watts in The Realist , cultivated important friendships with 
+    William S. Burroughs and Allen Ginsberg , and lectured at the Free University of New York on ' Anarchist and Synergetic Politics ' in 1965 .
+    
     Answer: 
-    1. anti-slavery writings | True 
-    2. poems | True 
-    3. Barbara Frietchie | True
-    4. The Barefoot Boy | True
-    5. Maud Muller | True
-    6. Snow-Bound | True 
+    1. period | False | None
+    2. Timothy Leary | True | (person)
+    3. Richard Alpert | True | (person)
+    4. Millbrook | True | (location)
+    5. New York | True | (location)
+    6. Castalia Foundation | True | (organisation)
+    7. instigation | False | None
+    8. Alan Watts | True | (writer)
+    9. The Realist | True | (magazine)
+    10. William S. Burroughs | True | (writer)
+    11. Allen Gibsberg | True | (writer)
+    12. Free University of New York | True | (organisation)
+    13. Anarchist and Synergetic Politics | True | (misc)
     """
 
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-    In 1351 , during the reign of Emperor Toghon Temür of the Yuan dynasty , 93rd-generation descendant Kong Huan 
-    ( 孔浣 ) ' s 2nd son Kong Shao ( 孔昭 ) moved from China to Korea during the Goryeo , 
-    and was received courteously by Princess Noguk ( the Mongolian-born wife of the future king Gongmin ) .
-
+     The poor conditions of the hospital in Lambaréné were also famously criticized by Nigerian professor and 
+     novelist Chinua Achebe in his essay on Joseph Conrad ' s novel Heart of Darkness : 
+     In a comment which has often been quoted Schweitzer says : ' The African is indeed my brother but my junior brother .
+    
     Answer:
-    1. Emperor Toghon Temür
-    2. Yuan dynasty
-    3. Kong Huan
-    4. 孔浣
-    5. Kong Shao
-    6. 孔昭
-    7. China
-    8. Korea
-    9. Goryeo
-    10. Princess Noguk
-    11. Mongolian-born
-    12. Gongmin
+    1. Lambaréné | (location)
+    2. Nigerian | (misc)
+    3. Chinua Achebe | (writer)
+    4. Joseph Conrad | (writer)
+    5. novel | (literarygenre)
+    6. Heart of Darkness | (book)
+    7. Schweitzer | (person)
+    8. African | (misc)
     """
 
     exemplar_2 = """
-    Highly regarded in his lifetime and for a period thereafter , he is now largely remembered for his anti-slavery 
-    writings and his poems Barbara Frietchie , The Barefoot Boy , Maud Muller and Snow-Bound .
-
+    During this period , he covered Timothy Leary and Richard Alpert ' s Millbrook , New York -based 
+    Castalia Foundation at the instigation of Alan Watts in The Realist , cultivated important friendships with 
+    William S. Burroughs and Allen Ginsberg , and lectured at the Free University of New York on ' Anarchist and Synergetic Politics ' in 1965 .
+    
     Answer: 
-    1. anti-slavery writings
-    2. poems
-    3. Barbara Frietchie
-    4. The Barefoot Boy
-    5. Maud Muller
-    6. Snow-Bound
+    1. Timothy Leary |  (person)
+    2. Richard Alpert | (person)
+    3. Millbrook | (location)
+    4. New York | (location)
+    5. Castalia Foundation | (organisation)
+    6. Alan Watts | (writer)
+    7. The Realist | (magazine)
+    8. William S. Burroughs | (writer)
+    9. Allen Gibsberg | (writer)
+    10. Free University of New York | (organisation)
+    11. Anarchist and Synergetic Politics | (misc)
     """
 
     exemplars = [exemplar_1, exemplar_2]
@@ -1032,125 +1065,129 @@ class CrossNERLiteratureConfig(Config):
 
 class CrossNERAIConfig(Config):
     defn = """
-    An entity is a person, country, location, organization, field of Artificial Intelligence, 
-    task in artificial intelligence, product, algorithm, metric in artificial intelligence, university. 
+    An entity is a person(person), country(country), location(location), organisation(organisation), field of Artificial Intelligence(field), 
+    task in artificial intelligence(task), product(product), algorithm(algorithm), 
+    metric in artificial intelligence(metrics), university(university), 
+    researcher(researcher), AI conference (conference), programming language (programlang) 
+    or other entity related to AI research (misc). 
     Dates, times, adjectives and verbs are not entities. 
     """
 
     cot_exemplar_1 = """
-    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
-    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
-    H. Zhang , 21 ( 5 ) : e12957 .
+    Since the Google acquisition , the company has notched up a number of significant achievements , 
+    perhaps the most notable being the creation of AlphaGo , a program that defeated world champion Lee Sedol at the complex game of Go 
     
     Answer:
-    1. opinion-based recommender system | True | as it is a type of system in AI
-    2. text mining | True | as it is a technique or method in AI
-    3. information retrieval | True | as it is a technique or method in AI
-    4. sentiment analysis | True | as it is a technique or method in AI
-    5. Multimodal sentiment analysis | True | as it is a technique or method in AI
-    6. deep learning | True | as it is a technique or method in AI
-    7. X.Y. Feng | True | as it is a person
-    8. H. Zhang | True | as it is a person
+    1. Google | True | as it is a company or organisation (organisation)
+    2. creation | False | as it is an action
+    3. AlphaGo | True | as it is a program or product using AI (product)
+    4. Lee Sedol | True | as this is a person but not a researcher (person)
+    5. Go | True | as this is a game that the AI played and is an entitty (misc)
     """
 
     cot_exemplar_2 = """
-    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
-    using a that is mostly compatible with MATLAB.
+    In machine learning , support-vector machines ( SVMs , also support-vector networks ) are 
+    supervised learning models with learning algorithm s that analyze data used for classification and regression analysis .
     
     Answer:
-    1. Octave | True | as it is a product or tool
-    2. linear and nonlinear problems | False | as it is a type of problem
-    3. MATLAB | True | as it is a product or tool
+    1. machine learning | True | as it is a field of AI (field)
+    2. support-vector machines | True | an algorithm in AI (algorithm)
+    3. SVMs | True | the abbreviation of support-vector machines which is an algorithm (algorithm)
+    4. supervised learning | True | a subfield of AI (field)
+    5. learning algorithms | False | as it is not a specific algorithm or task
+    6. classification | True | as it is a specific task in machine learning or AI (task)
+    7. regression analysis | True | as it is a specific task in machine learning or AI (task)
+
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
-    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
-    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
-    H. Zhang , 21 ( 5 ) : e12957 .
-
+    Since the Google acquisition , the company has notched up a number of significant achievements , 
+    perhaps the most notable being the creation of AlphaGo , a program that defeated world champion Lee Sedol at the complex game of Go 
+    
     Answer:
-    1. opinion-based recommender system | as it is a type of system in AI
-    2. text mining | as it is a technique or method in AI
-    3. information retrieval | as it is a technique or method in AI
-    4. sentiment analysis | as it is a technique or method in AI
-    5. Multimodal sentiment analysis | as it is a technique or method in AI
-    6. deep learning | as it is a technique or method in AI
-    7. X.Y. Feng | as it is a person
-    8. H. Zhang | as it is a person
+    1. Google | as it is a company or organisation (organisation)
+    2. AlphaGo | as it is a program or product using AI (product)
+    3. Lee Sedol | as this is a person but not a researcher (person)
+    4. Go | as this is a game that the AI played and is an entitty (misc)
+
     """
 
     no_tf_exemplar_2 = """
-    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
-    using a that is mostly compatible with MATLAB.
-
+    In machine learning , support-vector machines ( SVMs , also support-vector networks ) are 
+    supervised learning models with learning algorithm s that analyze data used for classification and regression analysis .
+    
     Answer:
-    1. Octave | as it is a product or tool
-    2. MATLAB | as it is a product or tool
+    1. machine learning | as it is a field of AI (field)
+    2. support-vector machines | an algorithm in AI (algorithm)
+    3. SVMs | the abbreviation of support-vector machines which is an algorithm (algorithm)
+    4. supervised learning | a subfield of AI (field)
+    5. classification | as it is a specific task in machine learning or AI (task)
+    6. regression analysis | as it is a specific task in machine learning or AI (task)
     """
 
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
 
     tf_exemplar_1 = """
-        Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
-        information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
-        H. Zhang , 21 ( 5 ) : e12957 .
-
-        Answer:
-        1. opinion-based recommender system | True
-        2. text mining | True
-        3. information retrieval | True
-        4. sentiment analysis | True
-        5. Multimodal sentiment analysis | True
-        6. deep learning | True
-        7. X.Y. Feng | True
-        8. H. Zhang | True
+    Since the Google acquisition , the company has notched up a number of significant achievements , 
+    perhaps the most notable being the creation of AlphaGo , a program that defeated world champion Lee Sedol at the complex game of Go 
+    
+    Answer:
+    1. Google | True | (organisation)
+    2. creation | False | None
+    3. AlphaGo | True | (product)
+    4. Lee Sedol | True | (person)
+    5. Go | True | (misc)
         """
 
     tf_exemplar_2 = """
-        Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
-        using a that is mostly compatible with MATLAB.
-
-        Answer:
-        1. Octave | True
-        2. linear and nonlinear problems | False
-        3. MATLAB | True
+    In machine learning , support-vector machines ( SVMs , also support-vector networks ) are 
+    supervised learning models with learning algorithm s that analyze data used for classification and regression analysis .
+    
+    Answer:
+    1. machine learning | True | (field)
+    2. support-vector machines | True | (algorithm)
+    3. SVMs | True | (algorithm)
+    4. supervised learning | True |(field)
+    5. learning algorithms | False | None
+    6. classification | True | (task)
+    7. regression analysis | True | (task)
         """
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
     exemplar_1 = """
-    Popular approaches of opinion-based recommender system utilize various techniques including text mining , 
-    information retrieval , sentiment analysis ( see also Multimodal sentiment analysis ) and deep learning X.Y. Feng , 
-    H. Zhang , 21 ( 5 ) : e12957 .
-
+    Since the Google acquisition , the company has notched up a number of significant achievements , 
+    perhaps the most notable being the creation of AlphaGo , a program that defeated world champion Lee Sedol at the complex game of Go 
+    
     Answer:
-    1. opinion-based recommender system
-    2. text mining
-    3. information retrieval
-    4. sentiment analysis
-    5. Multimodal sentiment analysis
-    6. deep learning
-    7. X.Y. Feng
-    8. H. Zhang
+    1. Google | (organisation)
+    2. AlphaGo | (product)
+    3. Lee Sedol | (person)
+    4. Go | (misc)
+
     """
 
     exemplar_2 = """
-    Octave helps in solving linear and nonlinear problems numerically , and for performing other numerical experiments 
-    using a that is mostly compatible with MATLAB.
-
+    In machine learning , support-vector machines ( SVMs , also support-vector networks ) are 
+    supervised learning models with learning algorithm s that analyze data used for classification and regression analysis .
+    
     Answer:
-    1. Octave
-    2. MATLAB
+    1. machine learning | (field)
+    2. support-vector machines | (algorithm)
+    3. SVMs | (algorithm)
+    4. supervised learning | (field)
+    5. classification | (task)
+    6. regression analysis | (task)
     """
     exemplars = [exemplar_1, exemplar_2]
 
 
 class FewNERDConfig(Config):
-    person = "person"
+    person = "person (person)"
     art = "piece of art"
     miscellaneous = "product, language, living thing, currency, god or scientific concept in astronomy, biology etc. "
-    locations = "locations"
-    organizations = "organizations"
+    locations = "locations (location)"
+    organizations = "organizations (organisation)"
     buildings = "the names of buildings"
     events = "events"
     clearly_not = "Dates, times, abstract concepts and adjectives"
@@ -1160,163 +1197,6 @@ class FewNERDConfig(Config):
     q_1 = "Albert Einstein used 100 USD to purchase the Eiffel tower from the Association of Artificial Intelligence"
     q_2 = "In England, there is a festival called the Grand Jubilee, founded in 1982 by Attila the Hun, " \
           "it was the original birthplace of the painting 'The Starry Night'"
-
-
-class FewNERDINTRATrainConfig(FewNERDConfig):
-    defn = f"""
-    An entitiy is a {FewNERDConfig.train_group}. {FewNERDConfig.dev_group} are not entities, 
-    {FewNERDConfig.test_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
-    """
-    cot_exemplar_1 = FewNERDConfig.q_1 + \
-        """
-         Answer:
-         1. Albert Einstein | True | as this is the name of a person
-         2. USD | True | as this is the name of a currency
-         3. purchase | False | as this is an action or verb
-         4. Eiffel tower | False | as this is the name of a building
-         5. Association of Artificial Intelligence | False | as this is an organization
-        """
-
-    cot_exemplar_2 = FewNERDConfig.q_2 + \
-        """
-        Answer:
-        1. England | False | as it is a location
-        2. festival | False | as it is not a named entity
-        3. Grand Jubilee | False | as it is an event
-        4. 1982 | False | as it is a date
-        5. Attila the Hun | True | as it is a person
-        6. The Starry Night | True | as it is a piece of art
-        """
-
-    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
-        """
-         Answer:
-         1. Albert Einstein | as this is the name of a person
-         2. USD | as this is the name of a currency
-        """
-
-    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
-        """
-        Answer:
-        1. Attila the Hun | as it is a person
-        2. The Starry Night | as it is a piece of art
-        """
-
-    tf_exemplar_1 = FewNERDConfig.q_1 + \
-                     """
-                      Answer:
-                      1. Albert Einstein | True
-                      2. USD | True
-                      3. purchase | False
-                      4. Eiffel tower | False
-                      5. Association of Artificial Intelligence | False
-                     """
-
-    tf_exemplar_2 = FewNERDConfig.q_2 + \
-                     """
-                     Answer:
-                     1. England | False
-                     2. festival | False
-                     3. Grand Jubilee | False
-                     4. 1982 | False
-                     5. Attila the Hun | True
-                     6. The Starry Night | True
-                     """
-
-    exemplar_1 = FewNERDConfig.q_1 + \
-        """
-        Answer:
-        1. Albert Einstein
-        2. USD
-        """
-
-    exemplar_2 = FewNERDConfig.q_2 + \
-        """
-        Answer: 
-        1. Attila the Hun
-        2. The Starry Night
-        """
-    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
-    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
-    exemplars = [exemplar_1, exemplar_2]
-    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
-
-
-class FewNERDINTRADevConfig(FewNERDConfig):
-    defn = f"""
-        Entities are  {FewNERDConfig.dev_group}. Entities are not a {FewNERDConfig.train_group}, 
-        {FewNERDConfig.test_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
-        """
-
-    cot_exemplar_1 = FewNERDConfig.q_1 + \
-         """
-          Answer:
-          1. Albert Einstein | False | as this is the name of a person
-          2. USD | False | as this is the name of a currency
-          3. purchase | False | as this is an action or verb
-          4. Eiffel tower | True | as this is the name of a building
-          5. Association of Artificial Intelligence | False | as this is an organization
-         """
-
-    cot_exemplar_2 = FewNERDConfig.q_2 + \
-         """
-         Answer:
-         1. England | False | as it is a location
-         2. festival | False | as it is not a named entity
-         3. Grand Jubilee | True | as it is an event
-         4. 1982 | False | as it is a date
-         5. Attila the Hun | False | as it is a person
-         6. The Starry Night | False | as it is a piece of art
-         """
-
-    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
-         """
-          Answer:
-          1. Eiffel tower | as this is the name of a building
-         """
-
-    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
-         """
-         Answer:
-         1. Grand Jubilee | as it is an event
-         """
-
-    tf_exemplar_1 = FewNERDConfig.q_1 + \
-         """
-          Answer:
-          1. Albert Einstein | False
-          2. USD | False
-          3. purchase | False
-          4. Eiffel tower | True
-          5. Association of Artificial Intelligence | False
-         """
-
-    tf_exemplar_2 = FewNERDConfig.q_2 + \
-         """
-         Answer:
-         1. England | False
-         2. festival | False
-         3. Grand Jubilee | True 
-         4. 1982 | False
-         5. Attila the Hun | False
-         6. The Starry Night | False
-         """
-
-    exemplar_1 = FewNERDConfig.q_1 + \
-         """
-         Answer:
-         1. Eiffel Tower
-         """
-
-    exemplar_2 = FewNERDConfig.q_2 + \
-         """
-         Answer: 
-         1. Grand Jubilee
-         """
-    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
-    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
-    exemplars = [exemplar_1, exemplar_2]
-    tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
 
 
 class FewNERDINTRATestConfig(FewNERDConfig):
@@ -1332,13 +1212,13 @@ class FewNERDINTRATestConfig(FewNERDConfig):
           2. USD | False | as this is the name of a currency
           3. purchase | False | as this is an action or verb
           4. Eiffel tower | False | as this is the name of a building
-          5. Association of Artificial Intelligence | True | as this is an organization
+          5. Association of Artificial Intelligence | True | as this is an organization (organisation)
          """
 
     cot_exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer:
-         1. England | True | as it is a location
+         1. England | True | as it is a location (location)
          2. festival | False | as it is not a named entity
          3. Grand Jubilee | False | as it is an event
          4. 1982 | False | as it is a date
@@ -1349,46 +1229,46 @@ class FewNERDINTRATestConfig(FewNERDConfig):
     no_tf_exemplar_1 = FewNERDConfig.q_1 + \
          """
           Answer:
-          1. Association of Artificial Intelligence | as this is an organization
+          1. Association of Artificial Intelligence | as this is an organisation (organisation)
          """
 
     no_tf_exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer:
-         1. England | as it is a location
+         1. England | as it is a location (location)
          """
 
     tf_exemplar_1 = FewNERDConfig.q_1 + \
                      """
-                      Answer:
-                      1. Albert Einstein | False
-                      2. USD | False
-                      3. purchase | False
-                      4. Eiffel tower | False
-                      5. Association of Artificial Intelligence | True
+          Answer:
+          1. Albert Einstein | False | None
+          2. USD | False | (currency)
+          3. purchase | False | None
+          4. Eiffel tower | False | (building)
+          5. Association of Artificial Intelligence | True | (organisation)
                      """
 
     tf_exemplar_2 = FewNERDConfig.q_2 + \
                      """
                      Answer:
-                     1. England | True
-                     2. festival | False
-                     3. Grand Jubilee | False
-                     4. 1982 | False
-                     5. Attila the Hun | False
-                     6. The Starry Night | False
+                     1. England | True | (location)
+                     2. festival | False | None
+                     3. Grand Jubilee | False | (event)
+                     4. 1982 | False | None
+                     5. Attila the Hun | False | (person)
+                     6. The Starry Night | False | (art)
                      """
 
     exemplar_1 = FewNERDConfig.q_1 + \
          """
          Answer:
-         1. Association of Artificial Intelligence
+         1. Association of Artificial Intelligence | (organisation)
          """
 
     exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer: 
-         1. England
+         1. England | (location)
          """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]

@@ -131,6 +131,13 @@ def type_f1(q, pred_list, pred_types):
     # pred_types is in string format
     entities = list(set(q['entities']))
     types = q["types"]
+    print(f"For Sentence: ")
+    print(q["text"])
+    print(f"Got Real types: ")
+    print(types)
+    print(f"Predictions: ")
+    for i in range(len(pred_list)):
+        print(pred_list[i], " ", pred_types[i])
     if len(entities) == 0:
         if len(pred_list) == 0:
             return 1, 1, 0, 0
@@ -142,29 +149,23 @@ def type_f1(q, pred_list, pred_types):
     fp = 0
     fn = 0
     tp = 0
-    done_entities = []
-    for i, pred in enumerate(pred_list):
-        matched_entity = None
-        for entity in entities:
-            if is_eq(pred, entity):
-                matched_entity = entity
-                break
-        if matched_entity == None:
-            fp += 1
-        else:
-            done_entities.append(matched_entity)
-            corr_type = types[matched_entity]
+    for etype in all_types:  # For every entity type we compute the fp, fn and tp
+        typed_entities = [d for d in types if types[d] == etype]
+        for entity in typed_entities:
             flag = False
-            for word in pred_types[i].split(" "):
-                if is_eq(corr_type, word) or corr_type.strip().lower() in word.lower():
-                    tp += 1
-                    flag = True
+            for i, pred_entity in enumerate(pred_list):
+                if is_eq(entity, pred_entity):
+                    for word in pred_types[i].split(" "):
+                        if is_eq(etype, word) or etype.strip().lower() in word.lower():
+                            tp += 1  # correctly identified entity as this type
+                            flag = True
+                            break
+                    if not flag:
+                        fp += 1 # if means we mislabelled the entity as some other type
+                    break
             if not flag:
-                fp += 1
-    for entity in entities:
-        if entity not in done_entities:
-            fn += 1
-
+                fn += 1  # it means we did not succesfully mark this entity as the correct type
+        # This might be double counting fp/fn, but it will only make our results worse?
     if tp == 0:
         return 0, tp, fp, fn
     else:
