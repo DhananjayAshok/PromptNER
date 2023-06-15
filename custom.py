@@ -63,8 +63,8 @@ class CustomConfig(Config):
     Sentence from which entities must be extracted
     
     Answer:
-    1. Candidate | True | reason why the candidate should be considered an entity
-    2. Candidate | False | reason why the candidate should not be considered an entity
+    1. Candidate | True | reason why the candidate should be considered an entity (entity_type)
+    2. Candidate | False | reason why the candidate should not be considered an entity (entity_type)
     .....
     """
 
@@ -74,18 +74,16 @@ class CustomConfig(Config):
 
 # This returns the NER system that will use the OpenAI GPT model as specified in models.py (lines 12-14),
 # change this to use a different model
-def get_ner_system(split_phrases=False):  # Set split_phrases with true to automatically split all identified phrases
-    algorithm = Algorithm(model_fn=OpenAIGPT.query, split_phrases=split_phrases)
+def get_ner_system(split_phrases=False, identify_types=True, verbose=True):  # Set split_phrases with true to automatically split all identified phrases
+    algorithm = Algorithm(model_fn=OpenAIGPT.query, split_phrases=split_phrases, identify_types=identify_types)
 
-    def get_entities(sentence: str, verbose=True):
+    def get_entities(sentence: str, verbose=verbose):  #
         """
 
         :param sentence: string input sentence
         :param verbose: boolean True will print model output
-        :return: list of strings (entities)
+        :return: <entities, entity_types, metadata> if identify_types is true, else <entities, metadata>
         """
         algorithm.para = sentence
         return algorithm.perform(verbose=verbose)
-
-    return get_entities  # You can call this function with a sentence and a
-    # verbose optional argument to get a list of entities ()
+    return get_entities  # You can call this function with a sentence input
