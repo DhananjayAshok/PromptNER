@@ -3,36 +3,41 @@ from models import OpenAIGPT
 
 
 class ExampleConfig(Config):
-    defn = "An entity is a person, title, named organization, location, country or nationality." \
+    defn = "An entity is a person (person), title, named organization (org), location (loc), country (loc) or nationality (misc)." \
            "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
            "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
-           "Possessive words like I, you, him and me are not entities."
+           "Possessive words like I, you, him and me are not entities. " \
+           "If a sporting team has the name of their location and the location is used to refer to the team, " \
+           "it is an entity which is an organisation, not a location"
 
     cot_exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
 
     Answer:
     1. bowling | False | as it is an action
-    2. Somerset | True | as it is a place
-    3. 83 | False | as it is a number
+    2. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (org)
+    3. 83 | False | as it is a number 
     4. morning | False| as it represents a time of day, with no distinct and independant existence
-    5. Grace Road | True | as it is a place or location
-    6. Leicestershire | True | as it is the name of a cricket team. 
+    5. Grace Road | True | the game is played at Grace Road, hence it is a place or location (loc)
+    6. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (org). 
     7. first innings | False | as it is an abstract concept of a phase in play of cricket
-    8. England | True | as it is a place or location
-    9. Andy Caddick | True | as it is the name of a person. 
+    8. England | True | as it is a place or location (loc)
+    9. Andy Caddick | True | as it is the name of a person. (person) 
     """
     cot_exemplar_2 = """
-    Florian Rousseau ( France ) beat Ainars Kiksis ( Latvia ) 2-0
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
 
     Answer:
-    1. Florian Rousseau | True | as it is the name of a person
-    2. France | True | as it is the name of a place or location
-    3. beat | False | as it is an action
-    4. Ainar Kiksis | True | as it is the name of a person
-    5. Latvia | True | as it is the name of a place or location
-    6. 2-0 | False | as it is a score or set of numbers which is not an entity. 
+    1. Their | False | as it is a possessive pronoun
+    2. stay | False | as it is an action
+    3. title rivals | False | as it is an abstract concept
+    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (org)
+    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (org)
+    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (org)
+    7. victory | False | as it is an abstract concept
+    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
+    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
 
     """
 
