@@ -127,25 +127,49 @@ def f1(true_list, pred_list):
     return f1_score, tp, fp, fn
 
 
-def type_acc(q, true_list, pred_list, pred_types):
-    correct = 0
-    for i, item in enumerate(true_list):
-        if item not in pred_list:
-            pass
-        else:
-            index = pred_list.index(item)
-            if item in q["types"]:
-                if q["types"][item] in pred_types[index]:
-                    correct += 1
-    if len(true_list) == 0:
+def type_f1(q, pred_list, pred_types):
+    # pred_types is in string format
+    types = q["types"]
+    if len(types) == 0:
         if len(pred_list) == 0:
             return 1
         else:
             return 0
-    return correct / len(true_list), 1, 1, 1
+    if len(pred_list) == 0:
+        return 0  # because if types was also none it would have caught it above
+    all_types = list(set([types[d] for d in types]))
+    fp = 0
+    fn = 0
+    tp = 0
+    entities = list(set(q['entities']))
+    done_entities = []
+    for i, pred in enumerate(pred_list):
+        matched_entity = None
+        for entity in entities:
+            if is_eq(pred, entity):
+                matched_entity = entity
+                break
+        if matched_entity == None:
+            fp += 1
+        else:
+            done_entities.append(matched_entity)
+            corr_type = types[matched_entity]
+            flag = False
+            for word in pred_types[i].split(" "):
+                if is_eq(corr_type, word) or corr_type.strip().lower() in word.lower():
+                    tp += 1
+                    flag = True
+            if not flag:
+                fp += 1
+    for entity in entities:
+        if entity not in done_entities:
+            fn += 1
 
-
-
+    if tp == 0:
+        return 0, tp, fp, fn
+    else:
+        f1_score = tp / (tp + 0.5 * (fp + fn))
+        return f1_score, tp, fp, fn
 
 
 

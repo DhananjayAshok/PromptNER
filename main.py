@@ -2,7 +2,7 @@ from algorithms import *
 from models import *
 
 from data import *
-from eval import f1, is_eq
+from eval import f1, is_eq, type_f1
 import string
 
 
@@ -16,18 +16,26 @@ class Quick:
         e.set_para(para)
         e.set_model_fn(model)
         config.set_config(e, exemplar=True, coT=True, tf=True)
-        ans = e.perform(verbose=verbose)[0]
-        Quick.analyze(entities, ans)
+        ret = e.perform(verbose=verbose)
+        print(ret)
+        ans = ret[0]
+        Quick.analyze(q, ret)
         return
 
     @staticmethod
-    def analyze(entities, ans):
+    def analyze(q, ret):
+        ans = ret[0]
+        entities = q['entities']
         print(entities)
         print(ans)
         entities_small = [e.lower().strip().strip(string.punctuation).strip() for e in entities]
         print(f"False positives: {set(entities_small).difference(set(ans))}")
         print(f"False negatives: {set(ans).difference(set(entities_small))}")
         print(f"F1: {f1(entities, ans)}")
+        if e.identify_types:
+            types = ret[1]
+            print("Type f1: ")
+            print(type_f1(q, ans, types))
 
 
     @staticmethod
@@ -61,7 +69,7 @@ class Quick:
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
-e = Algorithm(split_phrases=True)
+e = Algorithm(split_phrases=True, identify_types=True)
 genia_train = load_genia()
 conll_train = load_conll2003()
 few_nerd_train = load_few_nerd(split="train")

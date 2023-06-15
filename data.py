@@ -15,75 +15,76 @@ def get_row(func):
     return infunc
 
 
+
 def read_ob2(file_path):
     with open(file_path) as file:
         lines = file.readlines()
     sentences = []
     entities = []
-    entity_types = []
-    entity_type_match = []
-
-    entity_list = []
-    type_list = []
-    working_sentence = ""
-    working_entity = ""
-    for i, line in enumerate(lines):
-        if line == "\n":
-            if working_sentence != "":
-                sentences.append(working_sentence)
-                if working_entity != "":
-                    entity_list.append(working_entity)
-                entities.append(entity_list)
-                entity_types.append(type_list)
-            entity_list = []
-            working_sentence = ""
-            working_entity = ""
-            type_list = []
-        l = line.strip().split("\t")
-        if len(l) == 0 or l[0].strip() == "":
-            continue
-        if working_sentence == "":
-            working_sentence = l[0]
-        else:
-            working_sentence = working_sentence + " " + l[0]
-        type_list.append(l[1])
-        if len(l) != 2 or l[1] == "O":
-            if working_entity != "":
-                entity_list.append(working_entity)
-                working_entity = ""
-        else:
-            if l[1][0] == "B":
-                if working_entity != "":
-                    # Assume that its two different entities
-                    entity_list.append(working_entity)
-                working_entity = l[0]
-            elif l[1][0] == "I":
-                if working_entity == "":
-                    print(f"Theres a problem here no working entity, new entity {l[1][0]}. Line {line}")
-                working_entity = working_entity + " " + l[0]
-            else:
-                if working_entity == "":
-                    working_entity = l[0].translate(str.maketrans('', '', string.punctuation)).strip()
-                else:
-                    working_entity = working_entity + " " + \
-                                     l[0].translate(str.maketrans('', '', string.punctuation)).strip()
-    columns = ["text", "entities", "types"]
+    types = []
     data = []
-    for i in range(len(sentences)):
-        tokens = sentences[i].split(" ")
-        ts = entity_types[i]
-        d = {}
-        for j, token in enumerate(tokens):
-            if token in entities[i]:
-                d[token] = ts[j]
-        data.append([sentences[i], entities[i], d])
-    df = pd.DataFrame(columns=columns, data=data)
+    sub_entities = []
+    sub_types = {}
+    words = ""
+    curr_entity = ""
+    curr_type = None
+
+    for i, line in enumerate(lines):
+        if line.strip() == "" or line == "\n" or i == len(lines)-1:
+            # save entity if it exists
+            if curr_type is not None:
+                sub_entities.append(curr_entity.strip())
+                sub_types[curr_entity.strip()] = curr_type
+                curr_entity = ""
+                curr_type = None
+            if words != "":
+                sentences.append(words)
+                entities.append(sub_entities)
+                types.append(sub_types)
+                data.append([words, sub_entities, sub_types])
+            sub_entities = []
+            sub_types = {}
+            words = ""
+            curr_entity = ""
+            curr_type = None
+        else:
+            word, tag = line.split("\t")
+            words = words + " " + word
+            if tag.split() == "O" or "-" not in tag:  # if there was an entity before this then add it in full
+                if curr_type is not None:
+                    sub_entities.append(curr_entity.strip())
+                    sub_types[curr_entity.strip()] = curr_type
+                curr_entity = ""
+                curr_type = None
+            elif "B-" in tag or "I-" in tag:
+                if "B-" in tag:
+                    if curr_type is not None:
+                        sub_entities.append(curr_entity.strip())
+                        sub_types[curr_entity.strip()] = curr_type
+                    curr_entity = word
+                    curr_type = tag.split("-")[1].strip()
+                else:  # I- in tag
+                    if curr_type is None:
+                        print(f"Should not be happening bug here")
+                    curr_entity = curr_entity + " " + word
+            else:
+                main_type, subtype = tag.split("-")  # must assume that if curr_type is not None then its the same one
+                if curr_type is None:
+                    curr_entity = word
+                    curr_type = main_type.strip()  # can change to make it subtype if we want
+                else:
+                    curr_entity = curr_entity + " " + word
+
+    df = pd.DataFrame(columns=["text", "entities", "types"], data=data)
     return df
+
 
 
 def load_conll2003(split="validation"):
     dset = load_dataset("conll2003")[split]
     columns = ["text", "entities", "types"]
+    #'B-PER': 1, 'I-PER': 2, 'B-ORG': 3, 'I-ORG': 4, 'B-LOC': 5, 'I-LOC': 6, 'B-MISC': 7, 'I-MISC': 8}
+    conll_tag_map = {0: "none", 1: "person", 2: "person", 3: "org", 4: "org", 5: "loc", 6: "loc", 7: "misc", 8: "misc"}
     data = []
     for i in range(len(dset)):
         text = " ".join(dset[i]['tokens'])
@@ -95,7 +96,7 @@ def load_conll2003(split="validation"):
         for i, tag in enumerate(types):
             if tag != 0:
                 entities.append(sentence[i])
-                d[sentence[i]] = tag
+                d[sentence[i]] = conll_tag_map[tag]
         data.append([text, entities, d])
     df = pd.DataFrame(columns=columns, data=data)
     return df

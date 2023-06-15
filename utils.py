@@ -83,7 +83,7 @@ class AnswerMapping:
                     else:
                         listed.append(item.strip())
         final = []
-        typstring = []
+        typestring = []
         for option in listed:
             if separator in option:
                 split = option.split(separator)

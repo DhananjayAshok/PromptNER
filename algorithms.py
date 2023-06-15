@@ -50,12 +50,21 @@ class Algorithm(BaseAlgorithm):
         :return:
         """
         if isinstance(self.model_fn, OpenAIGPT):
-            if self.model_fn.is_chat():
-                answers, metadata = self.perform_chat_query(verbose=verbose)
+            if not self.identify_types:
+                if self.model_fn.is_chat():
+                    answers, metadata = self.perform_chat_query(verbose=verbose)
+                else:
+                    answers, metadata = self.perform_single_query(verbose=verbose)
             else:
-                answers, metadata = self.perform_single_query(verbose=verbose)
+                if self.model_fn.is_chat():
+                    answers, typestrings, metadata = self.perform_chat_query(verbose=verbose)
+                else:
+                    answers, typestrings, metadata = self.perform_single_query(verbose=verbose)
         else:
-            answers, metadata = self.perform_single_query(verbose=verbose)
+            if not self.identify_types:
+                answers, metadata = self.perform_single_query(verbose=verbose)
+            else:
+                answers, typestrings, metadata = self.perform_single_query(verbose=verbose)
         answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
@@ -68,7 +77,10 @@ class Algorithm(BaseAlgorithm):
                         new_answers.append(mini)
             answers = new_answers
         answers = BaseAlgorithm.clean_output(answers)
-        return answers, metadata
+        if not self.identify_types:
+            return answers, metadata
+        else:
+            return answers, typestrings, metadata
 
     def perform_single_query(self, verbose=True):
         if self.exemplar_task is not None:
@@ -79,8 +91,8 @@ class Algorithm(BaseAlgorithm):
             task = self.defn + "\n" + self.format_task + f"\nParagraph: {self.para} \nAnswer:"
             output = self.model_fn(task)
             final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
-            if self.identify_final:
-                final, typestrings = final
+        if self.identify_types:
+            final, typestrings = final
         if not self.identify_types:
             return final, output
         else:
@@ -104,7 +116,7 @@ class Algorithm(BaseAlgorithm):
             msgs = [(system_msg, "system"), (f"\nParagraph: {self.para} \nAnswer:", "user")]
             output = self.model_fn(msgs)
             final = AnswerMapping.exemplar_format_list(output, identify_types=self.identify_types, verbose=verbose)
-        if self.identify_final:
+        if self.identify_types:
             final, typestrings = final
         if not self.identify_types:
             return final, output

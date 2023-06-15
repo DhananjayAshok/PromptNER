@@ -5,7 +5,7 @@ from tqdm import tqdm
 import time
 import pandas as pd
 import openai
-from eval import f1, type_acc, is_eq
+from eval import f1, type_f1, is_eq
 
 
 def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
@@ -34,7 +34,7 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         if types is None:
             f1_score, tp_a, fp_a, fn_a = f1(entities, preds)
         else:
-            f1_score, tp_a, fp_a, fn_a = type_acc(q, entities, preds, types)
+            f1_score, tp_a, fp_a, fn_a = type_f1(q, preds, types)
         tp += tp_a
         fp += fp_a
         fn += fn_a
