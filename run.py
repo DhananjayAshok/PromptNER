@@ -128,7 +128,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
                          limit=limit)
 
 
-def run(dataset="conll", subdataset=None, gpt=False, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
+def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
     res_path = "results"
     gpt_limit = 20
     gpt_nruns = 2
@@ -246,4 +246,6 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
+    #run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
+    run()
+

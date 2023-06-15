@@ -13,7 +13,7 @@ class BaseAlgorithm:
 
     # if [] = n then there are O(n^2) phrase groupings
 
-    def __init__(self, model_fn=None, split_phrases=True, identify_types=False):
+    def __init__(self, model_fn=None, split_phrases=True, identify_types=True):
         self.defn = self.defn
         self.para = None
         self.model_fn = model_fn
@@ -30,15 +30,29 @@ class BaseAlgorithm:
         self.model_fn = model_fn
 
     @staticmethod
-    def clean_output(answers):
-        answers = list(set(answers))
-        for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
-            while trivial in answers:
-                answers.remove(trivial)
+    def clean_output(answers, typestrings=None):
+        if typestrings is None:
+            answers = list(set(answers))
+            for trivial in ["", " ", ".", "-"] + stopwords.words('english'):
+                while trivial in answers:
+                    answers.remove(trivial)
+        else:
+            new_answers = []
+            new_typestrings = []
+            for i, ans in enumerate(answers):
+                if ans in new_answers:
+                    continue
+                if ans in ["", " ", ".", "-"] + stopwords.words('english'):
+                    continue
+                new_answers.append(ans)
+                new_typestrings.append(typestrings[i])
         for i in range(len(answers)):
             ans = answers[i].strip().strip(''.join(string.punctuation)).strip()
             answers[i] = ans
-        return answers
+        if typestrings is None:
+            return answers
+        else:
+            return answers, typestrings
 
 
 class Algorithm(BaseAlgorithm):
@@ -65,18 +79,30 @@ class Algorithm(BaseAlgorithm):
                 answers, metadata = self.perform_single_query(verbose=verbose)
             else:
                 answers, typestrings, metadata = self.perform_single_query(verbose=verbose)
-        answers = list(set(answers))
+        if not self.identify_types:
+            answers = list(set(answers))
         if self.split_phrases:
             new_answers = []
-            for answer in answers:
+            if self.identify_types:
+                new_typestrings = []
+            for i, answer in enumerate(answers):
                 if " " not in answer:
                     new_answers.append(answer)
+                    if self.identify_types:
+                        new_typestrings.append(typestrings[i])
                 else:
                     minis = answer.split(" ")
                     for mini in minis:
                         new_answers.append(mini)
+                        if self.identify_types:
+                            new_typestrings.append(typestrings[i])
             answers = new_answers
-        answers = BaseAlgorithm.clean_output(answers)
+            if self.identify_types:
+                typestrings = new_typestrings
+        if self.identify_types:
+            answers, typestrings = BaseAlgorithm.clean_output(answers, typestrings)
+        else:
+            answers = BaseAlgorithm.clean_output(answers)
         if not self.identify_types:
             return answers, metadata
         else:

@@ -129,19 +129,19 @@ def f1(true_list, pred_list):
 
 def type_f1(q, pred_list, pred_types):
     # pred_types is in string format
+    entities = list(set(q['entities']))
     types = q["types"]
-    if len(types) == 0:
+    if len(entities) == 0:
         if len(pred_list) == 0:
-            return 1
+            return 1, 1, 0, 0
         else:
-            return 0
+            return 0, 0, 0, 0
     if len(pred_list) == 0:
-        return 0  # because if types was also none it would have caught it above
+        return 0, 0, 0, len(entities)  # because if entities was also none it would have caught it above
     all_types = list(set([types[d] for d in types]))
     fp = 0
     fn = 0
     tp = 0
-    entities = list(set(q['entities']))
     done_entities = []
     for i, pred in enumerate(pred_list):
         matched_entity = None
