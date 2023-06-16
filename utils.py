@@ -3,12 +3,39 @@ import string
 import re
 
 
-def find_nth(haystack, needle, n):
+def find_nth_str(haystack, needle, n):
     start = haystack.find(needle)
     while start >= 0 and n > 1:
         start = haystack.find(needle, start+len(needle))
         n -= 1
     return start
+
+def find_nth_list(haystack, needle, n):
+    start = haystack.index(needle)
+    while start >= 0 and n > 1:
+        start = haystack.index(needle, start+1)
+        n -= 1
+    return start
+
+def find_nth_list_subset(haystack, needle, n):
+    if n < 0:
+        return -1
+    if n == 0:
+        n = 1
+    found = []
+    needle_size = len(needle)
+    for i in range(len(haystack)):
+        sliced = " ".join(haystack[i:i+needle_size])
+        if needle == sliced:
+            found.append(i)
+    print(found)
+    print(haystack)
+    print(needle)
+    if len(found) > n:
+        return -1
+    else:
+        return found[n-1]
+
 
 def separate_single_multi(l):
     singles, multis = [], []
