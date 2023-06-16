@@ -72,8 +72,8 @@ class Algorithm(BaseAlgorithm):
                 n_th = completed_answers.count(answer.strip()) + 1
                 start_span = utils.find_nth(para, answer, n_th)
                 types = typestrings[i]
-                if "(" in types:
-                    types = types[types.find("("):]
+                if "(" in types and ")" in types:
+                    types = types[types.find("(")+1:types.find(")")]
                 span_predictions[(start_span, start_span + len(answer)-1)] = types
                 completed_answers.append(answer.strip())
         return span_predictions

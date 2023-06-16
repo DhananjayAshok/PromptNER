@@ -9,8 +9,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 class OpenAIGPT:
-    model = "text-davinci-003"
-    #model = "gpt-4"
+    #model = "text-davinci-003"
+    model = "gpt-4"
     #model = "davinci"
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
