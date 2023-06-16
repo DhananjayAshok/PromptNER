@@ -7,6 +7,7 @@ from algorithms import BaseAlgorithm
 from data import scroll
 import warnings
 import random
+from seqeval.metrics import f1_score as seq_f1
 
 def fn(x, pred_col="preds"):
     preds = set(x[pred_col])
@@ -128,50 +129,11 @@ def f1(true_list, pred_list):
     return f1_score, tp, fp, fn
 
 
-def type_f1(q, pred_list, pred_types):
-    entities = list(set(q['entities']))
-    types = q["types"]
-    if len(entities) == 0:
-        if len(pred_list) == 0:
-            return 1, 1, 0, 0
-        else:
-            return 0, 0, 0, 0
-    if len(pred_list) == 0:
-        return 0, 0, 0, len(entities)  # because if entities was also none it would have caught it above
-    all_types = list(set([types[d] for d in types]))
-    fp = 0
-    fn = 0
-    tp = 0
-    for etype in all_types:  # For every entity type we compute the fp, fn and tp
-        typed_entities = [d for d in types if types[d] == etype]
-        for entity in typed_entities:
-            flag = False
-            for i, pred_entity in enumerate(pred_list):
-                if is_eq(entity, pred_entity):
-                    if "(" in pred_types[i] and ")" in pred_types[i]:
-                        start, end = pred_types[i].find("("), pred_types[i].find(")")
-                        tag = pred_types[i][start+1:end].strip()
-                        if is_eq(tag, etype):
-                            tp += 1
-                            flag = True
-                            break
-                    else:
-                        warnings.warn("This shouldnt be happening anymore")
-                        for word in pred_types[i].split(" "):
-                            if is_eq(etype, word) or etype.strip().lower() in word.lower():
-                                tp += 1  # correctly identified entity as this type
-                                flag = True
-                                break
-                    if not flag:
-                        fp += 1 # if means we mislabelled the entity as some other type
-                    break
-            if not flag:
-                fn += 1  # it means we did not succesfully mark this entity as the correct type
-    if tp == 0:
-        return 0, tp, fp, fn
-    else:
-        f1_score = tp / (tp + 0.5 * (fp + fn))
-        return f1_score, tp, fp, fn
+def type_f1(q, pred_list):
+    ground_truth = [q['exact_types']]
+    prediction = [pred_list]
+    return seq_f1(ground, prediction)
+    return f1_score, tp, fp, fn
 
 
 

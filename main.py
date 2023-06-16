@@ -16,7 +16,6 @@ class Quick:
         ret = e.perform_span(verbose=verbose)
         return ret
 
-
     @staticmethod
     def dataset(i, train_dset, config, model=OpenAIGPT(), verbose=True):
         q = train_dset.loc[i]
@@ -42,10 +41,6 @@ class Quick:
         print(f"False positives: {set(entities_small).difference(set(ans))}")
         print(f"False negatives: {set(ans).difference(set(entities_small))}")
         print(f"F1: {f1(entities, ans)}")
-        if e.identify_types:
-            types = ret[1]
-            print("Type f1: ")
-            print(type_f1(q, ans, types))
 
 
     @staticmethod

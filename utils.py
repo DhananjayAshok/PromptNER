@@ -23,14 +23,11 @@ def find_nth_list_subset(haystack, needle, n):
     if n == 0:
         n = 1
     found = []
-    needle_size = len(needle)
+    needle_size = len(needle.split(" "))
     for i in range(len(haystack)):
         sliced = " ".join(haystack[i:i+needle_size])
         if needle == sliced:
             found.append(i)
-    print(found)
-    print(haystack)
-    print(needle)
     if len(found) > n:
         return -1
     else:

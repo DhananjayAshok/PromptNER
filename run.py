@@ -5,14 +5,12 @@ from tqdm import tqdm
 import time
 import pandas as pd
 import openai
-from eval import f1, type_f1, is_eq
+from seqeval.metrics import f1_score
 
 
 def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
     algorithm.set_model_fn(model)
-    f1s = []
-    tp, fp, fn = 0, 0, 0
-    mistake_data = []
+    preds, truths = [], []
     for i, info in tqdm(enumerate(val.iterrows()), total=len(val)):
         index, q = info
         para = q['text']
@@ -24,57 +22,37 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         flag = False
         while not flag:
             try:
-                if algorithm.identify_types:
-                    preds, types, metadata = algorithm.perform(verbose=False)
-                else:
-                    preds, metadata = algorithm.perform(verbose=False)
+                span_pred = algorithm.perform_span(verbose=False)
+                preds.append(span_pred)
+                truths.append(q['exact_types'])
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
-        if types is None:
-            f1_score, tp_a, fp_a, fn_a = f1(entities, preds)
-        else:
-            f1_score, tp_a, fp_a, fn_a = type_f1(q, preds, types)
-        tp += tp_a
-        fp += fp_a
-        fn += fn_a
-        if f1_score != 1 or True:
-            mistake_data.append([index, para, entities, preds, metadata, f1_score])
-        f1s.append(f1_score)
         if print_every is not None:
             if i % print_every == 0:
-                avg_f1 = np.array(f1s).mean()
-                std_f1 = np.array(f1s).std()
-                if (tp + 0.5 * (fp + fn)) == 0:
-                    micro_f1 = 0
-                else:
-                    micro_f1 = tp / (tp + 0.5 * (fp + fn))
-                print(f"Iteration {i}: Avg f1: {avg_f1}, Std f1: {std_f1}, micro f1: {micro_f1}")
-    f1s = np.array(f1s)
-    if (tp + 0.5 * (fp + fn)) == 0:
-        micro_f1 = 0
-    else:
-        micro_f1 = tp / (tp + 0.5 * (fp + fn))
-    return f1s.mean(), f1s.std(), micro_f1, mistake_data
+                f1_micro = f1_score(truths, preds, average="micro")
+                f1_macro = f1_score(truths, preds, average="macro")
+                print(f"Iteration {i}: micro f1: {f1_micro}, macro f1: {f1_macro}")
+    f1_micro = f1_score(truths, preds, average="micro")
+    f1_macro = f1_score(truths, preds, average="macro")
+    print(f"Finally: micro f1: {f1_micro}, macro f1: {f1_macro}")
+    return f1_micro, f1_macro
 
 
 def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=None, limit=None):
-    f1_means, f1_stds, micro_f1s = [], [], []
-    mistake_columns = ["idx", "para", "entities", "preds", "meta", "f1"]
+    micros = []
+    macros = []
     for i in range(n_runs):
         if limit is not None:
             small_dataset = dataset.sample(limit)
         else:
             small_dataset = dataset
-        f1_mean, f1_std, micro_f1, mistake_data = eval_dataset(small_dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
-        f1_means.append(f1_mean)
-        f1_stds.append(f1_std)
-        micro_f1s.append(micro_f1)
-    df = pd.DataFrame(data=mistake_data, columns=mistake_columns)
-    f1_means = np.array(f1_means)
-    f1_stds = np.array(f1_std)
-    micro_f1s = np.array(micro_f1s)
-    return f1_means, f1_stds, micro_f1s, df
+        f1_micro, f1_macro = eval_dataset(small_dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
+        micros.append(f1_micro)
+        macros.append(f1_macro)
+    micros = np.array(micros)
+    macros = np.array(macros)
+    return micros, macros
 
 
 def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
@@ -147,25 +125,24 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
 
     if gpt:
         model = OpenAIGPT()
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model, Algorithm_class(), n_runs=gpt_nruns,
+        micros, macros = eval_fn(model, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
                                                       exemplar=exemplar, coT=coT, defn=defn, tf=tf,
                                                       add_info=subdataset)
     else:
         model = T5XL(size='xl')
-        f1_mean, f1_std, micro_f1, mistakes = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
+        micros, macros = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, tf=tf,
                                                       limit=other_limit, add_info=subdataset)
     print(f"Final Results For {name_meta} | {dataset} {'('+subdataset+')' if subdataset is not None else ''}) "
           f"|CoT {coT} | Exemplar {exemplar} (tf {tf}) |Defn {defn}")
-    print(f"f1_means: {f1_mean}")
-    print(f"f1_stds: {f1_std}")
-    print(f"micro_f1s: {micro_f1}")
-    print(f"Saving file to {res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
-    mistakes.to_csv(f"{res_path}/{name_meta}{model.__class__.__name__}_{dataset}{subdataset}.csv")
-    return f1_mean, micro_f1
+    print(f"Micro f1_means: {micros.mean()}")
+    print(f"Micro f1_stds: {micros.std()}")
+    print(f"Macro f1_means: {macros.mean()}")
+    print(f"Macro f1_stds: {macros.std()}")
+    return micros, macros
 
 
 def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
@@ -180,7 +157,7 @@ def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
             continue
         sub = subdatasets.get(dataset, None)
         if sub is None:
-            macro, micro = run(gpt=gpt, dataset=dataset, coT=coT, exemplar=exemplar, defn=defn, tf=tf,
+            micro, macro = run(gpt=gpt, dataset=dataset, coT=coT, exemplar=exemplar, defn=defn, tf=tf,
                                name_meta=name_meta)
             d[dataset] = [(macro * 100).mean(), (macro * 100).std(), (micro * 100).mean(), (micro * 100).std()]
         else:
@@ -246,5 +223,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=True, subdataset_exclude=["train", "dev"])
+    run_all_datasets(gpt=True)
 
