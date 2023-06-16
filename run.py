@@ -80,7 +80,7 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
 def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                         defn=True, tf=True, **kwargs):
     config = ConllConfig()
-    algorithm.split_phrases = True
+    algorithm.split_phrases = False
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     conll = load_conll2003("validation")
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,

@@ -72,17 +72,17 @@ class Quick:
     @staticmethod
     def fewnerd(i, model=OpenAIGPT(), verbose=True, split="train"):
         splits = ["train", "dev", "test"]
-        confs = [FewNERDINTRATrainConfig(), FewNERDINTRADevConfig(), FewNERDINTRATestConfig()]
+        confs = [FewNERDINTRATestConfig()]
         assert split in splits
         j = splits.index(split)
         config = confs[j]
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
-e = Algorithm(split_phrases=True, identify_types=True)
+e = Algorithm(split_phrases=False, identify_types=True)
 genia_train = load_genia()
 conll_train = load_conll2003()
-few_nerd_train = load_few_nerd(split="train")
+few_nerd_train = load_few_nerd()
 cross_ner_train = load_cross_ner(category="ai")
 
 
