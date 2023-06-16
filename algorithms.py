@@ -63,20 +63,52 @@ class Algorithm(BaseAlgorithm):
         assert self.identify_types and not self.split_phrases
         answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
         para = self.para.lower()
+        para_words = para.split(" ")
+        span_pred = ["O" for word in para_words]
         completed_answers = []
-        span_predictions = {}
         for i, answer in enumerate(answers):
+            answer = answer.strip().lower()  # take any whitespace out and lowercase for matching
             if "(" in answer:
-                answer = answer[:answer.find("(")].strip()
-            if answer in para:
+                answer = answer[:answer.find("(")].strip()  # in case some type annotation is stuck here
+            types = typestrings[i]
+            if "(" in types and ")" in types:
+                types = types[types.find("(") + 1:types.find(")")]
+            else:
+                raise ValueError
+            exists = answer in para
+            answer_multi_word = len(answer.split(" ")) > 1
+            if not exists:
+                continue
+            if not answer_multi_word:
+                assert answer in para_words
+                multiple = para.count(answer) > 1
+                if not multiple:  # easiest case word should be in para_words only once
+                    index = para_words.index(answer)
+                else:  # must find which occurance this is
+                    n_th = completed_answers.count(answer.strip()) + 1
+                    index = utils.find_nth_list(para_words, answer, n_th)
+                if "-" in types:  # then its FEWNERD
+                    span_pred[index] = types
+                else:
+                    span_pred[index] = "B-" + types
+                completed_answers.append(answer)
+            else:
+                answer_words = answer.split(" ")
+                multiple = para.count(answer) > 1
                 n_th = completed_answers.count(answer.strip()) + 1
-                start_span = utils.find_nth(para, answer, n_th)
-                types = typestrings[i]
-                if "(" in types and ")" in types:
-                    types = types[types.find("(")+1:types.find(")")]
-                span_predictions[(start_span, start_span + len(answer)-1)] = types
-                completed_answers.append(answer.strip())
-        return span_predictions
+                index = utils.find_nth_list_subset(para_words, answer, n_th)
+                end_index = index + len(answer_words)
+                if "-" in types:  # then its FEWNERD
+                    span_pred[index] = types
+                else:
+                    span_pred[index] = "B-" + types
+                for j in range(index+1, end_index):
+                    if "-" in types:  # then its FEWNERD
+                        span_pred[j] = types
+                    else:
+                        span_pred[j] = "I-" + types
+                completed_answers.append(answer)
+        return span_pred
 
     def perform(self, verbose=True, deduplicate=True):
         """
@@ -269,7 +301,7 @@ class Config:
 
 
 class ConllConfig(Config):
-    defn = "An entity is a person (person), title, named organization (org), location (loc), country (loc) or nationality (misc)." \
+    defn = "An entity is a person (PER), title, named organization (ORG), location (LOC), country (LOC) or nationality (MISC)." \
            "Names, first names, last names, countries are entities. Nationalities are entities even if they are " \
            "adjectives. Sports, sporting events, adjectives, verbs, numbers, " \
                 "adverbs, abstract concepts, sports, are not entities. Dates, years and times are not entities. " \
@@ -282,14 +314,14 @@ class ConllConfig(Config):
     
     Answer:
     1. bowling | False | as it is an action
-    2. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (org)
+    2. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
     3. 83 | False | as it is a number 
     4. morning | False| as it represents a time of day, with no distinct and independant existence
-    5. Grace Road | True | the game is played at Grace Road, hence it is a place or location (loc)
-    6. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (org). 
+    5. Grace Road | True | the game is played at Grace Road, hence it is a place or location (LOC)
+    6. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (ORG). 
     7. first innings | False | as it is an abstract concept of a phase in play of cricket
-    8. England | True | as it is a place or location (loc)
-    9. Andy Caddick | True | as it is the name of a person. (person) 
+    8. England | True | as it is a place or location (LOC)
+    9. Andy Caddick | True | as it is the name of a person. (PER) 
     """
     cot_exemplar_2 = """
     Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
@@ -298,12 +330,12 @@ class ConllConfig(Config):
     1. Their | False | as it is a possessive pronoun
     2. stay | False | as it is an action
     3. title rivals | False | as it is an abstract concept
-    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (org)
-    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (org)
-    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (org)
+    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
+    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
+    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
     7. victory | False | as it is an abstract concept
-    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
-    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
+    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
     
     """
 
@@ -324,21 +356,21 @@ class ConllConfig(Config):
         After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
         
         Answer:
-        1. Somerset | Somerset is used as a sporting team here, not a location hence it is an organisation (org)
-        2. Grace Road | the game is played at Grace Road, hence it is a place or location (loc)
-        3. Leicestershire | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (org). 
-        4. England | as it is a place or location (loc)
-        5. Andy Caddick | as it is the name of a person. (person) 
+        1. Somerset | Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
+        2. Grace Road | the game is played at Grace Road, hence it is a place or location (LOC)
+        3. Leicestershire | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (ORG). 
+        4. England | as it is a place or location (LOC)
+        5. Andy Caddick | as it is the name of a person. (PER) 
         """
     no_tf_exemplar_2 = """
         Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
         
         Answer:
-        1. Essex | since Essex are title rivals is it a sporting team organisation not a location (org)
-        2. Derbyshire | since Derbyshire are title rivals is it a sporting team organisation not a location (org)
-        3. Surrey | since Surrey are title rivals is it a sporting team organisation not a location (org)
-        4. Kent | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
-        5. Nottinghamshire | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (org)
+        1. Essex | since Essex are title rivals is it a sporting team organisation not a location (ORG)
+        2. Derbyshire | since Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
+        3. Surrey | since Surrey are title rivals is it a sporting team organisation not a location (ORG)
+        4. Kent | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+        5. Nottinghamshire | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
 
         """
 
@@ -356,14 +388,14 @@ class ConllConfig(Config):
 
         Answer:
         1. bowling | False | None 
-        2. Somerset | True | (org)
+        2. Somerset | True | (ORG)
         3. 83 | False | None
         4. morning | False | None
-        5. Grace Road | True | (loc)
-        6. Leicestershire | True | (org)
+        5. Grace Road | True | (LOC)
+        6. Leicestershire | True | (ORG)
         7. first innings | False | None
-        8. England | True | (loc)
-        9. Andy Caddick | True | (person)
+        8. England | True | (LOC)
+        9. Andy Caddick | True | (PER)
         """
     tf_exemplar_2 = """
         Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
@@ -372,12 +404,12 @@ class ConllConfig(Config):
         1. Their | False | None
         2. stay | False | None
         3. title rivals | False | None
-        4. Essex | True | (org)
-        5. Derbyshire | True | (org)
-        6. Surrey | True | (org)
+        4. Essex | True | (ORG)
+        5. Derbyshire | True | (ORG)
+        6. Surrey | True | (ORG)
         7. victory | False | None
-        8. Kent | True | (org)
-        9. Nottinghamshire | True | (org)
+        8. Kent | True | (ORG)
+        9. Nottinghamshire | True | (ORG)
 
         """
 
@@ -398,21 +430,21 @@ class ConllConfig(Config):
         After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
         
         Answer:
-        1. Somerset | (org)
-        2. Grace Road | (loc)
-        3. Leicestershire | (org). 
-        4. England | (loc)
-        5. Andy Caddick | (person) 
+        1. Somerset | (ORG)
+        2. Grace Road | (LOC)
+        3. Leicestershire | (ORG). 
+        4. England | (LOC)
+        5. Andy Caddick | (PER) 
     """
     exemplar_2 = """
         Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
         
         Answer:
-        1. Essex | (org)
-        2. Derbyshire | (org)
-        3. Surrey | (org)
-        4. Kent | (org)
-        5. Nottinghamshire | (org)
+        1. Essex | (ORG)
+        2. Derbyshire | (ORG)
+        3. Surrey | (ORG)
+        4. Kent | (ORG)
+        5. Nottinghamshire | (ORG)
     """
 
     exemplar_3 = """
@@ -1206,11 +1238,14 @@ class CrossNERAIConfig(Config):
 
 
 class FewNERDConfig(Config):
-    person = "person (person)"
+    person = "person"
     art = "piece of art"
     miscellaneous = "product, language, living thing, currency, god or scientific concept in astronomy, biology etc. "
-    locations = "locations (location)"
-    organizations = "organizations (organisation)"
+    locations = "locations with the following types of locations - Country, Province/State, " \
+                "City or District (location-GPE), rivers, lakes, oceans or other bodies of water " \
+                "(location-bodiesofwater) Islands (location-island), Mountains (location-mountain), " \
+                "park (location-park), transit location (location-transit), or other location (location-other)"
+    organizations = "organizations with the following types of organizations - Companies (organization-company), educational organization (organization-education), government related (organization-government), media (organization-media), political party (organization-politicalparty), religion (organization-religion), sports team (organization-sportsteam), sporting league (organization-sportsleague), performance group (organization-showorg) or other organization (organization-other)"
     buildings = "the names of buildings"
     events = "events"
     clearly_not = "Dates, times, abstract concepts and adjectives"
@@ -1235,13 +1270,13 @@ class FewNERDINTRATestConfig(FewNERDConfig):
           2. USD | False | as this is the name of a currency
           3. purchase | False | as this is an action or verb
           4. Eiffel tower | False | as this is the name of a building
-          5. Association of Artificial Intelligence | True | as this is an organization (organisation)
+          5. Association of Artificial Intelligence | True | as this is an organization (organisation-education)
          """
 
     cot_exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer:
-         1. England | True | as it is a location (location)
+         1. England | True | as it is a location (location-GPE)
          2. festival | False | as it is not a named entity
          3. Grand Jubilee | False | as it is an event
          4. 1982 | False | as it is a date
@@ -1252,13 +1287,13 @@ class FewNERDINTRATestConfig(FewNERDConfig):
     no_tf_exemplar_1 = FewNERDConfig.q_1 + \
          """
           Answer:
-          1. Association of Artificial Intelligence | as this is an organisation (organisation)
+          1. Association of Artificial Intelligence | as this is an organisation (organisation-education)
          """
 
     no_tf_exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer:
-         1. England | as it is a location (location)
+         1. England | as it is a location (location-GPE)
          """
 
     tf_exemplar_1 = FewNERDConfig.q_1 + \
@@ -1268,13 +1303,13 @@ class FewNERDINTRATestConfig(FewNERDConfig):
           2. USD | False | (currency)
           3. purchase | False | None
           4. Eiffel tower | False | (building)
-          5. Association of Artificial Intelligence | True | (organisation)
+          5. Association of Artificial Intelligence | True | (organisation-education)
                      """
 
     tf_exemplar_2 = FewNERDConfig.q_2 + \
                      """
                      Answer:
-                     1. England | True | (location)
+                     1. England | True | (location-GPE)
                      2. festival | False | None
                      3. Grand Jubilee | False | (event)
                      4. 1982 | False | None
@@ -1285,13 +1320,13 @@ class FewNERDINTRATestConfig(FewNERDConfig):
     exemplar_1 = FewNERDConfig.q_1 + \
          """
          Answer:
-         1. Association of Artificial Intelligence | (organisation)
+         1. Association of Artificial Intelligence | (organisation-education)
          """
 
     exemplar_2 = FewNERDConfig.q_2 + \
          """
          Answer: 
-         1. England | (location)
+         1. England | (location-GPE)
          """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
