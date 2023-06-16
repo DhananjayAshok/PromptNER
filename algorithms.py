@@ -80,17 +80,19 @@ class Algorithm(BaseAlgorithm):
             if not exists:
                 continue
             if not answer_multi_word:
-                assert answer in para_words
+                if answer not in para_words:
+                    continue
                 multiple = para.count(answer) > 1
                 if not multiple:  # easiest case word should be in para_words only once
                     index = para_words.index(answer)
                 else:  # must find which occurance this is
                     n_th = completed_answers.count(answer.strip()) + 1
                     index = utils.find_nth_list(para_words, answer, n_th)
-                if "-" in types:  # then its FEWNERD
-                    span_pred[index] = types
-                else:
-                    span_pred[index] = "B-" + types
+                if span_pred[index] == "O":
+                    if "-" in types:  # then its FEWNERD
+                        span_pred[index] = types
+                    else:
+                        span_pred[index] = "B-" + types
                 completed_answers.append(answer)
             else:
                 answer_words = answer.split(" ")
@@ -555,7 +557,7 @@ class GeniaConfig(Config):
 
 class CrossNERPoliticsConfig(Config):
     defn = """
-    An entity is a person(person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location(location) or 
+    An entity is a person or named character (person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location(location) or 
     other political entity (misc). Dates, times, abstract concepts, adjectives and verbs are not entities
     """
 
@@ -684,7 +686,7 @@ class CrossNERPoliticsConfig(Config):
 
 class CrossNERNaturalSciencesConfig(Config):
     defn = """
-    An entity is a person(person), university(university), scientist(scientist), organisation(organisation), country(country), location(location), scientific discipline(discipline), enzyme(enzyme), 
+    An entity is a person or named character (person), university(university), scientist(scientist), organisation(organisation), country(country), location(location), scientific discipline(discipline), enzyme(enzyme), 
     protein(protein), chemical compound(chemicalcompound), chemical element(chemicalelement), event(event), astronomical object(astronomicalobject), academic journal(academicjournal), award(award), or theory(theory). 
     Abstract scientific concepts can be entities if they have a name associated with them. If an entity does not fit the types above it is (misc)
     Dates, times, adjectives and verbs are not entities
@@ -795,7 +797,7 @@ class CrossNERNaturalSciencesConfig(Config):
 
 class CrossNERMusicConfig(Config):
     defn = """
-    An entity is a person(person), country(country), location(location), organisation(organisation), 
+    An entity is a person or named character (person), country(country), location(location), organisation(organisation), 
     music genre(musicgenre), song(song), band(band), album(album), artist(musicalartist), 
     musical instrument(musicalinstrument), award(award), event(event) or musical entity (misc)
     Dates, times, adjectives and verbs are not entities. 
@@ -956,7 +958,7 @@ class CrossNERMusicConfig(Config):
 
 class CrossNERLiteratureConfig(Config):
     defn = """
-    An entity is a person(person), country(country), location(location), organisation(organisation), book(book), writer(writer), poem(poem), magazine(magazine), 
+    An entity is a person or named character (person), country(country), location(location), organisation(organisation), book(book), writer(writer), poem(poem), magazine(magazine), 
     award(award), event(event), country(country), literary genre (literarygenre), nationality(misc) or other enitity in literature (misc). 
     Dates, times, adjectives and verbs are not entities. 
     """
@@ -1120,7 +1122,7 @@ class CrossNERLiteratureConfig(Config):
 
 class CrossNERAIConfig(Config):
     defn = """
-    An entity is a person(person), country(country), location(location), organisation(organisation), field of Artificial Intelligence(field), 
+    An entity is a person or named character (person), country(country), location(location), organisation(organisation), field of Artificial Intelligence(field), 
     task in artificial intelligence(task), product(product), algorithm(algorithm), 
     metric in artificial intelligence(metrics), university(university), 
     researcher(researcher), AI conference (conference), programming language (programlang) 
