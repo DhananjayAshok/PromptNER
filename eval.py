@@ -5,6 +5,7 @@ import string
 from utils import AnswerMapping
 from algorithms import BaseAlgorithm
 from data import scroll
+import warnings
 import random
 
 def fn(x, pred_col="preds"):
@@ -147,11 +148,20 @@ def type_f1(q, pred_list, pred_types):
             flag = False
             for i, pred_entity in enumerate(pred_list):
                 if is_eq(entity, pred_entity):
-                    for word in pred_types[i].split(" "):
-                        if is_eq(etype, word) or etype.strip().lower() in word.lower():
-                            tp += 1  # correctly identified entity as this type
+                    if "(" in pred_types[i] and ")" in pred_types[i]:
+                        start, end = pred_types[i].find("("), pred_types[i].find(")")
+                        tag = pred_types[i][start+1:end].strip()
+                        if is_eq(tag, etype):
+                            tp += 1
                             flag = True
                             break
+                    else:
+                        warnings.warn("This shouldnt be happening anymore")
+                        for word in pred_types[i].split(" "):
+                            if is_eq(etype, word) or etype.strip().lower() in word.lower():
+                                tp += 1  # correctly identified entity as this type
+                                flag = True
+                                break
                     if not flag:
                         fp += 1 # if means we mislabelled the entity as some other type
                     break
