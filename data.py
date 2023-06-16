@@ -20,9 +20,11 @@ def read_ob2(file_path):
     sentences = []
     entities = []
     types = []
+    exact_types = []
     data = []
     sub_entities = []
     sub_types = {}
+    sub_exact_types = []
     words = ""
     curr_entity = ""
     curr_type = None
@@ -39,15 +41,21 @@ def read_ob2(file_path):
                 sentences.append(words)
                 entities.append(sub_entities)
                 types.append(sub_types)
-                data.append([words, sub_entities, sub_types])
+                exact_types.append(sub_exact_types)
+                data.append([words, sub_entities, sub_types, sub_exact_types])
             sub_entities = []
             sub_types = {}
+            sub_exact_types = []
             words = ""
             curr_entity = ""
             curr_type = None
         else:
             word, tag = line.split("\t")
-            words = words + " " + word
+            if words == "":
+                words = word
+            else:
+                words = words + " " + word
+            sub_exact_types.append(tag.strip())
             if tag.split() == "O" or "-" not in tag:  # if there was an entity before this then add it in full
                 if curr_type is not None:
                     sub_entities.append(curr_entity.strip())
@@ -66,21 +74,24 @@ def read_ob2(file_path):
                         print(f"Should not be happening bug here")
                     curr_entity = curr_entity + " " + word
             else:
-                main_type, subtype = tag.split("-")  # must assume that if curr_type is not None then its the same one
+                main_type, subtype = tag.split("-")  # must assume that if curr_type is not None then its the same one because FewNERD doesn't contain B, I information
+                if subtype.strip() == "government/governmentagency":
+                    subtype = "government"
                 if curr_type is None:
                     curr_entity = word
-                    curr_type = main_type.strip()  # can change to make it subtype if we want
+                    curr_type = main_type + "-" + subtype.strip()  # can change to make it subtype if we want
                 else:
                     curr_entity = curr_entity + " " + word
 
-    df = pd.DataFrame(columns=["text", "entities", "types"], data=data)
+    df = pd.DataFrame(columns=["text", "entities", "types", "exact_types"], data=data)
     return df
 
 def load_conll2003(split="validation"):
     dset = load_dataset("conll2003")[split]
-    columns = ["text", "entities", "types"]
+    columns = ["text", "entities", "types", "exact_types"]
     #'B-PER': 1, 'I-PER': 2, 'B-ORG': 3, 'I-ORG': 4, 'B-LOC': 5, 'I-LOC': 6, 'B-MISC': 7, 'I-MISC': 8}
-    conll_tag_map = {0: "none", 1: "person", 2: "person", 3: "org", 4: "org", 5: "loc", 6: "loc", 7: "misc", 8: "misc"}
+    conll_tag_map = {0: "none", 1: "per", 2: "per", 3: "org", 4: "org", 5: "loc", 6: "loc", 7: "misc", 8: "misc"}
+    conll_fulltagmap = {0: "O", 1: 'B-PER', 2: 'I-PER', 3: 'B-ORG', 4: 'I-ORG', 5: 'B-LOC', 6: 'I-LOC', 7: 'B-MISC', 8: 'I-MISC'}
     data = []
     for i in range(len(dset)):
         text = " ".join(dset[i]['tokens'])
@@ -89,11 +100,28 @@ def load_conll2003(split="validation"):
         assert len(sentence) == len(types)
         entities = []
         d = {}
+        subentities = ""
+        curr_type = None
+        exacts = []
         for i, tag in enumerate(types):
-            if tag != 0:
-                entities.append(sentence[i])
-                d[sentence[i]] = conll_tag_map[tag]
-        data.append([text, entities, d])
+            exacts.append(conll_fulltagmap[tag])
+            if tag == 0:
+                if curr_type is not None:
+                    entities.append(subentities)
+                    d[subentities] = curr_type
+                    curr_type = None
+                    subentities = ""
+            else:
+                if tag in [1, 3, 5, 7]:
+                    if curr_type is not None:
+                        entities.append(subentities)
+                        d[subentities] = curr_type
+                    curr_type = conll_tag_map[tag]
+                    subentities = sentence[i]
+                else:
+                    assert curr_type is not None
+                    subentities = subentities + " " + sentence[i]
+        data.append([text, entities, d, exacts])
     df = pd.DataFrame(columns=columns, data=data)
     return df
 
@@ -102,7 +130,7 @@ def load_genia(genia_path="data/Genia/Genia4ERtask1.iob2"):
     return read_ob2(genia_path)
 
 
-def load_few_nerd(few_nerd_path="data/FewNERD", category="intra", split="train"):
+def load_few_nerd(few_nerd_path="data/FewNERD", category="intra", split="test"):
     assert category in ["inter", "intra", "supervised"]
     file_path = os.path.join(few_nerd_path, category, f"{split}.txt")
     return read_ob2(file_path)
