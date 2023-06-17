@@ -2,7 +2,7 @@ from algorithms import *
 from models import *
 
 from data import *
-from eval import f1, is_eq, type_f1
+from seqeval.metrics import f1_score
 import string
 
 
@@ -25,22 +25,17 @@ class Quick:
         e.set_para(para)
         e.set_model_fn(model)
         config.set_config(e, exemplar=True, coT=True, tf=True)
-        ret = e.perform(verbose=verbose)
-        ans = ret[0]
+        ret = e.perform_span(verbose=verbose)
         Quick.analyze(q, ret)
         return
 
     @staticmethod
     def analyze(q, ret):
-        ans = ret[0]
-        entities = q['entities']
+        ans = [ret]
+        entities = [q['exact_types']]
         true_types = q['types']
-        print(true_types)
-        print(ans)
-        entities_small = [e.lower().strip().strip(string.punctuation).strip() for e in entities]
-        print(f"False positives: {set(entities_small).difference(set(ans))}")
-        print(f"False negatives: {set(ans).difference(set(entities_small))}")
-        print(f"F1: {f1(entities, ans)}")
+        print("True Types were: ", true_types)
+        print(f"F1: {f1_score(entities, ans)}")
 
 
     @staticmethod
@@ -54,7 +49,7 @@ class Quick:
         return Quick.dataset(i, train_dset=conll_train, config=config, model=model, verbose=verbose)
 
     @staticmethod
-    def crossner(i, model=OpenAIGPT(), verbose=True, category="politics"):
+    def crossner(i, model=OpenAIGPT(), verbose=True, category="ai"):
         cats = ['politics', 'literature', 'ai', 'science', 'music']
         confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
                  CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -76,7 +71,7 @@ class Quick:
 
 e = Algorithm(split_phrases=False, identify_types=True)
 genia_train = load_genia()
-conll_train = load_conll2003()
+#conll_train = load_conll2003()
 few_nerd_train = load_few_nerd()
 cross_ner_train = load_cross_ner(category="ai")
 

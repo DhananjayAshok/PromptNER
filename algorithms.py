@@ -74,7 +74,7 @@ class Algorithm(BaseAlgorithm):
             if "(" in types and ")" in types:
                 types = types[types.find("(") + 1:types.find(")")]
             else:
-                raise ValueError
+                continue
             exists = answer in para
             answer_multi_word = len(answer.split(" ")) > 1
             if not exists:
@@ -1122,11 +1122,11 @@ class CrossNERLiteratureConfig(Config):
 
 class CrossNERAIConfig(Config):
     defn = """
-    An entity is a person or named character (person), country(country), location(location), organisation(organisation), field of Artificial Intelligence(field), 
+    An entity is a person or named character (person), country(country), location(location), organisation(organisation), field of Artificial Intelligence, Computer Science or Engineering (field), 
     task in artificial intelligence(task), product(product), algorithm(algorithm), 
-    metric in artificial intelligence(metrics), university(university), 
+    metric in artificial intelligence(metrics), university or academic institution(university), 
     researcher(researcher), AI conference (conference), programming language (programlang) 
-    or other entity related to AI research (misc). 
+    or other entity related to AI research (misc). If an entity is an AI research organization that accepts publishing of papers e.g. Association for the Advancement of Artificial Intelligence it is a conference (conference). Academic degrees like PhD or diplomas are entities (misc)
     Dates, times, adjectives and verbs are not entities. 
     """
 
@@ -1156,6 +1156,22 @@ class CrossNERAIConfig(Config):
     7. regression analysis | True | as it is a specific task in machine learning or AI (task)
 
     """
+
+    cot_exemplar_3 ="""
+    In Cryo Electron Tomography , where the limited number of projections are acquired due to the hardware limitations 
+    and to avoid the biological specimen damage , it can be used along with compressive sensing techniques or 
+    regularization functions ( e.g. Huber loss ) to improve the reconstruction for better interpretation 
+    
+    Answer: 
+    1. Cryo Electron Tomography | True | as it is a field or method related to AI research but is not an AI algorithm itself (misc)
+    2. hardware limitations | False | as it is an abstract concept, not an entity
+    3. biological specimen damage | False | as it's an abstract concept, not an entity
+    4. compressive sensing techniques | True | as they are techniques related to AI research (algorithm)
+    5. regularization functions | False | as they are a specific components of ML algorithms (algorithm)
+    6. Huber loss | True | as it is a specific loss function in AI used to benchmark performance (metrics)    
+    """
+
+
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
 
     no_tf_exemplar_1 = """
@@ -1243,63 +1259,66 @@ class FewNERDConfig(Config):
     person = "person"
     art = "piece of art"
     miscellaneous = "product, language, living thing, currency, god or scientific concept in astronomy, biology etc. "
-    locations = "locations with the following types of locations - Country, Province/State, " \
-                "City or District (location-GPE), rivers, lakes, oceans or other bodies of water " \
+    locations = "locations with the following types of locations - Country(location-GPE), Province/State(location-GPE), " \
+                "City(location-GPE) or District(location-GPE) or nationality (location-GPE), rivers, lakes, oceans, bays, locations of Harbours or other bodies of water " \
                 "(location-bodiesofwater) Islands (location-island), Mountains (location-mountain), " \
-                "park (location-park), transit location (location-transit), or other location (location-other)"
-    organizations = "organizations with the following types of organizations - Companies (organization-company), educational organization (organization-education), government related (organization-government), media (organization-media), political party (organization-politicalparty), religion (organization-religion), sports team (organization-sportsteam), sporting league (organization-sportsleague), performance group (organization-showorg) or other organization (organization-other)"
+                "park (location-park), road, railway, tunnel or highway (location-road/railway/highway/transit) or other location (location-other)"
+    organizations = "organizations with the following types of organizations - Companies (organization-company), university or institute of education (organization-education), government related (organization-government), media (organization-media), political party (organization-politicalparty), religion (organization-religion), sports team (organization-sportsteam), sporting league (organization-sportsleague), performance group (organization-showorg) or other organization (organization-other) e.g. libraries are (organization-other)"
     buildings = "the names of buildings"
     events = "events"
     clearly_not = "Dates, times, abstract concepts and adjectives"
     train_group = f"{person}, {art}, {miscellaneous}."
     dev_group = f"{buildings} and {events}"
     test_group = f"{locations} and {organizations}"
-    q_1 = "Albert Einstein used 100 USD to purchase the Eiffel tower from the Association of Artificial Intelligence"
-    q_2 = "In England, there is a festival called the Grand Jubilee, founded in 1982 by Attila the Hun, " \
-          "it was the original birthplace of the painting 'The Starry Night'"
 
 
 class FewNERDINTRATestConfig(FewNERDConfig):
     defn = f"""
         Entities are  {FewNERDConfig.test_group}. Entities are not a {FewNERDConfig.train_group}, 
-        {FewNERDConfig.dev_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. 
+        {FewNERDConfig.dev_group} are also not entities. {FewNERDConfig.clearly_not} are not entities. Military organizations like a Regiment are (organization-other). If a country is mentioned as a competitor in a sport it is a (organization-sportsteam), if the government of the country is mentioned it is (GPE) e.g. in U.S government the entity is U.S (location-GPE)
         """
 
-    cot_exemplar_1 = FewNERDConfig.q_1 + \
-         """
-          Answer:
-          1. Albert Einstein | False | as this is the name of a person
-          2. USD | False | as this is the name of a currency
-          3. purchase | False | as this is an action or verb
-          4. Eiffel tower | False | as this is the name of a building
-          5. Association of Artificial Intelligence | True | as this is an organization (organisation-education)
-         """
-
-    cot_exemplar_2 = FewNERDConfig.q_2 + \
-         """
-         Answer:
-         1. England | True | as it is a location (location-GPE)
-         2. festival | False | as it is not a named entity
-         3. Grand Jubilee | False | as it is an event
-         4. 1982 | False | as it is a date
-         5. Attila the Hun | False | as it is a person
-         6. The Starry Night | False | as it is a piece of art
+    cot_exemplar_1 = """
+        Paragraph: The 1873 Invercargill by-election was a by-election during the 5th New Zealand Parliament in the Southland electorate of Invercargill .
+         
+        Answer:
+        1. 1873 Invercargill by-election | False | as it is an event
+        2. New Zealand | True | as it is a country (location-GPE)
+        3. Southland | True | as it is an electorate in New Zealand (location-GPE)
+        4. Invercargill | True | as it is a city (location-GPE)
          """
 
-    no_tf_exemplar_1 = FewNERDConfig.q_1 + \
+    cot_exemplar_2 = """
+        Paragraph: In 1921 he was appointed Ophthalmic Surgeon at Cardiff Royal Infirmary and United Cardiff Hospitals and served there for 37 years 
+    
+        Answer:
+        1. 1921 | False | as it is a date
+        2. Ophthalmic Surgeon | False | as it is a job title, not an organization or location
+        3. Cardiff Royal Infirmary and United Cardiff Hospitals | True | as it is a single organization (organization-other)
+        4. 37 years | False | as it is a duration, not an organization or location
          """
+
+    cot_exemplar_3 = """
+            Paragraph: In 1921 he was appointed Ophthalmic Surgeon at Cardiff Royal Infirmary and United Cardiff Hospitals and served there for 37 years 
+
+            Answer:
+            1. 1921 | False | as it is a date
+            2. Ophthalmic Surgeon | False | as it is a job title, not an organization or location
+            3. Cardiff Royal Infirmary and United Cardiff Hospitals | True | as it is a single organization (organization-other)
+            4. 37 years | False | as it is a duration, not an organization or location
+             """
+
+    no_tf_exemplar_1 = """
           Answer:
           1. Association of Artificial Intelligence | as this is an organisation (organisation-education)
          """
 
-    no_tf_exemplar_2 = FewNERDConfig.q_2 + \
-         """
+    no_tf_exemplar_2 = """
          Answer:
          1. England | as it is a location (location-GPE)
          """
 
-    tf_exemplar_1 = FewNERDConfig.q_1 + \
-                     """
+    tf_exemplar_1 = """
           Answer:
           1. Albert Einstein | False | None
           2. USD | False | (currency)
@@ -1308,8 +1327,7 @@ class FewNERDINTRATestConfig(FewNERDConfig):
           5. Association of Artificial Intelligence | True | (organisation-education)
                      """
 
-    tf_exemplar_2 = FewNERDConfig.q_2 + \
-                     """
+    tf_exemplar_2 =  """
                      Answer:
                      1. England | True | (location-GPE)
                      2. festival | False | None
@@ -1319,18 +1337,16 @@ class FewNERDINTRATestConfig(FewNERDConfig):
                      6. The Starry Night | False | (art)
                      """
 
-    exemplar_1 = FewNERDConfig.q_1 + \
-         """
+    exemplar_1 = """
          Answer:
          1. Association of Artificial Intelligence | (organisation-education)
          """
 
-    exemplar_2 = FewNERDConfig.q_2 + \
-         """
+    exemplar_2 = """
          Answer: 
          1. England | (location-GPE)
          """
-    cot_exemplars = [cot_exemplar_1, cot_exemplar_2]
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
     no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2]
     exemplars = [exemplar_1, exemplar_2]
     tf_exemplars = [tf_exemplar_1, tf_exemplar_2]
