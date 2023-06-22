@@ -110,7 +110,7 @@ class Algorithm(BaseAlgorithm):
                     else:
                         span_pred[j] = "I-" + types
                 completed_answers.append(answer)
-        return span_pred
+        return span_pred, metadata
 
     def perform(self, verbose=True, deduplicate=True):
         """

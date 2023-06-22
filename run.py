@@ -10,11 +10,14 @@ from seqeval.metrics import f1_score
 
 def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=10):
     algorithm.set_model_fn(model)
+    columns = ["text", "entities", "truth", "pred", "meta", "f1"]
+    data = []
     preds, truths = [], []
     for i, info in tqdm(enumerate(val.iterrows()), total=len(val)):
         index, q = info
         para = q['text']
         entities = q['entities']
+        subdata = [para, entities, q['exact_types']]
         algorithm.set_para(para)
         if sleep_between_queries is not None:
             time.sleep(sleep_between_queries)
@@ -22,9 +25,15 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         flag = False
         while not flag:
             try:
-                span_pred = algorithm.perform_span(verbose=False)
+                span_pred, meta = algorithm.perform_span(verbose=False)
+                p = [span_pred]
+                t = [q['exact_types']]
                 preds.append(span_pred)
                 truths.append(q['exact_types'])
+                mini_f1 = f1_score(t, p)
+                subdata.extend([span_pred, meta, mini_f1])
+                data.append(subdata)
+                f1_micro = f1_score(truths, preds, average="micro")
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
@@ -33,10 +42,12 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
                 f1_micro = f1_score(truths, preds, average="micro")
                 f1_macro = f1_score(truths, preds, average="macro")
                 print(f"Iteration {i}: micro f1: {f1_micro}, macro f1: {f1_macro}")
+                input()
     f1_micro = f1_score(truths, preds, average="micro")
     f1_macro = f1_score(truths, preds, average="macro")
     print(f"Finally: micro f1: {f1_micro}, macro f1: {f1_macro}")
-    return f1_micro, f1_macro
+    df = pd.DataFrame(data=data, columns=columns)
+    return f1_micro, f1_macro, df
 
 
 def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=None, limit=None):
@@ -47,12 +58,12 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
             small_dataset = dataset.sample(limit)
         else:
             small_dataset = dataset
-        f1_micro, f1_macro = eval_dataset(small_dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
+        f1_micro, f1_macro, df = eval_dataset(small_dataset, model, algorithm, sleep_between_queries=sleep_between_queries)
         micros.append(f1_micro)
         macros.append(f1_macro)
     micros = np.array(micros)
     macros = np.array(macros)
-    return micros, macros
+    return micros, macros, df
 
 
 def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
@@ -125,14 +136,14 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
 
     if gpt:
         model = OpenAIGPT()
-        micros, macros = eval_fn(model, Algorithm_class(), n_runs=gpt_nruns,
+        micros, macros, df = eval_fn(model, Algorithm_class(), n_runs=gpt_nruns,
                                                       sleep_between_queries=model.seconds_per_query,
                                                       limit=gpt_limit,
                                                       exemplar=exemplar, coT=coT, defn=defn, tf=tf,
                                                       add_info=subdataset)
     else:
         model = T5XL(size='xl')
-        micros, macros = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
+        micros, macros, df = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, tf=tf,
                                                       limit=other_limit, add_info=subdataset)
@@ -142,6 +153,8 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
     print(f"Micro f1_stds: {micros.std()}")
     print(f"Macro f1_means: {macros.mean()}")
     print(f"Macro f1_stds: {macros.std()}")
+    save_path = f"results/{name_meta}{dataset}{subdataset}.csv"
+    df.to_csv(save_path, index=False)
     return micros, macros
 
 
@@ -223,5 +236,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run_all_datasets(gpt=True)
+    run(dataset="fewnerd", subdataset="test", gpt=True)
 
