@@ -37,6 +37,8 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
                 flag = True
             except openai.error.RateLimitError:
                 time.sleep(0.5)
+            except IndexError:
+                flag = True
         if print_every is not None:
             if i % print_every == 0:
                 f1_micro = f1_score(truths, preds, average="micro")
@@ -118,6 +120,7 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
 
 
 def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, defn=True, tf=True, name_meta=""):
+    print(f"Running for: {dataset}, {subdataset}")
     res_path = "results"
     gpt_limit = 20
     gpt_nruns = 1
