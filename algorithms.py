@@ -69,6 +69,7 @@ class Algorithm(BaseAlgorithm):
         para_words = para.split(" ")
         span_pred = ["O" for word in para_words]
         completed_answers = []
+        split_tokens = ["'s", ":"]
         for i, answer in enumerate(answers):
             answer = answer.strip().lower()  # take any whitespace out and lowercase for matching
             if "(" in answer:
@@ -78,7 +79,10 @@ class Algorithm(BaseAlgorithm):
                 types = types[types.find("(") + 1:types.find(")")]
             else:
                 continue
-            exists = answer in para or " 's".join(answer.split("'s")) in para
+            answer_token_split = answer
+            for token in split_tokens:
+                answer_token_split = (" "+token).join(answer_token_split.split(token))
+            exists = answer in para or answer_token_split in para
             answer_multi_word = len(answer.split(" ")) > 1
             if not exists:
                 continue
@@ -98,8 +102,9 @@ class Algorithm(BaseAlgorithm):
                         span_pred[index] = "B-" + types
                 completed_answers.append(answer)
             else:
-                if "'s" in answer:
-                    answer = " 's".join(answer.split("'s"))
+                for token in split_tokens:
+                    if token in answer:
+                        answer = (" "+token).join(answer.split(token))
                 answer_words = answer.split(" ")
                 multiple = para.count(answer) > 1
                 n_th = completed_answers.count(answer.strip()) + 1
@@ -562,7 +567,7 @@ class GeniaConfig(Config):
 
 class CrossNERPoliticsConfig(Config):
     defn = """
-    An entity is a person or named character (person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location(location) or 
+    An entity is a person or named character (person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location that is not a country(location) or 
     other political entity (misc). Dates, times, abstract concepts, adjectives and verbs are not entities
     """
 
@@ -691,7 +696,7 @@ class CrossNERPoliticsConfig(Config):
 
 class CrossNERNaturalSciencesConfig(Config):
     defn = """
-    An entity is a person or named character (person), university(university), scientist(scientist), organisation(organisation), country(country), location(location), scientific discipline(discipline), enzyme(enzyme), 
+    An entity is a person or named character (person), university(university), scientist(scientist), organisation(organisation), country(country), location that is not a country(location), scientific discipline(discipline), enzyme(enzyme), 
     protein(protein), chemical compound(chemicalcompound), chemical element(chemicalelement), event(event), astronomical object(astronomicalobject), academic journal(academicjournal), award(award), or theory(theory). 
     Abstract scientific concepts can be entities if they have a name associated with them. If an entity does not fit the types above it is (misc)
     Dates, times, adjectives and verbs are not entities
@@ -802,7 +807,7 @@ class CrossNERNaturalSciencesConfig(Config):
 
 class CrossNERMusicConfig(Config):
     defn = """
-    An entity is a person or named character (person), country(country), location(location), organisation(organisation), 
+    An entity is a person or named character (person), country(country), location that is not a country(location), organisation(organisation), 
     music genre(musicgenre), song(song), band(band), album(album), artist(musicalartist), 
     musical instrument(musicalinstrument), award(award), event(event) or musical entity (misc)
     Dates, times, adjectives and verbs are not entities. 
@@ -963,7 +968,7 @@ class CrossNERMusicConfig(Config):
 
 class CrossNERLiteratureConfig(Config):
     defn = """
-    An entity is a person or named character (person), country(country), location(location), organisation(organisation), book(book), writer(writer), poem(poem), magazine(magazine), 
+    An entity is a person or named character (person), country(country), location that is not a country(location), organisation(organisation), book(book), writer(writer), poem(poem), magazine(magazine), 
     award(award), event(event), country(country), literary genre (literarygenre), nationality(misc) or other enitity in literature (misc). 
     Dates, times, adjectives and verbs are not entities. 
     """
@@ -1127,7 +1132,7 @@ class CrossNERLiteratureConfig(Config):
 
 class CrossNERAIConfig(Config):
     defn = """
-    An entity is a person or named character (person), country(country), location(location), organisation(organisation), field of Artificial Intelligence, Computer Science or Engineering (field), 
+    An entity is a person or named character (person), country(country), location that is not a country(location), organisation(organisation), field of Artificial Intelligence, Computer Science or Engineering (field), 
     task in artificial intelligence(task), product(product), algorithm(algorithm), 
     metric in artificial intelligence(metrics), university or academic institution(university), 
     researcher(researcher), AI conference (conference), programming language (programlang) 
