@@ -1,10 +1,13 @@
+import os
+
 from data import *
 import pandas as pd
 import numpy as np
 import string
 from utils import AnswerMapping
-from algorithms import BaseAlgorithm
+from algorithms import BaseAlgorithm, Algorithm
 from data import scroll
+from models import OpenAIGPT
 import warnings
 import random
 from seqeval.metrics import f1_score as seq_f1
@@ -19,7 +22,7 @@ def is_eq(e1, e2):
 def basic_process_results(filename):
     df = pd.read_csv(results_dir+"/"+filename)
     for col in ["entities", "truth", "pred"]:
-        df[col] =df[col].apply(eval)
+        df[col] = df[col].apply(eval)
     df['pred_text'] = None
     df['truth_text'] = None
     df['correct'] = df['pred'] == df['truth']
@@ -30,15 +33,15 @@ def basic_process_results(filename):
         truths = row['truths']
         pred_text = ""
         truth_text = ""
-        for i, word in enumerate(text):
+        for j, word in enumerate(text):
             if pred_text == "":
-                pred_text = word + " | " + preds[i]
+                pred_text = word + " | " + preds[j]
             else:
-                pred_text = pred_text + " " + word + " | " + preds[i]
+                pred_text = pred_text + " " + word + " | " + preds[j]
             if truth_text == "":
                 truth_text = word + " | " + truths[i]
             else:
-                truth_text = truth_text + " " + word + " | " + truths[i]
+                truth_text = truth_text + " " + word + " | " + truths[j]
         df.loc[i, "pred_text"] = pred_text
         df.loc[i, "truth_text"] = truth_text
     df.to_csv(results_dir + "/"+filename, index=False)
@@ -48,6 +51,20 @@ def basic_process_results(filename):
 def process_all_results():
     for filename in os.listdir(results_dir):
         basic_process_results(filename)
+
+
+def workbench():
+    d = {}
+    for file in os.listdir(results_dir):
+        d[file] = pd.read_csv(results_dir+"/"+file)
+    formatter = lambda x: AnswerMapping.exemplar_format_list(x, identify_types=True, verbose=False)
+    alg = Algorithm(model_fn=OpenAIGPT.query)
+
+    def do_span(para, meta):
+        alg.set_para(para)
+        answers, typestrings = formatter(meta)
+        return alg.parse_span(answers, typestrings, meta)
+    return d[list(d.keys())[0]], formatter, do_span
 
 
 

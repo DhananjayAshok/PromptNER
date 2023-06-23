@@ -13,7 +13,7 @@ class BaseAlgorithm:
 
     # if [] = n then there are O(n^2) phrase groupings
 
-    def __init__(self, model_fn=None, split_phrases=True, identify_types=True):
+    def __init__(self, model_fn=None, split_phrases=False, identify_types=True):
         self.defn = self.defn
         self.para = None
         self.model_fn = model_fn
@@ -62,6 +62,9 @@ class Algorithm(BaseAlgorithm):
     def perform_span(self, verbose=False):
         assert self.identify_types and not self.split_phrases
         answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
+        return self.parse_span(answers, typestrings, metadata)
+
+    def parse_span(self, answers, typestrings, metadata):
         para = self.para.lower()
         para_words = para.split(" ")
         span_pred = ["O" for word in para_words]
@@ -75,7 +78,7 @@ class Algorithm(BaseAlgorithm):
                 types = types[types.find("(") + 1:types.find(")")]
             else:
                 continue
-            exists = answer in para
+            exists = answer in para or " 's".join(answer.split("'s")) in para
             answer_multi_word = len(answer.split(" ")) > 1
             if not exists:
                 continue
@@ -95,6 +98,8 @@ class Algorithm(BaseAlgorithm):
                         span_pred[index] = "B-" + types
                 completed_answers.append(answer)
             else:
+                if "'s" in answer:
+                    answer = " 's".join(answer.split("'s"))
                 answer_words = answer.split(" ")
                 multiple = para.count(answer) > 1
                 n_th = completed_answers.count(answer.strip()) + 1

@@ -67,7 +67,10 @@ class AnswerMapping:
                 if c.lower().strip() in ["", "answer:"]:
                     pass
                 elif re.match(r"\d+[.)]+ *", c):
-                    final.append(c[2:].strip())
+                    start = 0
+                    while c[start].isnumeric() or c[start] == '.':
+                        start += 1
+                    final.append(c[start:].strip())
                 else:
                     print(f"Unable to match nonempty {c}")
                     pass
