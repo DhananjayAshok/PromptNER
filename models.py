@@ -10,7 +10,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class OpenAIGPT:
     #model = "text-davinci-003"
-    model = "gpt-4"
+    #model = "gpt-4"
+    model = "gpt-3.5-turbo"
     #model = "davinci"
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
@@ -42,7 +43,7 @@ class OpenAIGPT:
 
     @staticmethod
     def is_chat():
-        return OpenAIGPT.model in ["gpt-4"]
+        return OpenAIGPT.model in ["gpt-4", "gpt-3.5-turbo"]
 
     @staticmethod
     def __call__(inputs):
