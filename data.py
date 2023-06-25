@@ -147,7 +147,7 @@ def load_ontonotes(split="validation", save_ob2=True):
     columns = ["text", "entities", "types", "exact_types"]
     onto_tags = ["O", "B-PERSON", "I-PERSON", "B-NORP", "I-NORP", "B-FAC", "I-FAC", "B-ORG", "I-ORG", "B-GPE", "I-GPE", "B-LOC", "I-LOC", "B-PRODUCT", "I-PRODUCT", "B-DATE", "I-DATE", "B-TIME", "I-TIME", "B-PERCENT", "I-PERCENT", "B-MONEY", "I-MONEY", "B-QUANTITY", "I-QUANTITY", "B-ORDINAL", "I-ORDINAL", "B-CARDINAL", "I-CARDINAL", "B-EVENT", "I-EVENT", "B-WORK_OF_ART", "I-WORK_OF_ART", "B-LAW", "I-LAW", "B-LANGUAGE", "I-LANGUAGE"]
     onto_tag_map = {}
-    for i in range(onto_tags):
+    for i in range(len(onto_tags)):
         onto_tag_map[i] = onto_tags[i]
     onto_fulltagmap = onto_tag_map
     data = []
