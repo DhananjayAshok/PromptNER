@@ -74,8 +74,8 @@ def analytics(d):
     d["n_entities"] = d['entities'].apply(len)
     all_types = []
     for i in d.index:
-        types = set(d.loc[i, "truth"])
-        all_types.append(types)
+        types = list(set(d.loc[i, "truth"]))
+        all_types.extend(types)
     all_types = set(all_types)
     type_d = {}
     for e_type in all_types:
