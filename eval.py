@@ -76,7 +76,7 @@ def analytics(d):
     for i in d.index:
         types = set(d.loc[i, "truth"])
         all_types.append(types)
-    all_types = set(types)
+    all_types = set(all_types)
     type_d = {}
     for e_type in all_types:
         type_d[e_type] = {}
