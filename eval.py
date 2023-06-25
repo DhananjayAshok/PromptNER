@@ -57,6 +57,8 @@ def workbench():
     d = {}
     for file in os.listdir(results_dir):
         d[file] = pd.read_csv(results_dir+"/"+file)
+        for col in ["entities", "truth", "pred"]:
+            d[file][col] = d[file][col].apply(eval)
     formatter = lambda x: AnswerMapping.exemplar_format_list(x, identify_types=True, verbose=False)
     alg = Algorithm(model_fn=OpenAIGPT.query)
 
@@ -84,7 +86,7 @@ def analytics(d):
         row = d.loc[i]
         truths = row["truth"]
         pred = row["pred"]
-        for j in range(truths):
+        for j in range(len(truths)):
             true_tag = truths[j]
             pred_tag = pred[j]
             type_d[true_tag][pred_tag] = type_d[true_tag][pred_tag] + 1
