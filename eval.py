@@ -30,12 +30,12 @@ def basic_process_results(filename):
         row = df.loc[i]
         text = row['text'].split(" ")
         preds = row['pred']
-        truths = row['truths']
+        truths = row['truth']
         pred_text = ""
         truth_text = ""
         for j, word in enumerate(text):
             if pred_text == "":
-                pred_text = word + " | " + preds[j]
+                pred_text = word + " | " + preds[j]  # hello?
             else:
                 pred_text = pred_text + " " + word + " | " + preds[j]
             if truth_text == "":
