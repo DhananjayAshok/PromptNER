@@ -14,6 +14,7 @@ def get_row(func):
         return func(frame, i=None)
     return infunc
 
+
 def read_ob2(file_path):
     with open(file_path) as file:
         lines = file.readlines()
@@ -85,6 +86,21 @@ def read_ob2(file_path):
 
     df = pd.DataFrame(columns=["text", "entities", "types", "exact_types"], data=data)
     return df
+
+
+def write_ob2(df, dataset_folder=None, filename=None):
+    assert dataset_folder is not None and filename is not None
+    os.makedirs(data_root + "/" + dataset_folder, exist_ok=True)
+    with open(data_root + "/"+ dataset_folder +"/"+filename+".txt", "w") as f:
+        for i in df.index:
+            row = df.loc[i]
+            sentence = row["text"]
+            types = row["exact_types"]
+            for j, word in enumerate(sentence.split(" ")):
+                f.write(f"{word}\t{types[j]}\n")
+            f.write("\n")
+    return
+
 
 def load_conll2003(split="validation"):
     dset = load_dataset("conll2003")[split]
