@@ -89,7 +89,16 @@ def analytics(d):
         for j in range(len(truths)):
             true_tag = truths[j]
             pred_tag = pred[j]
-            type_d[true_tag][pred_tag] = type_d[true_tag][pred_tag] + 1
+            if true_tag not in type_d:
+                print(f"true tag {true_tag} not in type_d: {type_d.keys()}")
+                type_d[true_tag] = {}
+                for other_type in all_types:
+                    type_d[true_tag][other_type] = 0  # this will be how many times truth was etype and pred was othertype
+                for key in type_d:
+                    if true_tag in type_d[key].keys():
+                        continue
+                    type_d[key][true_tag] = 0
+            type_d[true_tag][pred_tag] = type_d[true_tag].get(pred_tag, 0) + 1
     print(f"Correlation is: ")
     print(d.corr()["f1"])
     return type_d
