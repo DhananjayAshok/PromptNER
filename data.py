@@ -109,9 +109,9 @@ def load_conll2003(split="validation"):
     conll_tag_map = {0: "none", 1: "per", 2: "per", 3: "org", 4: "org", 5: "loc", 6: "loc", 7: "misc", 8: "misc"}
     conll_fulltagmap = {0: "O", 1: 'B-PER', 2: 'I-PER', 3: 'B-ORG', 4: 'I-ORG', 5: 'B-LOC', 6: 'I-LOC', 7: 'B-MISC', 8: 'I-MISC'}
     data = []
-    for i in range(len(dset)):
-        text = " ".join(dset[i]['tokens'])
-        types = dset[i]["ner_tags"]
+    for j in range(len(dset)):
+        text = " ".join(dset[j]['tokens'])
+        types = dset[j]["ner_tags"]
         sentence = text.split(" ")
         assert len(sentence) == len(types)
         entities = []
@@ -139,6 +139,53 @@ def load_conll2003(split="validation"):
                     subentities = subentities + " " + sentence[i]
         data.append([text, entities, d, exacts])
     df = pd.DataFrame(columns=columns, data=data)
+    return df
+
+
+def load_ontonotes(split="validation", save_ob2=True):
+    dset = load_dataset("conll2012_ontonotesv5", 'english_v4')[split]
+    columns = ["text", "entities", "types", "exact_types"]
+    onto_tags = ["O", "B-PERSON", "I-PERSON", "B-NORP", "I-NORP", "B-FAC", "I-FAC", "B-ORG", "I-ORG", "B-GPE", "I-GPE", "B-LOC", "I-LOC", "B-PRODUCT", "I-PRODUCT", "B-DATE", "I-DATE", "B-TIME", "I-TIME", "B-PERCENT", "I-PERCENT", "B-MONEY", "I-MONEY", "B-QUANTITY", "I-QUANTITY", "B-ORDINAL", "I-ORDINAL", "B-CARDINAL", "I-CARDINAL", "B-EVENT", "I-EVENT", "B-WORK_OF_ART", "I-WORK_OF_ART", "B-LAW", "I-LAW", "B-LANGUAGE", "I-LANGUAGE"]
+    onto_tag_map = {}
+    for i in range(onto_tags):
+        onto_tag_map[i] = onto_tags[i]
+    onto_fulltagmap = onto_tag_map
+    data = []
+    for k in range(len(dset)):
+        for j in dset[k]['sentences']:
+            text = " ".join(dset[j]['words'])
+            types = dset[j]["named_entities"]
+            sentence = text.split(" ")
+            assert len(sentence) == len(types)
+            entities = []
+            d = {}
+            subentities = ""
+            curr_type = None
+            exacts = []
+            for i, tag in enumerate(types):
+                exacts.append(onto_fulltagmap[tag])
+                if tag == 0:
+                    if curr_type is not None:
+                        entities.append(subentities)
+                        d[subentities] = curr_type
+                        curr_type = None
+                        subentities = ""
+                else:
+                    if tag % 2 == 1:  # then it is a B
+                        if curr_type is not None:
+                            entities.append(subentities)
+                            d[subentities] = curr_type
+                        curr_type = onto_tag_map[tag]
+                        subentities = sentence[i]
+                    else:
+                        assert curr_type is not None
+                        subentities = subentities + " " + sentence[i]
+            data.append([text, entities, d, exacts])
+    df = pd.DataFrame(columns=columns, data=data)
+    if save_ob2:
+        if split == "validation":
+            split = "dev"
+        write_ob2(df, dataset_folder="ontoNotes", filename=f"{split}")
     return df
 
 
