@@ -35,11 +35,11 @@ def basic_process_results(filename):
         truth_text = ""
         for j, word in enumerate(text):
             if pred_text == "":
-                pred_text = word + " | " + preds[j]  # hello?
+                pred_text = word + " | " + preds[j]
             else:
                 pred_text = pred_text + " " + word + " | " + preds[j]
             if truth_text == "":
-                truth_text = word + " | " + truths[i]
+                truth_text = word + " | " + truths[j]
             else:
                 truth_text = truth_text + " " + word + " | " + truths[j]
         df.loc[i, "pred_text"] = pred_text
@@ -277,6 +277,6 @@ def analyze_turk():
 
 
 if __name__ == "__main__":
-    analyze_turk()
+    process_all_results()
 
 
