@@ -153,8 +153,8 @@ def load_ontonotes(split="validation", save_ob2=True):
     data = []
     for k, dset_example in enumerate(dset_holder):
         for j,  dset in enumerate(dset_example['sentences']):
-            text = " ".join(dset[j]['words'])
-            types = dset[j]["named_entities"]
+            text = " ".join(dset['words'])
+            types = dset["named_entities"]
             sentence = text.split(" ")
             assert len(sentence) == len(types)
             entities = []
