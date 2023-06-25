@@ -64,16 +64,41 @@ def workbench():
         alg.set_para(para)
         answers, typestrings = formatter(meta)
         return alg.parse_span(answers, typestrings, meta)
-    return d[list(d.keys())[0]], formatter, do_span
+    return d, formatter, do_span
+
+
+def analytics(d):
+    d["text_len"] = d['text'].apply(lambda x: len(x.split(" ")))
+    d["n_entities"] = d['entities'].apply(len)
+    all_types = []
+    for i in d.index:
+        types = set(d.loc[i, "truth"])
+        all_types.append(types)
+    all_types = set(types)
+    type_d = {}
+    for e_type in all_types:
+        type_d[e_type] = {}
+        for other_type in all_types:
+            type_d[e_type][other_type] = 0  # this will be how many times truth was etype and pred was othertype
+    for i in d.index:
+        row = d.loc[i]
+        truths = row["truth"]
+        pred = row["pred"]
+        for j in range(truths):
+            true_tag = truths[j]
+            pred_tag = pred[j]
+            type_d[true_tag][pred_tag] = type_d[true_tag][pred_tag] + 1
+    print(f"Correlation is: ")
+    print(d.corr()["f1"])
+    return type_d
 
 
 
 
-def type_f1(q, pred_list):
-    ground_truth = [q['exact_types']]
-    prediction = [pred_list]
-    return seq_f1(ground, prediction)
-    return f1_score, tp, fp, fn
+
+
+
+
 
 
 
