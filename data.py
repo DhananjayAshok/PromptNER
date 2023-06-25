@@ -143,7 +143,7 @@ def load_conll2003(split="validation"):
 
 
 def load_ontonotes(split="validation", save_ob2=True):
-    dset = load_dataset("conll2012_ontonotesv5", 'english_v4')[split]
+    dset_holder = load_dataset("conll2012_ontonotesv5", 'english_v4')[split]
     columns = ["text", "entities", "types", "exact_types"]
     onto_tags = ["O", "B-PERSON", "I-PERSON", "B-NORP", "I-NORP", "B-FAC", "I-FAC", "B-ORG", "I-ORG", "B-GPE", "I-GPE", "B-LOC", "I-LOC", "B-PRODUCT", "I-PRODUCT", "B-DATE", "I-DATE", "B-TIME", "I-TIME", "B-PERCENT", "I-PERCENT", "B-MONEY", "I-MONEY", "B-QUANTITY", "I-QUANTITY", "B-ORDINAL", "I-ORDINAL", "B-CARDINAL", "I-CARDINAL", "B-EVENT", "I-EVENT", "B-WORK_OF_ART", "I-WORK_OF_ART", "B-LAW", "I-LAW", "B-LANGUAGE", "I-LANGUAGE"]
     onto_tag_map = {}
@@ -151,8 +151,8 @@ def load_ontonotes(split="validation", save_ob2=True):
         onto_tag_map[i] = onto_tags[i]
     onto_fulltagmap = onto_tag_map
     data = []
-    for k in range(len(dset)):
-        for j in dset[k]['sentences']:
+    for k, dset_example in enumerate(dset_holder):
+        for j,  dset in enumerate(dset_example['sentences']):
             text = " ".join(dset[j]['words'])
             types = dset[j]["named_entities"]
             sentence = text.split(" ")
