@@ -103,7 +103,7 @@ def write_ob2(df, dataset_folder=None, filename=None):
 
 
 def load_tweetner(split="validation"):
-    columns = ["text", "entities", "types", "exact_types"]
+    columns = ["text", "entities", "types", "exact_types", "true_tokens"]
     tweetner_tag_map = {
         0: "B-corporation",
         1: "B-creative_work",
@@ -126,7 +126,7 @@ def load_tweetner(split="validation"):
     for j in range(len(dset)):
         text = " ".join(dset[j]['tokens'])
         types = dset[j]["tags"]
-        sentence = text.split(" ")
+        sentence = dset[j]['tokens']#text.split(" ")
         assert len(sentence) == len(types)
         entities = []
         d = {}
@@ -151,7 +151,7 @@ def load_tweetner(split="validation"):
                 else:
                     assert curr_type is not None
                     subentities = subentities + " " + sentence[i]
-        data.append([text, entities, d, exacts])
+        data.append([text, entities, d, exacts, sentence])
     df = pd.DataFrame(columns=columns, data=data)
     return df
 

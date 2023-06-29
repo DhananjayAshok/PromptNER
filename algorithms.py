@@ -4,6 +4,7 @@ from utils import AnswerMapping
 from nltk.corpus import stopwords
 from models import OpenAIGPT
 
+
 class BaseAlgorithm:
     defn = "An entity is an object, place, individual, being, title, proper noun or process that has a distinct and " \
            "independent existence. The name of a collection of entities is also an entity. Adjectives, verbs, numbers, " \
@@ -59,14 +60,17 @@ class BaseAlgorithm:
 
 
 class Algorithm(BaseAlgorithm):
-    def perform_span(self, verbose=False):
+    def perform_span(self, true_tokens=None, verbose=False):
         assert self.identify_types and not self.split_phrases
         answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
-        return self.parse_span(answers, typestrings, metadata)
+        return self.parse_span(answers, typestrings, metadata, true_tokens=true_tokens)
 
-    def parse_span(self, answers, typestrings, metadata):
+    def parse_span(self, answers, typestrings, metadata, true_tokens=None):
         para = self.para.lower()
-        para_words = para.split(" ")
+        if true_tokens is not None:
+            para_words = [token.lower() for token in true_tokens]
+        else:
+            para_words = para.split(" ")
         span_pred = ["O" for word in para_words]
         completed_answers = []
         split_tokens = ["'s", ":"]

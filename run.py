@@ -25,7 +25,10 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
         flag = False
         while not flag:
             try:
-                span_pred, meta = algorithm.perform_span(verbose=False)
+                true_tokens = None
+                if "true_tokens" in val.columns:
+                    true_tokens = q["true_tokens"]
+                span_pred, meta = algorithm.perform_span(true_tokens=true_tokens, verbose=False)
                 p = [span_pred]
                 t = [q['exact_types']]
                 preds.append(span_pred)
