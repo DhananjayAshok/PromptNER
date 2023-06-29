@@ -102,6 +102,160 @@ def write_ob2(df, dataset_folder=None, filename=None):
     return
 
 
+def load_tweetner(split="validation"):
+    columns = ["text", "entities", "types", "exact_types"]
+    tweetner_tag_map = {
+        0: "B-corporation",
+        1: "B-creative_work",
+        2: "B-event",
+        3: "B-group",
+        4: "B-location",
+        5: "B-person",
+        6: "B-product",
+        7: "I-corporation",
+        8: "I-creative_work",
+        9: "I-event",
+        10: "I-group",
+        11: "I-location",
+        12: "I-person",
+        13: "I-product",
+        14: "O"
+    }
+    data = []
+    dset = load_dataset("tner/tweetner7")[split+"_2021"]
+    for j in range(len(dset)):
+        text = " ".join(dset[j]['tokens'])
+        types = dset[j]["ner_tags"]
+        sentence = text.split(" ")
+        assert len(sentence) == len(types)
+        entities = []
+        d = {}
+        subentities = ""
+        curr_type = None
+        exacts = []
+        for i, tag in enumerate(types):
+            exacts.append(tweetner_tag_map[tag])
+            if tag == 14:
+                if curr_type is not None:
+                    entities.append(subentities)
+                    d[subentities] = curr_type
+                    curr_type = None
+                    subentities = ""
+            else:
+                if tag <= 6:
+                    if curr_type is not None:
+                        entities.append(subentities)
+                        d[subentities] = curr_type
+                    curr_type = tweetner_tag_map[tag]
+                    subentities = sentence[i]
+                else:
+                    assert curr_type is not None
+                    subentities = subentities + " " + sentence[i]
+        data.append([text, entities, d, exacts])
+    df = pd.DataFrame(columns=columns, data=data)
+    return df
+
+
+def load_wiesp(split="validation"):
+    dset = load_dataset("adsabs/WIESP2022-NER")[split]
+    columns = ["text", "entities", "types", "exact_types"]
+    data = []
+    for j in range(len(dset)):
+        text = " ".join(dset[j]['tokens'])
+        types = dset[j]["ner_tags"]
+        sentence = text.split(" ")
+        assert len(sentence) == len(types)
+        entities = []
+        d = {}
+        subentities = ""
+        curr_type = None
+        exacts = []
+        for i, tag in enumerate(types):
+            exacts.append(tag)
+            if tag == "O":
+                if curr_type is not None:
+                    entities.append(subentities)
+                    d[subentities] = curr_type
+                    curr_type = None
+                    subentities = ""
+            else:
+                if tag[0] == "B":
+                    if curr_type is not None:
+                        entities.append(subentities)
+                        d[subentities] = curr_type
+                    curr_type = tag
+                    subentities = sentence[i]
+                else:
+                    assert curr_type is not None
+                    subentities = subentities + " " + sentence[i]
+        data.append([text, entities, d, exacts])
+    df = pd.DataFrame(columns=columns, data=data)
+    return df
+
+
+def load_fabner(split="validation"):
+    dset = load_dataset("DFKI-SLT/fabner", "fabner_bio")[split]
+    columns = ["text", "entities", "types", "exact_types"]
+    fabner_tag_map = {0: "O",
+                      1: "B-MATE",
+                      2: "I-MATE",
+                      3: "B-MANP",
+                      4: "I-MANP",
+                      5: "B-MACEQ",
+                      6: "I-MACEQ",
+                      7: "B-APPL",
+                      8: "I-APPL",
+                      9: "B-FEAT",
+                      10: "I-FEAT",
+                      11: "B-PRO",
+                      12: "I-PRO",
+                      13: "B-CHAR",
+                      14: "I-CHAR",
+                      15: "B-PARA",
+                      16: "I-PARA",
+                      17: "B-ENAT",
+                      18: "I-ENAT",
+                      19: "B-CONPRI",
+                      20: "I-CONPRI",
+                      21: "B-MANS",
+                      22: "I-MANS",
+                      23: "B-BIOP",
+                      24: "I-BIOP"}
+
+    data = []
+    for j in range(len(dset)):
+        text = " ".join(dset[j]['tokens'])
+        types = dset[j]["ner_tags"]
+        sentence = text.split(" ")
+        assert len(sentence) == len(types)
+        entities = []
+        d = {}
+        subentities = ""
+        curr_type = None
+        exacts = []
+        for i, tag in enumerate(types):
+            exacts.append(fabner_tag_map[tag])
+            if tag == 0:
+                if curr_type is not None:
+                    entities.append(subentities)
+                    d[subentities] = curr_type
+                    curr_type = None
+                    subentities = ""
+            else:
+                if tag % 2 == 1:
+                    if curr_type is not None:
+                        entities.append(subentities)
+                        d[subentities] = curr_type
+                    curr_type = fabner_tag_map[tag]
+                    subentities = sentence[i]
+                else:
+                    assert curr_type is not None
+                    subentities = subentities + " " + sentence[i]
+        data.append([text, entities, d, exacts])
+    df = pd.DataFrame(columns=columns, data=data)
+    return df
+
+
 def load_conll2003(split="validation"):
     dset = load_dataset("conll2003")[split]
     columns = ["text", "entities", "types", "exact_types"]
