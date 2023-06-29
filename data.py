@@ -342,6 +342,39 @@ def scroll(dataset, start=0, exclude=None):
             return
 
 
+def miniproc(x):
+    if "-" in x:
+        return x.split("-")[1]
+    else:
+        return x
+
+
+def sample_all_types(dset, min_k=5):
+    total_types = []
+    for i in dset.index:
+        types = list(set([miniproc(x) for x in dset.loc[i, 'exact_types']]))
+        total_types.extend(types)
+    total_types = list(set(total_types))
+    done = False
+    k = min_k
+    i = 0
+    minidset = None
+    while not done:
+        selected_types = []
+        minidset = dset.sample(k).reset_index(drop=True)
+        for i in minidset.index:
+            types = list(set([miniproc(x) for x in minidset.loc[i, 'exact_types']]))
+            selected_types.extend(types)
+        selected_types = list(set(selected_types))
+        if len(selected_types) == len(total_types):
+            done = True
+            break
+        i += 1
+        if (i+1) % 10 == 0:
+            k += 1
+    return minidset
+
+
 def save(func, name):
     for split in ["train", "validation", "test"]:
         dset = func(split=split)
@@ -349,3 +382,10 @@ def save(func, name):
         if filename == "validation":
             filename = "dev"
         write_ob2(dset, dataset_folder=name, filename=filename)
+        minidset = sample_all_types(dset, k=5)
+        write_ob2(minidset, name, "5shot"+filename)
+
+
+if __name__ == "__main__":
+    save(load_fabner, "fabner")
+    save(load_tweetner, "tweetner")
