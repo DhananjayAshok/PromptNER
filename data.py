@@ -95,8 +95,11 @@ def write_ob2(df, dataset_folder=None, filename=None):
         for i in df.index:
             row = df.loc[i]
             sentence = row["text"]
+            tokens = sentence.split(" ")
+            if "true_tokens" in df.columns:
+                tokens = row["true_tokens"]
             types = row["exact_types"]
-            for j, word in enumerate(sentence.split(" ")):
+            for j, word in enumerate(tokens):
                 f.write(f"{word}\t{types[j]}\n")
             f.write("\n")
     return
