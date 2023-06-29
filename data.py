@@ -125,7 +125,7 @@ def load_tweetner(split="validation"):
     dset = load_dataset("tner/tweetner7")[split+"_2021"]
     for j in range(len(dset)):
         text = " ".join(dset[j]['tokens'])
-        types = dset[j]["ner_tags"]
+        types = dset[j]["tags"]
         sentence = text.split(" ")
         assert len(sentence) == len(types)
         entities = []
@@ -147,43 +147,6 @@ def load_tweetner(split="validation"):
                         entities.append(subentities)
                         d[subentities] = curr_type
                     curr_type = tweetner_tag_map[tag]
-                    subentities = sentence[i]
-                else:
-                    assert curr_type is not None
-                    subentities = subentities + " " + sentence[i]
-        data.append([text, entities, d, exacts])
-    df = pd.DataFrame(columns=columns, data=data)
-    return df
-
-
-def load_wiesp(split="validation"):
-    dset = load_dataset("adsabs/WIESP2022-NER")[split]
-    columns = ["text", "entities", "types", "exact_types"]
-    data = []
-    for j in range(len(dset)):
-        text = " ".join(dset[j]['tokens'])
-        types = dset[j]["ner_tags"]
-        sentence = text.split(" ")
-        assert len(sentence) == len(types)
-        entities = []
-        d = {}
-        subentities = ""
-        curr_type = None
-        exacts = []
-        for i, tag in enumerate(types):
-            exacts.append(tag)
-            if tag == "O":
-                if curr_type is not None:
-                    entities.append(subentities)
-                    d[subentities] = curr_type
-                    curr_type = None
-                    subentities = ""
-            else:
-                if tag[0] == "B":
-                    if curr_type is not None:
-                        entities.append(subentities)
-                        d[subentities] = curr_type
-                    curr_type = tag
                     subentities = sentence[i]
                 else:
                     assert curr_type is not None
@@ -374,3 +337,12 @@ def scroll(dataset, start=0, exclude=None):
         inp = input("Continue?")
         if inp != "":
             return
+
+
+def save(func, name):
+    for split in ["train", "validation", "test"]:
+        dset = func(split=split)
+        filename = split
+        if filename == "validation":
+            filename = "dev"
+        write_ob2(dset, dataset_folder=name, filename=filename)
