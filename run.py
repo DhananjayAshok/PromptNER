@@ -47,7 +47,6 @@ def eval_dataset(val, model, algorithm, sleep_between_queries=None, print_every=
                 f1_micro = f1_score(truths, preds, average="micro")
                 f1_macro = f1_score(truths, preds, average="macro")
                 print(f"Iteration {i}: micro f1: {f1_micro}, macro f1: {f1_macro}")
-                input()
     f1_micro = f1_score(truths, preds, average="micro")
     f1_macro = f1_score(truths, preds, average="macro")
     print(f"Finally: micro f1: {f1_micro}, macro f1: {f1_macro}")
