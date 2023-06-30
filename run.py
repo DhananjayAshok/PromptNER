@@ -158,6 +158,12 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
         eval_fn = eval_cross_ner
     elif dataset == "fewnerd":
         eval_fn = eval_few_nerd_intra
+    elif dataset == "tweetner":
+        eval_fn = eval_tweetner
+    elif dataset == "fabner":
+        eval_fn = eval_fabner
+    else:
+        raise ValueError(f"Unknown Dataset: {dataset}")
 
     if gpt:
         model = OpenAIGPT()
@@ -187,7 +193,7 @@ def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
                      name_meta="",
                      dataset_exclude=["genia"], subdataset_exclude=[]):
     d = {}
-    datasets = ["conll", "genia", "crossner", "fewnerd"]
+    datasets = ["conll", "genia", "crossner", "fewnerd", "tweetner", "fabner"]
     subdatasets = {"crossner": ['politics', 'literature', 'ai', 'science', 'music'],
                    'fewnerd': ["test"]}
     for dataset in datasets:
@@ -261,5 +267,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL
-    run(dataset="fewnerd", subdataset="test", gpt=True)
+    run(dataset="tweetner", gpt=True)
 
