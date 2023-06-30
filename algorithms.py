@@ -227,7 +227,7 @@ class MultiAlgorithm(Algorithm):
     def perform_span(self, true_tokens=None, resolve_disputes=False, verbose=False):
         assert self.identify_types and not self.split_phrases
         answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
-        span_pred, metadata = self.parse_span(answers, typestrings, metadata, query=True, resolve_disputes=False, true_tokens=true_tokens, verbose=verbose)
+        span_pred, metadata = self.parse_span(answers, typestrings, metadata, query=True, true_tokens=true_tokens, verbose=verbose)
         return span_pred, metadata
 
     def parse_span(self, answers, typestrings, metadata, true_tokens=None, query=False, verbose=False):
