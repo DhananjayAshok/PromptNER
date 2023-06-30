@@ -90,6 +90,26 @@ def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
                          limit=limit)
 
 
+def eval_tweetner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True, **kwargs):
+    config = TweetNERConfig()
+    algorithm.split_phrases = False
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
+    tweetner = load_tweetner()
+    return complete_eval(tweetner, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
+                         limit=limit)
+
+
+def eval_fabner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
+                        defn=True, tf=True, **kwargs):
+    config = FabNERConfig()
+    algorithm.split_phrases = False
+    config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
+    fabner = load_fabner()
+    return complete_eval(fabner, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
+                         limit=limit)
+
+
 def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
                         defn=True, tf=True, **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']

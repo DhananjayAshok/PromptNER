@@ -569,6 +569,279 @@ class GeniaConfig(Config):
     exemplars = [exemplar_1, exemplar_2]
 
 
+class TweetNERConfig(Config):
+    defn = "An entity is a corporation (corporation), the name of a creative work made by humans (creative_work), event (event), names of real or fictional people (person), names of real or fictional locations (location), products (product) or groups that are not a corporation (group). Any set of words in the format {@words inside@} is a twitter handle and the entire phrase should be considered"
+
+    cot_exemplar_1 = """
+        # ReformPoliceNG {@Nigeria Police Force@} not # EndSARS the entire {@Nigeria Police Force@} is the problem not only the SARS operatives,i remember sometime in 2017,it was the {@UEFA Champions League@} season,around 10.30-11.00pm,myself and two of my friends watched the game a street opposite my street,on our way back ,
+
+        Answer:
+        1. {@Nigeria Police Force@} | True | as a police force is a corporate organization (corporation)
+        2. SARS operatives | False | as it is not the name of a group or corporation
+        3. {@UEFA Champions League@} | True | it is a football tournament refered to as an event not a corporation (event)
+        """
+    cot_exemplar_2 = """
+        Soulja Boy Tell'em - Crank That ( Soulja Boy ) ( Official Music Video ) {{URL}} via {@YouTube@} {@Soulja Boy Draco 🌹@}
+        
+        Answer:
+        1. Soulja Boy | True | this is the name of a rapper (person)
+        2. Tell'em - Crank That | True | this is the name of a song created by Soulja Boy (creative_work)
+        3. Official Music Video | True | as it is a work of art created by a human (creative_work)
+        4. {{URL}} | False | as urls are not entities
+        5. {@YouTube@} | True | as YouTube is a product (product)
+        6. {@Soulja Boy Draco 🌹@} | True | as it is the twitter handle of a person (person)
+        """
+
+    cot_exemplar_3 = """
+    The story of how working class folks , diehard fans from rival football clubs across England , all joined together in solidarity to defeat the greed of billionaires like {@The Boston Globe@} / {@Liverpool FC@} / {@Red Sox@} owner John Henry is pretty amazing . {{URL}}
+    
+    Answer:
+    1. England | True | as it is a location (location)
+    2. billionares | False | as it is not a named entity
+    3. {@The Boston Globe@} | True | as it is a news organization it is a corporation (corporation)
+    4. {@Liverpool FC@} | True | as it is a sports team it is a group not a corporation (group)
+    5. {@Red Sox@} | True | as it is a sports team (group)
+    6. John Henry | True | as it is a person (person)
+    
+    """
+
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
+
+    no_tf_exemplar_1 = """
+            # ReformPoliceNG {@Nigeria Police Force@} not # EndSARS the entire {@Nigeria Police Force@} is the problem not only the SARS operatives,i remember sometime in 2017,it was the {@UEFA Champions League@} season,around 10.30-11.00pm,myself and two of my friends watched the game a street opposite my street,on our way back ,
+
+        Answer:
+        1. {@Nigeria Police Force@} | as a police force is a corporate organization (corporation)
+        2. {@UEFA Champions League@} | it is a football tournament refered to as an event not a corporation (event)
+        """
+    no_tf_exemplar_2 = """
+        Soulja Boy Tell'em - Crank That ( Soulja Boy ) ( Official Music Video ) {{URL}} via {@YouTube@} {@Soulja Boy Draco 🌹@}
+        
+        Answer:
+        1. Soulja Boy | this is the name of a rapper (person)
+        2. Tell'em - Crank That | this is the name of a song created by Soulja Boy (creative_work)
+        3. Official Music Video | as it is a work of art created by a human (creative_work)
+        4. {@YouTube@} | as YouTube is a product (product)
+        5. {@Soulja Boy Draco 🌹@} | as it is the twitter handle of a person (person)
+
+        """
+
+    no_tf_exemplar_3 = """
+    The story of how working class folks , diehard fans from rival football clubs across England , all joined together in solidarity to defeat the greed of billionaires like {@The Boston Globe@} / {@Liverpool FC@} / {@Red Sox@} owner John Henry is pretty amazing . {{URL}}
+    
+    Answer:
+    1. England | as it is a location (location)
+    2. {@The Boston Globe@} | as it is a news organization it is a corporation (corporation)
+    3. {@Liverpool FC@} | as it is a sports team it is a group not a corporation (group)
+    4. {@Red Sox@} | as it is a sports team (group)
+    5. John Henry | as it is a person (person)
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2, no_tf_exemplar_3]
+
+    tf_exemplar_1 = """
+        # ReformPoliceNG {@Nigeria Police Force@} not # EndSARS the entire {@Nigeria Police Force@} is the problem not only the SARS operatives,i remember sometime in 2017,it was the {@UEFA Champions League@} season,around 10.30-11.00pm,myself and two of my friends watched the game a street opposite my street,on our way back ,
+
+        Answer:
+        1. {@Nigeria Police Force@} | True | (corporation)
+        2. SARS operatives | False | None
+        3. {@UEFA Champions League@} | True | (event)
+        """
+    tf_exemplar_2 = """
+        Soulja Boy Tell'em - Crank That ( Soulja Boy ) ( Official Music Video ) {{URL}} via {@YouTube@} {@Soulja Boy Draco 🌹@}
+        
+        Answer:
+        1. Soulja Boy | True | (person)
+        2. Tell'em - Crank That | True | (creative_work)
+        3. Official Music Video | True | (creative_work)
+        4. {{URL}} | False | as urls are not entities
+        5. {@YouTube@} | True | (product)
+        6. {@Soulja Boy Draco 🌹@} | True | (person)
+
+        """
+
+    tf_exemplar_3 = """
+        The story of how working class folks , diehard fans from rival football clubs across England , all joined together in solidarity to defeat the greed of billionaires like {@The Boston Globe@} / {@Liverpool FC@} / {@Red Sox@} owner John Henry is pretty amazing . {{URL}}
+    
+        Answer:
+        1. England | True | (location)
+        2. billionares | False | None
+        3. {@The Boston Globe@} | True | (corporation)
+        4. {@Liverpool FC@} | True | (group)
+        5. {@Red Sox@} | True | (group)
+        6. John Henry | True | (person)
+    """
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2, tf_exemplar_3]
+
+    exemplar_1 = """
+        # ReformPoliceNG {@Nigeria Police Force@} not # EndSARS the entire {@Nigeria Police Force@} is the problem not only the SARS operatives,i remember sometime in 2017,it was the {@UEFA Champions League@} season,around 10.30-11.00pm,myself and two of my friends watched the game a street opposite my street,on our way back ,
+
+        Answer:
+        1. {@Nigeria Police Force@} |  (corporation)
+        2. {@UEFA Champions League@} | (event)
+
+        """
+    exemplar_2 = """
+        Soulja Boy Tell'em - Crank That ( Soulja Boy ) ( Official Music Video ) {{URL}} via {@YouTube@} {@Soulja Boy Draco 🌹@}
+        
+        Answer:
+        1. Soulja Boy | (person)
+        2. Tell'em - Crank That | (creative_work)
+        3. Official Music Video | (creative_work)
+        4. {@YouTube@} | (product)
+        5. {@Soulja Boy Draco 🌹@} | (person)
+        """
+
+    exemplar_3 = """
+    The story of how working class folks , diehard fans from rival football clubs across England , all joined together in solidarity to defeat the greed of billionaires like {@The Boston Globe@} / {@Liverpool FC@} / {@Red Sox@} owner John Henry is pretty amazing . {{URL}}
+    
+    Answer:
+    1. England | (location)
+    2. {@The Boston Globe@} | (corporation)
+    3. {@Liverpool FC@} | (group)
+    4. {@Red Sox@} | (group)
+    5. John Henry | (person)
+    """
+    exemplars = [exemplar_1, exemplar_2, exemplar_3]
+
+
+class FabNERConfig(Config):
+    defn = "An entity is a Material (MATE), Manufacturing Process (MANP), Application (APPL), Features (ENGF), Mechanical Property or Properties (MECHP), Characterization (PROC), Parameters (PROP), Machine/Equipment (MACEQ), Enabling Technology (ENAT), Concept/Principles (CONPRI), BioMedical entity (BIOP) or Manufacturing Standards (MANS)"
+
+    cot_exemplar_1 = """
+    However , parts fabricated using UAM often exhibit a reduction in strength levels when loaded normal to the welding interfaces ( Z-direction ) .
+    
+    Answer: 
+    1. fabricated | True | as it is related to a concept of fabrication (CONPRI)
+    2. UAM | True | it is used to fabricate something so it is a manufacturing process (MANP)
+    3. exhibit | False | as it is not a concept or any other type of entity defined above
+    4. reduction | True | as it is refers to a concept in manufacturing (CONPRI)
+    5. strength | True | as it is a property of parts (PRO)
+    6. normal | False | as it describes a direction and not an entity
+    7. welding interfaces | True | as they are engineering features (ENGF)
+    8. Z-direction | True | as it is a feature of engineering (ENGF)   
+    """
+    cot_exemplar_2 = """
+    The 3D model is converted into a file format that is understood by AM machines .
+    
+    Answer:
+    1. 3D model | True | as it is an application (APPL)
+    2. converted | False | as it is not related to manufacturing 
+    3. file | True | as it is standardized item that is understood by machines (MANS)
+    4. AM machines | True | as it is a kind of machine (MACEQ)
+    """
+
+    cot_exemplar_3 = """
+    Nowadays , these technologies have other names such as 3D printing or additive manufacturing , and so forth , but they all have the same origins from rapid prototyping 
+
+    Answer: 
+    1. technologies | True | as it is a general concept in manufacturing (CONPRI)
+    2. 3D printing | True | as it is a process (MANP)
+    3. additive manufacturing | True | as it is a process (MANP)
+    4. rapid prototyping | True | as it is a technology that enables the development of processes (ENAT)
+    """
+
+    cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
+
+    no_tf_exemplar_1 = """
+    However , parts fabricated using UAM often exhibit a reduction in strength levels when loaded normal to the welding interfaces ( Z-direction ) .
+    
+    Answer: 
+    1. fabricated | as it is related to a concept of fabrication (CONPRI)
+    2. UAM | it is used to fabricate something so it is a manufacturing process (MANP)
+    3. reduction | as it is refers to a concept in manufacturing (CONPRI)
+    4. strength | as it is a property of parts (PRO)
+    5. welding interfaces | as they are engineering features (ENGF)
+    6. Z-direction | as it is a feature of engineering (ENGF)   
+        """
+    no_tf_exemplar_2 = """
+    The 3D model is converted into a file format that is understood by AM machines .
+    
+    Answer:
+    1. 3D model | as it is an application (APPL)
+    2. file | as it is standardized item that is understood by machines (MANS)
+    3. AM machines | as it is a kind of machine (MACEQ)
+    """
+
+    no_tf_exemplar_3 = """
+    Nowadays , these technologies have other names such as 3D printing or additive manufacturing , and so forth , but they all have the same origins from rapid prototyping 
+
+    Answer: 
+    1. technologies | as it is a general concept in manufacturing (CONPRI)
+    2. 3D printing | as it is a process (MANP)
+    3. additive manufacturing | as it is a process (MANP)
+    4. rapid prototyping | as it is a technology that enables the development of processes (ENAT)
+    """
+
+    no_tf_exemplars = [no_tf_exemplar_1, no_tf_exemplar_2, no_tf_exemplar_3]
+
+    tf_exemplar_1 = """
+    However , parts fabricated using UAM often exhibit a reduction in strength levels when loaded normal to the welding interfaces ( Z-direction ) .
+    
+    Answer: 
+    1. fabricated | True | (CONPRI)
+    2. UAM | True | (MANP)
+    3. exhibit | False | None
+    4. reduction | True | (CONPRI)
+    5. strength | True | (PRO)
+    6. normal | False | None
+    7. welding interfaces | True | (ENGF)
+    8. Z-direction | True | (ENGF)   
+        """
+    tf_exemplar_2 = """
+    The 3D model is converted into a file format that is understood by AM machines .
+    
+    Answer:
+    1. 3D model | True | (APPL)
+    2. converted | False | None
+    3. file | True | (MANS)
+    4. AM machines | True | (MACEQ)
+        """
+
+    tf_exemplar_3 = """
+    Nowadays , these technologies have other names such as 3D printing or additive manufacturing , and so forth , but they all have the same origins from rapid prototyping 
+
+    Answer: 
+    1. technologies | True | (CONPRI)
+    2. 3D printing | True | (MANP)
+    3. additive manufacturing | True | (MANP)
+    4. rapid prototyping | True | (ENAT)
+    """
+
+    tf_exemplars = [tf_exemplar_1, tf_exemplar_2, tf_exemplar_3]
+
+    exemplar_1 = """
+    However , parts fabricated using UAM often exhibit a reduction in strength levels when loaded normal to the welding interfaces ( Z-direction ) .
+    
+    Answer: 
+    1. fabricated | (CONPRI)
+    2. UAM | (MANP)
+    3. reduction | (CONPRI)
+    4. strength | (PRO)
+    5. welding interfaces | (ENGF)
+    6. Z-direction | (ENGF)   
+        """
+    exemplar_2 = """
+    The 3D model is converted into a file format that is understood by AM machines .
+    
+    Answer:
+    1. 3D model | (APPL)
+    2. file | (MANS)
+    3. AM machines | (MACEQ)
+        """
+
+    exemplar_3 = """
+    Nowadays , these technologies have other names such as 3D printing or additive manufacturing , and so forth , but they all have the same origins from rapid prototyping 
+
+    Answer: 
+    1. technologies | (CONPRI)
+    2. 3D printing | (MANP)
+    3. additive manufacturing | (MANP)
+    4. rapid prototyping | (ENAT)
+    """
+    exemplars = [exemplar_1, exemplar_2, exemplar_3]
+
+
 class CrossNERPoliticsConfig(Config):
     defn = """
     An entity is a person or named character (person), organisation(organisation), politician(politician), political party (politicalparty), event(event), election(election), country(country), location that is not a country(location) or 

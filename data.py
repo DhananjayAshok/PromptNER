@@ -382,7 +382,7 @@ def save(func, name):
         if filename == "validation":
             filename = "dev"
         write_ob2(dset, dataset_folder=name, filename=filename)
-        minidset = sample_all_types(dset, k=5)
+        minidset = sample_all_types(dset, min_k=5)
         write_ob2(minidset, name, "5shot"+filename)
 
 
