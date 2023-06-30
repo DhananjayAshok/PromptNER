@@ -69,13 +69,13 @@ class Quick:
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
-e = Algorithm(split_phrases=False, identify_types=True)
+e = MultiAlgorithm(resolve_disputes=True)
 genia_train = load_genia()
-#conll_train = load_conll2003()
+conll_train = load_conll2003()
 few_nerd_train = load_few_nerd()
 cross_ner_train = load_cross_ner(category="ai")
 
 
 if __name__ == "__main__":
-    #loop(simple_q_a)
-    pass
+    Quick.conll(5)
+    Quick.conll(500)

@@ -14,7 +14,7 @@ class BaseAlgorithm:
 
     # if [] = n then there are O(n^2) phrase groupings
 
-    def __init__(self, model_fn=None, split_phrases=False, identify_types=True):
+    def __init__(self, model_fn=None, split_phrases=False, identify_types=True, resolve_disputes=True):
         self.defn = self.defn
         self.para = None
         self.model_fn = model_fn
@@ -23,6 +23,7 @@ class BaseAlgorithm:
         self.format_task = None
         self.whole_task = None
         self.identify_types = identify_types
+        self.resolve_disputes = resolve_disputes
 
     def set_para(self, para):
         self.para = para
@@ -221,6 +222,141 @@ class Algorithm(BaseAlgorithm):
             return final, typestrings, output
 
 
+class MultiAlgorithm(Algorithm):
+
+    def perform_span(self, true_tokens=None, resolve_disputes=False, verbose=False):
+        assert self.identify_types and not self.split_phrases
+        answers, typestrings, metadata = self.perform(verbose=verbose, deduplicate=False)
+        span_pred, metadata = self.parse_span(answers, typestrings, metadata, query=True, resolve_disputes=False, true_tokens=true_tokens, verbose=verbose)
+        return span_pred, metadata
+
+    def parse_span(self, answers, typestrings, metadata, true_tokens=None, query=False, resolve_disputes=False, verbose=False):
+        if not query:
+            resolve_disputes = False
+        para = self.para.lower()
+        if true_tokens is not None:
+            para_words = [token.lower() for token in true_tokens]
+        else:
+            para_words = para.split(" ")
+        span_pred = ["O" for word in para_words]
+        completed_answers = []
+        split_tokens = ["'s", ":"]
+        for i, answer in enumerate(answers):
+            answer = answer.strip().lower()  # take any whitespace out and lowercase for matching
+            if "(" in answer:
+                answer = answer[:answer.find("(")].strip()  # in case some type annotation is stuck here
+            if not resolve_disputes and query:
+                types = self.get_type(answer, verbose=verbose)
+                if types == -1:
+                    continue
+            else:
+                types = typestrings[i]
+                if "(" in types and ")" in types:
+                    types = types[types.find("(") + 1:types.find(")")]
+                else:
+                    continue
+                if resolve_disputes:
+                    other_types = self.get_type(answer, verbose=verbose)
+                    types = self.resolve_dispute(answer, types, other_types, verbose=verbose)
+
+            answer_token_split = answer
+            for token in split_tokens:
+                answer_token_split = (" "+token).join(answer_token_split.split(token))
+            exists = answer in para or answer_token_split in para
+            answer_multi_word = len(answer.split(" ")) > 1
+            if not exists:
+                continue
+            if not answer_multi_word:
+                if answer not in para_words:
+                    continue
+                multiple = para.count(answer) > 1
+                if not multiple:  # easiest case word should be in para_words only once
+                    index = para_words.index(answer)
+                else:  # must find which occurance this is
+                    n_th = completed_answers.count(answer.strip()) + 1
+                    index = utils.find_nth_list(para_words, answer, n_th)
+                if span_pred[index] == "O":
+                    if "-" in types:  # then its FEWNERD
+                        span_pred[index] = types
+                    else:
+                        span_pred[index] = "B-" + types
+                completed_answers.append(answer)
+            else:
+                for token in split_tokens:
+                    if token in answer:
+                        answer = (" "+token).join(answer.split(token))
+                answer_words = answer.split(" ")
+                multiple = para.count(answer) > 1
+                n_th = completed_answers.count(answer.strip()) + 1
+                index = utils.find_nth_list_subset(para_words, answer, n_th)
+                end_index = index + len(answer_words)
+                if "-" in types:  # then its FEWNERD
+                    span_pred[index] = types
+                else:
+                    span_pred[index] = "B-" + types
+                for j in range(index+1, end_index):
+                    if "-" in types:  # then its FEWNERD
+                        span_pred[j] = types
+                    else:
+                        span_pred[j] = "I-" + types
+                completed_answers.append(answer)
+        return span_pred, metadata
+
+    def get_type(self, phrase, verbose=False):
+        task = self.type_task
+        afterphrase = f"Entity Phrase: {phrase}"
+        if self.model_fn.is_chat():
+            exemplars = self.type_exemplars
+            answer = self.template_chat_query(task, exemplars, afterphrase, verbose=verbose)
+        else:
+            task = self.type_task_exemplars
+            answer = self.template_single_query(task, afterphrase, verbose=verbose)
+        if "(" in answer and ")" in answer:
+            start = answer.find("(")
+            end = answer.find(")")
+            return answer[start+1:end]
+        else:
+            return -1
+
+    def resolve_dispute(self, phrase, option1, option2, verbose=False):
+        task = self.dispute_task
+        afterphrase = f"Entity Phrase: {phrase}, Options: ({option1}), ({option2})"
+        if self.model_fn.is_chat():
+            exemplars = self.dispute_exemplars
+            answer = self.template_chat_query(task, exemplars, afterphrase, verbose=verbose)
+        else:
+            task = self.dispute_task_exemplars
+            answers = self.template_single_query(task, afterphrase, verbose=verbose)
+        if "(" in answer and ")" in answer:
+            start = answer.find("(")
+            end = answer.find(")")
+            return answer[start+1:end]
+        else:
+            return -1
+
+    def template_chat_query(self, task, exemplars, afterphrase, verbose=False):
+        system_msg = self.chatbot_init + self.defn + " " + task
+        msgs = [(system_msg, "system")]
+        for exemplar in exemplars:
+            if "Answer:" not in exemplar:
+                raise ValueError(f"Something is wrong, exemplar: \n{exemplar} \n Does not have an 'Answer:'")
+            ans_index = exemplar.index("Answer:")
+            msgs.append((exemplar[:ans_index+7].strip(), "user"))
+            msgs.append((exemplar[ans_index+7:].strip(), "assistant"))
+        msgs.append((f"\nParagraph: {self.para} \n{afterphrase} \nAnswer:", "user"))
+        output = self.model_fn(msgs)
+        if verbose:
+            print(output)
+        return output
+
+    def template_single_query(self, task, afterphrase, verbose=False):
+        task = self.defn + "\n" + task + f" '{self.para}' \n{afterphrase} \nAnswer:"
+        output = self.model_fn(task)
+        if verbose:
+            print(output)
+        return output
+
+
 class Config:
     cot_format = """
     Format: 
@@ -249,6 +385,30 @@ class Config:
     """
 
     def set_config(self, alg, exemplar=True, coT=True, tf=True, defn=True):
+        if isinstance(alg, MultiAlgorithm):
+            coT = False
+            tf = False
+            exemplar = True
+            type_task = "Q: Given the paragraph below and the entity phrase, identify what type the entity is \nParagraph:"
+            alg.type_exemplars = self.type_exemplars
+            exemplar_construction = ""
+            for exemplar in self.type_exemplars:
+                exemplar_construction = exemplar_construction + type_task + "\n"
+                exemplar_construction = exemplar_construction + exemplar + "\n"
+            exemplar_construction = exemplar_construction + type_task + "\n"
+            alg.type_task_exemplars = exemplar_construction
+            alg.type_task = type_task
+
+            dispute_task = "Q: Given the paragraph below, the entity phrase and two proposed entity types, identify what the actual type of the entity is \nParagraph:"
+            alg.dispute_exemplars = self.dispute_exemplars
+            exemplar_construction = ""
+            for exemplar in self.dispute_exemplars:
+                exemplar_construction = exemplar_construction + dispute_task + "\n"
+                exemplar_construction = exemplar_construction + exemplar + "\n"
+            exemplar_construction = exemplar_construction + dispute_task + "\n"
+            alg.dispute_task_exemplars = exemplar_construction
+            alg.dispute_task = dispute_task
+
         if defn:
             alg.defn = self.defn
         else:
@@ -364,7 +524,6 @@ class ConllConfig(Config):
     3. 5.3 | False | as it is a number
     4. June | False | as it is a date
     5. July | False | as it is a date
-    
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
 
@@ -387,7 +546,6 @@ class ConllConfig(Config):
         3. Surrey | since Surrey are title rivals is it a sporting team organisation not a location (ORG)
         4. Kent | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
         5. Nottinghamshire | since Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-
         """
 
     no_tf_exemplar_3 = """
@@ -470,6 +628,54 @@ class ConllConfig(Config):
     1. 
     """
     exemplars = [exemplar_1, exemplar_2, exemplar_3]
+
+    type_exemplar_1 = """
+    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+    Entity Phrase: Somerset
+    Answer: Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
+    
+    Entity Phrase: England
+    Answer: England is a country hence it is a location (LOC)
+    
+    Entity Phrase: Grace Road
+    Answer: at Grace Road indicates this is a location or venue (LOC)    
+    """
+
+    type_exemplar_2 = """
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+    
+    Entity Phrase: Essex
+    Answer: As they are tital rivals, Essex is a sports team and not a location (ORG)
+    
+    Entity Phrase: Nottinghamshire
+    Answer: As Nottinghamshire defeated Kent, this is a sports team not a location (ORG)
+    """
+    type_exemplars = [type_exemplar_1, type_exemplar_2]
+
+    dispute_exemplar_1 = """
+    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+    Entity Phrase: Somerset, Options: [(LOC), (ORG)]
+    Answer: Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
+
+    Entity Phrase: England, Options: [(LOC), (PER)]
+    Answer: England is a country hence it is a location not a person (LOC)
+
+    Entity Phrase: Grace Road, Options: [(LOC), (ORG)]
+    Answer: at Grace Road indicates this is a location or venue (LOC)    
+    """
+
+    dispute_exemplar_2 = """
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+
+    Entity Phrase: Essex, Options: [(LOC), (ORG)]
+    Answer: As they are tital rivals, Essex is a sports team and not a location (ORG)
+
+    Entity Phrase: Nottinghamshire, Options: [(LOC), (ORG)]
+    Answer: As Nottinghamshire defeated Kent, this is a sports team not a location (ORG)
+    """
+    dispute_exemplars = [dispute_exemplar_1, dispute_exemplar_2]
 
 
 class GeniaConfig(Config):
