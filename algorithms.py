@@ -231,8 +231,6 @@ class MultiAlgorithm(Algorithm):
         return span_pred, metadata
 
     def parse_span(self, answers, typestrings, metadata, true_tokens=None, query=False, verbose=False):
-        if not query:
-            resolve_disputes = False
         para = self.para.lower()
         if true_tokens is not None:
             para_words = [token.lower() for token in true_tokens]
@@ -248,7 +246,11 @@ class MultiAlgorithm(Algorithm):
             if not self.resolve_disputes and query:
                 types = self.get_type(answer, verbose=verbose)
                 if types == -1:
-                    continue
+                    types = typestrings[i]
+                    if "(" in types and ")" in types:
+                        types = types[types.find("(") + 1:types.find(")")]
+                    else:
+                        continue
             else:
                 types = typestrings[i]
                 if "(" in types and ")" in types:
@@ -259,6 +261,12 @@ class MultiAlgorithm(Algorithm):
                     other_types = self.get_type(answer, verbose=verbose)
                     if types != other_types:
                         types = self.resolve_dispute(answer, types, other_types, verbose=verbose)
+                        if types == -1:
+                            types = typestrings[i]
+                            if "(" in types and ")" in types:
+                                types = types[types.find("(") + 1:types.find(")")]
+                            else:
+                                continue
 
             answer_token_split = answer
             for token in split_tokens:
