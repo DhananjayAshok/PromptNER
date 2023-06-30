@@ -230,7 +230,7 @@ class MultiAlgorithm(Algorithm):
         span_pred, metadata = self.parse_span(answers, typestrings, metadata, query=True, resolve_disputes=False, true_tokens=true_tokens, verbose=verbose)
         return span_pred, metadata
 
-    def parse_span(self, answers, typestrings, metadata, true_tokens=None, query=False, resolve_disputes=False, verbose=False):
+    def parse_span(self, answers, typestrings, metadata, true_tokens=None, query=False, verbose=False):
         if not query:
             resolve_disputes = False
         para = self.para.lower()
@@ -245,7 +245,7 @@ class MultiAlgorithm(Algorithm):
             answer = answer.strip().lower()  # take any whitespace out and lowercase for matching
             if "(" in answer:
                 answer = answer[:answer.find("(")].strip()  # in case some type annotation is stuck here
-            if not resolve_disputes and query:
+            if not self.resolve_disputes and query:
                 types = self.get_type(answer, verbose=verbose)
                 if types == -1:
                     continue
@@ -255,9 +255,10 @@ class MultiAlgorithm(Algorithm):
                     types = types[types.find("(") + 1:types.find(")")]
                 else:
                     continue
-                if resolve_disputes:
+                if self.resolve_disputes:
                     other_types = self.get_type(answer, verbose=verbose)
-                    types = self.resolve_dispute(answer, types, other_types, verbose=verbose)
+                    if types != other_types:
+                        types = self.resolve_dispute(answer, types, other_types, verbose=verbose)
 
             answer_token_split = answer
             for token in split_tokens:
