@@ -494,6 +494,8 @@ class ConllConfig(Config):
            "If a sporting team has the name of their location and the location is used to refer to the team, " \
            "it is an entity which is an organisation, not a location"
 
+    defn = "An entity is a person (PER), title, named organization (ORG), location (LOC), country (LOC) or nationality (MISC)."
+
     cot_exemplar_1 = """
     After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
     
@@ -524,6 +526,49 @@ class ConllConfig(Config):
     
     """
 
+    cot_unrandom_exemplar_1 = """
+    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
+
+    Answer:
+    1. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
+    2. Grace Road | True | the game is played at Grace Road, hence it is a place or location (LOC)
+    3. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (ORG). 
+    4. innings | False | as it is an abstract concept of a phase in play of cricket
+    5. England | True | as it is a place or location (LOC)
+    6. Andy Caddick | True | as it is the name of a person. (PER) 
+    """
+    cot_exemplar_2 = """
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+
+    Answer:
+    1. Their | False | as it is a possessive pronoun
+    2. stay | False | as it is an action
+    3. title rivals | False | as it is an abstract concept
+    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
+    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
+    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
+    7. victory | False | as it is an abstract concept
+    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+
+    """
+
+    cot_exemplar_2 = """
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+
+    Answer:
+    1. Their | False | as it is a possessive pronoun
+    2. stay | False | as it is an action
+    3. title rivals | False | as it is an abstract concept
+    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
+    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
+    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
+    7. victory | False | as it is an abstract concept
+    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+
+    """
+
     cot_exemplar_3 = """
     But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
     
@@ -533,6 +578,27 @@ class ConllConfig(Config):
     3. 5.3 | False | as it is a number
     4. June | False | as it is a date
     5. July | False | as it is a date
+    """
+
+    cot_unrandom_exemplar_2 = """
+    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
+
+    Answer:
+    1. title rivals | False | as it is an abstract concept
+    2. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
+    3. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
+    4. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
+    5. victory | False | as it is an abstract concept
+    6. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+    7. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
+    """
+
+    cot_unrandom_exemplar_3 = """
+    But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
+
+    Answer:
+    1. money | False | as it is not a named person, organization or location
+    2. savings account | False | as it is not a person, organization or location
     """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
 
@@ -786,6 +852,8 @@ class GeniaConfig(Config):
 
 class TweetNERConfig(Config):
     defn = "An entity is a corporation (corporation), the name of a creative work made by humans (creative_work), event (event), names of real or fictional people (person), names of real or fictional locations (location), products (product) or groups that are not a corporation (group). Any set of words in the format {@words inside@} is a twitter handle and the entire phrase should be considered"
+
+    #defn = "An entity is words that refer to names of people: (e.g. Virginia Wade). Include punctuation in the middle of names. Fictional people can be included as long as they are referenced by name (e.g. Harry Potter) (person). Names of locations: (e.g. France). Include punctuation in the middle of names. Fictional people can be included as long as they are referenced by name (e.g. Hogwarts) (location). Names of groups: (e.g. Nirvana, San Diego Padres), fictional groups can be included (group). Names of events: (e.g. Christmas, Super Bowl) (event). Name of products (e.g. iPhone), it must be something one can touch and it has to be refereed to by the official name (product). Creative work (e.g. Bohemian Rhapsody), should be created by a human (creative_work) or a corporation (e.g. Google) (coorporation)"
 
     cot_exemplar_1 = """
         # ReformPoliceNG {@Nigeria Police Force@} not # EndSARS the entire {@Nigeria Police Force@} is the problem not only the SARS operatives,i remember sometime in 2017,it was the {@UEFA Champions League@} season,around 10.30-11.00pm,myself and two of my friends watched the game a street opposite my street,on our way back ,

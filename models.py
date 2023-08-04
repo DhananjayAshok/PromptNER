@@ -1,6 +1,5 @@
 import os
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, GPTNeoXForCausalLM, GPTNeoXTokenizerFast, \
-    GPTNeoForCausalLM, GPT2Tokenizer, AutoModelForCausalLM
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, AutoModelForCausalLM
 import openai
 
 import utils
@@ -10,8 +9,8 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class OpenAIGPT:
     #model = "text-davinci-003"
-    #model = "gpt-4"
-    model = "gpt-3.5-turbo"
+    model = "gpt-4"
+    #model = "gpt-3.5-turbo"
     #model = "davinci"
     seconds_per_query = (60 / 20) + 0.01
     @staticmethod
@@ -69,49 +68,37 @@ class T5(HugginFaceModel):
         self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
 
 
-class T5XL(HugginFaceModel):
-    def __init__(self, size="xxl"):
-        assert size in ["xl", "xxl"]
-        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}")
-        self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
-        self.devices = utils.Parameters.get_device_ints(3)
-        device_map = {
-            self.devices[0]: [0,  1,  2,  3,  4,  5,  6],
-            self.devices[1]: [7,  8,  9,  10, 11, 12, 13, 14, 15],
-            self.devices[2]: [16, 17, 18, 19, 20, 21, 22, 23]
-        }
+class ParallelHuggingFaceModel(HugginFaceModel):
+    def parallel(self, num_layers=24, num_devices=4):
+        self.devices = utils.Parameters.get_device_ints(num_devices)
+        layer_per_device = num_layers // num_devices
+        device_map = {}
+        start = 0
+        for i, device in enumerate(self.devices):
+            if i == len(self.devices) - 1:
+                device_map[device] = [j for j in range(start, num_layers)]
+            else:
+                device_map[device] = [j for j in range(start, start+layer_per_device)]
+                start = start + layer_per_device
         self.model.parallelize(device_map)
 
     def query(self, prompt):
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.devices[0])
-        outputs = self.model.generate(**inputs, max_new_tokens=200)
+        outputs = self.model.generate(**inputs, max_new_tokens=600)
         return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0]
 
 
-class GPTNeoX(HugginFaceModel):
-    def __init__(self):
-        self.model = GPTNeoXForCausalLM.from_pretrained("EleutherAI/gpt-neox-20b").half().to(utils.Parameters.devices[0])
-        self.tokenizer = GPTNeoXTokenizerFast.from_pretrained("EleutherAI/gpt-neox-20b")
+class T5XL(ParallelHuggingFaceModel):
+    def __init__(self, size="xxl"):
+        assert size in ["xl", "xxl"]
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"google/flan-t5-{size}")
+        self.tokenizer = AutoTokenizer.from_pretrained(f"google/flan-t5-{size}", model_max_length=600)
+        self.parallel(num_layers=24, num_devices=4)
 
 
-class GPTNeo(HugginFaceModel):
-    def __init__(self):
-        self.model = GPTNeoForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B").to(utils.Parameters.devices[0])
-        self.tokenizer = GPT2Tokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B")
-
-
-class GPTJ(HugginFaceModel):
-    def __init__(self):
-        self.model = AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-j-6B").to(utils.Parameters.devices[0])
-        self.tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
-
-    def query(self, prompt):
-        input_tokens = self.tokenizer(prompt, return_tensors="pt")
-        input_ids = input_tokens.input_ids
-        attention_mask = input_tokens.attention_mask
-        outputs = self.model.generate(input_ids, attention_mask=attention_mask, do_sample=True, temperature=0.3,
-                                      max_new_tokens=150)
-        return self.tokenizer.batch_decode(outputs, skip_special_tokens=True)[0][len(prompt):]
-
-    def __call__(self, prompt):
-        return self.query(prompt)
+class Alpaca(ParallelHuggingFaceModel):
+    def __init__(self, size="base"):
+        assert size in ["base", "large",  "gpt-4-xl", "xl", "xxl"]
+        self.tokenizer = AutoTokenizer.from_pretrained(f"declare-lab/flan-alpaca-{size}")
+        self.model = AutoModelForSeq2SeqLM.from_pretrained(f"declare-lab/flan-alpaca-{size}", model_max_length=600)
+        self.parallel(num_layers=24, num_devices=4)
