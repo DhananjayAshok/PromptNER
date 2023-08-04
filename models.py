@@ -98,7 +98,8 @@ class T5XL(ParallelHuggingFaceModel):
 
 class Alpaca(ParallelHuggingFaceModel):
     def __init__(self, size="base"):
-        assert size in ["base", "large",  "gpt-4-xl", "xl", "xxl"]
+        assert size in ["base", "large",  "gpt4-xl", "xl", "xxl"]
+        layer_sizes = {"base": 12, "large": 24, "xl": 24, "gpt4-xl": 24, "xxl": 24}
         self.tokenizer = AutoTokenizer.from_pretrained(f"declare-lab/flan-alpaca-{size}", model_max_length=600)
         self.model = AutoModelForSeq2SeqLM.from_pretrained(f"declare-lab/flan-alpaca-{size}")
-        self.parallel(num_layers=24, num_devices=4)
+        self.parallel(num_layers=layer_sizes[size], num_devices=4)

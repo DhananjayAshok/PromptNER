@@ -146,7 +146,7 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
     res_path = "results"
     gpt_limit = 20
     gpt_nruns = 1
-    other_limit = 100
+    other_limit = 200
     other_nruns = 2
     Algorithm_class = Algorithm
 
@@ -173,7 +173,7 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
                                                       exemplar=exemplar, coT=coT, defn=defn, tf=tf,
                                                       add_info=subdataset)
     else:
-        model = T5XL(size='xl')
+        model = Alpaca(size='base')
         micros, macros, df = eval_fn(model, Algorithm_class(), n_runs=other_nruns,
                                                       sleep_between_queries=None, exemplar=exemplar,
                                                       coT=coT, defn=defn, tf=tf,
@@ -191,7 +191,7 @@ def run(dataset="conll", subdataset=None, gpt=True, exemplar=True, coT=True, def
 
 def run_all_datasets(gpt=False, exemplar=True, coT=True, defn=True, tf=True,
                      name_meta="",
-                     dataset_exclude=["genia"], subdataset_exclude=[]):
+                     dataset_exclude=[], subdataset_exclude=[]):
     d = {}
     datasets = ["conll", "genia", "crossner", "fewnerd", "tweetner", "fabner"]
     subdatasets = {"crossner": ['politics', 'literature', 'ai', 'science', 'music'],
@@ -266,6 +266,6 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 
 if __name__ == "__main__":
-    from models import OpenAIGPT, T5XL
-    run(dataset="tweetner", gpt=True)
+    from models import OpenAIGPT, T5XL, Alpaca
+    run_all_datasets(gpt=False)
 
