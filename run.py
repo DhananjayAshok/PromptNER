@@ -71,19 +71,35 @@ def complete_eval(dataset, model, algorithm, n_runs=2, sleep_between_queries=Non
 
 
 def eval_conll(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True, **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     config = ConllConfig()
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        conll_train = load_conll2003("train")
+        subsample = sample_all_types(conll_train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["text"].apply(lambda x: x.split(" ")).tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
-    conll = load_conll2003("validation")
+    conll = load_conll2003("test")
     return complete_eval(conll, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
 def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True, **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     config = GeniaConfig()
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        train = load_genia()
+        subsample = sample_all_types(train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["text"].apply(lambda x: x.split(" ")).tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     genia = load_genia()
     return complete_eval(genia, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
@@ -91,27 +107,43 @@ def eval_genia(model, algorithm, n_runs=2, sleep_between_queries=None, limit=Non
 
 
 def eval_tweetner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True, **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     config = TweetNERConfig()
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        train = load_tweetner("train")
+        subsample = sample_all_types(train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["true_tokens"].tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
-    tweetner = load_tweetner()
+    tweetner = load_tweetner("validation")
     return complete_eval(tweetner, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
 def eval_fabner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True, **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     config = FabNERConfig()
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        train = load_fabner("train")
+        subsample = sample_all_types(train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["text"].apply(lambda x: x.split(" ")).tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
-    fabner = load_fabner()
+    fabner = load_fabner("test")
     return complete_eval(fabner, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
 def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True, **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     cats = ['politics', 'literature', 'ai', 'science', 'music']
     confs = [CrossNERPoliticsConfig(), CrossNERLiteratureConfig(), CrossNERAIConfig(),
              CrossNERNaturalSciencesConfig(), CrossNERMusicConfig()]
@@ -120,14 +152,22 @@ def eval_cross_ner(model, algorithm, n_runs=2, sleep_between_queries=None, limit
     i = cats.index(category)
     config = confs[i]
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        train = load_cross_ner(category=category, split="train")
+        subsample = sample_all_types(train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["text"].apply(lambda x: x.split(" ")).tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
-    dataset = load_cross_ner(category=category)
+    dataset = load_cross_ner(category=category, split="test")
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
                          limit=limit)
 
 
 def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, limit=None, exemplar=True, coT=True,
-                        defn=True, tf=True,  **kwargs):
+                        defn=True, tf=True, autogen=True, **kwargs):
     splits = ["test"]
     confs = [FewNERDINTRATestConfig()]
     split = kwargs.get("add_info")
@@ -135,6 +175,14 @@ def eval_few_nerd_intra(model, algorithm, n_runs=2, sleep_between_queries=None, 
     i = splits.index(split)
     config = confs[i]
     algorithm.split_phrases = False
+    if autogen:
+        algorithm.set_model_fn(model)
+        train = load_few_nerd(category="intra", split=split)
+        subsample = sample_all_types(train, 3)
+        texts = subsample["text"].tolist()
+        tokens = subsample["text"].apply(lambda x: x.split(" ")).tolist()
+        labels = subsample["exact_types"].tolist()
+        config.autogenerate_annotations(algorithm, texts, tokens, labels)
     config.set_config(algorithm, exemplar=exemplar, coT=coT, defn=defn, tf=tf)
     dataset = load_few_nerd(category="intra", split=split)
     return complete_eval(dataset, model, algorithm, n_runs=n_runs, sleep_between_queries=sleep_between_queries,
@@ -267,5 +315,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL, Alpaca
-    run_all_datasets(gpt=False)
+    run(gpt=True)
 

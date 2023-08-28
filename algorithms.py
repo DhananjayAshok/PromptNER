@@ -1,4 +1,5 @@
 import string
+import numpy as np
 import utils
 from utils import AnswerMapping
 from nltk.corpus import stopwords
@@ -11,6 +12,8 @@ class BaseAlgorithm:
            "adverbs, abstract concepts are not entities. Dates, years and times are not entities"
 
     chatbot_init = "You are an entity recognition system. "
+    entity_token_task = "In the sentence '[sent]'. The phrase '[token]' is an entity of type [type]. In one line explain why. \nAnswer: The phrase '[token]' is an entity of type [type] because"
+    nonentity_token_task = "In the sentence '[sent]'. The phrase '[token]' is not an entity. In one line explain why. \nAnswer: The phrase '[token]' is not an entity because"
 
     # if [] = n then there are O(n^2) phrase groupings
 
@@ -221,6 +224,60 @@ class Algorithm(BaseAlgorithm):
         else:
             return final, typestrings, output
 
+    def get_annotation(self, token, ner_label):
+        if ner_label == "O":
+            task_string = self.nonentity_token_task.replace("[sent]", self.para)
+            task_string = task_string.replace("[token]", token)
+        else:
+            task_string = self.entity_token_task.replace("[sent]", self.para)
+            task_string = task_string.replace("[token]", token)
+            task_string = task_string.replace("[type]", ner_label)
+        if self.model_fn.is_chat():
+            msgs = [(self.defn, "system"), (task_string, "user")]
+            output = self.model_fn(msgs)
+        else:
+            task_string = self.defn + "\n" + task_string
+            output = self.model_fn(task_string)
+        return output
+
+    def generate_annotations(self, tokens, ner_labels, max_falses=3):
+        false_indices = []
+        annots = []
+        for i, token in enumerate(tokens):
+            if ner_labels[i] != "O":
+                annot = self.get_annotation(token, ner_labels[i])
+                annots.append(annot)
+            else:
+                if token.strip().strip(string.punctuation).strip() == '' \
+                        or token.strip() in stopwords.words('english') or token.isnumeric():
+                    annots.append(None)
+                else:
+                    false_indices.append(i)
+                    annot = self.get_annotation(token, "O")
+                    annots.append(annot)
+        if len(false_indices) > max_falses:
+            false_indices = np.random.choice(false_indices, max_falses, replace=False)
+            false_indices.sort()
+        annot_str = "Answer: \n"
+        no = 1
+        for i, token in enumerate(tokens):
+            if annots[i] is None:
+                pass
+            else:
+                appendage = "\n" + f"{no}. {token} | {ner_labels[i] != 'O'} | {annots[i]}"
+                if ner_labels[i] != 'O':
+                    if ner_labels[i][:2] in ["B-", "I-"]:
+                        label = ner_labels[i][2:]
+                    else:
+                        label = ner_labels[i]
+                    annot_str = annot_str + appendage + f"({label})"
+                    no += 1
+                else:
+                    if i in false_indices:
+                        annot_str = annot_str + appendage
+                        no += 1
+        return annot_str
+
 
 class MultiAlgorithm(Algorithm):
 
@@ -417,7 +474,6 @@ class Config:
             exemplar_construction = exemplar_construction + dispute_task + "\n"
             alg.dispute_task_exemplars = exemplar_construction
             alg.dispute_task = dispute_task
-
         if defn:
             alg.defn = self.defn
         else:
@@ -484,6 +540,19 @@ class Config:
                 exemplar_construction = exemplar_construction + whole_task + "\n"
                 alg.exemplar_task = exemplar_construction
 
+    def autogenerate_annotations(self, alg, texts, tokens, labels, max_examples=3):
+        cot_exemplars = []
+        for i in range(len(texts[:max_examples])):
+            text = texts[i]
+            token = tokens[i]
+            label = labels[i]
+            alg.set_para(text)
+            exemplar = text + "\n" + alg.generate_annotations(token, label)
+            cot_exemplars.append(exemplar)
+        self.cot_exemplars = cot_exemplars
+
+
+
 
 class ConllConfig(Config):
     defn = "An entity is a person (PER), title, named organization (ORG), location (LOC), country (LOC) or nationality (MISC)." \
@@ -526,49 +595,6 @@ class ConllConfig(Config):
     
     """
 
-    cot_unrandom_exemplar_1 = """
-    After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .
-
-    Answer:
-    1. Somerset | True | Somerset is used as a sporting team here, not a location hence it is an organisation (ORG)
-    2. Grace Road | True | the game is played at Grace Road, hence it is a place or location (LOC)
-    3. Leicestershire | True | is the name of a cricket team that is based in the town of Leicestershire, hence it is an organisation (ORG). 
-    4. innings | False | as it is an abstract concept of a phase in play of cricket
-    5. England | True | as it is a place or location (LOC)
-    6. Andy Caddick | True | as it is the name of a person. (PER) 
-    """
-    cot_exemplar_2 = """
-    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
-
-    Answer:
-    1. Their | False | as it is a possessive pronoun
-    2. stay | False | as it is an action
-    3. title rivals | False | as it is an abstract concept
-    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
-    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
-    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
-    7. victory | False | as it is an abstract concept
-    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-
-    """
-
-    cot_exemplar_2 = """
-    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
-
-    Answer:
-    1. Their | False | as it is a possessive pronoun
-    2. stay | False | as it is an action
-    3. title rivals | False | as it is an abstract concept
-    4. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
-    5. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
-    6. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
-    7. victory | False | as it is an abstract concept
-    8. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-    9. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-
-    """
-
     cot_exemplar_3 = """
     But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
     
@@ -580,26 +606,6 @@ class ConllConfig(Config):
     5. July | False | as it is a date
     """
 
-    cot_unrandom_exemplar_2 = """
-    Their stay on top , though , may be short-lived as title rivals Essex , Derbyshire and Surrey all closed in on victory while Kent made up for lost time in their rain-affected match against Nottinghamshire .
-
-    Answer:
-    1. title rivals | False | as it is an abstract concept
-    2. Essex | True |  Essex are title rivals is it a sporting team organisation not a location (ORG)
-    3. Derbyshire | True |  Derbyshire are title rivals is it a sporting team organisation not a location (ORG)
-    4. Surrey | True |  Surrey are title rivals is it a sporting team organisation not a location (ORG)
-    5. victory | False | as it is an abstract concept
-    6. Kent | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-    7. Nottinghamshire | True |  Kent lost to Nottinghamshire, it is a sporting team organisation not a location (ORG)
-    """
-
-    cot_unrandom_exemplar_3 = """
-    But more money went into savings accounts , as savings held at 5.3 cents out of each dollar earned in both June and July .
-
-    Answer:
-    1. money | False | as it is not a named person, organization or location
-    2. savings account | False | as it is not a person, organization or location
-    """
     cot_exemplars = [cot_exemplar_1, cot_exemplar_2, cot_exemplar_3]
 
     no_tf_exemplar_1 = """

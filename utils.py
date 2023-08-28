@@ -1,6 +1,8 @@
 
 import string
 import re
+from numpy.random import choice
+from nltk.corpus import stopwords
 
 
 def find_nth_str(haystack, needle, n):

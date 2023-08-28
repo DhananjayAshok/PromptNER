@@ -319,9 +319,9 @@ def load_few_nerd(few_nerd_path="data/FewNERD", category="intra", split="test"):
     return read_ob2(file_path)
 
 
-def load_cross_ner(cross_ner_path='data/CrossNER', category="ai"):
+def load_cross_ner(cross_ner_path='data/CrossNER', category="ai", split="train"):
     assert category in ['politics', 'literature', 'ai', 'science', 'conll2003', 'music']
-    file_path = os.path.join(cross_ner_path, "ner_data", category, "dev.txt")
+    file_path = os.path.join(cross_ner_path, "ner_data", category, f"{split}.txt")
     return read_ob2(file_path)
 
 

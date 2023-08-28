@@ -25,8 +25,11 @@ class Quick:
         e.set_para(para)
         e.set_model_fn(model)
         config.set_config(e, exemplar=True, coT=True, tf=True)
-        ret, _ = e.perform_span(verbose=verbose)
-        Quick.analyze(q, ret)
+        #tokens =
+        ret = e.generate_annotations(para.split(" "), q["exact_types"])
+        print(ret)
+        #ret, _ = e.perform_span(verbose=verbose)
+        #Quick.analyze(q, ret)
         return
 
     @staticmethod
@@ -69,7 +72,7 @@ class Quick:
         return Quick.dataset(i, train_dset=few_nerd_train, config=config, model=model, verbose=verbose)
 
 
-e = MultiAlgorithm(resolve_disputes=True)
+e = Algorithm()
 genia_train = load_genia()
 conll_train = load_conll2003()
 few_nerd_train = load_few_nerd()
