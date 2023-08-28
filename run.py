@@ -315,5 +315,5 @@ def ablate_best(gpt=False, dataset_exclude=["genia"], subdataset_exclude=["polit
 
 if __name__ == "__main__":
     from models import OpenAIGPT, T5XL, Alpaca
-    run(gpt=True)
+    run_all_datasets(gpt=True)
 
