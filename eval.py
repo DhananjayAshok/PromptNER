@@ -101,10 +101,16 @@ def analytics(d):
             type_d[true_tag][pred_tag] = type_d[true_tag].get(pred_tag, 0) + 1
     print(f"Correlation is: ")
     print(d.corr()["f1"])
-    for etype in type_d:
-        for key in type_d[etype]:
-            if type_d[e_type][key] == 0:
-                type_d[e_type].pop(key)
+    print(f"NER Tags: {type_d.keys()}")
+    for truth_type in type_d:
+        print(f"True Tag: {truth_type}, Predicted: {type_d[truth_type]}")
+        n_corr = 0
+        n_mist = 0
+        for pred_type in type_d[truth_type]:
+            if pred_type == truth_type:
+                n_corr = type_d[truth_type][pred_type]
+            else:
+                n_mist += type_d[truth_type][pred_type]
     return type_d
 
 
