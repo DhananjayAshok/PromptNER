@@ -12,7 +12,7 @@ import warnings
 import random
 from seqeval.metrics import f1_score as seq_f1
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 results_dir = "results"
 
 
@@ -91,16 +91,10 @@ def analytics(d):
     print(f"Correlation is: ")
     print(d.corr()["f1"])
     conf = confusion_matrix(truths, preds, labels=all_types)
-    return conf
-
-
-
-
-
-
-
-
-
+    disp = ConfusionMatrixDisplay(confusion_matrix=conf, display_labels=all_types)
+    disp.plot()
+    plt.show()
+    return disp
 
 
 def_pre = "Named entities are phrases that represent the name of a "
