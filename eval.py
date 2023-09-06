@@ -11,6 +11,8 @@ from models import OpenAIGPT
 import warnings
 import random
 from seqeval.metrics import f1_score as seq_f1
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 results_dir = "results"
 
 
@@ -76,42 +78,20 @@ def analytics(d):
     for i in d.index:
         types = list(set(d.loc[i, "truth"]))
         all_types.extend(types)
-    all_types = set(all_types)
-    type_d = {}
-    for e_type in all_types:
-        type_d[e_type] = {}
-        for other_type in all_types:
-            type_d[e_type][other_type] = 0  # this will be how many times truth was etype and pred was othertype
+    all_types = list(set(all_types))
+    all_types.sort()
+    truths = []
+    preds = []
     for i in d.index:
         row = d.loc[i]
-        truths = row["truth"]
+        truth = row["truth"]
         pred = row["pred"]
-        for j in range(len(truths)):
-            true_tag = truths[j]
-            pred_tag = pred[j]
-            if true_tag not in type_d:
-                print(f"true tag {true_tag} not in type_d: {type_d.keys()}")
-                type_d[true_tag] = {}
-                for other_type in all_types:
-                    type_d[true_tag][other_type] = 0  # this will be how many times truth was etype and pred was othertype
-                for key in type_d:
-                    if true_tag in type_d[key].keys():
-                        continue
-                    type_d[key][true_tag] = 0
-            type_d[true_tag][pred_tag] = type_d[true_tag].get(pred_tag, 0) + 1
+        truths.extend(truth)
+        preds.extend(pred)
     print(f"Correlation is: ")
     print(d.corr()["f1"])
-    print(f"NER Tags: {type_d.keys()}")
-    for truth_type in type_d:
-        print(f"True Tag: {truth_type}, Predicted: {type_d[truth_type]}")
-        n_corr = 0
-        n_mist = 0
-        for pred_type in type_d[truth_type]:
-            if pred_type == truth_type:
-                n_corr = type_d[truth_type][pred_type]
-            else:
-                n_mist += type_d[truth_type][pred_type]
-    return type_d
+    conf = confusion_matrix(truths, preds, labels=all_types)
+    return conf
 
 
 
