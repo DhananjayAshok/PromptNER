@@ -1,0 +1,467 @@
+text,entities,truth,pred,meta,f1,pred_text,truth_text,correct
+"The number of operations on men increased even more -- by 80 percent , from 8,000 in 1994 to 15,000 in 1995 , he said .",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. The number of operations | False | as it is not a named entity
+    2. men | False | it only mentions a generic term 'men' which is not a specific person, organization, or location
+    3. 80 percent | False | as it is an amount, not a named entity
+    4. 8,000 | False | as it is a number
+    5. 1994 | False | as it is a date
+    6. 15,000 | False | as it is a number
+    7. 1995 | False | as it is a date
+    8. he | False | as it is a pronoun and no specific person is named",0.0,"The | O number | O of | O operations | O on | O men | O increased | O even | O more | O -- | O by | O 80 | O percent | O , | O from | O 8,000 | O in | O 1994 | O to | O 15,000 | O in | O 1995 | O , | O he | O said | O . | O","The | O number | O of | O operations | O on | O men | O increased | O even | O more | O -- | O by | O 80 | O percent | O , | O from | O 8,000 | O in | O 1994 | O to | O 15,000 | O in | O 1995 | O , | O he | O said | O . | O",True
+"Poland said on Friday that Swiss bank accounts , which in many cases belonged to Polish Jews who died in the Holocaust , were used in debt settlements between the two countries after the World War Two .","['Poland', 'Swiss', 'Polish', 'Jews', 'Holocaust', 'World War Two']","['B-LOC', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'B-MISC', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O']","['B-LOC', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'I-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'I-MISC', 'I-MISC', 'O']","1. Poland (True) | Poland is a country, therefore it is a location (LOC).
+2. Friday (False) | Friday represents a day of the week, not a specific date or named entity.
+3. Swiss bank (True) | Swiss bank is a named organization (ORG).
+4. Polish Jews (True) | Jew is a term for people of the Jewish ethnicity or religion. Therefore, Polish Jews, people of Jewish religion or ethnicity from Poland is an ethnic/national group (MISC).
+5. Holocaust (False) | Holocaust is an event, not a person, organization or location.
+6. debt settlements (False) | Debt settlements is a process or event, not a specific named entity.
+7. two countries (False) | 'two countries' is a general term, the actual names of the countries would have been entities.
+8. World War Two (True) | World War Two is a specific event, though not a traditional entity, it can be considered a named event (MISC).",0.4,"Poland | B-LOC said | O on | O Friday | O that | O Swiss | B-ORG bank | I-ORG accounts | O , | O which | O in | O many | O cases | O belonged | O to | O Polish | B-MISC Jews | I-MISC who | O died | O in | O the | O Holocaust | O , | O were | O used | O in | O debt | O settlements | O between | O the | O two | O countries | O after | O the | O World | B-MISC War | I-MISC Two | I-MISC . | O","Poland | B-LOC said | O on | O Friday | O that | O Swiss | B-MISC bank | O accounts | O , | O which | O in | O many | O cases | O belonged | O to | O Polish | B-MISC Jews | B-MISC who | O died | O in | O the | O Holocaust | B-MISC , | O were | O used | O in | O debt | O settlements | O between | O the | O two | O countries | O after | O the | O World | B-MISC War | I-MISC Two | I-MISC . | O",False
+Anke Baler ( Germany ) 41.76 .,"['Anke Baler', 'Germany']","['B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'O']","['B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'O']","1. Anke Baler | True | as it is the name of a person (PER).
+    2. Germany | True | as it is the country (LOC) from where Anke Baler is.
+    3. 41.76 | False | as it is just a number, which is not an entity.",1.0,Anke | B-PER Baler | I-PER ( | O Germany | B-LOC ) | O 41.76 | O . | O,Anke | B-PER Baler | I-PER ( | O Germany | B-LOC ) | O 41.76 | O . | O,True
+Kanchelskis 28 ) .,['Kanchelskis'],"['B-PER', 'O', 'O', 'O']","['B-PER', 'O', 'O', 'O']","1. Kanchelskis | True | Is a surname likely referring to a named person, Andrei Kanchelskis who is a personality in the world of football (PER).
+    2. 28 | False | as it is a number and has no identifiable stand-alone meaning in this context.",1.0,Kanchelskis | B-PER 28 | O ) | O . | O,Kanchelskis | B-PER 28 | O ) | O . | O,True
+Only bonds freely available to institutional investors and with a certain minimum amount outstanding are included .,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. bonds | False | as it is not a named person, organization or location
+    2. institutional investors | False | as it is a general term
+    3. minimum amount outstanding | False | as it is a financial term, not a specific, tangible entity.",0.0,Only | O bonds | O freely | O available | O to | O institutional | O investors | O and | O with | O a | O certain | O minimum | O amount | O outstanding | O are | O included | O . | O,Only | O bonds | O freely | O available | O to | O institutional | O investors | O and | O with | O a | O certain | O minimum | O amount | O outstanding | O are | O included | O . | O,True
+Teams :,[],"['O', 'O']","['O', 'O']","Teams | False | It's a common noun, not a proper noun and does not specifically relate to a person, organization or location.",0.0,Teams | O : | O,Teams | O : | O,True
+"British Airways 's initial response was that "" unconditional divestiture of slots is unprecedented and if done it must be on the basis of fair market value . """,['British Airways'],"['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. British Airways | True | as it is a named organization (ORG)
+    2. initial response | False | as it is an event, not a named person, organization, or location
+    3. unconditional divestiture of slots | False | as it is an event or action, not a named person, organization, or location
+    4. unprecedented | False | as it is a description, not a named person, organization, or location
+    5. fair market value | False | as it is economical concept, not a named person, organization, or location.",1.0,"British | B-ORG Airways | I-ORG 's | O initial | O response | O was | O that | O "" | O unconditional | O divestiture | O of | O slots | O is | O unprecedented | O and | O if | O done | O it | O must | O be | O on | O the | O basis | O of | O fair | O market | O value | O . | O "" | O","British | B-ORG Airways | I-ORG 's | O initial | O response | O was | O that | O "" | O unconditional | O divestiture | O of | O slots | O is | O unprecedented | O and | O if | O done | O it | O must | O be | O on | O the | O basis | O of | O fair | O market | O value | O . | O "" | O",True
+Net 6.20 5.36,[],"['O', 'O', 'O']","['O', 'O', 'O']","1. Net | False | as it is a term, not a named person, organization or location
+2. 6.20 | False | as it is a number
+3. 5.36 | False | as it is a number",0.0,Net | O 6.20 | O 5.36 | O,Net | O 6.20 | O 5.36 | O,True
+Sep 97 69.18 69.24 65.17 66.61-71.34,[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","1. Sep 97 | False | as it is a month and year, not a person, organization, or location 
+    2. 69.18, 69.24, 65.17, 66.61-71.34 | False | as they are numbers, not entities",0.0,Sep | O 97 | O 69.18 | O 69.24 | O 65.17 | O 66.61-71.34 | O,Sep | O 97 | O 69.18 | O 69.24 | O 65.17 | O 66.61-71.34 | O,True
+CLEVELAND 11 6 .647 5 1/2,['CLEVELAND'],"['B-ORG', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O']","1. CLEVELAND | True | As it refers to a baseball team based in Cleveland, it is an organization (ORG)
+   2. 11 | False | as it is a number
+   3. 6 | False | as it is a number
+   4. .647 | False | as it is a number
+   5. 5 1/2 | False | as it is a number",1.0,CLEVELAND | B-ORG 11 | O 6 | O .647 | O 5 | O 1/2 | O,CLEVELAND | B-ORG 11 | O 6 | O .647 | O 5 | O 1/2 | O,True
+INDIANAPOLIS 8 6 0 269 284,['INDIANAPOLIS'],"['B-ORG', 'O', 'O', 'O', 'O', 'O']","['B-LOC', 'O', 'O', 'O', 'O', 'O']","1. INDIANAPOLIS | True | INDIANAPOLIS could mean the city in which is a location(LOC) or a sports team which would be an organisation (ORG).
+2. 8 | False | 8 is a simple number, and has no specific named entity or distinct existence.
+3. 6 | False | Like 8, 6 is also just a number and not a named entity.
+4. 0 | False | 0 is yet another number and isn't a named entity.
+5. 269 | False | like previous numbers, 269 isn't a named entity.
+6. 284 | False | 284, as with all the other numbers listed, is just a number and holds no significant entity in-person, location, organization, etc.",0.0,INDIANAPOLIS | B-LOC 8 | O 6 | O 0 | O 269 | O 284 | O,INDIANAPOLIS | B-ORG 8 | O 6 | O 0 | O 269 | O 284 | O,False
+"Canada 's Bre-X Minerals Ltd and Barrick Gold Corp are to continue negotiations to hammer out a partnership agreement to develop the spectacular Busang gold find in Indonesia , sources close to the talks said on Friday .","['Canada', 'Bre-X Minerals Ltd', 'Barrick Gold Corp', 'Busang', 'Indonesia']","['B-LOC', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-LOC', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Canada | True | as it is a place or location (LOC).
+2. Bre-X Minerals Ltd | True | as it is an organization. (ORG)
+3. Barrick Gold Corp | True | as it is an organization. (ORG)
+4. partnership agreement | False | as it is an action
+5. Busang | True | Busang gold find indicates it is a location of a gold mine hence it is a location. (LOC)
+6. Indonesia | True | as it is a place or location (LOC).
+7. sources | False | as it is not a specific identified group or individuals
+8. talks | False | as it is an action
+9. Friday | False | as it is a date.",1.0,"Canada | B-LOC 's | O Bre-X | B-ORG Minerals | I-ORG Ltd | I-ORG and | O Barrick | B-ORG Gold | I-ORG Corp | I-ORG are | O to | O continue | O negotiations | O to | O hammer | O out | O a | O partnership | O agreement | O to | O develop | O the | O spectacular | O Busang | B-LOC gold | O find | O in | O Indonesia | B-LOC , | O sources | O close | O to | O the | O talks | O said | O on | O Friday | O . | O","Canada | B-LOC 's | O Bre-X | B-ORG Minerals | I-ORG Ltd | I-ORG and | O Barrick | B-ORG Gold | I-ORG Corp | I-ORG are | O to | O continue | O negotiations | O to | O hammer | O out | O a | O partnership | O agreement | O to | O develop | O the | O spectacular | O Busang | B-LOC gold | O find | O in | O Indonesia | B-LOC , | O sources | O close | O to | O the | O talks | O said | O on | O Friday | O . | O",True
+"12/15/2000 1,250M 6.25 4.10",[],"['O', 'O', 'O', 'O']","['O', 'O', 'O', 'O']","None of the provided elements are entities. They appear to be numbers and dates, which are not entities in terms of being a person (PER), title, named organization (ORG), location (LOC), country (LOC) or nationality (MISC). 
+
+1. 12/15/2000 | False | as it is a date
+2. 1,250M | False | as it is a numeric value
+3. 6.25 | False | as it is a numeric value
+4. 4.10 | False | as it is a numeric value",0.0,"12/15/2000 | O 1,250M | O 6.25 | O 4.10 | O","12/15/2000 | O 1,250M | O 6.25 | O 4.10 | O",True
+Summary of Saturday 's Spanish first division match :,['Spanish'],"['O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O']","1. Summary | False | as it is not a named person, organization or location
+2. Saturday | False | as it represents a day of the week, with no distinct and independent existence.
+3. Spanish first division | True | as it references the Spanish professional football division, hence it is an organization (ORG)
+4. match | False | as it is an event, not a named entity.",0.0,Summary | O of | O Saturday | O 's | O Spanish | B-ORG first | I-ORG division | I-ORG match | O : | O,Summary | O of | O Saturday | O 's | O Spanish | B-MISC first | O division | O match | O : | O,False
+"The Palestine Liberation Organisation ( PLO ) negotiators said the last two weeks of talks with Israel on implementing the long-delayed handover of most of Hebron to PLO rule had been "" meaningless "" , necessitating an Arafat-Netanyahu meeting .","['Palestine Liberation Organisation', 'PLO', 'Israel', 'Hebron', 'PLO']","['O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O']","1. The Palestine Liberation Organisation (PLO) | True | as it is a political organization (ORG)
+    2. negotiators | False | as it is a general term, not specific to any individual
+    3. talks | False | as it is an event
+    4. Israel | True | as it is a country (LOC)
+    5. Hebron | True | as it is a location (LOC)
+    6. PLO rule | False | as ""PLO"" is already mentioned as an organization separately and ""rule"" is not a named object or person
+    7. Arafat-Netanyahu meeting | True | this is a slightly tricky case as it refers indirectly to two people, Yasser Arafat & Benjamin Netanyahu. Hence, it can be considered as a two entities - Yasser Arafat (PER) and Benjamin Netanyahu (PER).",0.4444444444444445,"The | B-ORG Palestine | I-ORG Liberation | I-ORG Organisation | I-ORG ( | O PLO | O ) | O negotiators | O said | O the | O last | O two | O weeks | O of | O talks | O with | O Israel | B-LOC on | O implementing | O the | O long-delayed | O handover | O of | O most | O of | O Hebron | B-LOC to | O PLO | O rule | O had | O been | O "" | O meaningless | O "" | O , | O necessitating | O an | O Arafat-Netanyahu | B-PER meeting | I-PER . | O","The | O Palestine | B-ORG Liberation | I-ORG Organisation | I-ORG ( | O PLO | B-ORG ) | O negotiators | O said | O the | O last | O two | O weeks | O of | O talks | O with | O Israel | B-LOC on | O implementing | O the | O long-delayed | O handover | O of | O most | O of | O Hebron | B-LOC to | O PLO | B-ORG rule | O had | O been | O "" | O meaningless | O "" | O , | O necessitating | O an | O Arafat-Netanyahu | O meeting | O . | O",False
+WEATHER - Conditions at CIS airports - Dec 6 .,['CIS'],"['O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O']","1. WEATHER | False | as it is not a named person, organization or location
+2. Conditions | False | as it is not a named person, organization or location
+3. CIS airports | True | as it is a named organization (ORG) 
+4. Dec 6 | False | as it is a date and not a person, organization or location.",0.0,WEATHER | O - | O Conditions | O at | O CIS | B-ORG airports | I-ORG - | O Dec | O 6 | O . | O,WEATHER | O - | O Conditions | O at | O CIS | B-LOC airports | O - | O Dec | O 6 | O . | O,False
+""" It was the joy that we all had over the period , that I shared with people that I grew to love , that I treasure most , "" he added .",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. It | False | as it is a pronoun 
+2. joy | False | as it refers to an emotion, not a specific entity
+3. people | False | as it is a generic term, not specific entity
+4. I | False | as it is a pronoun 
+5. he | False | as it is a pronoun",0.0,""" | O It | O was | O the | O joy | O that | O we | O all | O had | O over | O the | O period | O , | O that | O I | O shared | O with | O people | O that | O I | O grew | O to | O love | O , | O that | O I | O treasure | O most | O , | O "" | O he | O added | O . | O",""" | O It | O was | O the | O joy | O that | O we | O all | O had | O over | O the | O period | O , | O that | O I | O shared | O with | O people | O that | O I | O grew | O to | O love | O , | O that | O I | O treasure | O most | O , | O "" | O he | O added | O . | O",True
+Coleraine 10 7 1 2 18 11 22,['Coleraine'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Coleraine | True | This is a name, which in this case represents a sports team, thus qualifying as an organization (ORG)
+    2. 10 | False | This is just a number, not an entity
+    3. 7 | False | This is just a number, not an entity
+    4. 1 | False | This is just a number, not an entity
+    5. 2 | False | This is just a number, not an entity
+    6. 18 | False | This is just a number, not an entity
+    7. 11 | False | This is just a number, not an entity
+    8. 22 | False | This is just a number, not an entity.",1.0,Coleraine | B-ORG 10 | O 7 | O 1 | O 2 | O 18 | O 11 | O 22 | O,Coleraine | B-ORG 10 | O 7 | O 1 | O 2 | O 18 | O 11 | O 22 | O,True
+"useful progress was made on a number of issues , but not all .",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. useful progress | False | as it is not a named person, organization or location
+    2. number of issues | False | as it is an abstract concept
+    3. all | False | as it is not a person, organization or location",0.0,"useful | O progress | O was | O made | O on | O a | O number | O of | O issues | O , | O but | O not | O all | O . | O","useful | O progress | O was | O made | O on | O a | O number | O of | O issues | O , | O but | O not | O all | O . | O",True
+The freak accident occurred in Mafikeng on Thursday .,['Mafikeng'],"['O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O']","1. freak accident | False | as it is an event
+    2. Mafikeng | True | as it is a location (LOC)
+    3. Thursday | False | as it is a date/time",1.0,The | O freak | O accident | O occurred | O in | O Mafikeng | B-LOC on | O Thursday | O . | O,The | O freak | O accident | O occurred | O in | O Mafikeng | B-LOC on | O Thursday | O . | O,True
+"Lahd , a 69-year-old former Lebanese army major-general , heads the 3,000-strong SLA militia which helps Israel hold a border zone in south Lebanon to ward off cross-frontier guerrilla raids on northern Israel .","['Lahd', 'Lebanese', 'SLA', 'Israel', 'Lebanon', 'Israel']","['B-PER', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O']","['B-PER', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'I-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'I-LOC', 'O']","1. Lahd | True | as it is the name of a person and thus a person entity (PER)
+    2. 69-year-old | False | as this is an age value but not a person, organization or location
+    3. Lebanese | True | as it can refer to nationality (MISC)
+    4. army | False | as it is not named
+    5. major-general | False | as it is a title but not a unique name
+    6. 3,000-strong SLA militia | False | as it lacks a named identifier, thus not a named organization
+    7. Israel | True | as it is a country and hence a location entity (LOC)
+    8. border zone | False | as it is not a unique and named location
+    9. south Lebanon | True | as it is referring to a unique location (LOC)
+   10. cross-frontier guerrilla raids | False | as it refers to an event rather than a named entity
+   11. northern Israel | True | as it is referring to a unique location (LOC)",0.5454545454545454,"Lahd | B-PER , | O a | O 69-year-old | O former | O Lebanese | B-MISC army | O major-general | O , | O heads | O the | O 3,000-strong | O SLA | O militia | O which | O helps | O Israel | B-LOC hold | O a | O border | O zone | O in | O south | B-LOC Lebanon | I-LOC to | O ward | O off | O cross-frontier | O guerrilla | O raids | O on | O northern | B-LOC Israel | I-LOC . | O","Lahd | B-PER , | O a | O 69-year-old | O former | O Lebanese | B-MISC army | O major-general | O , | O heads | O the | O 3,000-strong | O SLA | B-ORG militia | O which | O helps | O Israel | B-LOC hold | O a | O border | O zone | O in | O south | O Lebanon | B-LOC to | O ward | O off | O cross-frontier | O guerrilla | O raids | O on | O northern | O Israel | B-LOC . | O",False
+Montpellier 20 3 9 8 17 24 18,['Montpellier'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Montpellier | True | is used as a sporting team here, not a location hence it is an organisation (ORG)
+    2. 20 | False | as it is a number
+    3. 3 | False | as it is a number
+    4. 9 | False | as it is a number
+    5. 8 | False | as it is a number
+    6. 17 | False | as it is a number
+    7. 24 | False | as it is a number
+    8. 18 | False | as it is a number",1.0,Montpellier | B-ORG 20 | O 3 | O 9 | O 8 | O 17 | O 24 | O 18 | O,Montpellier | B-ORG 20 | O 3 | O 9 | O 8 | O 17 | O 24 | O 18 | O,True
+In-form Napoli should prove too strong for second from bottom Verona despite the absence of their suspended Argentine defender Roberto Ayala .,"['Napoli', 'Verona', 'Argentine', 'Roberto Ayala']","['O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'I-PER', 'O']","['O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'I-PER', 'O']","1. Napoli | True | Napoli is mentioned as a team, hence it is an organisation (ORG)
+    2. Verona | True | Verona is mentioned as a team, hence it is an organisation (ORG)
+    3. Argentine | True | Argentine is relating to Argentina, which is a nationality hence it is a geographical location/nationality (MISC)
+    4. Roberto Ayala | True | Roberto Ayala is a person's name, hence it is a person (PER)",1.0,In-form | O Napoli | B-ORG should | O prove | O too | O strong | O for | O second | O from | O bottom | O Verona | B-ORG despite | O the | O absence | O of | O their | O suspended | O Argentine | B-MISC defender | O Roberto | B-PER Ayala | I-PER . | O,In-form | O Napoli | B-ORG should | O prove | O too | O strong | O for | O second | O from | O bottom | O Verona | B-ORG despite | O the | O absence | O of | O their | O suspended | O Argentine | B-MISC defender | O Roberto | B-PER Ayala | I-PER . | O,True
+10= Megan Gerety ( U.S. ) 51,"['Megan Gerety', 'U.S.']","['O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O']","['O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O']","1. 10 | False | as it is a number
+    2. Megan Gerety | True | as it is the name of a person (PER)
+    3. U.S | True | as it is a country (LOC)
+    4. 51 | False | as it is a number.",0.6666666666666666,10= | O Megan | B-PER Gerety | I-PER ( | O U.S. | O ) | O 51 | O,10= | O Megan | B-PER Gerety | I-PER ( | O U.S. | B-LOC ) | O 51 | O,False
+Sheffield United 21 11 6 4 38 20 39,['Sheffield United'],"['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Sheffield United | True | It is the name of a football team, hence can be categorized as an organization (ORG).
+2. 21, 11, 6, 4, 38, 20, 39 | False | These are numbers and do not represent any particular entity.",1.0,Sheffield | B-ORG United | I-ORG 21 | O 11 | O 6 | O 4 | O 38 | O 20 | O 39 | O,Sheffield | B-ORG United | I-ORG 21 | O 11 | O 6 | O 4 | O 38 | O 20 | O 39 | O,True
+"On the KCBT , January finished 26.5 cents lower at $ 3.35 after dipping to a low of $ 3.33 earlier in the session .",['KCBT'],"['O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. KCBT | True | short for Kansas City Board of Trade, a named organization (ORG)
+    2. January | False | as it is a date
+    3. 26.5 | False | as it is a number
+    4. $ 3.35 | False | as it is a value
+    5. $ 3.33 | False | as it is a value
+    6. session | False | as it is not a named person, organization, or location.",1.0,"On | O the | O KCBT | B-ORG , | O January | O finished | O 26.5 | O cents | O lower | O at | O $ | O 3.35 | O after | O dipping | O to | O a | O low | O of | O $ | O 3.33 | O earlier | O in | O the | O session | O . | O","On | O the | O KCBT | B-ORG , | O January | O finished | O 26.5 | O cents | O lower | O at | O $ | O 3.35 | O after | O dipping | O to | O a | O low | O of | O $ | O 3.33 | O earlier | O in | O the | O session | O . | O",True
+It said in a statement that it made profits of 4.5 million kroons in November .,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. It | False | as it is a pronoun
+    2. statement | False | as it is not a named person, organization or location
+    3. profits | False | as it is not a named person, organization or location
+    4. 4.5 million kroons | False | as it is an amount of currency, not a person, organization or place
+    5. November | False | as it is a named time period, but not a location, organization or nationality",0.0,It | O said | O in | O a | O statement | O that | O it | O made | O profits | O of | O 4.5 | O million | O kroons | O in | O November | O . | O,It | O said | O in | O a | O statement | O that | O it | O made | O profits | O of | O 4.5 | O million | O kroons | O in | O November | O . | O,True
+"Saturday 12/07/96 ( est ) 38,000 0 18,000",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Saturday | False | as it is a day of the week.
+2. 12/07/96 | False | as it is a date.
+3. est | False | as it could possibly be an abbreviation but it does not refer to a person or an organization.
+4. 38,000 | False | as it is a number.
+5. 0 | False | as it is a number.
+6. 18,000 | False | as it is a number.",0.0,"Saturday | O 12/07/96 | O ( | O est | O ) | O 38,000 | O 0 | O 18,000 | O","Saturday | O 12/07/96 | O ( | O est | O ) | O 38,000 | O 0 | O 18,000 | O",True
+SHANGHAI 1996-12-06,['SHANGHAI'],"['B-LOC', 'O']","['B-LOC', 'O']","1. SHANGHAI | True | as it is a place, city (LOC)
+    2. 1996-12-06 | False | as it is a date",1.0,SHANGHAI | B-LOC 1996-12-06 | O,SHANGHAI | B-LOC 1996-12-06 | O,True
+"Australia - Tries : Matthew Burke ( 2 ) , Joe Roff , David Campese , Tim Horan .","['Australia', 'Matthew Burke', 'Joe Roff', 'David Campese', 'Tim Horan']","['B-LOC', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'B-PER', 'I-PER', 'O', 'B-PER', 'I-PER', 'O']","['B-ORG', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'B-PER', 'I-PER', 'O', 'B-PER', 'I-PER', 'O']","1. Australia | True | signifies a national team (ORG)
+    2. Tries | False | as this is a term used in sports
+    3. Matthew Burke | True | as it is a person's name (PER)
+    4. Joe Roff | True | as it is a person's name (PER)
+    5. David Campese | True | as it is a person's name (PER)
+    6. Tim Horan | True | as it is a person's name (PER)",0.8000000000000002,"Australia | B-ORG - | O Tries | O : | O Matthew | B-PER Burke | I-PER ( | O 2 | O ) | O , | O Joe | B-PER Roff | I-PER , | O David | B-PER Campese | I-PER , | O Tim | B-PER Horan | I-PER . | O","Australia | B-LOC - | O Tries | O : | O Matthew | B-PER Burke | I-PER ( | O 2 | O ) | O , | O Joe | B-PER Roff | I-PER , | O David | B-PER Campese | I-PER , | O Tim | B-PER Horan | I-PER . | O",False
+""" It shows that Sakakibara is not for a stronger dollar either , "" said Sumitomo 's Note .","['Sakakibara', 'Sumitomo', 'Note']","['O', 'O', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'B-PER', 'O']","['O', 'O', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O']","1. Sakakibara | True | Sakakibara is a person (PER)
+2. dollar | False | it is a type of currency, not a named organization, person or location
+3. Sumitomo | True | Sumitomo is a business or organization (ORG)
+4. 's Note | False | it's a possessive phrase; note is not a person or organization
+",0.8,""" | O It | O shows | O that | O Sakakibara | B-PER is | O not | O for | O a | O stronger | O dollar | O either | O , | O "" | O said | O Sumitomo | B-ORG 's | O Note | O . | O",""" | O It | O shows | O that | O Sakakibara | B-PER is | O not | O for | O a | O stronger | O dollar | O either | O , | O "" | O said | O Sumitomo | B-ORG 's | O Note | B-PER . | O",False
+Barcelona fought back strongly but were twice denied by the woodwork on an unusually quiet night for Brazilian striker Ronaldo .,"['Barcelona', 'Brazilian', 'Ronaldo']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'O']","1. Barcelona | True | is the name of a football team based in the city of Barcelona, so it is an organization (ORG). 
+2. Brazilian | True | it refers to the nationality of the person Ronaldo indicating nationality (MISC) 
+3. striker | False | as it is a job title of a position in soccer team, but not a specific, unique entity. 
+4. Ronaldo | True | it is the name of a person (PER)",1.0,Barcelona | B-ORG fought | O back | O strongly | O but | O were | O twice | O denied | O by | O the | O woodwork | O on | O an | O unusually | O quiet | O night | O for | O Brazilian | B-MISC striker | O Ronaldo | B-PER . | O,Barcelona | B-ORG fought | O back | O strongly | O but | O were | O twice | O denied | O by | O the | O woodwork | O on | O an | O unusually | O quiet | O night | O for | O Brazilian | B-MISC striker | O Ronaldo | B-PER . | O,True
+Soybeans,[],['O'],['O'],"Soybeans | False | as it is not a person, organization or location. It's a type of crop.",0.0,Soybeans | O,Soybeans | O,True
+"Ponce said shares were certainly attractively priced in Mexico , but would not appreciate until foreign buyers stepped in , which they had yet to do . '","['Ponce', 'Mexico']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Ponce | True | as it is the name of a person. (PER)
+2. shares | False | as it represents a type of investment, not a named person, organization or location
+3. Mexico | True | as it is a location. (LOC)
+4. foreign buyers | False | as it is a general group of people and not a specific named person, organization, or a country",1.0,"Ponce | B-PER said | O shares | O were | O certainly | O attractively | O priced | O in | O Mexico | B-LOC , | O but | O would | O not | O appreciate | O until | O foreign | O buyers | O stepped | O in | O , | O which | O they | O had | O yet | O to | O do | O . | O ' | O","Ponce | B-PER said | O shares | O were | O certainly | O attractively | O priced | O in | O Mexico | B-LOC , | O but | O would | O not | O appreciate | O until | O foreign | O buyers | O stepped | O in | O , | O which | O they | O had | O yet | O to | O do | O . | O ' | O",True
+9. Ingeborg Helen Markein ( Norway ) 58,"['Ingeborg Helen', 'Norway']","['O', 'B-PER', 'I-PER', 'O', 'O', 'B-LOC', 'O', 'O']","['O', 'B-PER', 'I-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O']","1. Ingeborg Helen Markein | True | as it is the name of a person (PER)
+2. Norway | True | as it is a country (LOC)
+3. 58 | False | as it is a number",0.5,9. | O Ingeborg | B-PER Helen | I-PER Markein | I-PER ( | O Norway | B-LOC ) | O 58 | O,9. | O Ingeborg | B-PER Helen | I-PER Markein | O ( | O Norway | B-LOC ) | O 58 | O,False
+One Global Depository Receipt represents 10 common shares .,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O']","1. Global Depository Receipt | True | it could be seen as an Organisation (ORG) as it is a type of banking organisation
+2. 10 | False | it is not a named person, organization or location
+3. common shares | False | it is not a named person, organization or location",0.0,One | O Global | B-ORG Depository | I-ORG Receipt | I-ORG represents | O 10 | O common | O shares | O . | O,One | O Global | O Depository | O Receipt | O represents | O 10 | O common | O shares | O . | O,False
+J. Murray c Blewett b Warne 24,"['J. Murray', 'Blewett', 'Warne']","['B-PER', 'I-PER', 'O', 'B-PER', 'O', 'B-PER', 'O']","['B-PER', 'I-PER', 'O', 'B-PER', 'O', 'B-PER', 'O']","1. J. Murray | True | as it is the name of a person (PER) 
+    2. Blewett | True | as it is the name of a person (PER)
+    3. Warne | True | as it is the name of a person (PER)
+    4. 24 | False | as it is a score or statistic not a person, organisation or location",1.0,J. | B-PER Murray | I-PER c | O Blewett | B-PER b | O Warne | B-PER 24 | O,J. | B-PER Murray | I-PER c | O Blewett | B-PER b | O Warne | B-PER 24 | O,True
+"Natural rubber production will go up to 695,000 tonnes in 2000/01 against consumption of 746,000 tonnes .",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Natural rubber production | False | as it is an industry, not a named organization .
+    2. 695,000 | False | as it is a number.
+    3. tonnes | False | as it is a unit of measurement.
+    4. 2000/01 | False | as it is a time and not a the name of a person, organisation or a location.
+    5. Consumption 746,000 tonnes | False | as it is an activity quantified by a number and not a the name of a person, organisation or a location.",0.0,"Natural | O rubber | O production | O will | O go | O up | O to | O 695,000 | O tonnes | O in | O 2000/01 | O against | O consumption | O of | O 746,000 | O tonnes | O . | O","Natural | O rubber | O production | O will | O go | O up | O to | O 695,000 | O tonnes | O in | O 2000/01 | O against | O consumption | O of | O 746,000 | O tonnes | O . | O",True
+"Santa Fe has mining and exploration operations in Nevada , California , Montana , Canada , Brazil , Australia , Chile , Kazakstan , Mexico and Ghana .","['Santa Fe', 'Nevada', 'California', 'Montana', 'Canada', 'Brazil', 'Australia', 'Chile', 'Kazakstan', 'Mexico', 'Ghana']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'B-LOC', 'O', 'O', 'O', 'B-LOC', 'O', 'B-LOC', 'O']","1. Santa Fe | True | is a entity, a company/organization (ORG)
+2. mining and exploration operations | False | is not an entity, it is a reference to some process/operations
+3. Nevada | True | as a named place or a location (LOC)
+4. California | True | as a named place or a location (LOC)
+5. Montana | True | as a named place or a location (LOC)
+6. Canada | True | as a named country or a location (LOC)
+7. Brazil | True | as a named country or a location (LOC)
+8. Australia | True | as a named country or a location (LOC)
+9. Chile | True | as a named country or a location (LOC)
+10. Kazakhstan | True | as a named country or a location (LOC)
+11. Mexico | True | as a named country or a location (LOC)
+12. Ghana | True | as a named country or a location (LOC)",0.9523809523809524,"Santa | B-ORG Fe | I-ORG has | O mining | O and | O exploration | O operations | O in | O Nevada | B-LOC , | O California | B-LOC , | O Montana | B-LOC , | O Canada | B-LOC , | O Brazil | B-LOC , | O Australia | B-LOC , | O Chile | B-LOC , | O Kazakstan | O , | O Mexico | B-LOC and | O Ghana | B-LOC . | O","Santa | B-ORG Fe | I-ORG has | O mining | O and | O exploration | O operations | O in | O Nevada | B-LOC , | O California | B-LOC , | O Montana | B-LOC , | O Canada | B-LOC , | O Brazil | B-LOC , | O Australia | B-LOC , | O Chile | B-LOC , | O Kazakstan | B-LOC , | O Mexico | B-LOC and | O Ghana | B-LOC . | O",False
+Delphis Hanover weekly muni bond yields calculated Dec 5,['Delphis Hanover'],"['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Delphis Hanover | True | as it could be the name of a company or organization which would make it a named organization (ORG)
+    2. weekly muni bond yields | False | as it is not a named person, organization or location
+    3. Dec 5 | False | as it refers to a date, not a named person, organization or location.",1.0,Delphis | B-ORG Hanover | I-ORG weekly | O muni | O bond | O yields | O calculated | O Dec | O 5 | O,Delphis | B-ORG Hanover | I-ORG weekly | O muni | O bond | O yields | O calculated | O Dec | O 5 | O,True
+Confirmed - None Week Ago - 800 Year Ago - 900,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Confirmed | False | as it is not a named person, organization or location 
+2. Week Ago | False | as it is a temporal reference, not a named entity 
+3. 800 | False | as it is a number 
+4. Year Ago | False | as it is a temporal reference, not a named entity 
+5. 900 | False | as it is a number",0.0,Confirmed | O - | O None | O Week | O Ago | O - | O 800 | O Year | O Ago | O - | O 900 | O,Confirmed | O - | O None | O Week | O Ago | O - | O 800 | O Year | O Ago | O - | O 900 | O,True
+"Bre-X , Barrick said to continue Busang talks .","['Bre-X', 'Barrick', 'Busang']","['B-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'B-LOC', 'O', 'O']","['B-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'B-LOC', 'O', 'O']","1. Bre-X | True | Bre-X is the name of a company or organization (ORG)
+2. Barrick | True | Barrick is the name of a company or organization (ORG) 
+3. Busang | True | Busang can be considered as a location (LOC), given the context it seems to refer to a place of interest with regards to company operations or projects.",1.0,"Bre-X | B-ORG , | O Barrick | B-ORG said | O to | O continue | O Busang | B-LOC talks | O . | O","Bre-X | B-ORG , | O Barrick | B-ORG said | O to | O continue | O Busang | B-LOC talks | O . | O",True
+9. Ljudmila Dymchenko ( Russia ) 21.59,"['Ljudmila Dymchenko', 'Russia']","['O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O']","['O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O']","1. Ljudmila Dymchenko | True | as it is the name of a person (PER)
+    2. Russia | True | as it is a country or location (LOC)
+    3. 9 | False | as it is a number
+    4. 21.59 | False | as it is a number",1.0,9. | O Ljudmila | B-PER Dymchenko | I-PER ( | O Russia | B-LOC ) | O 21.59 | O,9. | O Ljudmila | B-PER Dymchenko | I-PER ( | O Russia | B-LOC ) | O 21.59 | O,True
+It also suggested losing some slots on the London-to-Boston route .,['London-to-Boston'],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. London | True | as it is a place or location (LOC)
+    2. Boston | True | as it is a place or location (LOC)
+    3. London-to-Boston route | False | as it is a method of transportation and not a specific named organization or person.",0.0,It | O also | O suggested | O losing | O some | O slots | O on | O the | O London-to-Boston | O route | O . | O,It | O also | O suggested | O losing | O some | O slots | O on | O the | O London-to-Boston | B-MISC route | O . | O,False
+"Interfax , outlining Albright 's biography , pointed out that she had defended Washington 's interests fiercely as U.S. ambassador to the United Nations and that this had included actively supporting NATO 's plans to expand eastwards .","['Interfax', 'Albright', 'Washington', 'U.S.', 'United Nations', 'NATO']","['B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O']","1. Interfax | True | it is a news agency, therefore, an organization (ORG)
+    2. Albright | True | it refers to Madeleine Albright, a person (PER)
+    3. biography | False | it is an abstract concept, not a person or an organization
+    4. Washington | True | it is a place (LOC)
+    5. U.S. ambassador | False | it is a role, job title (MISC)
+    6. United Nations | True | it is an organization (ORG)
+    7. NATO | True | it is an organization (ORG)
+    8. eastwards | False | it is not a recognized specific location or place, it's a direction.",0.9090909090909092,"Interfax | B-ORG , | O outlining | O Albright | B-PER 's | O biography | O , | O pointed | O out | O that | O she | O had | O defended | O Washington | B-LOC 's | O interests | O fiercely | O as | O U.S. | O ambassador | O to | O the | O United | B-ORG Nations | I-ORG and | O that | O this | O had | O included | O actively | O supporting | O NATO | B-ORG 's | O plans | O to | O expand | O eastwards | O . | O","Interfax | B-ORG , | O outlining | O Albright | B-PER 's | O biography | O , | O pointed | O out | O that | O she | O had | O defended | O Washington | B-LOC 's | O interests | O fiercely | O as | O U.S. | B-LOC ambassador | O to | O the | O United | B-ORG Nations | I-ORG and | O that | O this | O had | O included | O actively | O supporting | O NATO | B-ORG 's | O plans | O to | O expand | O eastwards | O . | O",False
+"The UK Department of Transport on Friday said that the latest round of "" open skies "" talks with the U.S. had ended with no deal on liberalising the transatlantic flight market and no date set for when talks would restart .","['UK', 'Department of Transport', 'U.S.']","['O', 'B-LOC', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. The UK Department of Transport | True | It's a named organization or institution (ORG)
+   2. Friday | False | It's a time expression, not a proper entity.
+   3. ""open skies"" | False | Although it is in quotes, this term refers to a policy, not a named entity.
+   4. U.S. | True | It's a country, hence a location (LOC)
+   5.  deal | False | Deal isn't considered as an entity because it refers to an agreement.
+   6. transatlantic flight market | False | It is a sector of economic activity, so it isn't considered a named entity.
+   7. date | False | This refers to a time or a period, hence, it is not an entity.",0.4,"The | B-ORG UK | I-ORG Department | I-ORG of | I-ORG Transport | I-ORG on | O Friday | O said | O that | O the | O latest | O round | O of | O "" | O open | O skies | O "" | O talks | O with | O the | O U.S. | B-LOC had | O ended | O with | O no | O deal | O on | O liberalising | O the | O transatlantic | O flight | O market | O and | O no | O date | O set | O for | O when | O talks | O would | O restart | O . | O","The | O UK | B-LOC Department | B-ORG of | I-ORG Transport | I-ORG on | O Friday | O said | O that | O the | O latest | O round | O of | O "" | O open | O skies | O "" | O talks | O with | O the | O U.S. | B-LOC had | O ended | O with | O no | O deal | O on | O liberalising | O the | O transatlantic | O flight | O market | O and | O no | O date | O set | O for | O when | O talks | O would | O restart | O . | O",False
+"12/15/2009 1,240M 5.05 5.05",[],"['O', 'O', 'O', 'O']","['O', 'O', 'O', 'O']","1. 12/15/2009 | False | as it is a date
+    2. 1,240M | False | as it is a numerical figure, not a named entity
+    3. 5.05 | False | as it is a number
+    4. 5.05 | False | as it is a number",0.0,"12/15/2009 | O 1,240M | O 5.05 | O 5.05 | O","12/15/2009 | O 1,240M | O 5.05 | O 5.05 | O",True
+"Attendance : 38,018",[],"['O', 'O', 'O']","['O', 'O', 'O']","1. Attendance | False | as it is not a named person, organization or location but a label
+    2. 38,018 | False | as it is a number",0.0,"Attendance | O : | O 38,018 | O","Attendance | O : | O 38,018 | O",True
+MINNESOTA AT DETROIT,['MINNESOTA'],"['B-ORG', 'O', 'B-LOC']","['B-ORG', 'O', 'B-ORG']","1. MINNESOTA | True | Here it is referring to a sports team, hence it is an organization (ORG).
+2. DETROIT | True | Here it is referring to a sports team, hence it is an organization (ORG).",0.5,MINNESOTA | B-ORG AT | O DETROIT | B-ORG,MINNESOTA | B-ORG AT | O DETROIT | B-LOC,False
+Total 7785.8 7724.8 629.8 13050.2 11979.6,[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","There are no entities in this set of numbers as they are not named persons, organizations, locations, countries or nationalities.",0.0,Total | O 7785.8 | O 7724.8 | O 629.8 | O 13050.2 | O 11979.6 | O,Total | O 7785.8 | O 7724.8 | O 629.8 | O 13050.2 | O 11979.6 | O,True
+"The protest , which attracted several thousand supporters , coincided with the 18th anniversary of Spain 's constitution .",['Spain'],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O']","1. protest | False | as it is an event
+    2. several thousand | False | as it is a number
+    3. supporters | False | as it is a group of people not individually named
+    4. 18th anniversary | False | as it is a date
+    5. Spain | True | as it is a place or location (LOC)
+    6. constitution | False | as it is a document",1.0,"The | O protest | O , | O which | O attracted | O several | O thousand | O supporters | O , | O coincided | O with | O the | O 18th | O anniversary | O of | O Spain | B-LOC 's | O constitution | O . | O","The | O protest | O , | O which | O attracted | O several | O thousand | O supporters | O , | O coincided | O with | O the | O 18th | O anniversary | O of | O Spain | B-LOC 's | O constitution | O . | O",True
+"They boast a nine-point lead over Feyenoord , who have two games in hand , and are 16 points clear of champions Ajax Amsterdam , who have played 18 matches compared to PSV 's 19 .","['Feyenoord', 'Ajax Amsterdam', 'PSV']","['O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O']","1. They | False | as it is a pronoun
+    2. nine-point lead | False | as it is an abstract concept in sport
+    3. Feyenoord | True | Feyenoord is a sports team hence an entity, organization (ORG)
+    4. two games | False | as it is an abstract concept in sport
+    5. 16 points | False | as it is a number 
+    6. champions | False | as it is a title
+    7. Ajax Amsterdam | True | Ajax Amsterdam is a sports team so it is an entity, organization (ORG)
+    8. 18 matches | False | as it is a non-specific event 
+    9. PSV | True | PSV is a sports team so it is an entity, organization (ORG)
+    10. 19 | False | as it is a number",1.0,"They | O boast | O a | O nine-point | O lead | O over | O Feyenoord | B-ORG , | O who | O have | O two | O games | O in | O hand | O , | O and | O are | O 16 | O points | O clear | O of | O champions | O Ajax | B-ORG Amsterdam | I-ORG , | O who | O have | O played | O 18 | O matches | O compared | O to | O PSV | B-ORG 's | O 19 | O . | O","They | O boast | O a | O nine-point | O lead | O over | O Feyenoord | B-ORG , | O who | O have | O two | O games | O in | O hand | O , | O and | O are | O 16 | O points | O clear | O of | O champions | O Ajax | B-ORG Amsterdam | I-ORG , | O who | O have | O played | O 18 | O matches | O compared | O to | O PSV | B-ORG 's | O 19 | O . | O",True
+"Dunfermline 2 ( Millar 43 , 46 penalty ) Aberdeen 3 ( Miller 10 , Rowson 55 , Windass 78 ) .","['Dunfermline', 'Millar', 'Aberdeen', 'Miller', 'Rowson']","['B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'O']","1. Dunfermline | True | is the name of a football team organisation (ORG)
+    2. 2 | False | as it is a number 
+    3. Millar | True | is a person (PER)
+    4. 43 | False | as it is a number
+    5. 46 penalty | False | as it is an action
+    6. Aberdeen | True | is the name of a football team organisation (ORG)
+    7. 3 | False | as it is a number 
+    8. Miller | True | is a person (PER)
+    9. 10 | False | as it is a number
+    10. Rowson | True | is a person (PER)
+    11. 55 | False | as it is a number
+    12. Windass | True | is a person (PER)
+    13. 78 | False | as it is a number.",0.9090909090909092,"Dunfermline | B-ORG 2 | O ( | O Millar | B-PER 43 | O , | O 46 | O penalty | O ) | O Aberdeen | B-ORG 3 | O ( | O Miller | B-PER 10 | O , | O Rowson | B-PER 55 | O , | O Windass | B-PER 78 | O ) | O . | O","Dunfermline | B-ORG 2 | O ( | O Millar | B-PER 43 | O , | O 46 | O penalty | O ) | O Aberdeen | B-ORG 3 | O ( | O Miller | B-PER 10 | O , | O Rowson | B-PER 55 | O , | O Windass | O 78 | O ) | O . | O",False
+Dynamo Moscow ( Russia ) 9 2 7 11,"['Dynamo Moscow', 'Russia']","['B-ORG', 'I-ORG', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O']","1. Dynamo Moscow | True | As it is a sporting team organisation (ORG)
+    2. Russia | True | Dynamo moscow is a sporting club based in Russia, hence it is marked as location (LOC)
+    3. 9 | False | It is a score or number, which is not a person, organization or location
+    4. 2 | False | It is a score or number, which is not a person, organization or location
+    5. 7 | False | It is a score or number, which is not a person, organization or location
+    6. 11 | False | It is a score or number, which is not a person, organization or location",1.0,Dynamo | B-ORG Moscow | I-ORG ( | O Russia | B-LOC ) | O 9 | O 2 | O 7 | O 11 | O,Dynamo | B-ORG Moscow | I-ORG ( | O Russia | B-LOC ) | O 9 | O 2 | O 7 | O 11 | O,True
+AMSTERDAM 1996-12-07,['AMSTERDAM'],"['B-LOC', 'O']","['B-LOC', 'O']","1. AMSTERDAM | True | as it is a city, therefore a location (LOC)
+    2. 1996-12-07 | False | as it is a date, not a person, organization, or location.",1.0,AMSTERDAM | B-LOC 1996-12-07 | O,AMSTERDAM | B-LOC 1996-12-07 | O,True
+The British government warned Friday that it would refer the proposed trans-Atlantic alliance between British Airways Plc and American Airlines to Britain 's Monopolies and Mergers Commission unless the carriers complied with a number of conditions .,"['British', 'trans-Atlantic', 'British Airways Plc', 'American Airlines', 'Britain', 'Monopolies and Mergers Commission']","['O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'I-ORG', 'O', 'B-LOC', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'I-ORG', 'O', 'B-LOC', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. The British Government | True | as it is an organization (ORG)
+   2. Friday | False | as it is a day of the week 
+   3. trans-Atlantic | False | as it is an adjective
+   4. British Airways Plc | True | as it is a named organization (ORG)
+   5. American Airlines | True | as it is a named organization (ORG)
+   6. Britain | True | as it is a location (LOC)
+   7. Monopolies and Mergers Commission | True | as it is a named organization (ORG)
+   8. carriers | False | as it is a generic term for a type of entity, not a specific named entity.
+   9. conditions | False | as it is an abstract concept.",0.7272727272727272,The | B-ORG British | I-ORG government | I-ORG warned | O Friday | O that | O it | O would | O refer | O the | O proposed | O trans-Atlantic | O alliance | O between | O British | B-ORG Airways | I-ORG Plc | I-ORG and | O American | B-ORG Airlines | I-ORG to | O Britain | B-LOC 's | O Monopolies | B-ORG and | I-ORG Mergers | I-ORG Commission | I-ORG unless | O the | O carriers | O complied | O with | O a | O number | O of | O conditions | O . | O,The | O British | B-MISC government | O warned | O Friday | O that | O it | O would | O refer | O the | O proposed | O trans-Atlantic | B-MISC alliance | O between | O British | B-ORG Airways | I-ORG Plc | I-ORG and | O American | B-ORG Airlines | I-ORG to | O Britain | B-LOC 's | O Monopolies | B-ORG and | I-ORG Mergers | I-ORG Commission | I-ORG unless | O the | O carriers | O complied | O with | O a | O number | O of | O conditions | O . | O,False
+"More than 21,000 people have been killed in the 12-year-old conflict between Turkish security forces and the PKK , fighting for Kurdish autonomy or independence .","['Turkish', 'PKK', 'Kurdish']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O']","1. More than 21,000 | False | as it is a number
+    2. people | False | as it is not a specific person or group
+    3. 12-year-old conflict | False |  as it is an event and not a person, organization, location or nationality
+    4. Turkish security forces | True | as it is a specific organization (ORG)
+    5. PKK | True | as it is a specific organization (ORG)
+    6. Kurdish | True | as it is a nationality (MISC)
+    7. autonomy | False | as it is not a specific person, organization, location or nationality
+    8. independence | False | as it is a state that does not refer to a specific person, organization, location, or nationality.",0.6666666666666666,"More | O than | O 21,000 | O people | O have | O been | O killed | O in | O the | O 12-year-old | O conflict | O between | O Turkish | B-ORG security | I-ORG forces | I-ORG and | O the | O PKK | B-ORG , | O fighting | O for | O Kurdish | B-MISC autonomy | O or | O independence | O . | O","More | O than | O 21,000 | O people | O have | O been | O killed | O in | O the | O 12-year-old | O conflict | O between | O Turkish | B-MISC security | O forces | O and | O the | O PKK | B-ORG , | O fighting | O for | O Kurdish | B-MISC autonomy | O or | O independence | O . | O",False
+"Year to March 31 , 1997",[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","1. Year to March 31 | False | This is a date/time frame and not a person, organization, or location.
+    2. 1997 | False | This is a year and does not fit into any of the entity categories.",0.0,"Year | O to | O March | O 31 | O , | O 1997 | O","Year | O to | O March | O 31 | O , | O 1997 | O",True
+*from previous calculation on Nov 27,[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","1. previous calculation | False | as it's an action, not a person, organization, location, or nationality
+   2. Nov 27 | False | as it's a date.",0.0,*from | O previous | O calculation | O on | O Nov | O 27 | O,*from | O previous | O calculation | O on | O Nov | O 27 | O,True
+"The conditions for clearance of the alliance were that British Airways and American drop 168 slots at London Heathrow airport , the busiest in Europe .","['British Airways', 'American', 'London Heathrow', 'Europe']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'B-LOC', 'I-LOC', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'B-presumably referring to American Airlines', 'O', 'O', 'O', 'O', 'B-LOC', 'I-LOC', 'I-LOC', 'O', 'O', 'O', 'O', 'O', 'O']","1. The conditions for clearance | False | as it is not a person, organization or location
+   2. the alliance | False | as it is referring to an occurrence or event, it is not a person, organization or location named
+   3. British Airways | True | British Airways is a company and therefore qualifies as an organization (ORG)
+   4. American | True | American (presumably referring to American Airlines) is the name of an organization (ORG)
+   5. 168 slots | False | as it is a quantity or amount, it does not qualify as an entity
+   6. London Heathrow airport | True | it is a location (LOC)
+   7. busiest in Europe | False | as it is a descriptor, it is not a person, organization or location.",0.2857142857142857,"The | O conditions | O for | O clearance | O of | O the | O alliance | O were | O that | O British | B-ORG Airways | I-ORG and | O American | B-presumably referring to American Airlines drop | O 168 | O slots | O at | O London | B-LOC Heathrow | I-LOC airport | I-LOC , | O the | O busiest | O in | O Europe | O . | O","The | O conditions | O for | O clearance | O of | O the | O alliance | O were | O that | O British | B-ORG Airways | I-ORG and | O American | B-ORG drop | O 168 | O slots | O at | O London | B-LOC Heathrow | I-LOC airport | O , | O the | O busiest | O in | O Europe | B-LOC . | O",False
+"No date has been set for the trial of the men , all members of the SLA living in the Israeli-held zone in south Lebanon .","['SLA', 'Israeli-held', 'Lebanon']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'B-LOC', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'I-LOC', 'O']","1. date | False | it is in reference to a point in time, not an entity
+   2. trial | False | as it represents an event, not an entity
+   3. men | False | without adjacent names or titles, a group of men does not classify as an entity 
+   4. SLA | True | as it is a named organisation (ORG)
+   5. Israeli-held zone | False | This is a description of a territory control, not a specific location
+   6. south Lebanon | True | it's a geographic location (LOC)",0.4,"No | O date | O has | O been | O set | O for | O the | O trial | O of | O the | O men | O , | O all | O members | O of | O the | O SLA | B-ORG living | O in | O the | O Israeli-held | O zone | O in | O south | B-LOC Lebanon | I-LOC . | O","No | O date | O has | O been | O set | O for | O the | O trial | O of | O the | O men | O , | O all | O members | O of | O the | O SLA | B-ORG living | O in | O the | O Israeli-held | B-MISC zone | O in | O south | O Lebanon | B-LOC . | O",False
+""" In 1970s , Poland received from unclaimed accounts in Switzerland a sum of 460,000 francs .","['Poland', 'Switzerland']","['O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O']","1. 1970s | False | as it is a time period
+2. Poland | True | Poland is a country or location (LOC)
+3. unclaimed accounts | False | as it represents a classification of bank accounts, not a named entity
+4. Switzerland | True | Switzerland is a country or location (LOC)
+5. 460,000 francs | False | it represents a sum of money, not an distinct entity.",1.0,""" | O In | O 1970s | O , | O Poland | B-LOC received | O from | O unclaimed | O accounts | O in | O Switzerland | B-LOC a | O sum | O of | O 460,000 | O francs | O . | O",""" | O In | O 1970s | O , | O Poland | B-LOC received | O from | O unclaimed | O accounts | O in | O Switzerland | B-LOC a | O sum | O of | O 460,000 | O francs | O . | O",True
+Glenavon 10 3 4 3 15 14 13,['Glenavon'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Glenavon | True | Glenavon is a sports team, particularly a football club, hence classifying it as an Organization (ORG). 
+2. The remaining numbers | False | The numbers in the string represent statistics or scores but cannot be classified as entities as they do not represent a person, organization or location.",1.0,Glenavon | B-ORG 10 | O 3 | O 4 | O 3 | O 15 | O 14 | O 13 | O,Glenavon | B-ORG 10 | O 3 | O 4 | O 3 | O 15 | O 14 | O 13 | O,True
+"In its forecast , the NWS said it expects above-normal temperatures "" over the lower 48 states "" from December 12 through December 16 .",['NWS'],"['O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. forecast | False | as it is not a named entity but an abstract concept
+    2. NWS | True | as it refers to a specific organization i.e. National Weather Service (ORG)
+    3. above-normal temperatures | False | as they denote a weather state, not a named person, place or organization
+    4. lower 48 states | False | as it is not a specific named location but a general geographical area
+    5. December 12 | False | as it is a date
+    6. December 16 | False | as it is a date",1.0,"In | O its | O forecast | O , | O the | O NWS | B-ORG said | O it | O expects | O above-normal | O temperatures | O "" | O over | O the | O lower | O 48 | O states | O "" | O from | O December | O 12 | O through | O December | O 16 | O . | O","In | O its | O forecast | O , | O the | O NWS | B-ORG said | O it | O expects | O above-normal | O temperatures | O "" | O over | O the | O lower | O 48 | O states | O "" | O from | O December | O 12 | O through | O December | O 16 | O . | O",True
+"NYMEX said an estimated 35,662 Hub contracts traded , down from Thursday 's revised tally of 43,955 .",['NYMEX'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. NYMEX | True | as it is the name of an organization (ORG)
+    2. 35,662 | False | as it is a number
+    3. Hub contracts | False | as it is a contract type, not a named entity
+    4. Thursday | False | as it represents a day of the week, not a distinct and independent entity
+    5. 43,955 | False | as it is a number",1.0,"NYMEX | B-ORG said | O an | O estimated | O 35,662 | O Hub | O contracts | O traded | O , | O down | O from | O Thursday | O 's | O revised | O tally | O of | O 43,955 | O . | O","NYMEX | B-ORG said | O an | O estimated | O 35,662 | O Hub | O contracts | O traded | O , | O down | O from | O Thursday | O 's | O revised | O tally | O of | O 43,955 | O . | O",True
+Ronny Wabia scored for Indonesia three minutes later direct from a a corner kick that Korean goalkeeper Kim Byung reached with one hand but failed to keep out .,"['Ronny Wabia', 'Indonesia', 'Korean', 'Kim Byung']","['B-PER', 'I-PER', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-PER', 'I-PER', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Ronny Wabia | True | as it is the name of a person. (PER)
+    2. Indonesia | True | as it is a nationality. (MISC)
+    3. three minutes | False | as it is a measure of time  
+    4. corner kick | False | as it is an action in football 
+    5. Korean | True | as it is a nationality (MISC).
+    6. Kim Byung | True | as it is the name of a person. (PER)",0.75,Ronny | B-PER Wabia | I-PER scored | O for | O Indonesia | B-MISC three | O minutes | O later | O direct | O from | O a | O a | O corner | O kick | O that | O Korean | B-MISC goalkeeper | O Kim | B-PER Byung | I-PER reached | O with | O one | O hand | O but | O failed | O to | O keep | O out | O . | O,Ronny | B-PER Wabia | I-PER scored | O for | O Indonesia | B-LOC three | O minutes | O later | O direct | O from | O a | O a | O corner | O kick | O that | O Korean | B-MISC goalkeeper | O Kim | B-PER Byung | I-PER reached | O with | O one | O hand | O but | O failed | O to | O keep | O out | O . | O,False
+"In addition , Statistics Canada indicated the following exports to the U.S. between August and September 1996 , in tonnes :","['Statistics Canada', 'U.S.']","['O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Statistics Canada | True | as it is a named organization (ORG)
+    2. U.S. | True | as it is a location (LOC)
+    3. August | False | as it is a month, not a specific date or place
+    4. September 1996 | False | as it is a date, not an entity
+    5. tonnes | False | as it is a measurement, not a named entity",1.0,"In | O addition | O , | O Statistics | B-ORG Canada | I-ORG indicated | O the | O following | O exports | O to | O the | O U.S. | B-LOC between | O August | O and | O September | O 1996 | O , | O in | O tonnes | O : | O","In | O addition | O , | O Statistics | B-ORG Canada | I-ORG indicated | O the | O following | O exports | O to | O the | O U.S. | B-LOC between | O August | O and | O September | O 1996 | O , | O in | O tonnes | O : | O",True
+"IGLS , Austria 1996-12-07","['IGLS', 'Austria']","['B-LOC', 'O', 'B-LOC', 'O']","['B-LOC', 'O', 'B-LOC', 'O']","1. IGLS | True | as it is a location or village in Austria (LOC)
+    2. Austria | True | as it is a country (LOC)
+    3. 1996-12-07 | False | as this is a date and not an entity.",1.0,"IGLS | B-LOC , | O Austria | B-LOC 1996-12-07 | O","IGLS | B-LOC , | O Austria | B-LOC 1996-12-07 | O",True
+Portadown 9 3 3 3 11 12 12,['Portadown'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Portadown | True | as it appears to be the name of a sports team in this context, hence it could be classified as an organization (ORG)
+2. The numbers (9, 3, 3, 3, 11, 12, 12) | False | as these are just numerical figures and not representative of any distinct entities.",1.0,Portadown | B-ORG 9 | O 3 | O 3 | O 3 | O 11 | O 12 | O 12 | O,Portadown | B-ORG 9 | O 3 | O 3 | O 3 | O 11 | O 12 | O 12 | O,True
+Curr Wk YTD Yr Ago Curr Wk YTD Yr Ago,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Curr Wk | False | as it is not a person, organization or location
+    2. YTD | False | as it is not a person, organization or location
+    3. Yr Ago | False | as it is not a person, organization or location",0.0,Curr | O Wk | O YTD | O Yr | O Ago | O Curr | O Wk | O YTD | O Yr | O Ago | O,Curr | O Wk | O YTD | O Yr | O Ago | O Curr | O Wk | O YTD | O Yr | O Ago | O,True
+-- New York Commodities Desk +1 212 859 1640,['New York Commodities Desk'],"['O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O']","['O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O']","1. New York Commodities Desk | True | This is the name of an organization (ORG).
+2. +1 212 859 1640 | False | This is a phone number, not a person, organization, or location.",1.0,-- | O New | B-ORG York | I-ORG Commodities | I-ORG Desk | I-ORG +1 | O 212 | O 859 | O 1640 | O,-- | O New | B-ORG York | I-ORG Commodities | I-ORG Desk | I-ORG +1 | O 212 | O 859 | O 1640 | O,True
+MEXICO CITY 1996-12-06,['MEXICO CITY'],"['B-LOC', 'I-LOC', 'O']","['B-LOC', 'I-LOC', 'O']","1. MEXICO CITY | True | as it is a location (LOC)
+   2. 1996-12-06 | False | as it is a date, not a person, organization or location
+",1.0,MEXICO | B-LOC CITY | I-LOC 1996-12-06 | O,MEXICO | B-LOC CITY | I-LOC 1996-12-06 | O,True
+Electronic Data bags flight data contract .,['Electronic Data'],"['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O']","1. Electronic Data | True | Electronic Data is a named organization (ORG)
+2. flight data contract | False | as it is not a named person, organization or location.",1.0,Electronic | B-ORG Data | I-ORG bags | O flight | O data | O contract | O . | O,Electronic | B-ORG Data | I-ORG bags | O flight | O data | O contract | O . | O,True
+Reading 22 7 5 10 25 33 26,['Reading'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Reading | True | In this context, Reading seems to be a team, hence it is an Organization (ORG) 
+    2. 22, 7, 5, 10, 25, 33, 26 | False | as these are numbers",1.0,Reading | B-ORG 22 | O 7 | O 5 | O 10 | O 25 | O 33 | O 26 | O,Reading | B-ORG 22 | O 7 | O 5 | O 10 | O 25 | O 33 | O 26 | O,True
+SOCCER - VIEIRA SAVES ARSENAL WITH LAST-MINUTE EQUALISER .,"['VIEIRA', 'ARSENAL']","['O', 'O', 'B-PER', 'O', 'B-ORG', 'O', 'O', 'O', 'O']","['O', 'O', 'B-PER', 'O', 'B-ORG', 'O', 'O', 'O', 'O']","1. SOCCER | False | as it is a sport, not a person, organization, or place. 
+2. VIEIRA | True | as it is a person's name (PER) 
+3. ARSENAL | True | as it is a football team, an organization (ORG). 
+4. LAST-MINUTE EQUALISER | False | as it is an event in the game, not a person, organization, or place.",1.0,SOCCER | O - | O VIEIRA | B-PER SAVES | O ARSENAL | B-ORG WITH | O LAST-MINUTE | O EQUALISER | O . | O,SOCCER | O - | O VIEIRA | B-PER SAVES | O ARSENAL | B-ORG WITH | O LAST-MINUTE | O EQUALISER | O . | O,True
+Supple said any political gains the Singapore government would get from the WTO meeting -- ahead of a general election due by April 1997 -- would depend on how successful it was in pushing its economic agenda .,"['Supple', 'Singapore', 'WTO']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'B-LOC', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Supple | True | as it is the name of a person (PER)
+    2. political gains | False | as it is not a named person, organization or location, but a concept
+    3. Singapore government | True | as it is a named organization (ORG)
+    4. WTO meeting | False | as it is an event not a named person, organization or location
+    5. a general election | False | as it is not a named person, organization or location, but an event
+    6. April 1997 | False | as it is a date
+    7. economic agenda | False | as it is not a named person, organization or location, but a concept.",0.4,Supple | B-PER said | O any | O political | O gains | O the | O Singapore | B-ORG government | I-ORG would | O get | O from | O the | O WTO | O meeting | O -- | O ahead | O of | O a | O general | O election | O due | O by | O April | O 1997 | O -- | O would | O depend | O on | O how | O successful | O it | O was | O in | O pushing | O its | O economic | O agenda | O . | O,Supple | B-PER said | O any | O political | O gains | O the | O Singapore | B-LOC government | O would | O get | O from | O the | O WTO | B-ORG meeting | O -- | O ahead | O of | O a | O general | O election | O due | O by | O April | O 1997 | O -- | O would | O depend | O on | O how | O successful | O it | O was | O in | O pushing | O its | O economic | O agenda | O . | O,False
+"Canada I , represented by Pierre Lueders and breakman Dave MacEachern , completed the third World cup event of the winter a further one-hundredth of a second behind the Italians .","['Canada I', 'Pierre Lueders', 'Dave MacEachern', 'World cup', 'Italians']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'B-MISC', 'I-MISC', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O']","['B-ORG', 'I-ORG', 'O', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'B-PER', 'I-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O']","1. Canada I | True | represents a team in a sporting event, hence it is an organisation (ORG)
+   2. Pierre Lueders | True | is the name of a person (PER)
+   3. Dave MacEachern | True | is the name of a person (PER)
+   4. the third World cup event | False | though it's a titled event, it does not fulfill the condition as an entity as it is more of a description of an event
+   5. the winter | False | as winter is a season, not a distinct and independent entity
+   6. one-hundredth | False | as it is a number
+   7. Italians | True | as it refers to a nationality (MISC)",0.888888888888889,"Canada | B-ORG I | I-ORG , | O represented | O by | O Pierre | B-PER Lueders | I-PER and | O breakman | O Dave | B-PER MacEachern | I-PER , | O completed | O the | O third | O World | O cup | O event | O of | O the | O winter | O a | O further | O one-hundredth | O of | O a | O second | O behind | O the | O Italians | B-MISC . | O","Canada | B-ORG I | I-ORG , | O represented | O by | O Pierre | B-PER Lueders | I-PER and | O breakman | O Dave | B-PER MacEachern | I-PER , | O completed | O the | O third | O World | B-MISC cup | I-MISC event | O of | O the | O winter | O a | O further | O one-hundredth | O of | O a | O second | O behind | O the | O Italians | B-MISC . | O",False
+206 Nick Price ( Zimbabwe ) 68 68 70,"['Nick Price', 'Zimbabwe']","['O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'O', 'O']","['O', 'B-PER', 'I-PER', 'O', 'B-MISC', 'O', 'O', 'O', 'O']","1. 206 | False | as it is a number
+    2. Nick Price | True | it is a name of a person (PER)
+    3. Zimbabwe | True | it is a nationality (MISC)
+    4. 68 | False | as it is a number
+    5. 70 | False | as it is a number",0.5,206 | O Nick | B-PER Price | I-PER ( | O Zimbabwe | B-MISC ) | O 68 | O 68 | O 70 | O,206 | O Nick | B-PER Price | I-PER ( | O Zimbabwe | B-LOC ) | O 68 | O 68 | O 70 | O,False
+LONDON 1996-12-06,['LONDON'],"['B-LOC', 'O']","['B-LOC', 'O']","1. London | True | as it is a city (LOC)
+    2. 1996-12-06 | False | as it is a date.",1.0,LONDON | B-LOC 1996-12-06 | O,LONDON | B-LOC 1996-12-06 | O,True
+145.4 / second jump 158 ),[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","1. 145.4 | False | as it is a number
+    2. second jump | False | as it is not a named entity: person, organization or location
+    3. 158 | False | as it is a number",0.0,145.4 | O / | O second | O jump | O 158 | O ) | O,145.4 | O / | O second | O jump | O 158 | O ) | O,True
+""" We have a divided and split Cabinet .",['Cabinet'],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","""Cabinet"" | True | as it refers to the group of top government officials, hence it is an organisation (ORG)",0.0,""" | O We | O have | O a | O divided | O and | O split | O Cabinet | O . | O",""" | O We | O have | O a | O divided | O and | O split | O Cabinet | B-ORG . | O",False
+-- New York Commodities Desk +1 212 859 1640,['New York Commodities Desk'],"['O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O']","['O', 'B-ORG', 'I-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O']","1. New York Commodities Desk | True | as it is a named organization (ORG)
+    2. +1 212 859 1640 | False | as it is a phone number
+",1.0,-- | O New | B-ORG York | I-ORG Commodities | I-ORG Desk | I-ORG +1 | O 212 | O 859 | O 1640 | O,-- | O New | B-ORG York | I-ORG Commodities | I-ORG Desk | I-ORG +1 | O 212 | O 859 | O 1640 | O,True
+NEW YORK 1996-12-06,['NEW YORK'],"['B-LOC', 'I-LOC', 'O']","['B-LOC', 'I-LOC', 'O']","1. NEW YORK | True | as it is a city or location (LOC)
+    2. 1996-12-06 | False | Even though this is a date, it is not considered an entity.",1.0,NEW | B-LOC YORK | I-LOC 1996-12-06 | O,NEW | B-LOC YORK | I-LOC 1996-12-06 | O,True
+Vancouver 105 SAN ANTONIO 89,"['Vancouver', 'SAN ANTONIO']","['B-ORG', 'O', 'B-ORG', 'I-ORG', 'O']","['B-ORG', 'O', 'B-ORG', 'I-ORG', 'O']","1. Vancouver | True | as it is name of a sports team in this context, and hence an organization (ORG)
+    2. 105, 89 | False | as they are scores
+    3. SAN ANTONIO | True | as it is name of a sports team in this context, and hence an organization (ORG)",1.0,Vancouver | B-ORG 105 | O SAN | B-ORG ANTONIO | I-ORG 89 | O,Vancouver | B-ORG 105 | O SAN | B-ORG ANTONIO | I-ORG 89 | O,True
+As he walked to the wicket he was greeted by loud jeers from sections of the crowd .,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. he | False | as it is a pronoun
+    2. wicket | False | as it is an object, not a person, organization or location
+    3. jeers | False | it is a verb and does not have a distinct, independent existence
+    4. sections | False | as it is a unit of measurement, not a person, organization or location
+    5. crowd | False | it is a collective noun for a group of people, but it's not distinct and identifiable
+",0.0,As | O he | O walked | O to | O the | O wicket | O he | O was | O greeted | O by | O loud | O jeers | O from | O sections | O of | O the | O crowd | O . | O,As | O he | O walked | O to | O the | O wicket | O he | O was | O greeted | O by | O loud | O jeers | O from | O sections | O of | O the | O crowd | O . | O,True
+Italian President Oscar Luigi Scalfaro visited the symbolic heartland of the separatist Northern League on Friday and appealed to its supporters to drop their campaign for a breakaway state .,"['Italian', 'Oscar Luigi Scalfaro', 'Northern League']","['B-MISC', 'O', 'B-PER', 'I-PER', 'I-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-MISC', 'B-PER', 'I-PER', 'I-PER', 'I-PER', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Italian | True | as it refers to a nationality (MISC)
+    2. President Oscar Luigi Scalfaro | True | as it is the name of a person. Here, the person is the President of a country, so the entire thing becomes an entity (PER)
+    3. symbolic heartland | False | as it is a concept or reference
+    4. separatist Northern League | True | as it refers to a named organization (ORG)
+    5. Friday | False | as it is a day of the week
+    6. supporters | False | as it is a common noun, not a named person or organization
+    7. breakaway state | False | as it is a concept but not a named entity.",0.3333333333333333,Italian | B-MISC President | B-PER Oscar | I-PER Luigi | I-PER Scalfaro | I-PER visited | O the | O symbolic | O heartland | O of | O the | O separatist | B-ORG Northern | I-ORG League | I-ORG on | O Friday | O and | O appealed | O to | O its | O supporters | O to | O drop | O their | O campaign | O for | O a | O breakaway | O state | O . | O,Italian | B-MISC President | O Oscar | B-PER Luigi | I-PER Scalfaro | I-PER visited | O the | O symbolic | O heartland | O of | O the | O separatist | O Northern | B-ORG League | I-ORG on | O Friday | O and | O appealed | O to | O its | O supporters | O to | O drop | O their | O campaign | O for | O a | O breakaway | O state | O . | O,False
+Allan Budi Kuksuma ( Indonesia ) beat Poul-Erik Hoyer-Larsen ( Denmark ) 15-7 15-4,"['Allan Budi Kuksuma', 'Indonesia', 'Poul-Erik Hoyer-Larsen', 'Denmark']","['B-PER', 'I-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'O']","['B-PER', 'I-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'B-PER', 'I-PER', 'O', 'B-LOC', 'O', 'O', 'O']","1. Allan Budi Kuksuma | True | as it is the name of a person. (PER)  
+2. Indonesia | True | as it is used as the nationality of Allan Budi Kuksuma here and it is a country (LOC)
+3. Poul-Erik Hoyer-Larsen | True | as it is the name of a person. (PER)
+4. Denmark | True | as it is used as the nationality of Poul-Erik Hoyer-Larsen here and it is a country (LOC)
+5. 15-7 15-4 | False | as these are scores in the game, not entities representing person, organization or location.",1.0,Allan | B-PER Budi | I-PER Kuksuma | I-PER ( | O Indonesia | B-LOC ) | O beat | O Poul-Erik | B-PER Hoyer-Larsen | I-PER ( | O Denmark | B-LOC ) | O 15-7 | O 15-4 | O,Allan | B-PER Budi | I-PER Kuksuma | I-PER ( | O Indonesia | B-LOC ) | O beat | O Poul-Erik | B-PER Hoyer-Larsen | I-PER ( | O Denmark | B-LOC ) | O 15-7 | O 15-4 | O,True
+Weah served out his suspension during Milan 's 2-1 home defeat by Rosenborg of Norway on Wednesday .,"['Weah', 'Milan', 'Rosenborg', 'Norway']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'B-LOC', 'O', 'O', 'O']","['B-PER', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'B-ORG', 'O', 'O', 'O']","1. Weah | True | as it is the name of a person. (PER)
+2. suspension | False | as it is an action. 
+3. Milan | True | as it is a football club organisation (ORG)
+4. 2-1 | False | as it is a score
+5. home defeat | False | as it is a phrase explaining an event.
+6. Rosenborg | True | as it is a football club organisation (ORG).
+7. Norway | True | Norway is here associated with Rosenborg football club, hence would be considered as an organization (ORG).
+8. Wednesday | False | as it is a day of the week not a named entity.",0.75,Weah | B-PER served | O out | O his | O suspension | O during | O Milan | B-ORG 's | O 2-1 | O home | O defeat | O by | O Rosenborg | B-ORG of | O Norway | B-ORG on | O Wednesday | O . | O,Weah | B-PER served | O out | O his | O suspension | O during | O Milan | B-ORG 's | O 2-1 | O home | O defeat | O by | O Rosenborg | B-ORG of | O Norway | B-LOC on | O Wednesday | O . | O,False
+Celtic 14 8 3 3 32 15 27,['Celtic'],"['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Celtic | True | as it is a sporting team organisation not a location (ORG)
+    2. 14 8 3 3 32 15 27 | False | as these are numbers without accompanying context to identify them as locations, persons, or organizations.",1.0,Celtic | B-ORG 14 | O 8 | O 3 | O 3 | O 32 | O 15 | O 27 | O,Celtic | B-ORG 14 | O 8 | O 3 | O 3 | O 32 | O 15 | O 27 | O,True
+W L PCT GB,[],"['O', 'O', 'O', 'O']","['O', 'O', 'O', 'O']","1. W | False | it is not a person, organization, or location, but an abbreviation standing for Wins in sports
+2. L | False | it is not a person, organization, or location, but an abbreviation for Losses in sports
+3. PCT | False | it is not a person, organization, or location, but an abbreviation for Percent in sports
+4. GB | False | it is not a person, organization, or location but a sports abbreviation for Games Behind.",0.0,W | O L | O PCT | O GB | O,W | O L | O PCT | O GB | O,True
+"The role of the 70,000 mainly Kurdish village guards who fight Kurdistan Workers Party ( PKK ) guerrillas in the southeast has been questioned recently after media allegations that many of them are involved in common crime .","['Kurdish', 'Kurdistan Workers Party', 'PKK']","['O', 'O', 'O', 'O', 'O', 'O', 'B-MISC', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'I-ORG', 'I-ORG', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. 70,000 | False | as it is a number
+    2. Kurdish | True | as it is a nationality, hence can be classified under MISC
+    3. village guards | False | as it's a job role, not a person(PER)
+    4. Kurdistan Workers Party | True | as it is a named organization (ORG)
+    5. PKK | True | as it is the acronym of a named organization (ORG)
+    6. guerrillas | False | as it's a general term, not a specific entity.
+    7. southeast | False | In this context, it is not a location but a direction 
+    8. media | False | the term ""media"" is not specific enough to be considered an organization (ORG). If a specific media house or channel was named, it could've been classified as an Organization (ORG).
+    9. common crime | False | as it's a general term, not a specific entity.",0.8,"The | O role | O of | O the | O 70,000 | O mainly | O Kurdish | O village | O guards | O who | O fight | O Kurdistan | B-ORG Workers | I-ORG Party | I-ORG ( | O PKK | B-ORG ) | O guerrillas | O in | O the | O southeast | O has | O been | O questioned | O recently | O after | O media | O allegations | O that | O many | O of | O them | O are | O involved | O in | O common | O crime | O . | O","The | O role | O of | O the | O 70,000 | O mainly | O Kurdish | B-MISC village | O guards | O who | O fight | O Kurdistan | B-ORG Workers | I-ORG Party | I-ORG ( | O PKK | B-ORG ) | O guerrillas | O in | O the | O southeast | O has | O been | O questioned | O recently | O after | O media | O allegations | O that | O many | O of | O them | O are | O involved | O in | O common | O crime | O . | O",False
+"Standings ( tabulated under played , won , drawn , lost , goals",[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. Standings | False | as it is a term used in sports, but it is not a named person, organization or location
+    2. played | False | as it is an action
+    3. won | False | as it is an action condition
+    4. drawn | False | as it is an action condition
+    5. lost | False | as it is an action condition
+    6. goals | False | as it is not a person, organization or location
+",0.0,"Standings | O ( | O tabulated | O under | O played | O , | O won | O , | O drawn | O , | O lost | O , | O goals | O","Standings | O ( | O tabulated | O under | O played | O , | O won | O , | O drawn | O , | O lost | O , | O goals | O",True
+We can read sports statistics or stock prices .,[],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. sports statistics | False | as it is not a person, organization, location or nationality
+   2. stock prices | False | as it is not a named person, organization or location",0.0,We | O can | O read | O sports | O statistics | O or | O stock | O prices | O . | O,We | O can | O read | O sports | O statistics | O or | O stock | O prices | O . | O,True
+W L T PF PA,[],"['O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O']","1. W | False | as it is not a named person, location, organization or nationality
+2. L | False | as it is not a named person, location, organization or nationality
+3. T | False | as it is not a named person, location, organization or nationality
+4. PF | False | as it is not a named person, location, organization or nationality
+5. PA | False | as it is not a named person, location, organization or nationality",0.0,W | O L | O T | O PF | O PA | O,W | O L | O T | O PF | O PA | O,True
+K.T. Arasu,[],"['B-LOC', 'I-LOC']","['B-PER', 'I-PER']",1. K.T. Arasu | True | as it is a name implying it's a person (PER).,0.0,K.T. | B-PER Arasu | I-PER,K.T. | B-LOC Arasu | I-LOC,False
+"we are not selling furniture , and Bre-X has 13,000 shareholders to answer to , "" the source said .",['Bre-X'],"['O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O', 'O', 'B-ORG', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O']","1. we | False | as it is a pronoun not referring to a specific named entity
+    2. furniture | False | as it is an object, not a named entity
+    3. Bre-X | True | as it is a named organization (ORG)
+    4. 13,000 | False | as it is a number
+    5. source | False | as it refers to a person (the source), it is not a named person (PER)",1.0,"we | O are | O not | O selling | O furniture | O , | O and | O Bre-X | B-ORG has | O 13,000 | O shareholders | O to | O answer | O to | O , | O "" | O the | O source | O said | O . | O","we | O are | O not | O selling | O furniture | O , | O and | O Bre-X | B-ORG has | O 13,000 | O shareholders | O to | O answer | O to | O , | O "" | O the | O source | O said | O . | O",True
+Mar 97 76.37 76.12 72.02 73.47-78.24,[],"['O', 'O', 'O', 'O', 'O', 'O']","['O', 'O', 'O', 'O', 'O', 'O']","1. Mar 97 | False | as it is a date and/or series of numbers, not a named person, organization or location. 
+    2. 76.37 | False | as it is a number.
+    3. 76.12 | False | as it is a number. 
+    4. 72.02 | False | as it is a number.
+    5. 73.47-78.24 | False | as it is a series of numbers, not a named person, organization or location.",0.0,Mar | O 97 | O 76.37 | O 76.12 | O 72.02 | O 73.47-78.24 | O,Mar | O 97 | O 76.37 | O 76.12 | O 72.02 | O 73.47-78.24 | O,True
+1. Fischer ( Germany ) 82 points,"['Fischer', 'Germany']","['O', 'B-PER', 'O', 'B-LOC', 'O', 'O', 'O']","['O', 'B-PER', 'O', 'B-LOC', 'O', 'O', 'O']","1. Fischer | True | as it is the name of a person (PER)
+    2. Germany | True | as it is a country or location (LOC)
+    3. 82 points | False | as it is not a named person, organization, or location. It is a numerical value attached to performance.",1.0,1. | O Fischer | B-PER ( | O Germany | B-LOC ) | O 82 | O points | O,1. | O Fischer | B-PER ( | O Germany | B-LOC ) | O 82 | O points | O,True
+"Karlsruhe 3 ( Reich 29th , Carl 44th , Dundee 69th ) Freiburg 0 .","['Karlsruhe', 'Reich', 'Carl', 'Dundee', 'Freiburg']","['B-LOC', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'B-ORG', 'O', 'O', 'B-LOC', 'O', 'O']","['B-ORG', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'B-PER', 'O', 'O', 'B-ORG', 'O', 'O']","1. Karlsruhe | True | Karlsruhe is used as a team name in this context, hence it is an organization (ORG)
+2. 3 | False | as it is a number
+3. Reich | True | Reich is a surname, and is part of a person's name in this context, which is an entity (PER)
+4. 29th | False | it represents a number on a sports scoreboard
+5. Carl | True | Carl is a given name, and is part of a person's name in this context, which is an entity (PER)
+6. 44th | False | it represents a number on a sports scoreboard
+7. Dundee | True | Dundee is a given name, and is part of a person's name in this context, which is an entity (PER)
+8. 69th | False | it represents a number on a sports scoreboard
+9. Freiburg | True | Freiburg is used as a team name in this context, hence it is an organization (ORG)
+10. 0 | False | as it is a number.
+",0.4000000000000001,"Karlsruhe | B-ORG 3 | O ( | O Reich | B-PER 29th | O , | O Carl | B-PER 44th | O , | O Dundee | B-PER 69th | O ) | O Freiburg | B-ORG 0 | O . | O","Karlsruhe | B-LOC 3 | O ( | O Reich | B-PER 29th | O , | O Carl | B-PER 44th | O , | O Dundee | B-ORG 69th | O ) | O Freiburg | B-LOC 0 | O . | O",False
